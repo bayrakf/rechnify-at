@@ -275,6 +275,69 @@
       border-left: 3px solid var(--primary);
     }
 
+    /* Mobile Sticky Slim Sidebar Navigation Override */
+    @media (max-width: 1150px) {
+      .frontpage-layout {
+        display: grid !important;
+        grid-template-columns: 60px 1fr !important;
+        gap: 16px !important;
+        padding: 40px 12px 48px !important;
+      }
+      .sidebar-nav {
+        position: sticky !important;
+        top: 80px !important;
+        z-index: 90 !important;
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 10px 0 !important;
+        border: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        width: 60px !important;
+        height: fit-content !important;
+        overflow-x: visible !important;
+      }
+      .sidebar-nav::after {
+        display: none !important;
+      }
+      .sidebar-nav::-webkit-scrollbar {
+        display: none !important;
+      }
+      .sidebar-nav h3 {
+        display: none !important;
+      }
+      .sidebar-nav a {
+        width: 46px !important;
+        height: 46px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: var(--card) !important;
+        border: 1px solid var(--border) !important;
+        box-shadow: var(--shadow-sm) !important;
+        padding: 0 !important;
+        margin: 0 auto !important;
+        font-size: 0 !important; /* Hides raw text */
+        transition: all 0.2s ease !important;
+        flex: none !important;
+      }
+      .sidebar-nav a .icon {
+        font-size: 20px !important;
+        margin: 0 !important;
+        display: inline-flex !important;
+      }
+      .sidebar-nav a.active {
+        background: var(--primary) !important;
+        border-color: var(--primary) !important;
+        color: white !important;
+        padding-left: 0 !important;
+        border-left: none !important;
+        border-radius: 50% !important;
+      }
+    }
+
     .category-header h2 {
       color: var(--text);
       font-family: 'Instrument Serif', serif;
