@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMI Rechner online – Body-Mass-Index berechnen | rechnify.at</title>
+  <meta name="description" content="Kostenloser BMI-Rechner für Erwachsene. Berechne schnell und anonym deinen Body-Mass-Index und prüfe dein Normalgewicht." />
+  <link rel="canonical" href="https://rechnify.at/alltag/bmi-rechner.html" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="BMI Rechner | rechnify.at" />
+  <meta property="og:description" content="Kostenloser BMI-Rechner zur Bestimmung deines Körpergewichts." />
+  <meta property="og:url" content="https://rechnify.at/alltag/bmi-rechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); }
+    .input-group input, .input-group select { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--border); 
+      border-radius: 10px; 
+      background: var(--input); 
+      color: var(--text); 
+      font-size: 16px; 
+    }
+    
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--soft-row); 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      padding: 24px; 
+      text-align: center;
+    }
+    
+    .result-value {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    
+    .result-label {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .scale-bar {
+      margin-top: 24px;
+      height: 12px;
+      width: 100%;
+      background: linear-gradient(to right, #3498db 0%, #3498db 25%, #2ecc71 25%, #2ecc71 50%, #f1c40f 50%, #f1c40f 75%, #e74c3c 75%, #e74c3c 100%);
+      border-radius: 6px;
+      position: relative;
+    }
+    .scale-marker {
+      position: absolute;
+      top: -6px;
+      width: 4px;
+      height: 24px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: left 0.3s ease;
+      left: 50%;
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "BMI Rechner",
+    "description": "Kostenloser Body-Mass-Index Rechner für Männer und Frauen.",
+    "url": "https://rechnify.at/alltag/bmi-rechner.html",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Alltag</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">BMI-Rechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">BMI Rechner</h1>
+      <p class="subtitle">Berechne deinen Body-Mass-Index, um zu prüfen, ob du Normalgewicht hast.</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="height">Körpergröße (cm)</label>
+            <input type="number" id="height" min="50" max="250" placeholder="z. B. 175" value="175" />
+          </div>
+          
+          <div class="input-group">
+            <label for="weight">Gewicht (kg)</label>
+            <input type="number" id="weight" min="20" max="300" step="0.1" placeholder="z. B. 70" value="70" />
+          </div>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <div style="font-size:14px; color:var(--muted); margin-bottom:8px;">Dein Body-Mass-Index:</div>
+          <div class="result-value" id="resValue">22.9</div>
+          <div class="result-label" id="resLabel" style="color: #2ecc71;">Normalgewicht</div>
+          
+          <div class="scale-bar">
+            <div class="scale-marker" id="resMarker"></div>
+          </div>
+          
+          <div class="text-muted text-xs mt-16 text-left">
+            Legende: Blau (< 18.5) Untergewicht | Grün (18.5 - 24.9) Normalgewicht | Gelb (25 - 29.9) Übergewicht | Rot (≥ 30) Adipositas.
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Was ist der BMI?</h2>
+      <p>Der Body-Mass-Index (BMI) ist eine Maßzahl zur Bewertung des Körpergewichts eines Menschen in Relation zu seiner Körpergröße. Er wurde im 19. Jahrhundert vom belgischen Mathematiker Adolphe Quetelet entwickelt und ist bis heute der internationale Standard der WHO (Weltgesundheitsorganisation) zur Einschätzung des Gewichts.</p>
+      
+      <h3>Die BMI-Formel</h3>
+      <div class="alert alert-info mt-16 mb-16">
+        <strong>BMI = Körpergewicht in kg ÷ (Körpergröße in m)²</strong>
+      </div>
+      
+      <h3>Wie wird der BMI bewertet (WHO-Tabelle)?</h3>
+      <p>Für Erwachsene (ab 19 Jahren) gelten laut WHO folgende Richtwerte, unabhängig von Geschlecht oder Alter:</p>
+      <ul>
+        <li><strong>Unter 18,5:</strong> Untergewicht</li>
+        <li><strong>18,5 bis 24,9:</strong> Normalgewicht</li>
+        <li><strong>25,0 bis 29,9:</strong> Präadipositas (Übergewicht)</li>
+        <li><strong>30,0 bis 34,9:</strong> Adipositas Grad I</li>
+        <li><strong>35,0 bis 39,9:</strong> Adipositas Grad II</li>
+        <li><strong>Ab 40,0:</strong> Adipositas Grad III</li>
+      </ul>
+
+      <h3>Kritik am BMI</h3>
+      <p>Obwohl der BMI ein nützlicher Richtwert ist, hat er Schwächen. Er unterscheidet nicht zwischen Fett- und Muskelmasse. Ein durchtrainierter Sportler mit viel Muskelmasse (die schwerer als Fett ist) kann laut BMI "übergewichtig" sein, obwohl sein Körperfettanteil sehr niedrig ist. Für eine genauere Analyse der Gesundheit sollten auch Faktoren wie Bauchumfang und Lebensstil einbezogen werden.</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const heightInput = document.getElementById('height');
+      const weightInput = document.getElementById('weight');
+      const resValue = document.getElementById('resValue');
+      const resLabel = document.getElementById('resLabel');
+      const resMarker = document.getElementById('resMarker');
+      
+      const calculate = () => {
+        const heightCm = parseFloat(heightInput.value);
+        const weightKg = parseFloat(weightInput.value.replace(',', '.'));
+        
+        if (heightCm > 0 && weightKg > 0) {
+          const heightM = heightCm / 100;
+          const bmi = weightKg / (heightM * heightM);
+          
+          resValue.textContent = bmi.toFixed(1).replace('.', ',');
+          
+          let label = '';
+          let color = '';
+          let markerPos = 0;
+          
+          // Calculate marker pos for CSS gradient:
+          // 0-15 = 0% to 12.5% (underweight block is 0-25%, covering bmi < 18.5)
+          // Let's just map it roughly:
+          // 15 = 0%
+          // 18.5 = 25%
+          // 25 = 50%
+          // 30 = 75%
+          // 40 = 100%
+          if (bmi < 18.5) {
+            label = 'Untergewicht';
+            color = '#3498db';
+            markerPos = ((bmi - 10) / (18.5 - 10)) * 25;
+            if(markerPos < 0) markerPos = 0;
+          } else if (bmi < 25) {
+            label = 'Normalgewicht';
+            color = '#2ecc71';
+            markerPos = 25 + ((bmi - 18.5) / (25 - 18.5)) * 25;
+          } else if (bmi < 30) {
+            label = 'Übergewicht';
+            color = '#f1c40f';
+            markerPos = 50 + ((bmi - 25) / (30 - 25)) * 25;
+          } else {
+            label = 'Adipositas';
+            color = '#e74c3c';
+            markerPos = 75 + ((bmi - 30) / (40 - 30)) * 25;
+            if(markerPos > 100) markerPos = 100;
+          }
+          
+          resLabel.textContent = label;
+          resLabel.style.color = color;
+          resValue.style.color = color;
+          resMarker.style.left = markerPos + '%';
+        } else {
+          resValue.textContent = '-';
+          resLabel.textContent = '';
+        }
+      };
+
+      heightInput.addEventListener('input', calculate);
+      weightInput.addEventListener('input', calculate);
+
+      calculate();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Überstundenrechner Österreich – Auszahlung & Zeitausgleich | rechnify.at</title>
+  <meta name="description" content="Kostenloser Überstundenrechner für Österreich: Berechne schnell deine Auszahlung (brutto) inkl. 50% oder 100% Zuschlag oder deinen Anspruch auf Zeitausgleich." />
+  <link rel="canonical" href="https://rechnify.at/arbeitszeit/ueberstundenrechner.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/ueberstundenrechner.html" />
+  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/ueberstundenrechner.html" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Überstundenrechner Österreich | rechnify.at" />
+  <meta property="og:description" content="Berechne Auszahlung und Zeitausgleich für deine Überstunden in Österreich." />
+  <meta property="og:url" content="https://rechnify.at/arbeitszeit/ueberstundenrechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); }
+    .input-group input, .input-group select { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--border); 
+      border-radius: 10px; 
+      background: var(--input); 
+      color: var(--text); 
+      font-size: 16px; 
+    }
+    
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--soft-row); 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      padding: 24px; 
+    }
+    
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .result-item.highlight { font-weight: bold; font-size: 1.1em; color: var(--primary); }
+    .result-item.success { font-weight: bold; font-size: 1.2em; color: var(--success); border-bottom: none; }
+    
+    .toggle-group { display: flex; gap: 12px; margin-top: 8px; }
+    .toggle-btn {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+    .toggle-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Überstundenrechner Österreich",
+    "description": "Berechne die Auszahlung (Brutto) oder den Zeitausgleich für Überstunden nach österreichischem Arbeitsrecht.",
+    "url": "https://rechnify.at/arbeitszeit/ueberstundenrechner.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html" class="active">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Arbeitszeit</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Überstundenrechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <div class="calc-icon">📈</div>
+      <h1 style="margin-bottom:8px;">Überstundenrechner (Österreich)</h1>
+      <p class="subtitle">Berechne deine Auszahlung oder den Zeitausgleich für geleistete Überstunden – inkl. 50% oder 100% Zuschlag.</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="hours">Anzahl der Überstunden</label>
+            <input type="number" id="hours" min="0" step="0.5" placeholder="z. B. 10" value="10" />
+          </div>
+          
+          <div class="input-group">
+            <label for="wage">Brutto-Stundenlohn (€)</label>
+            <input type="number" id="wage" min="0" step="0.1" placeholder="z. B. 20.50" value="20" />
+            <div class="text-muted text-xs mt-4">Tipp: Bruttogehalt / 167 = ungefährer Stundenlohn</div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Art des Zuschlags (lt. AZG)</label>
+          <div class="toggle-group" id="surcharge-toggles">
+            <div class="toggle-btn active" data-surcharge="1.5">50% Zuschlag<br/><span style="font-size:12px;font-weight:normal;">(Normalfall)</span></div>
+            <div class="toggle-btn" data-surcharge="2.0">100% Zuschlag<br/><span style="font-size:12px;font-weight:normal;">(Nacht/Feiertag/Sonntag)</span></div>
+          </div>
+        </div>
+        
+        <div class="input-group" style="margin-top:24px;">
+          <label>Was möchtest du berechnen?</label>
+          <select id="calcMode">
+            <option value="payout">Auszahlung (Brutto)</option>
+            <option value="time">Zeitausgleich (ZA)</option>
+          </select>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <h3 style="margin-top:0; margin-bottom:16px; color:var(--primary);">Ergebnis</h3>
+          
+          <div id="payoutResult">
+            <div class="result-item">
+              <span>Grundlohn für <span id="resHours">10</span> Std.</span>
+              <span id="resBaseWage">200,00 €</span>
+            </div>
+            <div class="result-item">
+              <span>Überstundenzuschlag (<span id="resSurchargePercent">50</span>%)</span>
+              <span id="resSurchargeAmount">100,00 €</span>
+            </div>
+            <div class="result-item success" style="margin-top:8px;">
+              <span>Brutto-Auszahlung gesamt</span>
+              <span id="resTotalPayout">300,00 €</span>
+            </div>
+            <div class="text-muted text-xs mt-16">
+              Hinweis: Es handelt sich um einen Brutto-Betrag. Steuern und Sozialversicherung werden davon noch abgezogen. Die ersten 18 Überstunden pro Monat sind steuerlich begünstigt (bis max. 200€ steuerfrei).
+            </div>
+          </div>
+
+          <div id="timeResult" class="hidden">
+            <div class="result-item">
+              <span>Geleistete Stunden</span>
+              <span id="resTimeHours">10 Std.</span>
+            </div>
+            <div class="result-item">
+              <span>Faktor (<span id="resTimePercent">50</span>% Zuschlag)</span>
+              <span id="resTimeFactor">x 1,5</span>
+            </div>
+            <div class="result-item success" style="margin-top:8px;">
+              <span>Guthaben Zeitausgleich</span>
+              <span id="resTotalTime">15 Std.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Überstunden in Österreich: Was steht dir zu?</h2>
+      <p>Wenn du über deine vereinbarte Normalarbeitszeit (meist 38,5 oder 40 Stunden/Woche) hinaus arbeitest, leistest du Überstunden. Laut dem österreichischen Arbeitszeitgesetz (AZG) hast du dafür grundsätzlich Anspruch auf einen <strong>Zuschlag von 50%</strong>.</p>
+      
+      <h3>Auszahlung oder Zeitausgleich?</h3>
+      <p>Die Abgeltung kann in Geld (Auszahlung) oder in Freizeit (Zeitausgleich) erfolgen. Wenn nichts anderes im Kollektivvertrag oder Dienstvertrag geregelt ist, gilt:</p>
+      <ul>
+        <li><strong>Auszahlung:</strong> Grundstundenlohn + 50% Zuschlag.</li>
+        <li><strong>Zeitausgleich:</strong> Für 1 Überstunde bekommst du 1,5 Stunden Freizeit.</li>
+      </ul>
+
+      <h3>Wann gibt es 100% Zuschlag?</h3>
+      <p>Ein Überstundenzuschlag von 100% gebührt meistens für Arbeiten an <strong>Sonntagen, gesetzlichen Feiertagen</strong> oder während der <strong>Nachtruhe</strong> (oft zwischen 20:00 und 06:00 Uhr). Die genauen Zeiten und Regelungen hängen stark von deinem jeweiligen Kollektivvertrag ab.</p>
+
+      <h3>Mehrstunden vs. Überstunden (Teilzeit)</h3>
+      <p>Wenn du Teilzeit arbeitest (z.B. 20 Stunden), dann sind die Stunden bis zur gesetzlichen Normalarbeitszeit (40 Stunden) sogenannte <strong>Mehrstunden</strong>. Für diese gibt es oft nur einen Zuschlag von 25%, es sei denn, sie werden innerhalb eines bestimmten Zeitraums als Zeitausgleich (1:1) abgebaut. Unser Rechner fokussiert sich auf klassische <strong>Überstunden</strong> (ab der 40. Stunde).</p>
+      
+      <h2>FAQ</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Ist die Auszahlung brutto oder netto?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Der Rechner berechnet den <strong>Brutto-Betrag</strong>. Von diesem Betrag werden noch Sozialversicherung und Lohnsteuer abgezogen. Beachte: In Österreich sind die Zuschläge für die ersten 18 Überstunden im Monat bis zu einem Betrag von maximal 200 Euro steuerfrei (§ 68 Abs. 2 EStG).
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Wie berechne ich meinen Stundenlohn?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Oft wird als Faustregel das Bruttomonatsgehalt durch 167 geteilt (bei einer 38,5 Stunden-Woche) oder durch 173 (bei einer 40 Stunden-Woche). Dein exakter Überstundenteiler steht in deinem Kollektivvertrag.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const hoursInput = document.getElementById('hours');
+      const wageInput = document.getElementById('wage');
+      const calcModeSelect = document.getElementById('calcMode');
+      const toggleBtns = document.querySelectorAll('.toggle-btn');
+      
+      let currentFactor = 1.5;
+
+      // Format currency
+      const formatEuro = (num) => new Intl.NumberFormat('de-AT', { style: 'currency', currency: 'EUR' }).format(num);
+      
+      const calculate = () => {
+        const hours = parseFloat(hoursInput.value) || 0;
+        const wage = parseFloat(wageInput.value) || 0;
+        const mode = calcModeSelect.value;
+        const surchargePercent = currentFactor === 1.5 ? 50 : 100;
+
+        if (mode === 'payout') {
+          document.getElementById('payoutResult').classList.remove('hidden');
+          document.getElementById('timeResult').classList.add('hidden');
+          
+          const baseWage = hours * wage;
+          const surchargeAmount = baseWage * (currentFactor - 1);
+          const total = baseWage + surchargeAmount;
+
+          document.getElementById('resHours').textContent = hours;
+          document.getElementById('resBaseWage').textContent = formatEuro(baseWage);
+          document.getElementById('resSurchargePercent').textContent = surchargePercent;
+          document.getElementById('resSurchargeAmount').textContent = formatEuro(surchargeAmount);
+          document.getElementById('resTotalPayout').textContent = formatEuro(total);
+        } else {
+          document.getElementById('payoutResult').classList.add('hidden');
+          document.getElementById('timeResult').classList.remove('hidden');
+          
+          const totalTime = hours * currentFactor;
+
+          document.getElementById('resTimeHours').textContent = `${hours} Std.`;
+          document.getElementById('resTimePercent').textContent = surchargePercent;
+          document.getElementById('resTimeFactor').textContent = `x ${currentFactor.toString().replace('.', ',')}`;
+          document.getElementById('resTotalTime').textContent = `${totalTime.toString().replace('.', ',')} Std.`;
+        }
+      };
+
+      // Event Listeners
+      hoursInput.addEventListener('input', calculate);
+      wageInput.addEventListener('input', calculate);
+      calcModeSelect.addEventListener('change', calculate);
+
+      toggleBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          toggleBtns.forEach(b => b.classList.remove('active'));
+          e.currentTarget.classList.add('active');
+          currentFactor = parseFloat(e.currentTarget.dataset.surcharge);
+          calculate();
+        });
+      });
+
+      // Initial calc
+      calculate();
+    });
+  </script>
+</body>
+</html>

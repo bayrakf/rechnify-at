@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arbeitszeitrechner – Kostenlos online berechnen | rechnify.at</title>
+  <meta name="description" content="Kostenloser Arbeitszeitrechner: Berechne deine tägliche Arbeitszeit, Pausen und Überstunden. 100% lokal im Browser – kein Login, keine Datenspeicherung." />
+  <link rel="canonical" href="https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html" />
+  
+  <link rel="alternate" hreflang="de-at" href="https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html" />
+  <link rel="alternate" hreflang="de" href="https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Arbeitszeitrechner – Kommen/Gehen | rechnify.at" />
+  <meta property="og:description" content="Kostenloser Online-Arbeitszeitrechner für Österreich." />
+  <meta property="og:url" content="https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Arbeitszeitrechner | rechnify.at" />
+  <meta name="twitter:description" content="Kostenloser Arbeitszeitrechner – Arbeitszeit berechnen" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    /* Calculator Specific Styles overriding global if necessary */
+    .calculator-card { padding: 0; }
+    .calc-body { padding: 24px; }
+    
+    .top-grid, .custom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr auto auto; gap: 12px; align-items: end; margin-bottom: 12px; padding: 12px; background: var(--soft-row); border: 1px solid var(--border); border-radius: 12px; }
+    .row.has-error { border-color: var(--danger); }
+    .row-warning { font-size: 13px; color: var(--warning); margin-top: 6px; grid-column: 1 / -1; }
+    .row-error { font-size: 13px; color: var(--danger); margin-top: 6px; grid-column: 1 / -1; }
+    
+    .actions, .quick-actions, .export-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+    
+    .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+    .summary-card { background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 14px; }
+    .summary-card .label { color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+    .summary-card .value { font-size: 20px; font-weight: bold; }
+    
+    .result, .history, .help { margin-top: 20px; background: var(--soft); padding: 18px; border-radius: 14px; line-height: 1.7; border: 1px solid var(--border); }
+    
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--border); text-align: left; padding: 8px; vertical-align: top; }
+    th { font-weight: 600; color: var(--text); }
+    
+    .dashboard-display { display: flex; gap: 16px; margin-bottom: 24px; }
+    .dashboard-stat { flex: 1; background: var(--bg); border: 2px solid var(--border); border-radius: 16px; padding: 20px; text-align: center; transition: all 0.3s ease; }
+    .dashboard-stat.success { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+    .dash-label { font-size: 14px; color: var(--muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .dashboard-stat.success .dash-label { color: #2e7d32; }
+    .dash-value { font-size: 32px; font-weight: 800; font-variant-numeric: tabular-nums; }
+    
+    .main-controls { background: var(--soft); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+    .control-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .control-header label { margin: 0; font-weight: 600; }
+    .small-select { width: auto; padding: 6px 30px 6px 12px; font-size: 14px; border-radius: 8px; margin: 0; }
+    
+    .punch-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    .btn-punch { font-size: 16px; padding: 14px; border-radius: 12px; }
+
+    .more-details { margin-top: 24px; }
+    .more-details summary { font-weight: 600; cursor: pointer; padding: 16px; background: var(--soft); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; user-select: none; list-style: none; outline: none; }
+    .more-details summary::after { content: '▼'; font-size: 12px; transition: transform 0.2s; }
+    .more-details[open] summary::after { transform: rotate(180deg); }
+    .more-details summary::-webkit-details-marker { display: none; }
+    .details-content { padding: 20px 0 0 0; }
+
+    @media(max-width: 820px) {
+      .top-grid, .custom-grid, .row, .actions, .export-actions, .summary-grid { grid-template-columns: 1fr; }
+      .punch-buttons { grid-template-columns: 1fr; }
+      .dashboard-display { flex-direction: column; gap: 12px; }
+      
+      .responsive-table, .responsive-table thead, .responsive-table tbody, .responsive-table th, .responsive-table td, .responsive-table tr { display: block; }
+      .responsive-table thead tr { position: absolute; top: -9999px; left: -9999px; }
+      .responsive-table tr { border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; padding: 12px; background: var(--soft-row); }
+      .responsive-table td { border: none; position: relative; padding-left: 50%; text-align: right; margin-bottom: 8px; border-bottom: 1px dashed var(--border); }
+      .responsive-table td:last-child { border-bottom: none; margin-bottom: 0; }
+      .responsive-table td::before { position: absolute; left: 12px; width: 45%; padding-right: 10px; white-space: nowrap; text-align: left; font-weight: 600; color: var(--muted); }
+      .responsive-table td:nth-of-type(1)::before { content: "Datum"; }
+      .responsive-table td:nth-of-type(2)::before { content: "Soll"; }
+      .responsive-table td:nth-of-type(3)::before { content: "Arbeitszeit netto"; }
+      .responsive-table td:nth-of-type(4)::before { content: "Pause"; }
+      .responsive-table td:nth-of-type(5)::before { content: "Auto-Abzug"; }
+      .responsive-table td:nth-of-type(6)::before { content: "Saldo"; }
+      .responsive-table td:nth-of-type(7)::before { content: "Aktion"; }
+      .responsive-table td:nth-of-type(7) { display: flex; justify-content: flex-end; align-items: center; }
+    }
+    @media print {
+      body { background: white; padding: 0; }
+      .site-header, .site-footer, .related-tools, .content-section, .breadcrumb, button, .actions, .export-actions, .help, .punch-buttons, .more-details summary { display: none !important; }
+      .card { box-shadow: none; max-width: none; border:none; }
+      .more-details[open] .details-content { display: block !important; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Arbeitszeitrechner – Kommen/Gehen",
+    "description": "Kostenloser Online-Arbeitszeitrechner: Berechne deine tägliche Arbeitszeit, Überstunden und Pausen. Ideal für Österreich.",
+    "url": "https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any (Web Browser)",
+    "browserRequirements": "Requires JavaScript",
+    "inLanguage": "de",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "rechnify.at",
+      "url": "https://rechnify.at"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html" class="active">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Arbeitszeit</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Kommen/Gehen Rechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <div class="calc-icon">🕐</div>
+      <h1 style="margin-bottom:8px;">Arbeitszeit online berechnen (Österreich)</h1>
+      <p class="subtitle">Tagesarbeitszeit, automatische Mittagspause, Saldo und empfohlene Gehen-Zeit schnell nachvollziehbar berechnen. 100% kostenlos und datenschutzfreundlich.</p>
+    </div>
+
+    <!-- THE CALCULATOR -->
+    <div class="card calculator-card">
+      <div class="calc-body">
+        
+        <!-- 1. LIVE DASHBOARD -->
+        <div class="dashboard-display">
+          <div class="dashboard-stat">
+            <div class="dash-label">Arbeitszeit bisher</div>
+            <div class="dash-value" id="dashWorked">00h 00m</div>
+          </div>
+          <div class="dashboard-stat" id="dashRemainingContainer">
+            <div class="dash-label">Noch offen</div>
+            <div class="dash-value" id="dashRemaining">00h 00m</div>
+          </div>
+        </div>
+
+        <!-- 2. MAIN CONTROLS -->
+        <div class="main-controls">
+          <div class="control-header">
+            <label for="sollzeit">Soll-Arbeitszeit:</label>
+            <select id="sollzeit" class="small-select">
+              <option value="6">6 Stunden</option>
+              <option value="7.5">7,5 Stunden</option>
+              <option value="7.7">7,7 Stunden</option>
+              <option value="8" selected>8 Stunden</option>
+              <option value="8.5">8,5 Stunden</option>
+              <option value="9">9 Stunden</option>
+              <option value="custom">Benutzerdefiniert</option>
+            </select>
+          </div>
+          
+          <div id="customSollWrapper" class="custom-grid hidden" style="margin-bottom: 16px;">
+            <div>
+              <label for="customSoll">Benutzerdefinierte Sollzeit</label>
+              <input type="text" id="customSoll" placeholder="z. B. 7:42 oder 7,7" />
+              <div class="text-muted mt-4 text-xs">Erlaubt sind Formate wie 7:42, 7.5 oder 7,5.</div>
+            </div>
+          </div>
+
+          <div id="zeiten"></div>
+
+          <div style="margin-bottom: 16px;">
+            <button id="addRow" type="button" class="btn outline small" style="width:100%; border-style:dashed;">+ Weiteren Zeitblock hinzufügen</button>
+          </div>
+
+          <div class="punch-buttons">
+            <button id="addNowStart" type="button" class="btn btn-punch">Jetzt als Kommen</button>
+            <button id="setNowEnd" type="button" class="btn btn-punch btn-secondary">Jetzt als Gehen</button>
+          </div>
+        </div>
+
+        <!-- 3. MORE DETAILS & ACTIONS (Accordion) -->
+        <details class="more-details">
+          <summary>Mehr Details & Aktionen</summary>
+          <div class="details-content">
+            
+            <div class="top-grid">
+              <div>
+                <label for="datum">Datum anpassen</label>
+                <input type="date" id="datum" />
+              </div>
+            </div>
+
+            <div class="actions" style="margin-top: 16px;">
+              <button id="sortRows" class="btn-secondary" type="button">Zeiten sortieren</button>
+              <button id="reset" class="btn-secondary" type="button">Zurücksetzen</button>
+            </div>
+
+            <div class="summary-grid" id="summaryGrid">
+              <div class="summary-card"><div class="label">Status</div><div class="value" id="statusValue">Offen</div></div>
+              <div class="summary-card"><div class="label">Arbeitszeit netto</div><div class="value" id="workedValue">0h 0min</div></div>
+              <div class="summary-card"><div class="label">Eingetragene Pause</div><div class="value" id="breakValue">0h 0min</div></div>
+              <div class="summary-card"><div class="label">Auto-Pausenabzug</div><div class="value" id="autoBreakValue">0h 0min</div></div>
+              <div class="summary-card"><div class="label">Saldo netto</div><div class="value" id="saldoValue">0h 0min</div></div>
+            </div>
+
+            <div class="result" id="result">Bitte Zeiten eingeben.</div>
+
+            <div class="export-actions">
+              <button id="copyResult" class="btn-secondary" type="button">Ergebnis kopieren</button>
+              <button id="exportCsv" class="btn-secondary" type="button">CSV exportieren</button>
+              <button id="printView" class="btn-secondary" type="button">Drucken</button>
+            </div>
+
+            <div class="history" id="history">
+              <strong style="display:block; margin-bottom:8px;">Wochenübersicht</strong>
+              <div id="historyContent" class="text-muted text-sm">Noch keine gespeicherten Tagesdaten vorhanden.</div>
+              <div style="margin-top: 16px; text-align: right;">
+                <button id="clearHistory" class="btn danger small" type="button" style="padding: 6px 12px; font-size: 12px;">🗑️ Alle gespeicherten Daten löschen</button>
+              </div>
+            </div>
+
+            <div class="help text-muted text-sm">
+              <strong>Tipp:</strong> Lasse beim aktuellen Arbeitsblock das „Gehen“-Feld leer. Der Rechner berücksichtigt dann die Laufzeit bis jetzt. Bei Anwesenheit über 6 Stunden wird mindestens 30 Minuten Mittagspause als Netto-Abzug berücksichtigt (nach österr. Arbeitszeitgesetz).
+            </div>
+            
+          </div>
+        </details>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>So funktioniert der Rechner</h2>
+      <p>Dieser Arbeitszeitrechner hilft dir dabei, deine täglichen Arbeits- und Pausenzeiten mühelos zu dokumentieren. Trage einfach deine Kommen- und Gehen-Zeiten ein – auch mehrere Blöcke (z. B. vor und nach der Mittagspause) sind problemlos möglich.</p>
+      <ol>
+        <li>Wähle deine tägliche <strong>Soll-Arbeitszeit</strong> (z.B. 8 Stunden) aus.</li>
+        <li>Trage im Feld <strong>Kommen</strong> die Startuhrzeit ein.</li>
+        <li>Wenn du den Rechner während der Arbeit nutzt, lass das Feld <strong>Gehen</strong> einfach leer. Der Rechner berechnet dann automatisch, um wie viel Uhr du nach Hause gehen kannst, um deine Sollzeit zu erreichen.</li>
+        <li>Die Berechnung erfolgt in Echtzeit auf deinem Gerät. Es werden keine Daten an uns übertragen.</li>
+      </ol>
+
+      <h2>Berechnungsgrundlagen & Pausenregelung (Österreich)</h2>
+      <p>Der Rechner berücksichtigt automatisch das <strong>österreichische Arbeitszeitgesetz (AZG)</strong> bezüglich Ruhepausen:</p>
+      <ul>
+        <li>Beträgt die Gesamtdauer der Tagesarbeitszeit mehr als sechs Stunden, so ist die Arbeitszeit durch eine Ruhepause von mindestens einer halben Stunde zu unterbrechen.</li>
+        <li>Wenn du manuell keine oder weniger als 30 Minuten Pause einträgst, aber länger als 6 Stunden anwesend bist, zieht der Rechner automatisch die fehlende Pausenzeit (sogenannter <strong>Auto-Pausenabzug</strong>) ab.</li>
+      </ul>
+
+      <h2>Häufige Fragen (FAQ)</h2>
+      <div class="faq-list">
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Werden meine Zeiten gespeichert?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Nein, nicht auf unseren Servern. Alle Eingaben werden ausschließlich lokal im Cache (localStorage) deines Browsers gespeichert, damit sie beim Neuladen der Seite noch da sind. Du hast 100%ige Kontrolle über deine Daten.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Wie funktioniert der offene Arbeitsblock?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Wenn du in der Arbeit ankommst, trägst du nur die Kommen-Zeit ein. Der Rechner erkennt diesen "offenen" Block und berechnet auf Basis der aktuellen Uhrzeit dynamisch, wie viel du heute schon gearbeitet hast. Zudem verrät er dir, wann du Feierabend machen kannst, um deine Soll-Zeit exakt zu erfüllen (oder Überstunden abzubauen).
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Kann ich die Daten exportieren?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Ja, du kannst die täglichen Ergebnisse entweder als Text in deine Zwischenablage kopieren oder als CSV-Datei herunterladen (um sie z. B. in Excel weiterzuverarbeiten).
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RELATED TOOLS -->
+    <section class="related-tools">
+      <h3>Weitere nützliche Tools</h3>
+      <div class="related-tools-grid">
+        <a href="/arbeitszeit/ueberstundenrechner.html" class="related-tool-link">
+          <span class="rtl-icon">📈</span> Überstundenrechner
+        </a>
+        <a href="/arbeitszeit/urlaubstage-rechner.html" class="related-tool-link">
+          <span class="rtl-icon">🏖️</span> Urlaubstage
+        </a>
+        <a href="/finanzen/mwst-rechner.html" class="related-tool-link">
+          <span class="rtl-icon">🧾</span> MwSt-Rechner
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="site-logo-text">rechnify<span>.at</span></span>
+          <p>Kostenlose Online-Rechner und Tools für Österreich. Alle Berechnungen laufen direkt in deinem Browser.</p>
+          <span class="footer-privacy-badge">🔒 100% Datenschutz – lokal im Browser</span>
+        </div>
+        <div class="footer-col">
+          <h3>Tools</h3>
+          <ul>
+            <li><a href="/arbeitszeit/kommen-gehen-rechner.html">Arbeitszeitrechner</a></li>
+            <li><a href="/mathematik/prozentrechner.html">Prozentrechner</a></li>
+            <li><a href="/finanzen/mwst-rechner.html">MwSt-Rechner</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Info</h3>
+          <ul>
+            <li><a href="/ueber-uns.html">Über uns</a></li>
+            <li><a href="/kontakt.html">Kontakt</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Rechtliches</h3>
+          <ul>
+            <li><a href="/impressum.html">Impressum</a></li>
+            <li><a href="/datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GLOBAL SCRIPT -->
+  <script src="/assets/js/global.js"></script>
+
+  <!-- CALCULATOR SCRIPT -->
+  <script>
+    'use strict';
+
+    const STORAGE_KEY = 'kommenGehenRechner.v3';
+    const MIN_BREAK_THRESHOLD_MINUTES = 6 * 60;
+    const MIN_BREAK_MINUTES = 30;
+    const $ = (id) => document.getElementById(id);
+    const pad = (value) => String(value).padStart(2, '0');
+
+    function todayValue() {
+      const now = new Date();
+      return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+    }
+
+    function nowTimeValue() {
+      const now = new Date();
+      return `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    }
+
+    function formatTime(date) {
+      return date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function formatDate(dateString) {
+      const [year, month, day] = dateString.split('-').map(Number);
+      return new Date(year, month - 1, day).toLocaleDateString('de-DE');
+    }
+
+    function minutesToText(minutes) {
+      const rounded = Math.round(minutes || 0);
+      const sign = rounded < 0 ? '-' : '';
+      const abs = Math.abs(rounded);
+      const h = Math.floor(abs / 60);
+      const m = abs % 60;
+      return `${sign}${h}h ${m}min`;
+    }
+
+    function parseSollMinutes() {
+      const selected = $('sollzeit').value;
+      if (selected !== 'custom') return parseFloat(selected) * 60;
+      const raw = $('customSoll').value.trim().replace(',', '.');
+      if (!raw) return NaN;
+      if (raw.includes(':')) {
+        const [hours, minutes] = raw.split(':').map(Number);
+        if (!Number.isFinite(hours) || !Number.isFinite(minutes) || minutes < 0 || minutes > 59) return NaN;
+        return hours * 60 + minutes;
+      }
+      const decimal = Number(raw);
+      return Number.isFinite(decimal) ? decimal * 60 : NaN;
+    }
+
+    function timeToDate(time, dateString = $('datum').value || todayValue()) {
+      const [year, month, day] = dateString.split('-').map(Number);
+      const [hours, minutes] = time.split(':').map(Number);
+      return new Date(year, month - 1, day, hours, minutes, 0, 0);
+    }
+
+    function calculateBreakMinutesForIntervals(intervals) {
+      const sortedIntervals = [...intervals].sort((a, b) => a.start - b.start);
+      let breakMinutes = 0;
+      for (let i = 1; i < sortedIntervals.length; i++) {
+        const gap = (sortedIntervals[i].start - sortedIntervals[i - 1].end) / 60000;
+        if (gap > 0) breakMinutes += gap;
+      }
+      return breakMinutes;
+    }
+
+    function calculateAutoBreakDeduction(attendanceMinutes, enteredBreakMinutes) {
+      const requiredBreak = attendanceMinutes > MIN_BREAK_THRESHOLD_MINUTES ? MIN_BREAK_MINUTES : 0;
+      return Math.max(0, requiredBreak - enteredBreakMinutes);
+    }
+
+    function calculatePlannedLeaveTime(completedIntervals, openStart, sollMinutes) {
+      const completedGross = completedIntervals.reduce((sum, interval) => sum + interval.minutes, 0);
+      const firstStart = completedIntervals.length
+        ? new Date(Math.min(...completedIntervals.map(i => i.start.getTime()), openStart.getTime()))
+        : openStart;
+
+      const pseudoIntervals = [
+        ...completedIntervals.map(i => ({ start: i.start, end: i.end })),
+        { start: openStart, end: openStart }
+      ].sort((a, b) => a.start - b.start);
+      const enteredBreakBeforeOpen = calculateBreakMinutesForIntervals(pseudoIntervals);
+
+      let grossNeededFromOpen = Math.max(0, sollMinutes - completedGross);
+      let candidate = new Date(openStart.getTime() + grossNeededFromOpen * 60000);
+      let plannedAttendance = (candidate - firstStart) / 60000;
+      let plannedAutoBreakDeduction = calculateAutoBreakDeduction(plannedAttendance, enteredBreakBeforeOpen);
+
+      grossNeededFromOpen = Math.max(0, sollMinutes + plannedAutoBreakDeduction - completedGross);
+      candidate = new Date(openStart.getTime() + grossNeededFromOpen * 60000);
+      plannedAttendance = (candidate - firstStart) / 60000;
+      plannedAutoBreakDeduction = calculateAutoBreakDeduction(plannedAttendance, enteredBreakBeforeOpen);
+
+      return {
+        time: candidate,
+        enteredBreakBeforeOpen,
+        plannedAutoBreakDeduction,
+        plannedAttendance
+      };
+    }
+
+    function clearRowMessages() {
+      document.querySelectorAll('.row').forEach(row => {
+        row.classList.remove('has-error');
+        row.querySelectorAll('.row-error, .row-warning').forEach(msg => msg.remove());
+      });
+    }
+
+    function addRowError(row, text, type = 'error') {
+      row.classList.add('has-error');
+      const msg = document.createElement('div');
+      msg.className = type === 'warning' ? 'row-warning' : 'row-error';
+      msg.textContent = text;
+      row.appendChild(msg);
+    }
+
+    function addRow(kommen = '', gehen = '') {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'row';
+      wrapper.innerHTML = `
+        <div>
+          <label>Kommen</label>
+          <input type="time" class="kommen" value="${kommen}">
+        </div>
+        <div>
+          <label>Gehen</label>
+          <input type="time" class="gehen" value="${gehen}">
+        </div>
+        <button class="btn-secondary small fill-end" type="button">Jetzt gehen</button>
+        <button class="btn danger small remove-row" type="button" aria-label="Zeitblock entfernen" style="padding: 0; min-height:34px; width:34px;">✕</button>
+      `;
+      $('zeiten').appendChild(wrapper);
+      saveState();
+      return wrapper;
+    }
+
+    function readEntries() {
+      return [...document.querySelectorAll('.row')].map((row, index) => ({
+        row,
+        index,
+        kommen: row.querySelector('.kommen').value,
+        gehen: row.querySelector('.gehen').value
+      }));
+    }
+
+    function validateAndCalculate() {
+      clearRowMessages();
+      const dateString = $('datum').value || todayValue();
+      const sollMinutes = parseSollMinutes();
+      const entries = readEntries();
+      const now = new Date();
+      const intervals = [];
+      const warnings = [];
+      const errors = [];
+      let openEntry = null;
+      let currentOpenMinutes = 0;
+
+      if (!Number.isFinite(sollMinutes) || sollMinutes <= 0) {
+        errors.push('Bitte eine gültige Soll-Arbeitszeit eingeben.');
+      }
+
+      if (entries.length === 0) {
+        errors.push('Bitte mindestens einen Zeitblock erfassen.');
+      }
+
+      entries.forEach(entry => {
+        if (!entry.kommen && !entry.gehen) return;
+        if (!entry.kommen && entry.gehen) {
+          addRowError(entry.row, 'Gehen ohne Kommen ist nicht gültig.');
+          errors.push('Mindestens ein Zeitblock enthält eine Gehen-Zeit ohne Kommen-Zeit.');
+          return;
+        }
+        if (entry.kommen && !entry.gehen) {
+          if (openEntry) {
+            addRowError(entry.row, 'Es darf nur ein offener Arbeitsblock existieren.');
+            addRowError(openEntry.row, 'Dieser Block ist ebenfalls offen.');
+            errors.push('Mehr als ein offener Arbeitsblock vorhanden.');
+            return;
+          }
+          const start = timeToDate(entry.kommen, dateString);
+          openEntry = { ...entry, start };
+          return;
+        }
+
+        const start = timeToDate(entry.kommen, dateString);
+        let end = timeToDate(entry.gehen, dateString);
+        let overnight = false;
+        if (end < start) {
+          end.setDate(end.getDate() + 1);
+          overnight = true;
+          addRowError(entry.row, 'Gehen liegt vor Kommen und wird als Folgetag interpretiert.', 'warning');
+          warnings.push('Mindestens ein Block wurde als Nachtschicht/Folgetag interpretiert.');
+        }
+        const minutes = (end - start) / 60000;
+        if (minutes <= 0) {
+          addRowError(entry.row, 'Der Zeitblock muss länger als 0 Minuten sein.');
+          errors.push('Ein Zeitblock hat keine gültige Dauer.');
+        }
+        if (minutes > 16 * 60) {
+          addRowError(entry.row, 'Dieser Zeitblock ist ungewöhnlich lang. Bitte Tippfehler prüfen.', 'warning');
+          warnings.push('Mindestens ein Zeitblock ist länger als 16 Stunden.');
+        }
+        intervals.push({ ...entry, start, end, minutes, overnight, open: false });
+      });
+
+      if (openEntry) {
+        const comparableNow = new Date(now);
+        if (dateString !== todayValue()) {
+          const [year, month, day] = dateString.split('-').map(Number);
+          comparableNow.setFullYear(year, month - 1, day);
+        }
+        if (comparableNow < openEntry.start) {
+          comparableNow.setDate(comparableNow.getDate() + 1);
+          warnings.push('Der offene Block wird bis zur aktuellen Uhrzeit am Folgetag gerechnet.');
+        }
+        currentOpenMinutes = Math.max(0, (comparableNow - openEntry.start) / 60000);
+        intervals.push({ ...openEntry, end: comparableNow, minutes: currentOpenMinutes, open: true, overnight: comparableNow.getDate() !== openEntry.start.getDate() });
+      }
+
+      const sorted = [...intervals].sort((a, b) => a.start - b.start);
+      for (let i = 1; i < sorted.length; i++) {
+        if (sorted[i].start < sorted[i - 1].end) {
+          addRowError(sorted[i].row, 'Dieser Block überschneidet sich mit einem anderen Zeitblock.');
+          addRowError(sorted[i - 1].row, 'Dieser Block überschneidet sich mit einem anderen Zeitblock.');
+          errors.push('Zeitblöcke überschneiden sich.');
+        }
+      }
+
+      const completedIntervals = sorted.filter(i => !i.open);
+      const grossCompletedWorked = completedIntervals.reduce((sum, i) => sum + i.minutes, 0);
+      const grossCurrentWorked = sorted.reduce((sum, i) => sum + i.minutes, 0);
+      const breakMinutes = calculateBreakMinutesForIntervals(sorted);
+      const attendanceMinutes = sorted.length ? (sorted[sorted.length - 1].end - sorted[0].start) / 60000 : 0;
+      const requiredBreakMinutes = attendanceMinutes > MIN_BREAK_THRESHOLD_MINUTES ? MIN_BREAK_MINUTES : 0;
+      const autoBreakDeduction = calculateAutoBreakDeduction(attendanceMinutes, breakMinutes);
+      const currentWorked = Math.max(0, grossCurrentWorked - autoBreakDeduction);
+      const completedWorked = grossCompletedWorked;
+      const saldo = currentWorked - sollMinutes;
+      let plannedLeaveTime = null;
+      let plannedAutoBreakDeduction = 0;
+      if (openEntry) {
+        const planned = calculatePlannedLeaveTime(completedIntervals, openEntry.start, sollMinutes);
+        plannedLeaveTime = planned.time;
+        plannedAutoBreakDeduction = planned.plannedAutoBreakDeduction;
+      }
+
+      if (requiredBreakMinutes && autoBreakDeduction > 0) {
+        warnings.push(`Anwesenheit über 6 Stunden: Es werden automatisch zusätzlich ${minutesToText(autoBreakDeduction)} Mittagspause abgezogen, weil bisher nur ${minutesToText(breakMinutes)} Pause eingetragen ist.`);
+      }
+
+      return {
+        dateString,
+        sollMinutes,
+        intervals: sorted,
+        entries,
+        errors: [...new Set(errors)],
+        warnings: [...new Set(warnings)],
+        openEntry,
+        completedWorked,
+        grossCurrentWorked,
+        currentWorked,
+        currentOpenMinutes,
+        breakMinutes,
+        attendanceMinutes,
+        requiredBreakMinutes,
+        autoBreakDeduction,
+        plannedAutoBreakDeduction,
+        saldo,
+        plannedLeaveTime
+      };
+    }
+
+    function statusFor(calc) {
+      if (calc.errors.length) return { text: 'Fehler', css: 'status-red' };
+      if (!calc.openEntry && calc.currentWorked === 0) return { text: 'Offen', css: 'status-blue' };
+      if (calc.saldo >= 0) return { text: 'Erreicht', css: 'status-green' };
+      if (Math.abs(calc.saldo) <= 30) return { text: 'Fast fertig', css: 'status-yellow' };
+      return { text: 'Offen', css: 'status-red' };
+    }
+
+    function renderSummary(calc) {
+      const status = statusFor(calc);
+      $('statusValue').innerHTML = `<span class="status-pill ${status.css}">${status.text}</span>`;
+      $('workedValue').textContent = minutesToText(calc.currentWorked);
+      $('breakValue').textContent = minutesToText(calc.breakMinutes);
+      $('autoBreakValue').textContent = minutesToText(calc.autoBreakDeduction);
+      $('autoBreakValue').className = calc.autoBreakDeduction > 0 ? 'value text-warning' : 'value';
+      $('saldoValue').textContent = minutesToText(calc.saldo);
+      $('saldoValue').className = calc.saldo >= 0 ? 'value text-success' : 'value text-warning';
+    }
+
+    function renderDashboard(calc) {
+      const dashWorked = $('dashWorked');
+      const dashRemaining = $('dashRemaining');
+      const dashContainer = $('dashRemainingContainer');
+
+      dashWorked.textContent = minutesToText(calc.currentWorked);
+      
+      const remainingMinutes = Math.max(0, calc.sollMinutes - calc.currentWorked);
+      dashRemaining.textContent = minutesToText(remainingMinutes);
+
+      if (calc.saldo >= 0) {
+        dashContainer.classList.add('success');
+      } else {
+        dashContainer.classList.remove('success');
+      }
+    }
+
+    function renderResult(calc) {
+      renderSummary(calc);
+      renderDashboard(calc);
+      if (calc.errors.length) {
+        $('result').innerHTML = `
+          <p class="text-danger">Bitte Eingaben prüfen:</p>
+          <ul>${calc.errors.map(e => `<li>${e}</li>`).join('')}</ul>
+        `;
+        return;
+      }
+
+      const warningHtml = calc.warnings.length
+        ? `<p class="text-warning">Hinweise:</p><ul>${calc.warnings.map(w => `<li>${w}</li>`).join('')}</ul>`
+        : '';
+
+      const rowsHtml = calc.intervals.length ? `
+        <table>
+          <thead><tr><th>Block</th><th>Von</th><th>Bis</th><th>Dauer brutto</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            ${calc.intervals.map((i, idx) => `
+              <tr>
+                <td>${idx + 1}</td>
+                <td>${formatTime(i.start)}</td>
+                <td>${i.open ? 'läuft bis jetzt' : formatTime(i.end)}</td>
+                <td>${minutesToText(i.minutes)}</td>
+                <td class="text-muted text-sm">${i.open ? 'Offener Arbeitsblock' : (i.overnight ? 'Folgetag' : '')}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>` : '';
+
+      if (calc.openEntry) {
+        const leaveInPast = calc.plannedLeaveTime && calc.plannedLeaveTime < new Date();
+        $('result').innerHTML = `
+          <p><strong>Datum:</strong> ${formatDate(calc.dateString)}</p>
+          <p><strong>Arbeitszeit netto inkl. offenem Block:</strong> ${minutesToText(calc.currentWorked)}</p>
+          <p><strong>Arbeitszeit brutto:</strong> ${minutesToText(calc.grossCurrentWorked)}</p>
+          <p><strong>Eingetragene Pause:</strong> ${minutesToText(calc.breakMinutes)}</p>
+          <p><strong>Automatischer Pausenabzug:</strong> ${minutesToText(calc.autoBreakDeduction)}</p>
+          <p><strong>Abgeschlossene Arbeitszeit:</strong> ${minutesToText(calc.completedWorked)}</p>
+          <p><strong>Noch zu arbeiten:</strong> ${minutesToText(Math.max(0, -calc.saldo))}</p>
+          <p><strong>Rechnerische Gehen-Zeit:</strong> <span class="text-success" style="font-size:18px;">${formatTime(calc.plannedLeaveTime)} Uhr</span></p>
+          ${leaveInPast || calc.saldo >= 0 ? '<p class="text-success mt-16">✅ Soll-Arbeitszeit ist aktuell erreicht oder überschritten.</p>' : ''}
+          ${warningHtml}
+          ${rowsHtml}
+        `;
+      } else {
+        $('result').innerHTML = `
+          <p><strong>Datum:</strong> ${formatDate(calc.dateString)}</p>
+          <p><strong>Soll-Arbeitszeit:</strong> ${minutesToText(calc.sollMinutes)}</p>
+          <p><strong>Arbeitszeit netto:</strong> ${minutesToText(calc.currentWorked)}</p>
+          <p><strong>Arbeitszeit brutto:</strong> ${minutesToText(calc.grossCurrentWorked)}</p>
+          <p><strong>Eingetragene Pause:</strong> ${minutesToText(calc.breakMinutes)}</p>
+          <p><strong>Automatischer Pausenabzug:</strong> ${minutesToText(calc.autoBreakDeduction)}</p>
+          <p><strong>Saldo:</strong> <span class="${calc.saldo >= 0 ? 'text-success' : 'text-warning'}">${minutesToText(calc.saldo)}</span></p>
+          ${calc.saldo < 0 ? `<p class="text-warning mt-16">Es fehlen noch ${minutesToText(Math.abs(calc.saldo))}.</p>` : '<p class="text-success mt-16">✅ Soll-Arbeitszeit erreicht.</p>'}
+          ${warningHtml}
+          ${rowsHtml}
+        `;
+      }
+    }
+
+    function calculateAndRender() {
+      const calc = validateAndCalculate();
+      renderResult(calc);
+      if (!calc.errors.length && calc.currentWorked > 15) saveDaySummary(calc);
+      saveState();
+      return calc;
+    }
+
+    function getState() {
+      // Don't save dark mode in this object anymore, it's handled by global.js
+      return {
+        date: $('datum').value,
+        sollzeit: $('sollzeit').value,
+        customSoll: $('customSoll').value,
+        rows: readEntries().map(e => ({ kommen: e.kommen, gehen: e.gehen }))
+      };
+    }
+
+    function saveState() {
+      const current = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...current, state: getState() }));
+    }
+
+    function loadState() {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      const state = saved.state;
+      if (!state) return false;
+      $('datum').value = state.date || todayValue();
+      $('sollzeit').value = state.sollzeit || '8';
+      $('customSoll').value = state.customSoll || '';
+      $('customSollWrapper').classList.toggle('hidden', $('sollzeit').value !== 'custom');
+      
+      $('zeiten').innerHTML = '';
+      (state.rows && state.rows.length ? state.rows : [{ kommen: nowTimeValue(), gehen: '' }]).forEach(r => addRow(r.kommen, r.gehen));
+      return true;
+    }
+
+    function saveDaySummary(calc) {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      const days = saved.days || {};
+      days[calc.dateString] = {
+        date: calc.dateString,
+        soll: Math.round(calc.sollMinutes),
+        worked: Math.round(calc.currentWorked),
+        breakMinutes: Math.round(calc.breakMinutes),
+        autoBreakDeduction: Math.round(calc.autoBreakDeduction),
+        saldo: Math.round(calc.saldo),
+        updatedAt: new Date().toISOString()
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...saved, days, state: getState() }));
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      const days = Object.values(saved.days || {}).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 7);
+      if (!days.length) {
+        $('historyContent').textContent = 'Noch keine gespeicherten Tagesdaten vorhanden.';
+        return;
+      }
+      const sumWorked = days.reduce((s, d) => s + d.worked, 0);
+      const sumSaldo = days.reduce((s, d) => s + d.saldo, 0);
+      $('historyContent').innerHTML = `
+        <table class="responsive-table">
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Soll</th>
+              <th>Arbeitszeit netto</th>
+              <th>Pause</th>
+              <th>Auto-Abzug</th>
+              <th>Saldo</th>
+              <th>Aktion</th>
+            </tr>
+          </thead>
+          <tbody>${days.map(d => `
+            <tr>
+              <td>${formatDate(d.date)}</td>
+              <td>${minutesToText(d.soll)}</td>
+              <td>${minutesToText(d.worked)}</td>
+              <td>${minutesToText(d.breakMinutes)}</td>
+              <td>${minutesToText(d.autoBreakDeduction || 0)}</td>
+              <td class="${d.saldo >= 0 ? 'text-success' : 'text-warning'}">${minutesToText(d.saldo)}</td>
+              <td>
+                <button class="btn danger small delete-history-day" data-date="${d.date}" type="button" style="padding: 2px 6px; font-size: 11px; margin: 0;">Löschen</button>
+              </td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+        <p class="mt-16"><strong>Summe angezeigte Tage:</strong> Arbeitszeit ${minutesToText(sumWorked)}, Saldo <span class="${sumSaldo >= 0 ? 'text-success' : 'text-warning'}">${minutesToText(sumSaldo)}</span></p>
+      `;
+    }
+
+    function sortRowsByStart() {
+      const rows = readEntries().filter(e => e.kommen || e.gehen).sort((a, b) => (a.kommen || '99:99').localeCompare(b.kommen || '99:99'));
+      $('zeiten').innerHTML = '';
+      rows.forEach(r => addRow(r.kommen, r.gehen));
+      if (!rows.length) addRow(nowTimeValue(), '');
+      calculateAndRender();
+    }
+
+    function setNowEndOnOpenRow() {
+      const rows = readEntries();
+      const open = rows.find(e => e.kommen && !e.gehen);
+      if (open) {
+        open.row.querySelector('.gehen').value = nowTimeValue();
+      } else if (rows.length) {
+        rows[rows.length - 1].row.querySelector('.gehen').value = nowTimeValue();
+      }
+      calculateAndRender();
+    }
+
+    function copyResultText(calc) {
+      const lines = [
+        `Datum: ${formatDate(calc.dateString)}`,
+        `Sollzeit: ${minutesToText(calc.sollMinutes)}`,
+        `Arbeitszeit netto: ${minutesToText(calc.currentWorked)}`,
+        `Arbeitszeit brutto: ${minutesToText(calc.grossCurrentWorked)}`,
+        `Eingetragene Pause: ${minutesToText(calc.breakMinutes)}`,
+        `Automatischer Pausenabzug: ${minutesToText(calc.autoBreakDeduction)}`,
+        `Saldo: ${minutesToText(calc.saldo)}`,
+        '',
+        'Zeitblöcke:',
+        ...calc.intervals.map((i, idx) => `${idx + 1}. ${formatTime(i.start)} - ${i.open ? 'offen/jetzt' : formatTime(i.end)} (${minutesToText(i.minutes)})`)
+      ];
+      navigator.clipboard.writeText(lines.join('\n')).then(() => {
+        const msg = document.createElement('p');
+        msg.className = 'text-success mt-16';
+        msg.textContent = '✅ Ergebnis wurde in die Zwischenablage kopiert.';
+        $('result').insertAdjacentElement('afterbegin', msg);
+        setTimeout(() => msg.remove(), 3000);
+      }).catch(() => alert(lines.join('\n')));
+    }
+
+    function exportCsv(calc) {
+      const rows = [['Datum','Block','Kommen','Gehen','Dauer Minuten','Hinweis']];
+      calc.intervals.forEach((i, idx) => rows.push([
+        calc.dateString,
+        String(idx + 1),
+        formatTime(i.start),
+        i.open ? 'offen/jetzt' : formatTime(i.end),
+        String(Math.round(i.minutes)),
+        i.open ? 'Offener Arbeitsblock' : (i.overnight ? 'Folgetag' : '')
+      ]));
+      rows.push([]);
+      rows.push(['Zusammenfassung','','','Arbeitszeit netto',String(Math.round(calc.currentWorked)),'']);
+      rows.push(['Zusammenfassung','','','Arbeitszeit brutto',String(Math.round(calc.grossCurrentWorked)),'']);
+      rows.push(['Zusammenfassung','','','Eingetragene Pause',String(Math.round(calc.breakMinutes)),'']);
+      rows.push(['Zusammenfassung','','','Automatischer Pausenabzug',String(Math.round(calc.autoBreakDeduction)),'']);
+      rows.push(['Zusammenfassung','','','Saldo',String(Math.round(calc.saldo)),'']);
+      const csv = rows.map(r => r.map(v => `"${String(v).replaceAll('"','""')}"`).join(';')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `kommen-gehen-${calc.dateString}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function resetAll(shouldSaveHistory = true) {
+      $('zeiten').innerHTML = '';
+      $('result').innerHTML = 'Bitte Zeiten eingeben.';
+      $('sollzeit').value = '8';
+      $('customSoll').value = '';
+      $('customSollWrapper').classList.add('hidden');
+      $('datum').value = todayValue();
+      addRow(nowTimeValue(), '');
+      
+      const calc = validateAndCalculate();
+      renderResult(calc);
+      if (shouldSaveHistory && !calc.errors.length && calc.currentWorked > 15) {
+        saveDaySummary(calc);
+      }
+      saveState();
+    }
+
+    document.addEventListener('click', (event) => {
+      if (event.target.classList.contains('remove-row')) {
+        event.target.closest('.row').remove();
+        calculateAndRender();
+      }
+      if (event.target.classList.contains('fill-end')) {
+        event.target.closest('.row').querySelector('.gehen').value = nowTimeValue();
+        calculateAndRender();
+      }
+      if (event.target.classList.contains('delete-history-day')) {
+        const date = event.target.getAttribute('data-date');
+        if (confirm(`Möchtest du den Eintrag für den ${formatDate(date)} wirklich löschen?`)) {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+          if (saved.days && saved.days[date]) {
+            delete saved.days[date];
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+            renderHistory();
+          }
+        }
+      }
+    });
+
+    document.addEventListener('input', (event) => { 
+      if (event.target.matches('input, select')) {
+        saveState();
+        if (event.target.matches('.kommen, .gehen, #sollzeit, #customSoll, #datum')) {
+          calculateAndRender();
+        }
+      }
+    });
+
+    $('addRow').addEventListener('click', () => addRow('', ''));
+    $('addNowStart').addEventListener('click', () => { addRow(nowTimeValue(), ''); calculateAndRender(); });
+    $('setNowEnd').addEventListener('click', setNowEndOnOpenRow);
+    $('sortRows').addEventListener('click', sortRowsByStart);
+    $('calculate').addEventListener('click', calculateAndRender);
+    $('reset').addEventListener('click', () => resetAll(true));
+    $('clearHistory').addEventListener('click', () => {
+      if(confirm('Möchtest du wirklich alle gespeicherten Daten (inklusive Wochenübersicht) löschen? Dies kann nicht rückgängig gemacht werden.')) {
+        localStorage.removeItem(STORAGE_KEY);
+        resetAll(false);
+        renderHistory();
+      }
+    });
+    $('copyResult').addEventListener('click', () => copyResultText(calculateAndRender()));
+    $('exportCsv').addEventListener('click', () => exportCsv(calculateAndRender()));
+    $('printView').addEventListener('click', () => window.print());
+    
+    $('sollzeit').addEventListener('change', () => {
+      $('customSollWrapper').classList.toggle('hidden', $('sollzeit').value !== 'custom');
+      calculateAndRender();
+    });
+
+    window.addEventListener('load', () => {
+      if (!loadState()) {
+        $('datum').value = todayValue();
+        addRow(nowTimeValue(), '');
+      }
+      renderHistory();
+      calculateAndRender();
+    });
+
+    setInterval(() => {
+      // Auto-refresh the dashboard every minute to update the live timer
+      const entries = readEntries();
+      const hasOpen = entries.some(e => e.kommen && !e.gehen);
+      if (hasOpen) {
+        calculateAndRender();
+      }
+    }, 60000);
+  </script>
+</body>
+</html>

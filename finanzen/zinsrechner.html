@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zinsrechner online – Zinsen & Zinseszins berechnen | rechnify.at</title>
+  <meta name="description" content="Kostenloser Zinsrechner. Berechne Endkapital und Zinserträge deiner Geldanlage – wahlweise mit oder ohne Zinseszins." />
+  <link rel="canonical" href="https://rechnify.at/finanzen/zinsrechner.html" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Zinsrechner online | rechnify.at" />
+  <meta property="og:description" content="Berechne schnell und einfach Zinsen, Zinseszins und dein Endkapital." />
+  <meta property="og:url" content="https://rechnify.at/finanzen/zinsrechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); }
+    .input-group input, .input-group select { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--border); 
+      border-radius: 10px; 
+      background: var(--input); 
+      color: var(--text); 
+      font-size: 16px; 
+    }
+    
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--soft-row); 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      padding: 24px; 
+    }
+    
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .result-item.highlight { font-weight: bold; font-size: 1.1em; color: var(--primary); }
+    .result-item.success { font-weight: bold; font-size: 1.2em; color: var(--success); border-bottom: none; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Zinsrechner",
+    "description": "Rechner zur Berechnung von Zinsen und Zinseszins für Kapitalanlagen.",
+    "url": "https://rechnify.at/finanzen/zinsrechner.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Finanzen</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Zinsrechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Zinsrechner (inkl. Zinseszins)</h1>
+      <p class="subtitle">Berechne, wie sich dein Kapital über die Jahre vermehrt.</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="capital">Anfangskapital (€)</label>
+            <input type="number" id="capital" min="0" step="100" placeholder="z. B. 10000" value="10000" />
+          </div>
+          
+          <div class="input-group">
+            <label for="rate">Zinssatz pro Jahr (%)</label>
+            <input type="number" id="rate" min="0" step="0.1" placeholder="z. B. 3.5" value="3.5" />
+          </div>
+        </div>
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="years">Laufzeit (in Jahren)</label>
+            <input type="number" id="years" min="1" max="100" step="1" placeholder="z. B. 5" value="5" />
+          </div>
+          
+          <div class="input-group">
+            <label for="compound">Zinseszins?</label>
+            <select id="compound">
+              <option value="yes" selected>Ja, Zinsen werden wiederangelegt (Zinseszins)</option>
+              <option value="no">Nein, Zinsen werden ausgeschüttet (Einfache Verzinsung)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <h3 style="margin-top:0; margin-bottom:16px; color:var(--primary);">Ergebnis</h3>
+          
+          <div class="result-item">
+            <span>Eingesetztes Kapital</span>
+            <span id="resCapital">10.000,00 €</span>
+          </div>
+          <div class="result-item highlight" style="color:var(--success);">
+            <span>+ Zinsertrag gesamt</span>
+            <span id="resInterest">1.876,86 €</span>
+          </div>
+          <div class="result-item success" style="margin-top:8px;">
+            <span>Endkapital</span>
+            <span id="resTotal">11.876,86 €</span>
+          </div>
+          <div class="text-muted text-xs mt-16 text-center">
+            Hinweis: Berechnet vor Abzug von Kapitalertragsteuer (KESt) oder Abgeltungssteuer.
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Was ist der Zinseszins?</h2>
+      <p>Der Zinseszins-Effekt wird oft als das "achte Weltwunder" bezeichnet (ein Zitat, das fälschlicherweise Albert Einstein zugeschrieben wird). Er beschreibt das exponentielle Wachstum von Vermögen, wenn anfallende Zinsen nicht ausbezahlt, sondern dem Kapital hinzugefügt und in den Folgejahren <strong>mitverzahnt</strong> werden.</p>
+      
+      <h3>Einfache Verzinsung vs. Zinseszins</h3>
+      <ul>
+        <li><strong>Einfache Verzinsung (ohne Zinseszins):</strong> Du legst 10.000 € zu 5 % an. Die Zinsen werden dir jedes Jahr aufs Girokonto ausgezahlt. Du erhältst jedes Jahr genau 500 € Zinsen. Nach 10 Jahren hast du 5.000 € an Zinsen eingenommen.</li>
+        <li><strong>Zinseszins (Wiederanlage):</strong> Du belässt die 500 € Zinsen im ersten Jahr auf dem Sparkonto. Im zweiten Jahr bekommst du nun 5 % auf 10.500 € (das sind 525 €). Im dritten Jahr auf 11.025 € usw. Nach 10 Jahren hast du durch diesen Schneeballeffekt insgesamt 6.288,95 € an Zinsen erhalten – also knapp 1.300 € mehr, nur durchs Liegenlassen!</li>
+      </ul>
+
+      <h3>Die Zinseszins-Formel</h3>
+      <p>Für die mathematisch Interessierten, so wird der Zinseszins berechnet:</p>
+      <div class="alert alert-info mt-16 mb-16">
+        <strong>K<sub>n</sub> = K<sub>0</sub> × (1 + p/100)<sup>n</sup></strong><br/><br/>
+        K<sub>n</sub> = Endkapital nach n Jahren<br/>
+        K<sub>0</sub> = Anfangskapital<br/>
+        p = Zinssatz in Prozent<br/>
+        n = Laufzeit in Jahren
+      </div>
+      <p>Mit unserem Rechner sparst du dir das Tippen auf dem Taschenrechner und siehst sofort, was am Ende der Laufzeit übrig bleibt.</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const capitalInput = document.getElementById('capital');
+      const rateInput = document.getElementById('rate');
+      const yearsInput = document.getElementById('years');
+      const compoundSelect = document.getElementById('compound');
+      
+      const formatEuro = (num) => new Intl.NumberFormat('de-AT', { style: 'currency', currency: 'EUR' }).format(num);
+      
+      const calculate = () => {
+        const p = parseFloat(capitalInput.value) || 0;
+        const r = parseFloat(rateInput.value) || 0;
+        const t = parseFloat(yearsInput.value) || 0;
+        const compound = compoundSelect.value === 'yes';
+        
+        let endCapital = 0;
+        let totalInterest = 0;
+
+        if (compound) {
+          // Compound Interest formula: A = P(1 + r/100)^t
+          endCapital = p * Math.pow(1 + (r / 100), t);
+          totalInterest = endCapital - p;
+        } else {
+          // Simple Interest formula: I = P * r/100 * t
+          totalInterest = p * (r / 100) * t;
+          endCapital = p + totalInterest;
+        }
+
+        document.getElementById('resCapital').textContent = formatEuro(p);
+        document.getElementById('resInterest').textContent = formatEuro(totalInterest);
+        document.getElementById('resTotal').textContent = formatEuro(endCapital);
+      };
+
+      capitalInput.addEventListener('input', calculate);
+      rateInput.addEventListener('input', calculate);
+      yearsInput.addEventListener('input', calculate);
+      compoundSelect.addEventListener('change', calculate);
+
+      calculate();
+    });
+  </script>
+</body>
+</html>

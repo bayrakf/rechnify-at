@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Einheitenrechner online – Umrechnung Länge, Gewicht, Temperatur | rechnify.at</title>
+  <meta name="description" content="Kostenloser Einheitenrechner. Rechne einfach Längen, Gewichte, Temperaturen und Volumina um (z.B. kg in lbs, Celsius in Fahrenheit)." />
+  <link rel="canonical" href="https://rechnify.at/alltag/einheitenrechner.html" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Einheitenrechner online | rechnify.at" />
+  <meta property="og:description" content="Schnell und einfach Einheiten umrechnen (Länge, Gewicht, Temperatur, Volumen)." />
+  <meta property="og:url" content="https://rechnify.at/alltag/einheitenrechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); }
+    .input-group input, .input-group select { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--border); 
+      border-radius: 10px; 
+      background: var(--input); 
+      color: var(--text); 
+      font-size: 16px; 
+    }
+    
+    .convert-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    
+    .convert-col { flex: 1; }
+    
+    .swap-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 28px;
+      transition: all 0.2s;
+    }
+    .swap-btn:hover { background: var(--soft); color: var(--primary); border-color: var(--primary); }
+    
+    @media(max-width: 600px) {
+      .convert-row { flex-direction: column; align-items: stretch; }
+      .swap-btn { margin: -10px auto; transform: rotate(90deg); z-index: 2; position: relative; }
+    }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--soft-row); 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      padding: 24px; 
+      text-align: center;
+    }
+    
+    .result-value {
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 8px;
+      color: var(--success);
+      word-break: break-all;
+    }
+    
+    .result-formula {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 16px;
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Einheitenrechner",
+    "description": "Rechner zur Umrechnung verschiedener Maßeinheiten (Länge, Gewicht, Temperatur).",
+    "url": "https://rechnify.at/alltag/einheitenrechner.html",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Alltag</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Einheitenrechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Einheitenrechner</h1>
+      <p class="subtitle">Rechne blitzschnell Längen, Gewichte, Temperaturen und mehr um.</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-group">
+          <label for="category">Was möchtest du umrechnen?</label>
+          <select id="category">
+            <option value="length">Länge (km, m, cm, Meilen, ...)</option>
+            <option value="weight">Gewicht (kg, g, lbs, Unzen, ...)</option>
+            <option value="temp">Temperatur (Celsius, Fahrenheit, Kelvin)</option>
+            <option value="volume">Volumen (Liter, Milliliter, Gallonen, ...)</option>
+          </select>
+        </div>
+        
+        <div class="convert-row">
+          <div class="convert-col">
+            <div class="input-group" style="margin-bottom:0;">
+              <label for="valFrom">Wert</label>
+              <input type="number" id="valFrom" step="any" placeholder="1" value="1" />
+            </div>
+            <div class="input-group" style="margin-top:12px; margin-bottom:0;">
+              <select id="unitFrom"></select>
+            </div>
+          </div>
+          
+          <button class="swap-btn" id="btnSwap" title="Einheiten tauschen">⇄</button>
+          
+          <div class="convert-col">
+            <div class="input-group" style="margin-bottom:0;">
+              <label>Ergebnis</label>
+              <input type="text" id="valTo" readonly style="background:var(--soft-row); border-color:var(--success); color:var(--success); font-weight:bold;" />
+            </div>
+            <div class="input-group" style="margin-top:12px; margin-bottom:0;">
+              <select id="unitTo"></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <div style="font-size:14px; color:var(--muted); margin-bottom:8px;">Umrechnungsergebnis:</div>
+          <div class="result-value" id="resText">1 = 1</div>
+          <div class="result-formula" id="resFormula"></div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Warum ein Einheitenrechner?</h2>
+      <p>Im Alltag stoßen wir ständig auf unterschiedliche Maßeinheiten – sei es beim Kochen mit einem amerikanischen Rezept (Unzen, Fahrenheit, Cups), beim Autokauf (Meilen vs. Kilometer) oder auf Reisen. Unser universeller Einheitenrechner hilft dir dabei, die gängigsten internationalen und metrischen Einheiten fehlerfrei ineinander umzurechnen.</p>
+      
+      <h3>Das Metrische System vs. Imperiales System</h3>
+      <p>Während in fast allen Ländern der Welt, so auch in Europa, das **metrische System** (Meter, Kilogramm, Celsius) gilt, nutzen die USA und einige andere Länder das **imperiale System** (Meilen, Pfund, Fahrenheit). Dies führt oft zu Verwirrungen.</p>
+
+      <h3>Gängige Umrechnungen</h3>
+      <ul>
+        <li><strong>1 Meile (mi)</strong> = 1,60934 Kilometer (km)</li>
+        <li><strong>1 Inch / Zoll (in)</strong> = 2,54 Zentimeter (cm)</li>
+        <li><strong>1 Pfund (lbs)</strong> = 0,453592 Kilogramm (kg)</li>
+        <li><strong>1 Gallone (US gal)</strong> ≈ 3,785 Liter (l)</li>
+      </ul>
+      
+      <div class="alert alert-info mt-16 mb-16">
+        <strong>Faustregel für Temperatur (Fahrenheit in Celsius):</strong><br/>
+        Zieht man von der Fahrenheit-Temperatur 30 ab und teilt das Ergebnis durch 2, erhält man einen ungefähren (aber nicht exakten) Celsius-Wert. <em>Beispiel: 90°F - 30 = 60. 60 ÷ 2 = 30°C (Exakt: 32,2°C).</em>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const categorySel = document.getElementById('category');
+      const unitFromSel = document.getElementById('unitFrom');
+      const unitToSel = document.getElementById('unitTo');
+      const valFrom = document.getElementById('valFrom');
+      const valTo = document.getElementById('valTo');
+      const btnSwap = document.getElementById('btnSwap');
+      
+      const resText = document.getElementById('resText');
+      const resFormula = document.getElementById('resFormula');
+
+      // Conversion Data
+      // base units for factors: length=meter, weight=kg, volume=liter
+      const units = {
+        length: {
+          base: 'm',
+          list: [
+            { id: 'mm', name: 'Millimeter (mm)', factor: 0.001 },
+            { id: 'cm', name: 'Zentimeter (cm)', factor: 0.01 },
+            { id: 'm', name: 'Meter (m)', factor: 1 },
+            { id: 'km', name: 'Kilometer (km)', factor: 1000 },
+            { id: 'in', name: 'Inch / Zoll (in)', factor: 0.0254 },
+            { id: 'ft', name: 'Fuß (ft)', factor: 0.3048 },
+            { id: 'yd', name: 'Yard (yd)', factor: 0.9144 },
+            { id: 'mi', name: 'Meile (mi)', factor: 1609.344 }
+          ],
+          defFrom: 'km', defTo: 'mi'
+        },
+        weight: {
+          base: 'kg',
+          list: [
+            { id: 'mg', name: 'Milligramm (mg)', factor: 0.000001 },
+            { id: 'g', name: 'Gramm (g)', factor: 0.001 },
+            { id: 'kg', name: 'Kilogramm (kg)', factor: 1 },
+            { id: 't', name: 'Tonne (t)', factor: 1000 },
+            { id: 'oz', name: 'Unze (oz)', factor: 0.0283495 },
+            { id: 'lbs', name: 'Pfund (lbs)', factor: 0.453592 }
+          ],
+          defFrom: 'kg', defTo: 'lbs'
+        },
+        volume: {
+          base: 'l',
+          list: [
+            { id: 'ml', name: 'Milliliter (ml)', factor: 0.001 },
+            { id: 'l', name: 'Liter (l)', factor: 1 },
+            { id: 'm3', name: 'Kubikmeter (m³)', factor: 1000 },
+            { id: 'gal', name: 'US Gallone (gal)', factor: 3.78541 },
+            { id: 'floz', name: 'US Fluid Ounce (fl oz)', factor: 0.0295735 }
+          ],
+          defFrom: 'l', defTo: 'gal'
+        },
+        temp: {
+          list: [
+            { id: 'c', name: 'Celsius (°C)' },
+            { id: 'f', name: 'Fahrenheit (°F)' },
+            { id: 'k', name: 'Kelvin (K)' }
+          ],
+          defFrom: 'c', defTo: 'f'
+        }
+      };
+
+      const populateSelects = () => {
+        const cat = categorySel.value;
+        const data = units[cat];
+        
+        unitFromSel.innerHTML = '';
+        unitToSel.innerHTML = '';
+        
+        data.list.forEach(u => {
+          unitFromSel.add(new Option(u.name, u.id));
+          unitToSel.add(new Option(u.name, u.id));
+        });
+        
+        unitFromSel.value = data.defFrom;
+        unitToSel.value = data.defTo;
+      };
+
+      const calcTemp = (val, from, to) => {
+        let c = 0;
+        // Convert to Celsius first
+        if (from === 'c') c = val;
+        else if (from === 'f') c = (val - 32) * 5/9;
+        else if (from === 'k') c = val - 273.15;
+        
+        // Convert from Celsius to Target
+        if (to === 'c') return c;
+        if (to === 'f') return (c * 9/5) + 32;
+        if (to === 'k') return c + 273.15;
+      };
+
+      const calculate = () => {
+        const cat = categorySel.value;
+        const data = units[cat];
+        const fId = unitFromSel.value;
+        const tId = unitToSel.value;
+        let v = parseFloat(valFrom.value);
+        if (isNaN(v)) {
+          valTo.value = '';
+          resText.textContent = '-';
+          resFormula.textContent = '';
+          return;
+        }
+
+        let result = 0;
+        let fName = unitFromSel.options[unitFromSel.selectedIndex].text;
+        let tName = unitToSel.options[unitToSel.selectedIndex].text;
+
+        if (cat === 'temp') {
+          result = calcTemp(v, fId, tId);
+        } else {
+          // Multiply by fromFactor to get base, divide by toFactor to get target
+          const fFactor = data.list.find(x => x.id === fId).factor;
+          const tFactor = data.list.find(x => x.id === tId).factor;
+          result = (v * fFactor) / tFactor;
+        }
+
+        // Format
+        let resStr = parseFloat(result.toFixed(6)).toString();
+        
+        valTo.value = resStr;
+        resText.innerHTML = `${v} <span style="font-size:0.5em">${fId}</span> = ${resStr} <span style="font-size:0.5em">${tId}</span>`;
+      };
+
+      // Events
+      categorySel.addEventListener('change', () => {
+        populateSelects();
+        calculate();
+      });
+      
+      valFrom.addEventListener('input', calculate);
+      unitFromSel.addEventListener('change', calculate);
+      unitToSel.addEventListener('change', calculate);
+      
+      btnSwap.addEventListener('click', () => {
+        const temp = unitFromSel.value;
+        unitFromSel.value = unitToSel.value;
+        unitToSel.value = temp;
+        calculate();
+      });
+
+      // Init
+      populateSelects();
+      calculate();
+    });
+  </script>
+</body>
+</html>

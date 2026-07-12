@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Urlaubstage Rechner Österreich – Anspruch berechnen | rechnify.at</title>
+  <meta name="description" content="Berechne deinen gesetzlichen Urlaubsanspruch in Österreich. Egal ob 5-Tage-Woche, Teilzeit, Aliquotierung oder 6. Urlaubswoche." />
+  <link rel="canonical" href="https://rechnify.at/arbeitszeit/urlaubstage-rechner.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/urlaubstage-rechner.html" />
+  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/urlaubstage-rechner.html" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Urlaubstage Rechner Österreich | rechnify.at" />
+  <meta property="og:description" content="Wie viel Urlaub steht dir in Österreich zu? Berechne deinen Anspruch (Teilzeit, Aliquotierung)." />
+  <meta property="og:url" content="https://rechnify.at/arbeitszeit/urlaubstage-rechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); }
+    .input-group input, .input-group select { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--border); 
+      border-radius: 10px; 
+      background: var(--input); 
+      color: var(--text); 
+      font-size: 16px; 
+    }
+    
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--soft-row); 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      padding: 24px; 
+      text-align: center;
+    }
+    
+    .result-value {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--success);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    
+    .result-label {
+      font-size: 16px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .toggle-group { display: flex; gap: 12px; margin-top: 8px; }
+    .toggle-btn {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+    .toggle-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Urlaubstage Rechner Österreich",
+    "description": "Berechne deinen gesetzlichen Urlaubsanspruch nach österreichischem Urlaubsgesetz.",
+    "url": "https://rechnify.at/arbeitszeit/urlaubstage-rechner.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html" class="active">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Arbeitszeit</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Urlaubstage Rechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <div class="calc-icon">🏖️</div>
+      <h1 style="margin-bottom:8px;">Urlaubstage Rechner (Österreich)</h1>
+      <p class="subtitle">Wie viel gesetzlicher Urlaub steht dir zu? Berechne deinen Anspruch (Teilzeit, Vollzeit, Aliquot).</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-group">
+          <label for="workdays">An wie vielen Tagen pro Woche arbeitest du (im Schnitt)?</label>
+          <select id="workdays">
+            <option value="1">1 Tag pro Woche</option>
+            <option value="2">2 Tage pro Woche</option>
+            <option value="3">3 Tage pro Woche</option>
+            <option value="4">4 Tage pro Woche</option>
+            <option value="5" selected>5 Tage pro Woche (Normalfall)</option>
+            <option value="6">6 Tage pro Woche</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Hast du bereits 25 Dienstjahre erreicht?</label>
+          <div class="toggle-group" id="seniority-toggles">
+            <div class="toggle-btn active" data-weeks="5">Nein (5 Wochen)</div>
+            <div class="toggle-btn" data-weeks="6">Ja (6 Wochen)</div>
+          </div>
+          <div class="text-muted text-xs mt-4">Nach 25 anrechenbaren Dienstjahren (inkl. Schul-/Studienzeiten) entsteht Anspruch auf die 6. Urlaubswoche.</div>
+        </div>
+        
+        <div class="input-group" style="margin-top:24px;">
+          <label>Möchtest du den Urlaub für ein ganzes Jahr oder anteilig (aliquot) berechnen?</label>
+          <select id="calcMode">
+            <option value="full">Ganzes Urlaubsjahr (voller Anspruch)</option>
+            <option value="aliquot">Anteilig (Aliquotierung nach Monaten)</option>
+          </select>
+        </div>
+        
+        <div class="input-group hidden" id="monthsWrapper">
+          <label for="months">Für wie viele volle Monate warst/bist du beschäftigt?</label>
+          <input type="number" id="months" min="1" max="11" value="6" />
+          <div class="text-muted text-xs mt-4">Wichtig: In den ersten 6 Monaten des ersten Arbeitsjahres entsteht der Urlaub anteilig (pro Monat). Bei Austritt während des Jahres wird ebenfalls anteilig berechnet.</div>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <div class="result-label" id="resLabel">Dein Urlaubsanspruch beträgt:</div>
+          <div class="result-value" id="resValue">25 Tage</div>
+          <div class="text-muted text-sm mt-8" id="resDetail">bei 5 Wochen für ein volles Urlaubsjahr.</div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Der gesetzliche Urlaubsanspruch in Österreich (UrlG)</h2>
+      <p>In Österreich hat jede Arbeitnehmerin und jeder Arbeitnehmer Anspruch auf einen bezahlten Jahresurlaub. Das österreichische Urlaubsgesetz (UrlG) regelt dabei die genauen Rahmenbedingungen.</p>
+      
+      <h3>1. Wie viel Urlaub steht mir zu? (5 oder 6 Wochen)</h3>
+      <p>Grundsätzlich hast du Anspruch auf <strong>5 Wochen bezahlten Urlaub pro Arbeitsjahr</strong>. Das entspricht:</p>
+      <ul>
+        <li><strong>25 Arbeitstagen</strong> bei einer 5-Tage-Woche (Montag bis Freitag)</li>
+        <li><strong>30 Werktagen</strong> bei einer 6-Tage-Woche (Montag bis Samstag)</li>
+        <li>Bei Teilzeit (z.B. 3 Tage pro Woche): 3 Tage × 5 Wochen = 15 Urlaubstage</li>
+      </ul>
+      <p>Nach Vollendung des 25. anrechenbaren Dienstjahres (hier können unter bestimmten Voraussetzungen auch Vordienstzeiten, Schul-, und Studienzeiten eingerechnet werden), erhöht sich der Anspruch auf <strong>6 Wochen</strong> (z.B. 30 Arbeitstage bei einer 5-Tage-Woche).</p>
+
+      <h3>2. Aliquotierung: Wann bekomme ich meinen Urlaub?</h3>
+      <p>Der Urlaubsanspruch entsteht in den ersten 6 Monaten des <strong>ersten Arbeitsjahres</strong> im Verhältnis zur erbrachten Dienstzeit (aliquot). Das bedeutet, pro vollem Monat erwirbst du etwa 2 Urlaubstage (bei einer 5-Tage-Woche).</p>
+      <p>Ab Beginn des 7. Monats entsteht der volle Urlaubsanspruch (die kompletten 5 Wochen) für das erste Arbeitsjahr. Ab dem zweiten Arbeitsjahr entsteht der volle Anspruch immer sofort mit Beginn des neuen Urlaubsjahres.</p>
+
+      <h3>3. Was passiert, wenn ich während des Jahres kündige?</h3>
+      <p>Endet das Dienstverhältnis während des Urlaubsjahres, so hast du Anspruch auf eine <strong>Urlaubsersatzleistung</strong> (Auszahlung) für den offenen, aliquot berechneten Resturlaub, den du bis zum Ende des Dienstverhältnisses nicht konsumieren konntest.</p>
+      
+      <h2>FAQ</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Ist Samstag ein Urlaubstag?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Das kommt darauf an, wie deine wöchentliche Arbeitszeit verteilt ist. Wenn du regelmäßig von Montag bis Freitag (5-Tage-Woche) arbeitest, wird der Urlaub in <strong>Arbeitstagen</strong> gerechnet, der Samstag zählt nicht. Arbeitest du regelmäßig 6 Tage die Woche (Werktage), dann zählt der Samstag als Urlaubstag und dein Anspruch beträgt 30 Werktage.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Wie wird Urlaub bei unregelmäßiger Teilzeit berechnet?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Wenn du unregelmäßig arbeitest (z.B. Schichtdienst oder jede Woche andere Tage), wird der Urlaub oft in <strong>Stunden</strong> umgerechnet. Hast du 5 Wochen Anspruch, rechnest du: Wochenstunden × 5. Bei 20 Stunden pro Woche wären das 100 Stunden Urlaub im Jahr. Wenn du dann an einem Tag fehlst, an dem du 6 Stunden gearbeitet hättest, werden dir 6 Urlaubsstunden abgezogen.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const workdaysSelect = document.getElementById('workdays');
+      const calcModeSelect = document.getElementById('calcMode');
+      const monthsWrapper = document.getElementById('monthsWrapper');
+      const monthsInput = document.getElementById('months');
+      const toggleBtns = document.querySelectorAll('.toggle-btn');
+      
+      let baseWeeks = 5;
+      
+      const calculate = () => {
+        const daysPerWeek = parseInt(workdaysSelect.value, 10);
+        const mode = calcModeSelect.value;
+        const months = parseInt(monthsInput.value, 10) || 0;
+        
+        // Full year calculation
+        let totalDays = daysPerWeek * baseWeeks;
+        
+        let detailText = `bei ${baseWeeks} Wochen Anspruch für ein volles Urlaubsjahr.`;
+
+        // Aliquot calculation
+        if (mode === 'aliquot') {
+          totalDays = (totalDays / 12) * months;
+          
+          // In AT, vacation days are usually rounded based on collective agreements or practice.
+          // Commercially, mathematically rounding is common, but often the exact fraction remains until consumed.
+          // We will show 1 decimal if not an integer.
+          totalDays = Math.round(totalDays * 10) / 10;
+          
+          detailText = `anteilig für ${months} Monat(e) (bei ${baseWeeks} Wochen Vollanspruch).`;
+        }
+
+        document.getElementById('resValue').textContent = `${totalDays.toString().replace('.', ',')} Tage`;
+        document.getElementById('resDetail').textContent = detailText;
+      };
+
+      // Event Listeners
+      workdaysSelect.addEventListener('change', calculate);
+      
+      calcModeSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'aliquot') {
+          monthsWrapper.classList.remove('hidden');
+        } else {
+          monthsWrapper.classList.add('hidden');
+        }
+        calculate();
+      });
+
+      monthsInput.addEventListener('input', calculate);
+
+      toggleBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          toggleBtns.forEach(b => b.classList.remove('active'));
+          e.currentTarget.classList.add('active');
+          baseWeeks = parseInt(e.currentTarget.dataset.weeks, 10);
+          calculate();
+        });
+      });
+
+      // Initial calc
+      calculate();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontakt | rechnify.at</title>
+  <meta name="description" content="Kontaktiere das Team von rechnify.at für Feedback, Fehlerberichte oder Kooperationsanfragen." />
+  <link rel="canonical" href="https://rechnify.at/kontakt.html" />
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html" class="active">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Kontakt</span>
+  </nav>
+
+  <main class="site-main">
+    <div class="card" style="max-width:600px; margin:24px auto;">
+      <h1 style="font-size:var(--text-2xl); font-weight:800; color:var(--primary); margin-bottom:12px;">Kontaktiere uns</h1>
+      <p class="text-muted" style="margin-bottom:32px;">Wir freuen uns auf dein Feedback, Vorschläge für neue Rechner oder Fehlerberichte.</p>
+
+      <div class="alert alert-success hidden" id="form-success">
+        <span>✅</span>
+        <span>Vielen Dank für deine Nachricht! Wir melden uns so schnell wie möglich bei dir.</span>
+      </div>
+
+      <form id="contact-form" name="contact" method="POST" data-netlify="true" action="/kontakt.html">
+        <input type="hidden" name="form-name" value="contact" />
+        <div style="margin-bottom: 20px;">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required placeholder="Dein Name" />
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" name="email" required placeholder="deine.email@beispiel.at" />
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <label for="betreff">Betreff</label>
+          <select id="betreff" name="betreff" required>
+            <option value="" disabled selected>Bitte wählen...</option>
+            <option value="Feedback">Allgemeines Feedback</option>
+            <option value="Neuer_Rechner">Vorschlag für einen neuen Rechner</option>
+            <option value="Fehler">Fehler melden</option>
+            <option value="Kooperation">Kooperationsanfrage</option>
+            <option value="Sonstiges">Sonstiges</option>
+          </select>
+        </div>
+        
+        <div style="margin-bottom: 24px;">
+          <label for="nachricht">Nachricht</label>
+          <textarea id="nachricht" name="nachricht" rows="5" required placeholder="Wie können wir dir helfen?"></textarea>
+        </div>
+        
+        <button type="submit" class="btn" style="width: 100%;">Nachricht senden</button>
+      </form>
+      
+      <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); text-align: center;">
+        <p class="text-muted text-sm">Oder schreib uns direkt an:<br/>
+        <a href="mailto:kontakt@rechnify.at" style="font-weight:600;">kontakt@rechnify.at</a></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(contactForm);
+        // Netlify Forms requires the form name in the POST payload
+        formData.append('form-name', 'contact');
+        
+        fetch('/kontakt.html', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString()
+        })
+        .then(() => {
+          document.getElementById('form-success').classList.remove('hidden');
+          contactForm.classList.add('hidden');
+          // Smooth scroll to card top to see success message
+          contactForm.closest('.card').scrollIntoView({ behavior: 'smooth' });
+        })
+        .catch((error) => {
+          console.error('Error submitting form:', error);
+          alert('Beim Senden der Nachricht ist ein Fehler aufgetreten. Bitte versuche es erneut oder schreibe uns direkt eine E-Mail an kontakt@rechnify.at.');
+        });
+      });
+    }
+  </script>
+</body>
+</html>

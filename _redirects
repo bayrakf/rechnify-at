@@ -1,0 +1,11 @@
+# Netlify Redirects
+
+# Netlify-Subdomain auf Custom-Domain umleiten (301 permanent)
+https://rechnify-at.netlify.app/* https://rechnify.at/:splat 301!
+
+# www auf non-www umleiten
+https://www.rechnify.at/* https://rechnify.at/:splat 301!
+
+# Alte URLs auf neue SEO-URLs umleiten
+/kommen_gehen_rechner.html /arbeitszeit/kommen-gehen-rechner.html 301
+/index.html / 301

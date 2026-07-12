@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schichtplan-Rechner online – Arbeitszeiten summieren | rechnify.at</title>
+  <meta name="description" content="Kostenloser Schichtplan-Rechner. Trage deine Schichten (Frühschicht, Spätschicht, Nachtschicht) ein und berechne die wöchentliche Gesamtarbeitszeit inkl. Pausenabzug." />
+  <link rel="canonical" href="https://rechnify.at/arbeitszeit/schichtplan-rechner.html" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Schichtplan-Rechner online | rechnify.at" />
+  <meta property="og:description" content="Berechne deine wöchentlichen Schichtzeiten inkl. Pausen." />
+  <meta property="og:url" content="https://rechnify.at/arbeitszeit/schichtplan-rechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    
+    .shift-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr 100px 80px;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+      background: var(--soft-row);
+      padding: 12px;
+      border-radius: 8px;
+    }
+    
+    .shift-row label { font-weight: bold; color: var(--text); }
+    .shift-row input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--input);
+      color: var(--text);
+    }
+    
+    .shift-row .res-day {
+      text-align: right;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    @media(max-width: 600px) {
+      .shift-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .shift-row label { grid-column: span 2; padding-bottom: 4px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+      .shift-row .res-day { grid-column: span 2; text-align: left; margin-top: 8px; }
+    }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--card); 
+      border: 2px solid var(--primary); 
+      border-radius: 12px; 
+      padding: 24px; 
+      text-align: center;
+    }
+    
+    .result-value {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--success);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Schichtplan-Rechner",
+    "description": "Rechner zur Ermittlung der wöchentlichen Arbeitszeit basierend auf Schichtplänen.",
+    "url": "https://rechnify.at/arbeitszeit/schichtplan-rechner.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html" class="active">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Arbeitszeit</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Schichtplan-Rechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Schichtplan-Rechner</h1>
+      <p class="subtitle">Trage deine Wochenschichten ein und berechne die Gesamtarbeitszeit (inkl. Nachtschichten).</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div id="shiftsContainer">
+          <!-- Rows injected via JS -->
+        </div>
+        
+        <div style="text-align:right; margin-top:12px;">
+          <button class="btn-icon" style="width:auto; padding:0 16px;" onclick="clearAll()" title="Alles löschen">🔄 Zurücksetzen</button>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <div style="font-size:16px; font-weight:bold; color:var(--text); margin-bottom:8px;">Wöchentliche Arbeitszeit (Netto):</div>
+          <div class="result-value" id="resTotal">00:00 Std.</div>
+          <div class="text-muted text-sm mt-8">
+            Das entspricht <span id="resDecimal" style="font-weight:bold; color:var(--text);">0,00</span> Industriestunden.
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Wie funktioniert der Schichtplan-Rechner?</h2>
+      <p>Dieser Rechner hilft dir dabei, deine wöchentlichen Arbeitszeiten aus einem Dienst- oder Schichtplan zusammenzurechnen. Besonders bei Wechselschichten (Früh-, Spät- und Nachtschicht) ist es oft mühsam, die Nettoarbeitszeit manuell auszurechnen.</p>
+      
+      <h3>Nachtschichten über Mitternacht</h3>
+      <p>Ein großer Vorteil dieses Tools: Es erkennt automatisch Nachtschichten! Wenn du zum Beispiel um 22:00 Uhr anfängst und um 06:00 Uhr aufhörst, rechnet das Tool automatisch über die Mitternachtsgrenze hinweg und ermittelt korrekte 8 Stunden Arbeitszeit (minus deiner eingetragenen Pause).</p>
+
+      <h3>Brutto- vs. Nettoarbeitszeit</h3>
+      <ul>
+        <li><strong>Bruttoarbeitszeit:</strong> Die Zeit von Arbeitsbeginn bis Arbeitsende (inkl. Pausen).</li>
+        <li><strong>Nettoarbeitszeit:</strong> Die tatsächliche Arbeitszeit, für die du bezahlt wirst. Gesetzlich vorgeschriebene Pausen sind in der Regel unbezahlt und werden von der Bruttoarbeitszeit abgezogen.</li>
+      </ul>
+      
+      <div class="alert alert-info mt-16 mb-16">
+        <strong>Pausenregelung (gesetzlich):</strong><br/>
+        In den meisten Ländern (AT & DE) musst du nach spätestens 6 Stunden Arbeit eine Pause von mindestens 30 Minuten machen. Arbeitest du länger als 9 Stunden, stehen dir 45 Minuten Pause zu.
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    const days = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
+    const container = document.getElementById('shiftsContainer');
+
+    // Build UI
+    days.forEach((day, index) => {
+      const div = document.createElement('div');
+      div.className = 'shift-row';
+      div.innerHTML = `
+        <label>${day}</label>
+        <div>
+          <span style="font-size:12px; color:var(--muted); display:block; margin-bottom:4px;">Start</span>
+          <input type="time" id="start_${index}" class="time-input" />
+        </div>
+        <div>
+          <span style="font-size:12px; color:var(--muted); display:block; margin-bottom:4px;">Ende</span>
+          <input type="time" id="end_${index}" class="time-input" />
+        </div>
+        <div>
+          <span style="font-size:12px; color:var(--muted); display:block; margin-bottom:4px;">Pause (Min)</span>
+          <input type="number" id="break_${index}" class="time-input" min="0" step="15" placeholder="z.B. 30" />
+        </div>
+        <div class="res-day" id="res_${index}">00:00</div>
+      `;
+      container.appendChild(div);
+    });
+
+    const pad = (num) => num.toString().padStart(2, '0');
+
+    function calculate() {
+      let totalMinutes = 0;
+
+      for (let i = 0; i < 7; i++) {
+        const start = document.getElementById(`start_${i}`).value;
+        const end = document.getElementById(`end_${i}`).value;
+        const breakMin = parseInt(document.getElementById(`break_${i}`).value) || 0;
+        const resLabel = document.getElementById(`res_${i}`);
+
+        if (start && end) {
+          let [sH, sM] = start.split(':').map(Number);
+          let [eH, eM] = end.split(':').map(Number);
+
+          let minStart = sH * 60 + sM;
+          let minEnd = eH * 60 + eM;
+
+          // Night shift over midnight
+          if (minEnd < minStart) {
+            minEnd += 24 * 60; // Add 24h
+          }
+
+          let diff = minEnd - minStart - breakMin;
+          if (diff < 0) diff = 0;
+
+          totalMinutes += diff;
+          
+          let dH = Math.floor(diff / 60);
+          let dM = diff % 60;
+          resLabel.textContent = `${pad(dH)}:${pad(dM)}`;
+        } else {
+          resLabel.textContent = `00:00`;
+        }
+      }
+
+      // Update Total
+      let totH = Math.floor(totalMinutes / 60);
+      let totM = totalMinutes % 60;
+      document.getElementById('resTotal').textContent = `${pad(totH)}:${pad(totM)} Std.`;
+
+      let decimal = (totalMinutes / 60).toFixed(2).replace('.', ',');
+      document.getElementById('resDecimal').textContent = decimal;
+    }
+
+    function clearAll() {
+      for (let i = 0; i < 7; i++) {
+        document.getElementById(`start_${i}`).value = '';
+        document.getElementById(`end_${i}`).value = '';
+        document.getElementById(`break_${i}`).value = '';
+      }
+      calculate();
+    }
+
+    document.querySelectorAll('.time-input').forEach(input => {
+      input.addEventListener('input', calculate);
+    });
+
+    // Default 1 row for UX
+    document.getElementById('start_0').value = '08:00';
+    document.getElementById('end_0').value = '16:30';
+    document.getElementById('break_0').value = '30';
+    
+    calculate();
+  </script>
+</body>
+</html>

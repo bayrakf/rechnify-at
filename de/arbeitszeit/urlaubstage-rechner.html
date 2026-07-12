@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Urlaubstage Rechner Deutschland – Anspruch berechnen | rechnify.at</title>
+  <meta name="description" content="Berechne deinen gesetzlichen Urlaubsanspruch in Deutschland (BUrlG). Egal ob 5-Tage-Woche, Teilzeit oder anteilig (Probezeit)." />
+  <link rel="canonical" href="https://rechnify.at/de/arbeitszeit/urlaubstage-rechner.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/urlaubstage-rechner.html" />
+  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/urlaubstage-rechner.html" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Urlaubstage Rechner Deutschland | rechnify.at" />
+  <meta property="og:description" content="Wie viel Urlaub steht dir in Deutschland zu? Berechne deinen gesetzlichen Anspruch (Teilzeit, Aliquotierung)." />
+  <meta property="og:url" content="https://rechnify.at/de/arbeitszeit/urlaubstage-rechner.html" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); }
+    .input-group input, .input-group select { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--border); 
+      border-radius: 10px; 
+      background: var(--input); 
+      color: var(--text); 
+      font-size: 16px; 
+    }
+    
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--soft-row); 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      padding: 24px; 
+      text-align: center;
+    }
+    
+    .result-value {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--success);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    
+    .result-label {
+      font-size: 16px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .toggle-group { display: flex; gap: 12px; margin-top: 8px; }
+    .toggle-btn {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+    .toggle-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Urlaubstage Rechner Deutschland",
+    "description": "Berechne deinen gesetzlichen Urlaubsanspruch nach deutschem Bundesurlaubsgesetz (BUrlG).",
+    "url": "https://rechnify.at/de/arbeitszeit/urlaubstage-rechner.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-DE",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html" class="active">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Arbeitszeit</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Urlaubstage Rechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <div class="calc-icon">🏖️</div>
+      <h1 style="margin-bottom:8px;">Urlaubstage Rechner (Deutschland)</h1>
+      <p class="subtitle">Wie viel gesetzlicher Urlaub steht dir zu? Berechne deinen Anspruch (Teilzeit, Vollzeit, anteilig).</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-group">
+          <label for="workdays">An wie vielen Tagen pro Woche arbeitest du (im Schnitt)?</label>
+          <select id="workdays">
+            <option value="1">1 Tag pro Woche</option>
+            <option value="2">2 Tage pro Woche</option>
+            <option value="3">3 Tage pro Woche</option>
+            <option value="4">4 Tage pro Woche</option>
+            <option value="5" selected>5 Tage pro Woche (Normalfall)</option>
+            <option value="6">6 Tage pro Woche</option>
+          </select>
+          <div class="text-muted text-xs mt-4">Das BUrlG sieht 4 Wochen Urlaub vor (20 Tage bei 5-Tage-Woche, 24 Tage bei 6-Tage-Woche).</div>
+        </div>
+        
+        <div class="input-group" style="margin-top:24px;">
+          <label>Möchtest du den Urlaub für ein ganzes Jahr oder anteilig (Probezeit/Austritt) berechnen?</label>
+          <select id="calcMode">
+            <option value="full">Ganzes Urlaubsjahr (voller Anspruch)</option>
+            <option value="aliquot">Anteilig (Berechnung nach vollen Monaten)</option>
+          </select>
+        </div>
+        
+        <div class="input-group hidden" id="monthsWrapper">
+          <label for="months">Für wie viele volle Monate warst/bist du beschäftigt?</label>
+          <input type="number" id="months" min="1" max="11" value="6" />
+          <div class="text-muted text-xs mt-4">Wichtig: In der Probezeit (erste 6 Monate) erwirbst du pro vollem Monat 1/12 deines Jahresurlaubs. (Bruchteile ab 0,5 werden aufgerundet).</div>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <div class="result-label" id="resLabel">Dein Urlaubsanspruch beträgt:</div>
+          <div class="result-value" id="resValue">20 Tage</div>
+          <div class="text-muted text-sm mt-8" id="resDetail">bei 4 Wochen für ein volles Urlaubsjahr.</div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Der gesetzliche Urlaubsanspruch in Deutschland (BUrlG)</h2>
+      <p>In Deutschland wird der Erholungsurlaub durch das Bundesurlaubsgesetz (BUrlG) geregelt. Hierbei geht es um den gesetzlichen Mindesturlaub – viele Tarif- oder Arbeitsverträge gewähren mehr Urlaub (oft 25 bis 30 Tage).</p>
+      
+      <h3>1. Wie viel Urlaub steht mir gesetzlich zu? (4 Wochen)</h3>
+      <p>Grundsätzlich hat jeder Arbeitnehmer Anspruch auf <strong>4 Wochen bezahlten Urlaub pro Jahr</strong>. Umgerechnet auf Tage bedeutet das:</p>
+      <ul>
+        <li><strong>20 Arbeitstage</strong> bei einer 5-Tage-Woche (Montag bis Freitag)</li>
+        <li><strong>24 Werktage</strong> bei einer 6-Tage-Woche (Montag bis Samstag)</li>
+        <li>Bei Teilzeit (z.B. 3 Tage pro Woche): 3 Tage × 4 Wochen = 12 Urlaubstage</li>
+      </ul>
+
+      <h3>2. Anteilsmäßige Berechnung (Teilurlaub in den ersten 6 Monaten)</h3>
+      <p>Der volle Urlaubsanspruch entsteht in Deutschland erst, wenn das Arbeitsverhältnis 6 Monate ununterbrochen bestanden hat (sogenannte Wartezeit). Innerhalb dieser ersten 6 Monate (Probezeit) erwirbst du für <strong>jeden vollen Monat des Bestehens 1/12 deines Jahresurlaubs</strong>.</p>
+      <p><em>Beispiel:</em> Bei 20 Tagen Jahresanspruch hast du nach einem vollen Monat Anspruch auf 1,66 Tage. Laut BUrlG werden Bruchteile von Urlaubstagen, die mindestens 0,5 ergeben, auf volle Urlaubstage aufgerundet. Nach 1 Monat hättest du also Anspruch auf 2 Tage, nach 2 Monaten auf 3,33 Tage (abgerundet 3 Tage), usw.</p>
+
+      <h3>3. Was passiert bei Kündigung?</h3>
+      <p>Wenn du in der ersten Jahreshälfte (bis 30.06.) aus dem Unternehmen ausscheidest, hast du nur Anspruch auf den Teilurlaub (1/12 pro Monat). Scheidest du in der zweiten Jahreshälfte aus (nach erfüllter Wartezeit von 6 Monaten), hast du laut Gesetz Anspruch auf den gesamten gesetzlichen Jahresurlaub, es sei denn, ein Tarif- oder Arbeitsvertrag sieht eine "pro rata temporis" (zeitanteilige) Kürzung für den übergesetzlichen Mehrurlaub vor.</p>
+      
+      <h2>FAQ</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Ist Samstag ein Urlaubstag?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Das Bundesurlaubsgesetz geht von einer 6-Tage-Woche aus (Werktage = Mo-Sa). Arbeitest du also regulär 6 Tage, zählt der Samstag als Urlaubstag und dein Anspruch liegt bei 24 Tagen. Arbeitest du regulär an 5 Tagen (Arbeitstage = Mo-Fr), musst du für eine freie Woche auch nur 5 Urlaubstage nehmen (Dein Anspruch ist dann 20 Tage).
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Mein Vertrag sagt 30 Tage, der Rechner sagt 20?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Der Rechner berechnet das <strong>gesetzliche Minimum</strong> von 4 Wochen. 30 Tage (6 Wochen) sind ein freiwilliger vertraglicher oder tariflicher Mehrurlaub, der in Deutschland sehr üblich ist, aber gesetzlich nicht vorgeschrieben ist.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const workdaysSelect = document.getElementById('workdays');
+      const calcModeSelect = document.getElementById('calcMode');
+      const monthsWrapper = document.getElementById('monthsWrapper');
+      const monthsInput = document.getElementById('months');
+      
+      const baseWeeks = 4; // BUrlG DE
+      
+      const calculate = () => {
+        const daysPerWeek = parseInt(workdaysSelect.value, 10);
+        const mode = calcModeSelect.value;
+        const months = parseInt(monthsInput.value, 10) || 0;
+        
+        let totalDays = daysPerWeek * baseWeeks;
+        let detailText = `bei ${baseWeeks} Wochen (gesetzliches Minimum) für ein volles Urlaubsjahr.`;
+
+        // Aliquot calculation (DE logic: 1/12 per month, >=0.5 round up)
+        if (mode === 'aliquot') {
+          let calcDays = (totalDays / 12) * months;
+          
+          // BUrlG §5 Abs 2: Bruchteile von Urlaubstagen, die mindestens einen halben Tag ergeben, sind aufzurunden.
+          const decimalPart = calcDays - Math.floor(calcDays);
+          if (decimalPart >= 0.5) {
+            totalDays = Math.ceil(calcDays);
+          } else {
+            // Unclear in BUrlG if it rounds down or stays a fraction. Usually practice leaves it or rounds down. We'll show the exact fraction or round down if requested.
+            // Let's just round to 2 decimals to be safe if not rounded up.
+            totalDays = Math.floor(calcDays * 100) / 100;
+          }
+          
+          detailText = `anteilig für ${months} Monat(e) (nach gesetzlichem Minimum). Bruchteile ab 0,5 wurden aufgerundet.`;
+        }
+
+        document.getElementById('resValue').textContent = `${totalDays.toString().replace('.', ',')} Tage`;
+        document.getElementById('resDetail').textContent = detailText;
+      };
+
+      // Event Listeners
+      workdaysSelect.addEventListener('change', calculate);
+      
+      calcModeSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'aliquot') {
+          monthsWrapper.classList.remove('hidden');
+        } else {
+          monthsWrapper.classList.add('hidden');
+        }
+        calculate();
+      });
+
+      monthsInput.addEventListener('input', calculate);
+
+      // Initial calc
+      calculate();
+    });
+  </script>
+</body>
+</html>

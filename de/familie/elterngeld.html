@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elterngeld Rechner online – Deutschland | rechnify.at</title>
+  <meta name="description" content="Berechne kostenlos dein Elterngeld für Deutschland (Basiselterngeld vs. ElterngeldPlus). Finde heraus, welche Variante dir mehr Geld bringt." />
+  <link rel="canonical" href="https://rechnify.at/de/familie/elterngeld.html" />
+  <link rel="alternate" hreflang="de-at" href="https://rechnify.at/familie/kinderbetreuungsgeld.html" />
+  <link rel="alternate" hreflang="de" href="https://rechnify.at/de/familie/elterngeld.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Elterngeld Rechner Deutschland | rechnify.at" />
+  <meta property="og:description" content="Basiselterngeld vs. ElterngeldPlus berechnen." />
+  <meta property="og:url" content="https://rechnify.at/de/familie/elterngeld.html" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    .input-group { margin-bottom: 16px; }
+    
+    .tab-container { display: flex; gap: 8px; margin-bottom: 24px; }
+    .tab-container .btn-secondary { flex: 1; }
+    .tab-container .btn-secondary.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .result-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+    
+    .big-number { font-size: 32px; font-weight: 800; color: var(--primary); margin: 8px 0; }
+    .sub-number { font-size: 16px; color: var(--muted); }
+
+    .affiliate-banner {
+      margin-top: 24px;
+      padding: 16px;
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .affiliate-banner .icon { font-size: 28px; }
+    .affiliate-banner .content { flex: 1; font-size: 14px; }
+    .affiliate-banner .btn-aff {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .affiliate-banner .btn-aff:hover { background: var(--primary-hover); }
+
+    .help { margin-top: 20px; background: var(--soft); padding: 18px; border-radius: 14px; line-height: 1.7; border: 1px solid var(--border); font-size: 14px; color: var(--muted); }
+
+    @media (max-width: 600px) {
+      .result-grid { grid-template-columns: 1fr; }
+      .affiliate-banner { flex-direction: column; text-align: center; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Elterngeld Rechner online",
+    "operatingSystem": "All",
+    "applicationCategory": "BusinessApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Was ist der Unterschied zwischen Basiselterngeld und ElterngeldPlus?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Das Basiselterngeld ist der reguläre Auszahlungsbetrag für bis zu 14 Monate (bei Aufteilung). Das ElterngeldPlus richtet sich vor allem an Eltern, die während des Bezugs in Teilzeit arbeiten möchten. Es beträgt die Hälfte des Basiselterngeldes, wird dafür aber doppelt so lange ausgezahlt."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Wie hoch ist das maximale Elterngeld in Deutschland?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Das maximale Basiselterngeld beträgt 1.800 € pro Monat, das maximale ElterngeldPlus beträgt 900 € pro Monat."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Wie hoch ist der Mindestsatz beim Elterngeld?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Auch Eltern, die vor der Geburt kein Einkommen hatten (z. B. Studenten, Hausfrauen/Hausmänner), erhalten den Mindestsatz von 300 € pro Monat (Basiselterngeld) bzw. 150 € pro Monat (ElterngeldPlus)."
+      }
+    }]
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/familie/schwangerschaftsrechner.html" class="active">👶 Familie</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill active" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/familie/schwangerschaftsrechner.html">Familie</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Elterngeld (DE)</span>
+  </nav>
+
+  <main class="site-main">
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Elterngeld Rechner (DE)</h1>
+      <p class="subtitle">Berechne die Höhe deines Elterngeldes basierend auf deinem Einkommen. Vergleiche Basiselterngeld und ElterngeldPlus.</p>
+    </div>
+
+    <div class="card calculator-card">
+      <div class="calc-body">
+        
+        <div class="tab-container">
+          <button class="btn-secondary active" id="tabBasis">Basiselterngeld</button>
+          <button class="btn-secondary" id="tabPlus">ElterngeldPlus</button>
+        </div>
+
+        <div class="input-group">
+          <label for="egIncome">Dein durchschnittliches Netto-Einkommen (pro Monat) vor der Geburt</label>
+          <div style="position:relative;">
+            <input type="number" id="egIncome" value="2500" min="0" step="10" />
+            <span style="position:absolute; right:12px; top:12px; color:var(--muted);">€</span>
+          </div>
+          <div class="text-xs text-muted" style="margin-top:4px;">Durchschnitt der letzten 12 Monate.</div>
+        </div>
+
+        <div class="input-group">
+          <label for="egPartner">Nimmt der Partner auch Partnermonate?</label>
+          <select id="egPartner">
+            <option value="nein">Nein</option>
+            <option value="ja">Ja (+ 2 Monate Basis / + 4 Monate Plus)</option>
+          </select>
+        </div>
+
+        <button id="calculate" class="btn" style="width: 100%;">Berechnen</button>
+
+        <div id="result" class="hidden">
+          <div class="result-box">
+            <h3 style="margin-top:0; text-align:center;">Dein Elterngeld (Schätzung)</h3>
+            
+            <div class="result-grid">
+              <div class="result-card">
+                <div class="text-sm text-muted">Auszahlung pro Monat</div>
+                <div class="big-number" id="resMonthly">-- €</div>
+                <div class="sub-number" id="resLimits">Min/Max: --</div>
+              </div>
+              <div class="result-card">
+                <div class="text-sm text-muted">Dauer (Elternteil 1)</div>
+                <div class="big-number" id="resDuration1">-- Monate</div>
+              </div>
+            </div>
+
+            <div class="result-grid hidden" id="partnerResultGrid">
+              <div class="result-card" style="background: var(--soft-row);">
+                <div class="text-sm text-muted">Partner-Dauer</div>
+                <div class="big-number" id="resDuration2">-- Monate</div>
+                <div class="sub-number">zusätzlich</div>
+              </div>
+              <div class="result-card" style="background: var(--soft-row);">
+                <div class="text-sm text-muted">Gesamte Auszahlungsdauer</div>
+                <div class="big-number text-primary" id="resDurationTotal">-- Monate</div>
+              </div>
+            </div>
+
+            <!-- Premium Erstausstattung Box -->
+            <div class="affiliate-banner">
+              <div class="icon">🍼</div>
+              <div class="content">
+                <strong>Bereit für die Erstausstattung?</strong><br/>
+                Erstelle jetzt deine kostenlose Baby-Wunschliste und erhalte tolle Rabatte und Geschenke für die Erstausstattung deines Babys!
+              </div>
+              <a href="https://amzn.to/44UUV2R" target="_blank" rel="noopener" class="btn-aff">Erstausstattung finden</a>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="help">
+          <strong>Gesetzliche Grenzen (Stand 2025):</strong><br/>
+          Das <strong>Basiselterngeld</strong> ist gesetzlich auf maximal <strong>1.800 € pro Monat</strong> gedeckelt (erreicht bei ca. 2.770 € Nettoeinkommen). Der Mindestsatz beträgt <strong>300 €</strong> (auch für Personen ohne vorheriges Einkommen).<br/><br/>
+          <strong>Ersatzrate:</strong> Die Ersatzrate beträgt standardmäßig 65%. Bei einem Einkommen zwischen 1.000 € und 1.220 € steigt sie auf 67%, bei unter 1.000 € schrittweise auf bis zu 100%. All das berücksichtigt dieser Rechner automatisch.
+        </div>
+
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="faq-section" style="margin-top: 32px;">
+        <h2>Häufig gestellte Fragen (FAQs)</h2>
+        
+        <div class="faq-accordion">
+          <div class="faq-item">
+            <button class="faq-question" type="button">Was ist der Unterschied zwischen Basiselterngeld und ElterngeldPlus?</button>
+            <div class="faq-answer">
+              <p>Basiselterngeld wird maximal 14 Monate lang ausgezahlt und ist als voller Lohnersatz gedacht. ElterngeldPlus richtet sich vor allem an Eltern, die bald in Teilzeit arbeiten möchten. Es beträgt die Hälfte des Basiselterngelds, wird dafür aber doppelt so lange ausgezahlt.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" type="button">Wie hoch ist das maximale Elterngeld?</button>
+            <div class="faq-answer">
+              <p>Das Basiselterngeld ist bei 1.800 € gedeckelt, das ElterngeldPlus entsprechend bei 900 € pro Monat.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" type="button">Bekommen auch nicht erwerbstätige Eltern Elterngeld?</button>
+            <div class="faq-answer">
+              <p>Ja. Auch Eltern, die vor der Geburt kein Einkommen hatten (z. B. Hausfrauen/-männer, Studierende oder Bezieher von Bürgergeld), erhalten den Mindestsatz von 300 € (bzw. 150 € bei ElterngeldPlus).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="site-logo-text">rechnify<span>.at</span></span>
+          <p>Kostenlose Online-Rechner und Tools für Deutschland & Österreich.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Familie & Leben</h3>
+          <ul>
+            <li><a href="/familie/schwangerschaftsrechner.html">Schwangerschaftsrechner</a></li>
+            <li><a href="/de/familie/elterngeld.html">Elterngeld</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Info</h3>
+          <ul>
+            <li><a href="/ueber-uns.html">Über uns</a></li>
+            <li><a href="/kontakt.html">Kontakt</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    'use strict';
+
+    const tabBasis = document.getElementById('tabBasis');
+    const tabPlus = document.getElementById('tabPlus');
+    let activeModel = 'basis';
+
+    tabBasis.addEventListener('click', () => {
+      activeModel = 'basis';
+      tabBasis.classList.add('active');
+      tabPlus.classList.remove('active');
+    });
+
+    tabPlus.addEventListener('click', () => {
+      activeModel = 'plus';
+      tabPlus.classList.add('active');
+      tabBasis.classList.remove('active');
+    });
+
+    document.getElementById('calculate').addEventListener('click', () => {
+      const netIncome = parseFloat(document.getElementById('egIncome').value) || 0;
+      const hasPartner = document.getElementById('egPartner').value === 'ja';
+      
+      let rate = 0.65;
+      if (netIncome < 1000) {
+        rate = 0.67 + ((1000 - netIncome) / 2) * 0.001;
+        if (rate > 1.0) rate = 1.0;
+      } else if (netIncome >= 1000 && netIncome <= 1200) {
+        rate = 0.67;
+      }
+
+      let cappedIncome = netIncome;
+      if (cappedIncome > 2770) cappedIncome = 2770;
+      
+      let baseMonthly = cappedIncome * rate;
+      
+      if (baseMonthly > 1800) baseMonthly = 1800;
+      if (baseMonthly < 300) baseMonthly = 300;
+
+      let monthly, limitText, duration1, duration2;
+
+      if (activeModel === 'basis') {
+        monthly = baseMonthly;
+        limitText = 'Grenzen: 300 € – 1.800 €';
+        duration1 = 12;
+        duration2 = hasPartner ? 2 : 0;
+      } else {
+        monthly = baseMonthly / 2;
+        limitText = 'Grenzen: 150 € – 900 €';
+        duration1 = 24;
+        duration2 = hasPartner ? 4 : 0;
+      }
+
+      document.getElementById('resMonthly').textContent = monthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resLimits').textContent = limitText;
+      document.getElementById('resDuration1').textContent = duration1 + ' Monate';
+
+      if (hasPartner) {
+        document.getElementById('partnerResultGrid').classList.remove('hidden');
+        document.getElementById('resDuration2').textContent = duration2 + ' Monate';
+        document.getElementById('resDurationTotal').textContent = (duration1 + duration2) + ' Monate';
+      } else {
+        document.getElementById('partnerResultGrid').classList.add('hidden');
+      }
+
+      document.getElementById('result').classList.remove('hidden');
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  </script>
+</body>
+</html>

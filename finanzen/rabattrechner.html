@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rabattrechner online – Rabatt & neuen Preis berechnen | rechnify.at</title>
+  <meta name="description" content="Kostenloser Rabattrechner. Berechne blitzschnell den neuen Preis nach Abzug von Prozent-Rabatten und erfahre, wie viel du sparst." />
+  <link rel="canonical" href="https://rechnify.at/finanzen/rabattrechner.html" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Rabattrechner online | rechnify.at" />
+  <meta property="og:description" content="Schnell Rabatte in Prozent berechnen und wissen, was es wirklich kostet." />
+  <meta property="og:url" content="https://rechnify.at/finanzen/rabattrechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); }
+    .input-group input, .input-group select { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--border); 
+      border-radius: 10px; 
+      background: var(--input); 
+      color: var(--text); 
+      font-size: 16px; 
+    }
+    
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--soft-row); 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      padding: 24px; 
+    }
+    
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .result-item.highlight { font-weight: bold; font-size: 1.1em; color: var(--primary); }
+    .result-item.success { font-weight: bold; font-size: 1.2em; color: var(--success); border-bottom: none; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Rabattrechner",
+    "description": "Rechner zur Ermittlung von Rabattbeträgen und neuen Preisen.",
+    "url": "https://rechnify.at/finanzen/rabattrechner.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Finanzen</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Rabattrechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Rabattrechner</h1>
+      <p class="subtitle">Was kostet es nach dem Abzug? Berechne Rabatte und Ersparnisse.</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="price">Ursprünglicher Preis (€)</label>
+            <input type="number" id="price" min="0" step="0.01" placeholder="z. B. 120" value="100" />
+          </div>
+          
+          <div class="input-group">
+            <label for="discount">Rabatt (%)</label>
+            <input type="number" id="discount" min="0" max="100" step="0.1" placeholder="z. B. 20" value="20" />
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <label for="additionalDiscount">Zusätzlicher Rabatt / Skonto (%) <span style="font-weight:normal; color:var(--muted);">(optional)</span></label>
+          <input type="number" id="additionalDiscount" min="0" max="100" step="0.1" placeholder="z. B. 3 (für Skonto)" value="" />
+          <div class="text-muted text-xs mt-4">Wird vom bereits rabattierten Preis abgezogen.</div>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <h3 style="margin-top:0; margin-bottom:16px; color:var(--primary);">Ergebnis</h3>
+          
+          <div class="result-item">
+            <span>Alter Preis</span>
+            <span id="resOldPrice">100,00 €</span>
+          </div>
+          <div class="result-item highlight" style="color:var(--danger);">
+            <span>- Ersparnis gesamt</span>
+            <span id="resSaved">20,00 €</span>
+          </div>
+          <div class="result-item success" style="margin-top:8px;">
+            <span>Neuer Preis (Endbetrag)</span>
+            <span id="resNewPrice">80,00 €</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Wie berechnet man einen Rabatt?</h2>
+      <p>Die Berechnung eines Prozentrabatts ist ein klassischer Fall der Prozentrechnung. Um den rabattierten Preis (den neuen Preis) zu berechnen, zieht man den Rabattbetrag vom ursprünglichen Preis (Grundwert) ab.</p>
+      
+      <h3>Die Formeln</h3>
+      
+      <div class="alert alert-info mt-16 mb-16">
+        <strong>1. Rabattbetrag berechnen (Ersparnis):</strong><br/>
+        Rabatt in Euro = (Alter Preis × Rabatt in Prozent) ÷ 100<br/>
+        <em>Beispiel: (100 € × 20) ÷ 100 = 20 €</em>
+      </div>
+
+      <div class="alert alert-info mt-16 mb-16">
+        <strong>2. Neuen Preis berechnen:</strong><br/>
+        Neuer Preis = Alter Preis - Rabattbetrag<br/>
+        <em>Beispiel: 100 € - 20 € = 80 €</em>
+      </div>
+
+      <h3>Was bedeutet "zusätzlicher Rabatt" oder Skonto?</h3>
+      <p>Manchmal gewähren Händler auf einen bereits reduzierten Preis nochmals einen Rabatt, oder im B2B-Bereich zieht man bei schneller Zahlung "Skonto" (z.B. 2% oder 3%) ab. Wichtig dabei ist: Der zweite Rabatt wird nicht einfach mit dem ersten addiert (z.B. 20% + 3% = 23%), sondern er wird <strong>vom bereits reduzierten Betrag</strong> abgezogen.</p>
+      <p><em>Rechenbeispiel (100€ minus 20% minus 3%):</em><br>
+      Schritt 1: 100€ - 20% = 80€.<br>
+      Schritt 2: 80€ - 3% (2,40€) = 77,60€.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const priceInput = document.getElementById('price');
+      const discountInput = document.getElementById('discount');
+      const addDiscountInput = document.getElementById('additionalDiscount');
+      
+      const formatEuro = (num) => new Intl.NumberFormat('de-AT', { style: 'currency', currency: 'EUR' }).format(num);
+      
+      const calculate = () => {
+        const price = parseFloat(priceInput.value) || 0;
+        const discount1 = parseFloat(discountInput.value) || 0;
+        const discount2 = parseFloat(addDiscountInput.value) || 0;
+        
+        let saved1 = price * (discount1 / 100);
+        let intermediatePrice = price - saved1;
+        
+        let saved2 = intermediatePrice * (discount2 / 100);
+        let finalPrice = intermediatePrice - saved2;
+        
+        let totalSaved = saved1 + saved2;
+
+        document.getElementById('resOldPrice').textContent = formatEuro(price);
+        document.getElementById('resSaved').textContent = formatEuro(totalSaved);
+        document.getElementById('resNewPrice').textContent = formatEuro(finalPrice);
+      };
+
+      priceInput.addEventListener('input', calculate);
+      discountInput.addEventListener('input', calculate);
+      addDiscountInput.addEventListener('input', calculate);
+
+      calculate();
+    });
+  </script>
+</body>
+</html>

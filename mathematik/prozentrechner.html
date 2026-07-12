@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prozentrechner online – Einfach Prozente berechnen | rechnify.at</title>
+  <meta name="description" content="Kostenloser Prozentrechner: Berechne schnell Prozentwert, Prozentsatz, Zunahme und Abnahme. Einfach, übersichtlich und 100% lokal im Browser." />
+  <link rel="canonical" href="https://rechnify.at/mathematik/prozentrechner.html" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Prozentrechner | rechnify.at" />
+  <meta property="og:description" content="Berechne Prozente, Zu- und Abschläge blitzschnell online." />
+  <meta property="og:url" content="https://rechnify.at/mathematik/prozentrechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    
+    .calc-section {
+      background: var(--soft-row);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    
+    .calc-section h3 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 1.1em;
+      margin-bottom: 16px;
+    }
+
+    .inline-inputs {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .inline-inputs input {
+      width: 120px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--input);
+      color: var(--text);
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .res-box {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border);
+      font-size: 18px;
+    }
+    
+    .res-val {
+      font-weight: 800;
+      color: var(--success);
+      font-size: 24px;
+    }
+
+    @media(max-width: 500px) {
+      .inline-inputs input { width: 100px; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Prozentrechner",
+    "description": "Kostenloser Online-Prozentrechner. Berechnet Prozentwert, Prozentsatz und Differenzen.",
+    "url": "https://rechnify.at/mathematik/prozentrechner.html",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Mathematik</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Prozentrechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Prozentrechner</h1>
+      <p class="subtitle">Drei einfache Rechner für alle gängigen Prozentrechnungen im Alltag.</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card" style="padding:0;">
+      <div class="calc-body">
+        
+        <!-- CALC 1 -->
+        <div class="calc-section">
+          <h3>1. Prozentwert berechnen</h3>
+          <div class="inline-inputs">
+            <span>Wie viel sind</span>
+            <input type="number" id="c1_p" placeholder="20" />
+            <span>% von</span>
+            <input type="number" id="c1_g" placeholder="150" />
+            <span>?</span>
+          </div>
+          <div class="res-box">
+            Ergebnis: <span class="res-val" id="c1_res">30</span>
+          </div>
+        </div>
+
+        <!-- CALC 2 -->
+        <div class="calc-section">
+          <h3>2. Prozentsatz berechnen</h3>
+          <div class="inline-inputs">
+            <input type="number" id="c2_w" placeholder="30" />
+            <span>ist wie viel Prozent von</span>
+            <input type="number" id="c2_g" placeholder="150" />
+            <span>?</span>
+          </div>
+          <div class="res-box">
+            Ergebnis: <span class="res-val" id="c2_res">20 %</span>
+          </div>
+        </div>
+
+        <!-- CALC 3 -->
+        <div class="calc-section">
+          <h3>3. Zunahme / Abnahme</h3>
+          <div class="inline-inputs">
+            <input type="number" id="c3_g" placeholder="100" />
+            <select id="c3_mode" style="width:130px; font-weight:bold; font-size:16px;">
+              <option value="plus">zuzüglich (+)</option>
+              <option value="minus">abzüglich (-)</option>
+            </select>
+            <input type="number" id="c3_p" placeholder="10" />
+            <span>%</span>
+          </div>
+          <div class="res-box">
+            Ergebnis: <span class="res-val" id="c3_res">110</span> 
+            <span class="text-muted text-sm" style="margin-left:12px; font-weight:normal;" id="c3_diff">(Differenz: 10)</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>So funktioniert die Prozentrechnung</h2>
+      <p>Prozentrechnen gehört zu den wichtigsten mathematischen Fähigkeiten im Alltag – egal ob beim Einkaufen (Rabatte), bei der Bank (Zinsen) oder in der Arbeit. Das Wort <strong>Prozent</strong> kommt aus dem Lateinischen (<em>pro centum</em>) und bedeutet wörtlich „von Hundert“.</p>
+      
+      <h3>Die drei wichtigsten Begriffe</h3>
+      <ul>
+        <li><strong>Grundwert (G):</strong> Das Ganze (100 %). Beispiel: Der reguläre Preis eines T-Shirts ist 50 €. (50 = Grundwert)</li>
+        <li><strong>Prozentsatz (p %):</strong> Der Anteil in Prozent. Beispiel: Es gibt 20 % Rabatt. (20 = Prozentsatz)</li>
+        <li><strong>Prozentwert (W):</strong> Der berechnete Wert in Zahlen. Beispiel: Der Rabatt beträgt 10 €. (10 = Prozentwert)</li>
+      </ul>
+
+      <h3>Die Grundformel</h3>
+      <div class="alert alert-info mt-16 mb-16">
+        <strong>Prozentwert (W) = Grundwert (G) × (Prozentsatz (p) ÷ 100)</strong>
+      </div>
+      
+      <p>Um unsere Rechner zu benutzen, musst du dir diese Formeln aber nicht merken. Trage einfach deine Werte in die entsprechenden Lücken ein und das Ergebnis wird in Echtzeit berechnet.</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      const formatResult = (num) => {
+        if (!isFinite(num) || isNaN(num)) return '-';
+        // Max 4 decimal places
+        return parseFloat(num.toFixed(4)).toString().replace('.', ',');
+      };
+
+      // CALC 1
+      const c1_p = document.getElementById('c1_p');
+      const c1_g = document.getElementById('c1_g');
+      const c1_res = document.getElementById('c1_res');
+      const calc1 = () => {
+        const p = parseFloat(c1_p.value.replace(',','.'));
+        const g = parseFloat(c1_g.value.replace(',','.'));
+        if(!isNaN(p) && !isNaN(g)) {
+          c1_res.textContent = formatResult((g * p) / 100);
+        } else {
+          c1_res.textContent = '-';
+        }
+      };
+      c1_p.addEventListener('input', calc1);
+      c1_g.addEventListener('input', calc1);
+
+      // CALC 2
+      const c2_w = document.getElementById('c2_w');
+      const c2_g = document.getElementById('c2_g');
+      const c2_res = document.getElementById('c2_res');
+      const calc2 = () => {
+        const w = parseFloat(c2_w.value.replace(',','.'));
+        const g = parseFloat(c2_g.value.replace(',','.'));
+        if(!isNaN(w) && !isNaN(g) && g !== 0) {
+          c2_res.textContent = formatResult((w / g) * 100) + ' %';
+        } else {
+          c2_res.textContent = '- %';
+        }
+      };
+      c2_w.addEventListener('input', calc2);
+      c2_g.addEventListener('input', calc2);
+
+      // CALC 3
+      const c3_g = document.getElementById('c3_g');
+      const c3_mode = document.getElementById('c3_mode');
+      const c3_p = document.getElementById('c3_p');
+      const c3_res = document.getElementById('c3_res');
+      const c3_diff = document.getElementById('c3_diff');
+      const calc3 = () => {
+        const g = parseFloat(c3_g.value.replace(',','.'));
+        const p = parseFloat(c3_p.value.replace(',','.'));
+        const mode = c3_mode.value;
+        
+        if(!isNaN(p) && !isNaN(g)) {
+          const diff = (g * p) / 100;
+          const res = mode === 'plus' ? g + diff : g - diff;
+          c3_res.textContent = formatResult(res);
+          c3_diff.textContent = `(Differenz: ${formatResult(diff)})`;
+        } else {
+          c3_res.textContent = '-';
+          c3_diff.textContent = '';
+        }
+      };
+      c3_g.addEventListener('input', calc3);
+      c3_p.addEventListener('input', calc3);
+      c3_mode.addEventListener('change', calc3);
+
+    });
+  </script>
+</body>
+</html>

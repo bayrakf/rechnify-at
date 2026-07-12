@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Altersrechner online – Exaktes Alter berechnen | rechnify.at</title>
+  <meta name="description" content="Berechne dein exaktes Alter in Jahren, Monaten, Wochen und Tagen. Finde heraus, an welchem Wochentag du geboren wurdest." />
+  <link rel="canonical" href="https://rechnify.at/alltag/altersrechner.html" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Altersrechner | rechnify.at" />
+  <meta property="og:description" content="Wie alt bist du ganz genau? Berechne dein Alter in Tagen und erfahre deinen Geburts-Wochentag." />
+  <meta property="og:url" content="https://rechnify.at/alltag/altersrechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); }
+    .input-group input { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--border); 
+      border-radius: 10px; 
+      background: var(--input); 
+      color: var(--text); 
+      font-size: 16px; 
+    }
+    
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--soft-row); 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      padding: 24px; 
+      text-align: center;
+    }
+    
+    .result-value {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: var(--primary);
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .stat-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 8px;
+    }
+    .stat-val { font-size: 20px; font-weight: bold; color: var(--text); }
+    .stat-lbl { font-size: 12px; color: var(--muted); text-transform: uppercase; }
+    @media(max-width: 500px) { .stats-grid { grid-template-columns: 1fr; } }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Altersrechner",
+    "description": "Exakter Altersrechner in Jahren, Monaten, Wochen und Tagen.",
+    "url": "https://rechnify.at/alltag/altersrechner.html",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Alltag</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Altersrechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Altersrechner</h1>
+      <p class="subtitle">Wie alt bist du exakt? Berechne dein Alter in Tagen, Wochen und Monaten.</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="birthDate">Geburtsdatum</label>
+            <input type="date" id="birthDate" />
+          </div>
+          
+          <div class="input-group">
+            <label for="targetDate">Ziel-Datum (Standard: Heute)</label>
+            <input type="date" id="targetDate" />
+          </div>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <div style="font-size:14px; color:var(--muted); margin-bottom:8px;">Dein exaktes Alter:</div>
+          <div class="result-value" id="resExact">-</div>
+          
+          <div style="font-size:16px; color:var(--text); margin-bottom:16px;">
+            Du wurdest an einem <strong id="resWeekday" style="color:var(--primary);">...</strong> geboren.
+          </div>
+          
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="stat-val" id="resTotalMonths">-</div>
+              <div class="stat-lbl">Monate gesamt</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-val" id="resTotalWeeks">-</div>
+              <div class="stat-lbl">Wochen gesamt</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-val" id="resTotalDays">-</div>
+              <div class="stat-lbl">Tage gesamt</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Warum ein Altersrechner?</h2>
+      <p>Es ist einfach, sein Alter in vollen Jahren zu kennen. Doch weißt du auch, wie viele tausend Tage du schon auf dieser Welt verbringst? Oder an welchem Wochentag du genau geboren wurdest? Mit diesem Rechner findest du es in Sekundenschnelle heraus.</p>
+      
+      <h3>Historische Ereignisse und Jubiläen</h3>
+      <p>Ein Altersrechner hilft nicht nur bei der Bestimmung des eigenen Alters, sondern auch bei der Berechnung von historischen Zeitspannen. So kannst du ganz einfach ermitteln, wie viel Zeit zwischen zwei Ereignissen (z. B. der Mondlandung und dem Fall der Berliner Mauer) vergangen ist.</p>
+
+      <h3>Wie viele Wochen hat ein Jahr?</h3>
+      <p>Ein reguläres Jahr hat 365 Tage und exakt 52,14 Wochen. Ein Schaltjahr, das alle 4 Jahre stattfindet (wie 2024 oder 2028), hat 366 Tage und dementsprechend 52,28 Wochen. Unser Rechner berücksichtigt alle Schaltjahre bei der exakten Berechnung der Tage!</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const birthDate = document.getElementById('birthDate');
+      const targetDate = document.getElementById('targetDate');
+      
+      // Default to today
+      const today = new Date();
+      targetDate.value = today.toISOString().split('T')[0];
+      
+      const weekdays = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+
+      const calculate = () => {
+        if (!birthDate.value || !targetDate.value) return;
+        
+        let d1 = new Date(birthDate.value);
+        let d2 = new Date(targetDate.value);
+        
+        // If birth is after target, swap or show error
+        if (d1 > d2) {
+          document.getElementById('resExact').textContent = 'Fehler: Geburt nach Ziel-Datum!';
+          return;
+        }
+        
+        const bDay = d1.getDay();
+        document.getElementById('resWeekday').textContent = weekdays[bDay];
+
+        // Exact age in years, months, days
+        let years = d2.getFullYear() - d1.getFullYear();
+        let months = d2.getMonth() - d1.getMonth();
+        let days = d2.getDate() - d1.getDate();
+
+        if (days < 0) {
+          months--;
+          // Days in previous month
+          const prevMonth = new Date(d2.getFullYear(), d2.getMonth(), 0).getDate();
+          days += prevMonth;
+        }
+        
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+
+        let exactStr = [];
+        if (years > 0) exactStr.push(`${years} ${years === 1 ? 'Jahr' : 'Jahre'}`);
+        if (months > 0) exactStr.push(`${months} ${months === 1 ? 'Monat' : 'Monate'}`);
+        if (days > 0 || exactStr.length === 0) exactStr.push(`${days} ${days === 1 ? 'Tag' : 'Tage'}`);
+        
+        document.getElementById('resExact').textContent = exactStr.join(', ');
+
+        // Totals
+        const timeDiff = Math.abs(d2.getTime() - d1.getTime());
+        const totalDays = Math.floor(timeDiff / (1000 * 3600 * 24));
+        const totalWeeks = Math.floor(totalDays / 7);
+        
+        // Total months approx (years * 12 + diff in months)
+        let totM = (d2.getFullYear() - d1.getFullYear()) * 12 + (d2.getMonth() - d1.getMonth());
+        if (d2.getDate() < d1.getDate()) totM--;
+        if (totM < 0) totM = 0;
+
+        document.getElementById('resTotalDays').textContent = totalDays.toLocaleString('de-AT');
+        document.getElementById('resTotalWeeks').textContent = totalWeeks.toLocaleString('de-AT');
+        document.getElementById('resTotalMonths').textContent = totM.toLocaleString('de-AT');
+      };
+
+      birthDate.addEventListener('input', calculate);
+      targetDate.addEventListener('input', calculate);
+    });
+  </script>
+</body>
+</html>

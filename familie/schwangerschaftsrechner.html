@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schwangerschaftsrechner online – SSW & Geburtstermin | rechnify.at</title>
+  <meta name="description" content="Kostenloser Schwangerschaftsrechner: Berechne deinen voraussichtlichen Geburtstermin (EGT), die aktuelle Schwangerschaftswoche (SSW) und alle wichtigen Meilensteine." />
+  <link rel="canonical" href="https://rechnify.at/familie/schwangerschaftsrechner.html" />
+  
+  <link rel="alternate" hreflang="de-at" href="https://rechnify.at/familie/schwangerschaftsrechner.html" />
+  <link rel="alternate" hreflang="de-de" href="https://rechnify.at/de/familie/schwangerschaftsrechner.html" />
+  <link rel="alternate" hreflang="de" href="https://rechnify.at/familie/schwangerschaftsrechner.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Schwangerschaftsrechner | rechnify.at" />
+  <meta property="og:description" content="Berechne SSW und Geburtstermin kostenlos." />
+  <meta property="og:url" content="https://rechnify.at/familie/schwangerschaftsrechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    .input-group { margin-bottom: 16px; }
+    .method-toggle { display: flex; gap: 8px; margin-bottom: 24px; }
+    .method-toggle .btn-secondary { flex: 1; }
+    .method-toggle .btn-secondary.active { background: var(--primary); color: white; border-color: var(--primary); }
+    
+    .timeline { margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
+    .milestone { background: var(--soft-row); border: 1px solid var(--border); padding: 16px; border-radius: 12px; display: flex; gap: 16px; align-items: flex-start; }
+    .milestone-icon { font-size: 24px; background: var(--soft); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .milestone-content h4 { margin: 0 0 4px 0; color: var(--text); }
+    .milestone-date { font-weight: bold; color: var(--primary); font-size: 16px; }
+    .milestone-desc { color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; text-align: center; }
+    .result-box .big-number { font-size: 32px; font-weight: 800; color: var(--primary); margin: 8px 0; }
+    
+    .progress-bar { width: 100%; height: 24px; background: var(--border); border-radius: 12px; overflow: hidden; margin: 16px 0; position: relative; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #e91e63, var(--primary)); width: 0%; transition: width 1s ease-in-out; }
+    .progress-text { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+
+    .help { margin-top: 20px; background: var(--soft); padding: 18px; border-radius: 14px; line-height: 1.7; border: 1px solid var(--border); font-size: 14px; color: var(--muted); }
+
+    .affiliate-banner {
+      margin-top: 24px;
+      padding: 16px;
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .affiliate-banner .icon { font-size: 28px; }
+    .affiliate-banner .content { flex: 1; font-size: 14px; text-align: left; }
+    .affiliate-banner .btn-aff {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .affiliate-banner .btn-aff:hover { background: var(--primary-hover); }
+
+    @media (max-width: 600px) {
+      .affiliate-banner { flex-direction: column; text-align: center; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Schwangerschaftsrechner online",
+    "operatingSystem": "All",
+    "applicationCategory": "BusinessApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/familie/schwangerschaftsrechner.html" class="active">👶 Familie</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/familie/schwangerschaftsrechner.html">Familie</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Schwangerschaftsrechner</span>
+  </nav>
+
+  <main class="site-main">
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Schwangerschaftsrechner</h1>
+      <p class="subtitle">Berechne deinen voraussichtlichen Geburtstermin (EGT), die aktuelle SSW und alle wichtigen Meilensteine deiner Schwangerschaft.</p>
+    </div>
+
+    <div class="card calculator-card">
+      <div class="calc-body">
+        
+        <div class="method-toggle">
+          <button class="btn-secondary active" id="btnMethodPeriode">Letzte Periode (Naegele-Regel)</button>
+          <button class="btn-secondary" id="btnMethodUltraschall">Ultraschall / IVF</button>
+        </div>
+
+        <!-- Method: Periode -->
+        <div id="methodPeriode">
+          <div class="input-group">
+            <label for="lastPeriod">Erster Tag der letzten Periode</label>
+            <input type="date" id="lastPeriod" />
+          </div>
+          <div class="input-group">
+            <label for="cycleLength">Durchschnittliche Zykluslänge (in Tagen)</label>
+            <input type="number" id="cycleLength" value="28" min="21" max="45" />
+            <div class="text-xs text-muted" style="margin-top: 4px;">Der Standard sind 28 Tage.</div>
+          </div>
+        </div>
+
+        <!-- Method: Ultraschall -->
+        <div id="methodUltraschall" class="hidden">
+          <div class="input-group">
+            <label for="knownDate">Bekanntes Datum (EGT oder Empfängnis)</label>
+            <input type="date" id="knownDate" />
+          </div>
+          <div class="input-group">
+            <label for="knownType">Was bedeutet dieses Datum?</label>
+            <select id="knownType">
+              <option value="egt">Voraussichtlicher Geburtstermin (EGT laut Arzt)</option>
+              <option value="empfaengnis">Tag der Empfängnis / Eisprung / Punktion</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="calculate" class="btn" style="width: 100%;">Berechnen</button>
+
+        <div id="result" class="hidden">
+          <div class="result-box">
+            <h3 style="margin-top:0;">Voraussichtlicher Geburtstermin (EGT)</h3>
+            <div class="big-number" id="resEgt">--</div>
+            
+            <p style="margin: 16px 0 8px 0; font-size:18px;">Du bist aktuell in der:</p>
+            <div class="big-number" id="resSsw" style="font-size:28px; color:var(--text);">--</div>
+            
+            <div class="progress-bar">
+              <div class="progress-fill" id="resProgress" style="width:0%;"></div>
+              <div class="progress-text" id="resProgressText">--%</div>
+            </div>
+            <p class="text-sm text-muted">Noch ca. <strong id="resDaysLeft">--</strong> Tage bis zur Geburt.</p>
+
+            <!-- Premium Erstausstattung Box -->
+            <div class="affiliate-banner">
+              <div class="icon">🍼</div>
+              <div class="content">
+                <strong>Bereit für die Erstausstattung?</strong><br/>
+                Erstelle jetzt deine kostenlose Baby-Wunschliste und erhalte tolle Rabatte und Geschenke für die Erstausstattung deines Babys!
+              </div>
+              <a href="https://amzn.to/44UUV2R" target="_blank" rel="noopener" class="btn-aff">Erstausstattung finden</a>
+            </div>
+          </div>
+
+          <h3 style="margin-top: 32px;">Deine Meilensteine</h3>
+          <div class="timeline">
+            
+            <div class="milestone">
+              <div class="milestone-icon">🌱</div>
+              <div class="milestone-content">
+                <h3>Empfängnis (Schätzung)</h3>
+                <div class="milestone-date" id="msEmpfaengnis">--</div>
+                <div class="milestone-desc">Etwa 2 Wochen nach dem 1. Tag der letzten Periode.</div>
+              </div>
+            </div>
+            
+            <div class="milestone">
+              <div class="milestone-icon">🧬</div>
+              <div class="milestone-content">
+                <h3>Erstes Trimester (1. - 12. SSW)</h3>
+                <div class="milestone-date" id="msTri1">--</div>
+                <div class="milestone-desc">Wichtige Entwicklungsphase der Organe.</div>
+              </div>
+            </div>
+
+            <div class="milestone">
+              <div class="milestone-icon">👶</div>
+              <div class="milestone-content">
+                <h3>Zweites Trimester (13. - 27. SSW)</h3>
+                <div class="milestone-date" id="msTri2">--</div>
+                <div class="milestone-desc">Oft die angenehmste Zeit. Das Baby wächst und man spürt erste Tritte.</div>
+              </div>
+            </div>
+
+            <div class="milestone">
+              <div class="milestone-icon">⚖️</div>
+              <div class="milestone-content">
+                <h4 id="msMutterschutzTitle">Beginn Mutterschutz (AT)</h3>
+                <div class="milestone-date" id="msMutterschutz">--</div>
+                <div class="milestone-desc" id="msMutterschutzDesc">8 Wochen vor dem EGT (in DE 6 Wochen).</div>
+              </div>
+            </div>
+
+            <div class="milestone">
+              <div class="milestone-icon">🎉</div>
+              <div class="milestone-content">
+                <h3>Geburtstermin</h3>
+                <div class="milestone-date" id="msGeburt">--</div>
+                <div class="milestone-desc">Nur ca. 4% der Babys kommen exakt an diesem Tag zur Welt!</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="help">
+          <strong>Hinweis zur Berechnung:</strong> Wir nutzen die medizinisch anerkannte Naegele-Regel zur Schätzung des EGT. Jede Schwangerschaft ist individuell – Abweichungen von +/- 2 Wochen um den Termin herum sind völlig normal. Die offiziellen und verbindlichen Termine (für z.B. Mutterschutz) legt immer dein Arzt / deine Ärztin per Ultraschall fest.
+        </div>
+
+      </div>
+    </div>
+    
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="site-logo-text">rechnify<span>.at</span></span>
+          <p>Kostenlose Online-Rechner und Tools für Österreich & Deutschland.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Familie & Leben</h3>
+          <ul>
+            <li><a href="/familie/schwangerschaftsrechner.html">Schwangerschaftsrechner</a></li>
+            <li><a href="/familie/kinderbetreuungsgeld.html" class="link-at-only">Kinderbetreuungsgeld</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Info</h3>
+          <ul>
+            <li><a href="/ueber-uns.html">Über uns</a></li>
+            <li><a href="/kontakt.html">Kontakt</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    'use strict';
+
+    const btnPeriode = document.getElementById('btnMethodPeriode');
+    const btnUltraschall = document.getElementById('btnMethodUltraschall');
+    const divPeriode = document.getElementById('methodPeriode');
+    const divUltraschall = document.getElementById('methodUltraschall');
+    
+    let currentMethod = 'periode';
+
+    btnPeriode.addEventListener('click', () => {
+      currentMethod = 'periode';
+      btnPeriode.classList.add('active');
+      btnUltraschall.classList.remove('active');
+      divPeriode.classList.remove('hidden');
+      divUltraschall.classList.add('hidden');
+    });
+
+    btnUltraschall.addEventListener('click', () => {
+      currentMethod = 'ultraschall';
+      btnUltraschall.classList.add('active');
+      btnPeriode.classList.remove('active');
+      divUltraschall.classList.remove('hidden');
+      divPeriode.classList.add('hidden');
+    });
+
+    // Default to today for inputs
+    document.getElementById('lastPeriod').value = new Date().toISOString().split('T')[0];
+    document.getElementById('knownDate').value = new Date().toISOString().split('T')[0];
+
+    document.getElementById('calculate').addEventListener('click', () => {
+      let egtDate;
+      let startPregnancyDate; // The date considered "Day 0" (usually 1. day of last period for a 28 day cycle)
+      
+      if (currentMethod === 'periode') {
+        const lastPeriod = new Date(document.getElementById('lastPeriod').value);
+        if (isNaN(lastPeriod)) return alert('Bitte ein gültiges Datum wählen.');
+        const cycle = parseInt(document.getElementById('cycleLength').value) || 28;
+        
+        // Naegele Rule: LMP + 280 days + (cycle - 28)
+        egtDate = new Date(lastPeriod);
+        egtDate.setDate(egtDate.getDate() + 280 + (cycle - 28));
+        
+        startPregnancyDate = new Date(lastPeriod);
+        startPregnancyDate.setDate(startPregnancyDate.getDate() + (cycle - 28)); 
+      } else {
+        const known = new Date(document.getElementById('knownDate').value);
+        if (isNaN(known)) return alert('Bitte ein gültiges Datum wählen.');
+        const type = document.getElementById('knownType').value;
+        
+        if (type === 'egt') {
+          egtDate = known;
+          startPregnancyDate = new Date(egtDate);
+          startPregnancyDate.setDate(startPregnancyDate.getDate() - 280);
+        } else {
+          // Empfängnis (Conception)
+          egtDate = new Date(known);
+          egtDate.setDate(egtDate.getDate() + 266); // Conception is approx 14 days after LMP
+          startPregnancyDate = new Date(known);
+          startPregnancyDate.setDate(startPregnancyDate.getDate() - 14);
+        }
+      }
+
+      // Calculate Weeks
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const msPerDay = 1000 * 60 * 60 * 24;
+      const daysPregnant = Math.floor((today - startPregnancyDate) / msPerDay);
+      
+      const isAT = (localStorage.getItem('countryPref') || 'at') === 'at';
+
+      const sswFull = Math.floor(daysPregnant / 7);
+      const sswDays = daysPregnant % 7;
+      let sswString = 'Nicht schwanger / Vor Empfängnis';
+      let progress = 0;
+      let daysLeft = Math.floor((egtDate - today) / msPerDay);
+      
+      if (daysLeft < 0) daysLeft = 0;
+
+      if (daysPregnant >= 0 && daysPregnant <= 294) { // Up to 42 weeks
+        sswString = `${sswFull + 1}. SSW (${sswFull}W + ${sswDays}T)`;
+        progress = Math.min(100, (daysPregnant / 280) * 100);
+      } else if (daysPregnant > 294) {
+        sswString = 'Entbunden';
+        progress = 100;
+        daysLeft = 0;
+      }
+
+      document.getElementById('resEgt').textContent = egtDate.toLocaleDateString('de-DE');
+      document.getElementById('resSsw').textContent = sswString;
+      document.getElementById('resProgress').style.width = `${progress}%`;
+      document.getElementById('resProgressText').textContent = `${Math.round(progress)}%`;
+      document.getElementById('resDaysLeft').textContent = daysLeft;
+
+      // Milestones
+      const empfaengnis = new Date(startPregnancyDate);
+      empfaengnis.setDate(empfaengnis.getDate() + 14);
+      document.getElementById('msEmpfaengnis').textContent = empfaengnis.toLocaleDateString('de-DE');
+
+      const tri1 = new Date(startPregnancyDate);
+      document.getElementById('msTri1').textContent = tri1.toLocaleDateString('de-DE');
+
+      const tri2 = new Date(startPregnancyDate);
+      tri2.setDate(tri2.getDate() + 12*7); // week 13
+      document.getElementById('msTri2').textContent = tri2.toLocaleDateString('de-DE');
+
+      // Mutterschutz differs AT vs DE
+      const mutterschutz = new Date(egtDate);
+      if (isAT) {
+        mutterschutz.setDate(mutterschutz.getDate() - (8 * 7)); // 8 weeks in AT
+        document.getElementById('msMutterschutzTitle').textContent = 'Beginn Mutterschutz (AT)';
+        document.getElementById('msMutterschutzDesc').textContent = '8 Wochen vor dem EGT (gemäß österreichischem Gesetz).';
+      } else {
+        mutterschutz.setDate(mutterschutz.getDate() - (6 * 7)); // 6 weeks in DE
+        document.getElementById('msMutterschutzTitle').textContent = 'Beginn Mutterschutz (DE)';
+        document.getElementById('msMutterschutzDesc').textContent = '6 Wochen vor dem EGT (gemäß deutschem Gesetz).';
+      }
+      document.getElementById('msMutterschutz').textContent = mutterschutz.toLocaleDateString('de-DE');
+
+      document.getElementById('msGeburt').textContent = egtDate.toLocaleDateString('de-DE');
+
+      document.getElementById('result').classList.remove('hidden');
+      
+      // Scroll to result smoothly
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+  </script>
+</body>
+</html>

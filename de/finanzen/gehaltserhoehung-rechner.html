@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gehaltserhöhung Rechner Deutschland (Brutto/Netto) | rechnify.at</title>
+  <meta name="description" content="Berechne kostenlos, wie viel Netto von deiner Gehaltserhöhung in Deutschland übrig bleibt. Vorher-Nachher-Vergleich inkl. Steuerklasse & SV." />
+  <link rel="canonical" href="https://rechnify.at/de/finanzen/gehaltserhoehung-rechner.html" />
+  <link rel="alternate" hreflang="de-at" href="https://rechnify.at/finanzen/gehaltserhoehung-rechner.html" />
+  <link rel="alternate" hreflang="de" href="https://rechnify.at/de/finanzen/gehaltserhoehung-rechner.html" />
+
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    
+    .diff-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--primary-light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .diff-display .diff-val { font-size: 38px; font-weight: 800; color: var(--primary); margin: 8px 0; }
+
+    .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .comparison-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+    .comparison-card h4 { margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+
+    .details-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    .details-table td { padding: 8px 0; border-bottom: 1px dashed var(--border); }
+    .details-table tr:last-child td { border-bottom: none; }
+
+    .affiliate-banner {
+      margin-top: 24px;
+      padding: 16px;
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .affiliate-banner .icon { font-size: 28px; }
+    .affiliate-banner .content { flex: 1; font-size: 14px; }
+    .affiliate-banner .btn-aff {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .affiliate-banner .btn-aff:hover { background: var(--primary-hover); }
+
+    @media (max-width: 600px) {
+      .input-row, .comparison-grid { grid-template-columns: 1fr; }
+      .affiliate-banner { flex-direction: column; text-align: center; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Gehaltserhöhung Rechner Deutschland",
+    "operatingSystem": "All",
+    "applicationCategory": "FinanceApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/familie/schwangerschaftsrechner.html">👶 Familie</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill active" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <div class="calculator-container">
+      <div class="calculator-card">
+        
+        <div class="calc-header">
+          <div class="calc-icon">📈</div>
+          <h1>Gehaltserhöhung Rechner (DE)</h1>
+          <p>Finde heraus, wie viel Netto-Plus dir von deiner Bruttogehaltserhöhung in Deutschland wirklich bleibt.</p>
+        </div>
+
+        <div class="calc-body">
+          <div class="input-row">
+            <div class="input-group">
+              <label for="currentGross">Aktuelles Bruttogehalt (Monat)</label>
+              <div class="input-suffix">
+                <input type="number" id="currentGross" value="3500" min="0" step="100">
+                <span class="suffix">€</span>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="raiseAmount">Erhöhung (Brutto / Monat)</label>
+              <div class="input-suffix">
+                <input type="number" id="raiseAmount" value="300" min="0" step="50">
+                <span class="suffix">€</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="input-group">
+              <label for="taxClass">Steuerklasse</label>
+              <select id="taxClass">
+                <option value="1">Klasse 1 (Single / ledig)</option>
+                <option value="3">Klasse 3 (Verheiratet, Besserverdiener)</option>
+                <option value="4">Klasse 4 (Verheiratet, gleich verdienend)</option>
+                <option value="5">Klasse 5 (Verheiratet, Geringverdiener)</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="churchTax">Kirchensteuer</label>
+              <select id="churchTax">
+                <option value="nein">Nein</option>
+                <option value="ja">Ja (ca. 9%)</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Erhöhung berechnen</button>
+
+          <div id="result" class="result-box hidden">
+            
+            <div class="diff-display">
+              <div class="text-sm text-muted">Dein reales monatliches Netto-Plus</div>
+              <div class="diff-val" id="resNetMonthlyDiff">+ 0,00 €</div>
+              <div class="text-xs text-muted" id="resPercentageKeep">Du behältst ca. --% deiner Erhöhung.</div>
+            </div>
+
+            <div class="comparison-grid">
+              <!-- Vorher -->
+              <div class="comparison-card">
+                <h4 class="text-muted">Vor der Erhöhung</h4>
+                <table class="details-table text-sm">
+                  <tr><td>Brutto monatlich:</td><td class="text-right" id="grossOld">-- €</td></tr>
+                  <tr><td>Sozialabgaben:</td><td class="text-right text-danger" id="svOld">-- €</td></tr>
+                  <tr><td>Lohnsteuer:</td><td class="text-right text-danger" id="taxOld">-- €</td></tr>
+                  <tr style="font-weight:600;"><td>Netto monatlich:</td><td class="text-right text-success" id="netOld">-- €</td></tr>
+                </table>
+              </div>
+              
+              <!-- Nachher -->
+              <div class="comparison-card" style="border-color: var(--primary);">
+                <h4>Nach der Erhöhung</h4>
+                <table class="details-table text-sm">
+                  <tr><td>Brutto monatlich:</td><td class="text-right" id="grossNew">-- €</td></tr>
+                  <tr><td>Sozialabgaben:</td><td class="text-right text-danger" id="svNew">-- €</td></tr>
+                  <tr><td>Lohnsteuer:</td><td class="text-right text-danger" id="taxNew">-- €</td></tr>
+                  <tr style="font-weight:600;"><td>Netto monatlich:</td><td class="text-right text-success" id="netNew">-- €</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 14px;">
+              <strong>Zusätzliche Auswirkungen aufs Jahr:</strong>
+              <div style="display:flex; justify-content:space-between; margin-top: 8px;">
+                <span class="text-muted">Zusätzliches Brutto (Jahr):</span>
+                <span id="resGrossYearlyDiff">-- €</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                <span class="text-muted">Zusätzliches Netto (Jahr):</span>
+                <span class="text-success" style="font-weight:600;" id="resNetYearlyDiff">-- €</span>
+              </div>
+            </div>
+
+            <!-- Premium Girokonto Affiliate Box -->
+            <div class="affiliate-banner">
+              <div class="icon">💳</div>
+              <div class="content">
+                <strong>Mehr Netto vom Brutto behalten?</strong><br/>
+                Wechsle zu einem komplett gebührenfreien Girokonto in Deutschland und spare bis zu 150 € Kontoführungsgebühren pro Jahr!
+              </div>
+              <a href="#" target="_blank" rel="noopener" class="btn-aff">Girokonten vergleichen</a>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="help">
+          <strong>Steuerliche Progression in Deutschland (2025):</strong><br/>
+          In Deutschland steigt der Lohnsteuersatz progressiv an (Stufen von 14% bis 42%/45%). Eine Gehaltserhöhung wird daher oft mit einem höheren Grenzsteuersatz versteuert als dein bisheriges Einkommen. Dieser Rechner zeigt dir exakt den Grenzsteuereffekt auf deine Gehaltserhöhung.
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="site-logo-text">rechnify<span>.at</span></span>
+          <p>Kostenlose Online-Rechner und Tools für Deutschland & Österreich.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Finanzen</h4>
+          <ul>
+            <li><a href="/de/finanzen/gehaltsrechner.html">Gehaltsrechner</a></li>
+            <li><a href="/de/finanzen/gehaltserhoehung-rechner.html">Gehaltserhöhung Rechner</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Info</h4>
+          <ul>
+            <li><a href="/ueber-uns.html">Über uns</a></li>
+            <li><a href="/kontakt.html">Kontakt</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    'use strict';
+
+    // Same calculation engine as DE Gehaltsrechner
+    function calculateDENet(grossMonthly, taxClass, churchTaxInput) {
+      const grossYearly = grossMonthly * 12;
+      
+      let kvBase = grossMonthly > 5512.50 ? 5512.50 : grossMonthly;
+      let rvBase = grossMonthly > 7550 ? 7550 : grossMonthly;
+      
+      const kv = kvBase * 0.0815; // 7.3% + 0.85% avg
+      const pv = kvBase * 0.022;
+      const rv = rvBase * 0.093;
+      const av = rvBase * 0.013;
+      
+      const svMonthly = kv + pv + rv + av;
+      
+      let freibetrag = 12084;
+      if (taxClass === '3') freibetrag = 24168;
+      if (taxClass === '5') freibetrag = 0;
+      
+      let taxableIncome = grossYearly - (svMonthly * 12) - freibetrag;
+      if (taxableIncome < 0) taxableIncome = 0;
+      
+      let taxYearly = 0;
+      if (taxClass === '5') {
+        taxYearly = taxableIncome * 0.35;
+      } else {
+        if (taxableIncome > 277826) {
+          taxYearly += (taxableIncome - 277826) * 0.45;
+          taxYearly += (277826 - 66760) * 0.42;
+          taxYearly += (66760 - 17005) * 0.24;
+          taxYearly += (17005 - 0) * 0.14;
+        } else if (taxableIncome > 66760) {
+          taxYearly += (taxableIncome - 66760) * 0.42;
+          taxYearly += (66760 - 17005) * 0.24;
+          taxYearly += (17005 - 0) * 0.14;
+        } else if (taxableIncome > 17005) {
+          taxYearly += (taxableIncome - 17005) * 0.24;
+          taxYearly += (17005 - 0) * 0.14;
+        } else if (taxableIncome > 0) {
+          taxYearly += taxableIncome * 0.14;
+        }
+      }
+      
+      let taxMonthly = taxYearly / 12;
+      let churchTaxMonthly = churchTaxInput ? taxMonthly * 0.09 : 0;
+      
+      const netMonthly = grossMonthly - svMonthly - taxMonthly - churchTaxMonthly;
+      const totalNetYear = netMonthly * 12;
+      const totalGrossYear = grossYearly;
+
+      return {
+        grossMonthly,
+        svMonthly: svMonthly + churchTaxMonthly, // grouping for simple display
+        taxMonthly,
+        netMonthly,
+        totalGrossYear,
+        totalNetYear
+      };
+    }
+
+    document.getElementById('calculate').addEventListener('click', () => {
+      const currentGross = parseFloat(document.getElementById('currentGross').value) || 0;
+      const raiseAmount = parseFloat(document.getElementById('raiseAmount').value) || 0;
+      const taxClass = document.getElementById('taxClass').value;
+      const churchTax = document.getElementById('churchTax').value === 'ja';
+
+      const oldCalc = calculateDENet(currentGross, taxClass, churchTax);
+      const newCalc = calculateDENet(currentGross + raiseAmount, taxClass, churchTax);
+
+      const netMonthlyDiff = newCalc.netMonthly - oldCalc.netMonthly;
+      const netYearlyDiff = newCalc.totalNetYear - oldCalc.totalNetYear;
+      const grossYearlyDiff = newCalc.totalGrossYear - oldCalc.totalGrossYear;
+      
+      const percentageKeep = raiseAmount > 0 ? (netMonthlyDiff / raiseAmount) * 100 : 0;
+
+      // Update UI
+      document.getElementById('resNetMonthlyDiff').textContent = '+ ' + netMonthlyDiff.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resPercentageKeep').textContent = `Du behältst ca. ${percentageKeep.toFixed(0)}% deiner Gehaltserhöhung.`;
+
+      document.getElementById('grossOld').textContent = oldCalc.grossMonthly.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' €';
+      document.getElementById('svOld').textContent = oldCalc.svMonthly.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' €';
+      document.getElementById('taxOld').textContent = oldCalc.taxMonthly.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' €';
+      document.getElementById('netOld').textContent = oldCalc.netMonthly.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' €';
+
+      document.getElementById('grossNew').textContent = newCalc.grossMonthly.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' €';
+      document.getElementById('svNew').textContent = newCalc.svMonthly.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' €';
+      document.getElementById('taxNew').textContent = newCalc.taxMonthly.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' €';
+      document.getElementById('netNew').textContent = newCalc.netMonthly.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' €';
+
+      document.getElementById('resGrossYearlyDiff').textContent = '+ ' + grossYearlyDiff.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' €';
+      document.getElementById('resNetYearlyDiff').textContent = '+ ' + netYearlyDiff.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' €';
+
+      document.getElementById('result').classList.remove('hidden');
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  </script>
+</body>
+</html>

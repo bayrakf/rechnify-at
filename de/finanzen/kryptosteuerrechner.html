@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krypto Steuerrechner Deutschland (Freibetrag & Haltefrist) | rechnify.at</title>
+  <meta name="description" content="Berechne die Steuern auf deine Krypto-Gewinne in Deutschland. Berücksichtigt die 1-Jahres-Haltefrist und die 1.000 € Freigrenze." />
+  <link rel="canonical" href="https://rechnify.at/de/finanzen/kryptosteuerrechner.html" />
+  <link rel="alternate" hreflang="de-at" href="https://rechnify.at/finanzen/kryptosteuerrechner.html" />
+  <link rel="alternate" hreflang="de" href="https://rechnify.at/de/finanzen/kryptosteuerrechner.html" />
+
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    
+    .big-number { font-size: 32px; font-weight: 800; color: var(--primary); margin: 8px 0; }
+    .sub-number { font-size: 16px; color: var(--muted); }
+
+    .affiliate-banner {
+      margin-top: 24px;
+      padding: 16px;
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .affiliate-banner .icon { font-size: 28px; }
+    .affiliate-banner .content { flex: 1; font-size: 14px; }
+    .affiliate-banner .btn-aff {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .affiliate-banner .btn-aff:hover { background: var(--primary-hover); }
+
+    @media (max-width: 600px) {
+      .input-row { grid-template-columns: 1fr; }
+      .affiliate-banner { flex-direction: column; text-align: center; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Krypto Steuerrechner Deutschland",
+    "operatingSystem": "All",
+    "applicationCategory": "FinanceApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/familie/schwangerschaftsrechner.html">👶 Familie</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill active" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <div class="calculator-container">
+      <div class="calculator-card">
+        
+        <div class="calc-header">
+          <div class="calc-icon">🪙</div>
+          <h1>Krypto Steuerrechner Deutschland</h1>
+          <p>Berechne die Steuern auf deine Gewinne aus Bitcoin und anderen Kryptowährungen nach deutschem Steuerrecht.</p>
+        </div>
+
+        <div class="calc-body">
+          <div class="input-row">
+            <div class="input-group">
+              <label for="purchasePrice">Anschaffungskosten (Kaufpreis)</label>
+              <div class="input-suffix">
+                <input type="number" id="purchasePrice" value="5000" min="0" step="100">
+                <span class="suffix">€</span>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="sellPrice">Veräußerungserlös (Verkaufspreis)</label>
+              <div class="input-suffix">
+                <input type="number" id="sellPrice" value="8000" min="0" step="100">
+                <span class="suffix">€</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="input-group">
+              <label for="holdingPeriod">Haltefrist</label>
+              <select id="holdingPeriod">
+                <option value="unter">Weniger als 1 Jahr (steuerrelevant)</option>
+                <option value="ueber">Mindestens 1 Jahr (steuerfrei)</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="taxRate">Persönlicher Steuersatz (ca.)</label>
+              <div class="input-suffix">
+                <input type="number" id="taxRate" value="30" min="0" max="45" step="1">
+                <span class="suffix">%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="totalYearlyGains">Deine gesamten Krypto-Gewinne in diesem Kalenderjahr (inkl. diesem)</label>
+            <div class="input-suffix">
+              <input type="number" id="totalYearlyGains" value="3000" min="0" step="100">
+              <span class="suffix">€</span>
+            </div>
+            <div class="text-xs text-muted" style="margin-top:4px;">Erforderlich für die Ermittlung der Freigrenze von 1.000 € (ab 2024).</div>
+          </div>
+
+          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Steuer berechnen</button>
+
+          <div id="result" class="result-box hidden">
+            <h3>Berechnungsergebnis</h3>
+            
+            <div class="input-row">
+              <div class="result-card">
+                <div class="text-sm text-muted">Gewinn aus diesem Verkauf</div>
+                <div class="big-number text-success" id="resProfit">-- €</div>
+              </div>
+              <div class="result-card">
+                <div class="text-sm text-muted">Fällige Steuer</div>
+                <div class="big-number text-danger" id="resTax" style="color: var(--danger);">-- €</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 15px; display:flex; justify-content:space-between;">
+              <span><strong>Nettogewinn (nach Steuern):</strong></span>
+              <strong class="text-success" style="font-size: 1.2em;" id="resNetProfit">-- €</strong>
+            </div>
+
+            <!-- Premium Broker Affiliate Box -->
+            <div class="affiliate-banner">
+              <div class="icon">📈</div>
+              <div class="content">
+                <strong>Suchst du einen sicheren Krypto-Broker in Deutschland?</strong><br/>
+                Nutze Trade Republic, um sicher Bitcoin und über 50 andere Kryptowährungen zu handeln – zu unschlagbar günstigen Konditionen!
+              </div>
+              <a href="#" target="_blank" rel="noopener" class="btn-aff">Zu Trade Republic</a>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="help">
+          <strong>Regelung für private Veräußerungsgeschäfte (Deutschland):</strong><br/>
+          Gewinne aus dem Verkauf von Kryptowährungen unterliegen in Deutschland nicht der Abgeltungsteuer, sondern werden mit deinem **persönlichen Einkommensteuersatz** versteuert.<br/><br/>
+          - <strong>Haltefrist über 1 Jahr:</strong> Nach genau 1 Jahr (365 Tage) Haltefrist sind alle Verkäufe und Gewinne komplett **steuerfrei**, egal wie hoch der Gewinn ist.<br/>
+          - <strong>Freigrenze unter 1 Jahr:</strong> Liegt die Haltefrist unter einem Jahr, sind Gewinne steuerfrei, wenn deine gesamten Krypto-Gewinne im Kalenderjahr **unter 1.000 €** liegen (ab 2024; davor 600 €). Wird die Freigrenze auch nur um 1 € überschritten, muss der **gesamte Gewinn** versteuert werden.
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="site-logo-text">rechnify<span>.at</span></span>
+          <p>Kostenlose Online-Rechner und Tools für Deutschland & Österreich.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Finanzen</h4>
+          <ul>
+            <li><a href="/de/finanzen/gehaltsrechner.html">Gehaltsrechner</a></li>
+            <li><a href="/de/finanzen/kryptosteuerrechner.html">Krypto Steuerrechner</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Info</h4>
+          <ul>
+            <li><a href="/ueber-uns.html">Über uns</a></li>
+            <li><a href="/kontakt.html">Kontakt</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    'use strict';
+
+    document.getElementById('calculate').addEventListener('click', () => {
+      const purchase = parseFloat(document.getElementById('purchasePrice').value) || 0;
+      const sell = parseFloat(document.getElementById('sellPrice').value) || 0;
+      const period = document.getElementById('holdingPeriod').value;
+      const personalTaxRate = (parseFloat(document.getElementById('taxRate').value) || 0) / 100;
+      const totalYearlyGains = parseFloat(document.getElementById('totalYearlyGains').value) || 0;
+
+      const profit = Math.max(0, sell - purchase);
+      
+      let tax = 0;
+      if (period === 'unter' && profit > 0) {
+        // Check if total yearly gains exceed the 1000 EUR Freigrenze
+        if (totalYearlyGains >= 1000) {
+          tax = profit * personalTaxRate;
+        } else {
+          tax = 0; // Tax-free because it is under the Freigrenze
+        }
+      }
+      
+      const netProfit = profit - tax;
+
+      // Update UI
+      document.getElementById('resProfit').textContent = profit.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resTax').textContent = tax.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resNetProfit').textContent = netProfit.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+
+      document.getElementById('result').classList.remove('hidden');
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  </script>
+</body>
+</html>

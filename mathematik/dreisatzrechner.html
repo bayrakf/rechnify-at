@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dreisatzrechner online – Einfach & schnell | rechnify.at</title>
+  <meta name="description" content="Kostenloser Dreisatzrechner: Berechne proportionale und antiproportionale Zuordnungen schnell online. Mit Schritt-für-Schritt-Erklärung." />
+  <link rel="canonical" href="https://rechnify.at/mathematik/dreisatzrechner.html" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Dreisatzrechner | rechnify.at" />
+  <meta property="og:description" content="Dreisatz einfach und schnell online berechnen." />
+  <meta property="og:url" content="https://rechnify.at/mathematik/dreisatzrechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .calc-col {
+      background: var(--soft-row);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .calc-col input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--input);
+      color: var(--text);
+      font-size: 18px;
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    .calc-col .result-input {
+      background: var(--soft);
+      border-color: var(--success);
+      color: var(--success);
+      cursor: default;
+    }
+
+    .equal-sign {
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .relation-text {
+      text-align: center;
+      font-weight: bold;
+      color: var(--primary);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    @media(max-width: 600px) {
+      .calc-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .equal-sign {
+        flex-direction: row;
+        gap: 16px;
+        transform: rotate(90deg);
+        margin: 16px 0;
+      }
+    }
+
+    .toggle-group { display: flex; gap: 8px; margin-bottom: 24px; }
+    .toggle-btn {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+    .toggle-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Dreisatzrechner",
+    "description": "Kostenloser Online-Dreisatzrechner für proportionale und antiproportionale Zuordnungen.",
+    "url": "https://rechnify.at/mathematik/dreisatzrechner.html",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Mathematik</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Dreisatzrechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Dreisatzrechner</h1>
+      <p class="subtitle">Berechne unbekannte Werte ganz einfach über das Verhältnis von drei bekannten Werten.</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="toggle-group">
+          <div class="toggle-btn active" data-mode="proportional">Proportional (Je mehr, desto mehr)</div>
+          <div class="toggle-btn" data-mode="anti">Antiproportional (Je mehr, desto weniger)</div>
+        </div>
+
+        <div class="calc-grid">
+          <div class="calc-col">
+            <div class="relation-text">Wert 1</div>
+            <input type="number" id="valA" placeholder="z. B. 2" value="2" />
+            <input type="number" id="valC" placeholder="z. B. 5" value="5" />
+          </div>
+          
+          <div class="equal-sign">
+            <span>=</span>
+            <span>=</span>
+          </div>
+
+          <div class="calc-col">
+            <div class="relation-text">Wert 2</div>
+            <input type="number" id="valB" placeholder="z. B. 10" value="10" />
+            <input type="text" id="valX" class="result-input" readonly placeholder="Ergebnis" />
+          </div>
+        </div>
+
+        <div class="alert alert-info mt-16" id="explanationBox">
+          <strong>Rechenweg:</strong> <span id="formulaText"></span>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Was ist der Dreisatz?</h2>
+      <p>Der Dreisatz (oder die „Schlussrechnung“) ist ein mathematisches Verfahren, um aus drei bekannten Werten eines Verhältnisses einen vierten, unbekannten Wert (x) zu berechnen. Es ist eines der nützlichsten Werkzeuge für den Alltag – ob beim Kochen, Einkaufen oder Handwerken.</p>
+      
+      <h3>1. Proportionaler Dreisatz (Gerader Dreisatz)</h3>
+      <p><strong>Regel:</strong> Je mehr, desto mehr (bzw. je weniger, desto weniger).</p>
+      <p><em>Beispiel:</em> 2 Äpfel kosten 10 €. Wie viel kosten 5 Äpfel?<br/>
+      Wenn die Anzahl der Äpfel steigt, steigt auch der Preis. <br/>
+      Formel: <code>X = (B × C) ÷ A</code> → <code>X = (10 × 5) ÷ 2 = 25 €</code></p>
+
+      <h3>2. Antiproportionaler Dreisatz (Ungerader Dreisatz)</h3>
+      <p><strong>Regel:</strong> Je mehr, desto weniger (bzw. je weniger, desto mehr).</p>
+      <p><em>Beispiel:</em> 2 Bauarbeiter brauchen 10 Stunden für eine Mauer. Wie lange brauchen 5 Bauarbeiter?<br/>
+      Wenn die Anzahl der Bauarbeiter steigt, sinkt die benötigte Zeit. <br/>
+      Formel: <code>X = (A × B) ÷ C</code> → <code>X = (2 × 10) ÷ 5 = 4 Stunden</code></p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const valA = document.getElementById('valA');
+      const valB = document.getElementById('valB');
+      const valC = document.getElementById('valC');
+      const valX = document.getElementById('valX');
+      const formulaText = document.getElementById('formulaText');
+      const toggleBtns = document.querySelectorAll('.toggle-btn');
+      
+      let mode = 'proportional';
+
+      const formatResult = (num) => {
+        if (!isFinite(num) || isNaN(num)) return '-';
+        return parseFloat(num.toFixed(4)).toString().replace('.', ',');
+      };
+      
+      const calculate = () => {
+        const A = parseFloat(valA.value.replace(',','.'));
+        const B = parseFloat(valB.value.replace(',','.'));
+        const C = parseFloat(valC.value.replace(',','.'));
+
+        if (!isNaN(A) && !isNaN(B) && !isNaN(C) && A !== 0 && C !== 0) {
+          if (mode === 'proportional') {
+            const x = (B * C) / A;
+            valX.value = formatResult(x);
+            formulaText.innerHTML = `(${formatResult(B)} × ${formatResult(C)}) ÷ ${formatResult(A)} = <strong>${formatResult(x)}</strong>`;
+          } else {
+            // antiproportional
+            const x = (A * B) / C;
+            valX.value = formatResult(x);
+            formulaText.innerHTML = `(${formatResult(A)} × ${formatResult(B)}) ÷ ${formatResult(C)} = <strong>${formatResult(x)}</strong>`;
+          }
+        } else {
+          valX.value = '';
+          formulaText.textContent = 'Bitte alle Felder mit gültigen Zahlen füllen.';
+        }
+      };
+
+      // Event Listeners
+      valA.addEventListener('input', calculate);
+      valB.addEventListener('input', calculate);
+      valC.addEventListener('input', calculate);
+
+      toggleBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          toggleBtns.forEach(b => b.classList.remove('active'));
+          e.currentTarget.classList.add('active');
+          mode = e.currentTarget.dataset.mode;
+          calculate();
+        });
+      });
+
+      // Initial calc
+      calculate();
+    });
+  </script>
+</body>
+</html>

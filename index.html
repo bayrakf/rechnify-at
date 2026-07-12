@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Meta -->
+  <title>rechnify.at – Kostenlose Online-Rechner für Österreich</title>
+  <meta name="description" content="Kostenlose Online-Rechner und Tools für Österreich: Arbeitszeitrechner, Prozentrechner, MwSt-Rechner, Dreisatzrechner und mehr. 100% lokal – keine Datenweitergabe." />
+  <link rel="canonical" href="https://rechnify.at/" />
+  <link rel="alternate" hreflang="de-at" href="https://rechnify.at/" />
+  <link rel="alternate" hreflang="de" href="https://rechnify.at/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="rechnify.at – Kostenlose Online-Rechner für Österreich" />
+  <meta property="og:description" content="Kostenlose Online-Rechner: Arbeitszeit, Prozent, MwSt und mehr. Alle Berechnungen lokal im Browser." />
+  <meta property="og:url" content="https://rechnify.at/" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/og-image.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="rechnify.at – Kostenlose Online-Rechner" />
+  <meta name="twitter:description" content="Kostenlose Rechner für Österreich: Arbeitszeit, Prozent, MwSt und mehr." />
+
+  <!-- Theme & Favicon -->
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+
+  <!-- Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <!-- Schema.org WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "rechnify.at",
+    "url": "https://rechnify.at",
+    "description": "Kostenlose Online-Rechner und Tools für Österreich.",
+    "inLanguage": "de",
+    "publisher": {
+      "@type": "Organization",
+      "name": "rechnify.at",
+      "url": "https://rechnify.at"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://rechnify.at/?s={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- INDEX SPECIFIC BASE STYLES & ANIMATION -->
+  <style>
+    /* Global theme adaptations for frontpage */
+    .site-header {
+      background: rgba(243, 246, 251, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+    body.dark .site-header {
+      background: rgba(15, 23, 42, 0.75);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .site-logo span {
+      color: var(--text) !important;
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+    }
+    .site-nav a {
+      color: var(--text) !important;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+    }
+    .site-nav a:hover {
+      background: var(--primary-light);
+      color: var(--primary) !important;
+    }
+    .country-toggle-group {
+      background: var(--soft) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 9999px;
+      padding: 2px;
+    }
+    .country-pill {
+      color: var(--muted) !important;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: transparent;
+      border: none;
+    }
+    .country-pill.active {
+      background: var(--card) !important;
+      color: var(--text) !important;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Hero section */
+    .hero-liquid {
+      position: relative;
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      text-align: center;
+      padding: 80px 24px 40px 24px;
+    }
+
+    /* Pure CSS Animated Background (Orbs) */
+    .bg-anim-container {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      overflow: hidden;
+      z-index: 0;
+      background: linear-gradient(135deg, var(--bg) 0%, var(--primary-light) 100%);
+      transition: background 0.3s ease;
+    }
+    .bg-anim-container::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(243, 246, 251, 0.2);
+      z-index: 2;
+    }
+    body.dark .bg-anim-container::after {
+      background: rgba(15, 23, 42, 0.4);
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(45px);
+      animation: float 25s infinite ease-in-out alternate;
+      z-index: 1;
+      opacity: 0.45;
+      mix-blend-mode: multiply;
+    }
+    body.dark .orb {
+      mix-blend-mode: screen;
+      opacity: 0.3;
+    }
+    .orb-1 { width: 45vw; height: 45vw; background: #93c5fd; top: -10%; left: -5%; animation-delay: 0s; }
+    .orb-2 { width: 35vw; height: 35vw; background: #c084fc; bottom: -10%; right: -5%; animation-delay: -6s; animation-direction: alternate-reverse; }
+    .orb-3 { width: 40vw; height: 40vw; background: #22d3ee; top: 25%; left: 35%; animation-duration: 30s; animation-delay: -3s; }
+
+    body.dark .orb-1 { background: #1e3a8a; }
+    body.dark .orb-2 { background: #4c1d95; }
+    body.dark .orb-3 { background: #155e75; }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(8%, 12%) scale(1.08); }
+      66% { transform: translate(-8%, 4%) scale(0.92); }
+      100% { transform: translate(4%, -12%) scale(1.04); }
+    }
+
+    /* Typography & Content */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 900px;
+    }
+    .hero-liquid h1 {
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      font-family: 'Instrument Serif', serif;
+    }
+    .hero-liquid h1 em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      color: var(--primary);
+    }
+    .hero-liquid p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      max-width: 650px;
+      margin-bottom: 35px;
+      line-height: 1.6;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 32px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      background: var(--primary);
+      color: white !important;
+      box-shadow: var(--shadow-sm);
+    }
+    .hero-cta:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      text-decoration: none;
+    }
+    .hero-cta .arrow {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    /* Index layout overrides */
+    .frontpage-layout {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+    .sidebar-nav {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+    .sidebar-nav h3 {
+      color: var(--text);
+    }
+    .sidebar-nav a {
+      color: var(--muted);
+    }
+    .sidebar-nav a:hover {
+      background: var(--soft);
+      color: var(--text);
+    }
+    .sidebar-nav a.active {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: bold;
+      border-left: 3px solid var(--primary);
+    }
+
+    .category-header h2 {
+      color: var(--text);
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.4rem;
+      font-style: italic;
+      font-weight: normal;
+    }
+    .category-header-line {
+      background: var(--border);
+    }
+    
+    .tool-card {
+      background: var(--card) !important;
+      border: 1px solid var(--border) !important;
+      box-shadow: var(--shadow-sm) !important;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      color: var(--text) !important;
+    }
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg) !important;
+      border-color: var(--primary) !important;
+    }
+    .tool-card-title {
+      color: var(--text) !important;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .tool-card-desc {
+      color: var(--muted) !important;
+    }
+    .tool-card-icon {
+      background: var(--primary-light) !important;
+      color: var(--primary) !important;
+    }
+
+    /* About section on index */
+    .about-liquid {
+      position: relative;
+      background: radial-gradient(ellipse at top, var(--primary-light) 0%, transparent 70%);
+      padding: 100px 24px;
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .about-liquid-label {
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .about-liquid h2 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin: 0 auto;
+      max-width: 850px;
+      font-family: 'Instrument Serif', serif;
+    }
+    .about-liquid h2 em {
+      color: var(--primary);
+      font-style: italic;
+      font-family: 'Instrument Serif', serif;
+    }
+
+    /* Scroll animations classes */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <span>Rechnify</span>
+      </a>
+
+      <nav class="site-nav" id="siteNav" aria-label="Hauptnavigation">
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO (Animated Liquid Background) -->
+  <section class="hero-liquid">
+    
+    <!-- Background Orbs -->
+    <div class="bg-anim-container">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="hero-content">
+      <h1>Zuerst rechnen,<br><em class="italic">dann wissen.</em></h1>
+      <p>Kostenlose, präzise Online-Rechner für Österreich 🇦🇹 und Deutschland 🇩🇪. 100% lokal in deinem Browser – keine Datenweitergabe.</p>
+      <a href="#arbeitszeit" class="hero-cta">
+        Zu den Rechnern
+        <span class="arrow">↓</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="about-liquid animate-on-scroll">
+    <span class="about-liquid-label">Über Uns</span>
+    <h2 class="instrument-serif">Komplexe Zahlen <em class="italic">einfach</em> gemacht – für deinen Alltag.</h2>
+  </section>
+
+  <!-- MAIN CONTENT WITH SIDEBAR -->
+  <main class="frontpage-layout" id="main-content">
+    
+    <aside class="sidebar-nav">
+      <h3>Kategorien</h3>
+      <a href="#arbeitszeit"><span class="icon">⏰</span> Arbeitszeit & Personal</a>
+      <a href="#mathematik"><span class="icon">📐</span> Mathematik & Allgemein</a>
+      <a href="#finanzen"><span class="icon">💶</span> Finanzen & Steuern</a>
+      <a href="#familie"><span class="icon">👶</span> Familie & Leben</a>
+      <a href="#alltag"><span class="icon">⚖️</span> Alltag & Gesundheit</a>
+    </aside>
+
+    <div class="main-content-grid">
+
+    <!-- ARBEITSZEIT -->
+    <section class="category-section animate-on-scroll" id="arbeitszeit">
+      <div class="category-header">
+        <span style="font-size:24px;">⏰</span>
+        <h2>Arbeitszeit & Personal</h2>
+        <div class="category-header-line"></div>
+      </div>
+      <div class="tool-grid">
+        <a href="/arbeitszeit/kommen-gehen-rechner.html" class="tool-card">
+          <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+          <span class="tool-card-badge badge-de" style="right: 50px;">🇩🇪 DE</span>
+          <div class="tool-card-icon">🕐</div>
+          <div class="tool-card-title">Arbeitszeitrechner</div>
+          <div class="tool-card-desc">Kommen/Gehen-Zeiten erfassen, Pausen berechnen, Überstunden und Saldo ermitteln.</div>
+        </a>
+        <a href="/arbeitszeit/ueberstundenrechner.html" class="tool-card">
+          <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+          <span class="tool-card-badge badge-de" style="right: 50px;">🇩🇪 DE</span>
+          <div class="tool-card-icon">📈</div>
+          <div class="tool-card-title">Überstundenrechner</div>
+          <div class="tool-card-desc">Überstunden berechnen inkl. Zuschläge nach Arbeitsrecht.</div>
+        </a>
+        <a href="/arbeitszeit/urlaubstage-rechner.html" class="tool-card">
+          <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+          <span class="tool-card-badge badge-de" style="right: 50px;">🇩🇪 DE</span>
+          <div class="tool-card-icon">🏖️</div>
+          <div class="tool-card-title">Urlaubstage-Rechner</div>
+          <div class="tool-card-desc">Urlaubsanspruch nach Urlaubsgesetz berechnen.</div>
+        </a>
+        <a href="/arbeitszeit/schichtplan-rechner.html" class="tool-card">
+          <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+          <div class="tool-card-icon">📋</div>
+          <div class="tool-card-title">Schichtplan-Rechner</div>
+          <div class="tool-card-desc">Trage deine Wochenschichten ein und berechne die Gesamtarbeitszeit (inkl. Nachtschichten).</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- MATHEMATIK -->
+    <section class="category-section animate-on-scroll" id="mathematik">
+      <div class="category-header">
+        <span style="font-size:24px;">📐</span>
+        <h2>Mathematik & Allgemein</h2>
+        <div class="category-header-line"></div>
+      </div>
+      <div class="tool-grid">
+        <a href="/mathematik/prozentrechner.html" class="tool-card">
+          <div class="tool-card-icon">%</div>
+          <div class="tool-card-title">Prozentrechner</div>
+          <div class="tool-card-desc">Prozente berechnen, Prozentwert und Grundwert ermitteln – einfach und schnell.</div>
+        </a>
+        <a href="/mathematik/dreisatzrechner.html" class="tool-card">
+          <div class="tool-card-icon">✖️</div>
+          <div class="tool-card-title">Dreisatzrechner</div>
+          <div class="tool-card-desc">Dreisatz einfach und schnell berechnen – mit Schritt-für-Schritt-Erklärung.</div>
+        </a>
+        <a href="/mathematik/taschenrechner.html" class="tool-card">
+          <div class="tool-card-icon">🔢</div>
+          <div class="tool-card-title">Taschenrechner</div>
+          <div class="tool-card-desc">Einfacher Online-Taschenrechner mit Verlauf und Tastaturunterstützung.</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- FINANZEN -->
+    <section class="category-section animate-on-scroll" id="finanzen">
+      <div class="category-header">
+        <span style="font-size:24px;">💶</span>
+        <h2>Finanzen & Steuern</h2>
+        <div class="category-header-line"></div>
+      </div>
+      <div class="tool-grid">
+        <a href="/finanzen/gehaltsrechner.html" class="tool-card">
+          <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+          <span class="tool-card-badge badge-de" style="right: 50px;">🇩🇪 DE</span>
+          <div class="tool-card-icon">💰</div>
+          <div class="tool-card-title">Gehaltsrechner (Brutto/Netto)</div>
+          <div class="tool-card-desc">Berechne dein exaktes Nettoeinkommen inkl. 13./14. Gehalt.</div>
+        </a>
+        <a href="/finanzen/gehaltserhoehung-rechner.html" class="tool-card">
+          <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+          <span class="tool-card-badge badge-de" style="right: 50px;">🇩🇪 DE</span>
+          <div class="tool-card-icon">📈</div>
+          <div class="tool-card-title">Gehaltserhöhung Rechner</div>
+          <div class="tool-card-desc">Berechne, wie viel Netto dir von deiner Bruttogehaltserhöhung wirklich bleibt.</div>
+        </a>
+        <a href="/finanzen/kryptosteuerrechner.html" class="tool-card">
+          <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+          <span class="tool-card-badge badge-de" style="right: 50px;">🇩🇪 DE</span>
+          <div class="tool-card-icon">🪙</div>
+          <div class="tool-card-title">Krypto Steuerrechner</div>
+          <div class="tool-card-desc">Berechne die Steuern auf Gewinne aus Bitcoin und anderen Kryptowährungen.</div>
+        </a>
+        <a href="/finanzen/mwst-rechner.html" class="tool-card">
+          <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+          <span class="tool-card-badge badge-de" style="right: 50px;">🇩🇪 DE</span>
+          <div class="tool-card-icon">🛒</div>
+          <div class="tool-card-title">MwSt-Rechner</div>
+          <div class="tool-card-desc">Berechne Brutto und Netto anhand der aktuellen Mehrwertsteuersätze.</div>
+        </a>
+        <a href="/finanzen/rabattrechner.html" class="tool-card">
+          <div class="tool-card-icon">🏷️</div>
+          <div class="tool-card-title">Rabattrechner</div>
+          <div class="tool-card-desc">Rabatt und Ersparnis berechnen – für Einkauf, Handel und Buchhaltung.</div>
+        </a>
+        <a href="/finanzen/zinsrechner.html" class="tool-card">
+          <div class="tool-card-icon">💹</div>
+          <div class="tool-card-title">Zinsrechner</div>
+          <div class="tool-card-desc">Zinsen, Zinseszins und Endkapital berechnen – einfach und verständlich.</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- FAMILIE -->
+    <section class="category-section animate-on-scroll" id="familie">
+      <div class="category-header">
+        <span style="font-size:24px;">👶</span>
+        <h2>Familie & Leben</h2>
+        <div class="category-header-line"></div>
+      </div>
+      <div class="tool-grid">
+        <a href="/familie/schwangerschaftsrechner.html" class="tool-card">
+          <div class="tool-card-icon">🤰</div>
+          <div class="tool-card-title">Schwangerschaftsrechner</div>
+          <div class="tool-card-desc">Berechne den Geburtstermin (EGT), SSW und Meilensteine.</div>
+        </a>
+        <a href="/familie/kinderbetreuungsgeld.html" class="tool-card">
+          <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+          <div class="tool-card-icon">🍼</div>
+          <div class="tool-card-title">Kinderbetreuungsgeld</div>
+          <div class="tool-card-desc">Vergleiche KBG-Konto und eaKBG für Österreich.</div>
+        </a>
+        <a href="/de/familie/elterngeld.html" class="tool-card">
+          <span class="tool-card-badge badge-de">🇩🇪 DE</span>
+          <div class="tool-card-icon">🍼</div>
+          <div class="tool-card-title">Elterngeld Rechner</div>
+          <div class="tool-card-desc">Basiselterngeld und ElterngeldPlus berechnen und vergleichen.</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ALLTAG & GESUNDHEIT -->
+    <section class="category-section animate-on-scroll" id="alltag">
+      <div class="category-header">
+        <span style="font-size:24px;">⚖️</span>
+        <h2>Alltag & Gesundheit</h2>
+        <div class="category-header-line"></div>
+      </div>
+      <div class="tool-grid">
+        <a href="/alltag/bmi-rechner.html" class="tool-card">
+          <div class="tool-card-icon">⚖️</div>
+          <div class="tool-card-title">BMI-Rechner</div>
+          <div class="tool-card-desc">Berechne deinen Body-Mass-Index und prüfe dein Normalgewicht.</div>
+        </a>
+        <a href="/alltag/kaufkraftrechner.html" class="tool-card">
+          <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+          <span class="tool-card-badge badge-de" style="right: 50px;">🇩🇪 DE</span>
+          <div class="tool-card-icon">📉</div>
+          <div class="tool-card-title">Kaufkraftrechner</div>
+          <div class="tool-card-desc">Berechne den Kaufkraftverlust des Euro und die historische Inflation.</div>
+        </a>
+        <a href="/alltag/einheitenrechner.html" class="tool-card">
+          <div class="tool-card-icon">📏</div>
+          <div class="tool-card-title">Einheitenrechner</div>
+          <div class="tool-card-desc">Rechne Längen, Gewichte, Temperaturen und Volumina schnell um.</div>
+        </a>
+        <a href="/alltag/altersrechner.html" class="tool-card">
+          <div class="tool-card-icon">🎂</div>
+          <div class="tool-card-title">Altersrechner</div>
+          <div class="tool-card-desc">Berechne dein exaktes Alter in Tagen, Wochen und Monaten.</div>
+        </a>
+      </div>
+    </section>
+
+    </div> <!-- End main-content-grid -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="site-logo-text">rechnify<span>.at</span></span>
+          <p>Kostenlose Online-Rechner und Tools für Österreich. Alle Berechnungen laufen direkt in deinem Browser – keine Daten werden an Server übertragen.</p>
+          <span class="footer-privacy-badge">🔒 100% Datenschutz – lokal im Browser</span>
+        </div>
+        <div class="footer-col">
+          <h3>Tools</h3>
+          <ul>
+            <li><a href="/arbeitszeit/kommen-gehen-rechner.html">Arbeitszeitrechner</a></li>
+            <li><a href="/mathematik/prozentrechner.html">Prozentrechner</a></li>
+            <li><a href="/finanzen/mwst-rechner.html">MwSt-Rechner</a></li>
+            <li><a href="/mathematik/dreisatzrechner.html">Dreisatzrechner</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Info</h3>
+          <ul>
+            <li><a href="/ueber-uns.html">Über uns</a></li>
+            <li><a href="/kontakt.html">Kontakt</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Rechtliches</h3>
+          <ul>
+            <li><a href="/impressum.html">Impressum</a></li>
+            <li><a href="/datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at – Alle Rechte vorbehalten</span>
+        <nav class="footer-legal-links" aria-label="Rechtliche Links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    'use strict';
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = document.querySelectorAll('.category-section');
+      const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+      // Use IntersectionObserver to track visible sections
+      const observerOptions = {
+        root: null,
+        rootMargin: '-130px 0px -50% 0px',
+        threshold: 0
+      };
+
+      const nav = document.querySelector('.sidebar-nav');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const activeId = entry.target.getAttribute('id');
+            navLinks.forEach((link) => {
+              const href = link.getAttribute('href').substring(1);
+              if (href === activeId) {
+                link.classList.add('active');
+                // Auto-scroll the active pill into view on mobile
+                if (window.innerWidth <= 1150 && nav) {
+                  const scrollLeftTarget = link.offsetLeft - nav.offsetWidth / 2 + link.offsetWidth / 2;
+                  nav.scrollTo({ left: scrollLeftTarget, behavior: 'smooth' });
+                }
+              } else {
+                link.classList.remove('active');
+              }
+            });
+          }
+        });
+      }, observerOptions);
+
+      // Scroll Animations Observer
+      const animObserverOptions = {
+        threshold: 0.05,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const animObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            animObserver.unobserve(entry.target);
+          }
+        });
+      }, animObserverOptions);
+
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        animObserver.observe(el);
+      });
+
+      sections.forEach((section) => {
+        observer.observe(section);
+      });
+      
+      // Fallbacks for top and bottom scroll positions
+      window.addEventListener('scroll', () => {
+        if (window.scrollY < 50) {
+          navLinks.forEach((link, idx) => {
+            if (idx === 0) {
+              link.classList.add('active');
+              if (window.innerWidth <= 1150 && nav) nav.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+              link.classList.remove('active');
+            }
+          });
+          return;
+        }
+
+        const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 50;
+        if (isAtBottom && navLinks.length > 0) {
+          navLinks.forEach((link, idx) => {
+            if (idx === navLinks.length - 1) {
+              link.classList.add('active');
+              if (window.innerWidth <= 1150 && nav) {
+                nav.scrollTo({ left: nav.scrollWidth, behavior: 'smooth' });
+              }
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

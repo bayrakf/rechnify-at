@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MwSt-Rechner Österreich – Brutto Netto berechnen | rechnify.at</title>
+  <meta name="description" content="Kostenloser Mehrwertsteuer-Rechner für Österreich. Berechne blitzschnell Brutto, Netto und die Umsatzsteuer (20%, 13%, 10%)." />
+  <link rel="canonical" href="https://rechnify.at/finanzen/mwst-rechner.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/mwst-rechner.html" />
+  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/mwst-rechner.html" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MwSt-Rechner Österreich | rechnify.at" />
+  <meta property="og:description" content="Mehrwertsteuer berechnen leicht gemacht. Für 20%, 13% und 10% USt in Österreich." />
+  <meta property="og:url" content="https://rechnify.at/finanzen/mwst-rechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <meta name="theme-color" content="#1f4e79" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); }
+    .input-group input, .input-group select { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--border); 
+      border-radius: 10px; 
+      background: var(--input); 
+      color: var(--text); 
+      font-size: 16px; 
+    }
+    
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--soft-row); 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      padding: 24px; 
+    }
+    
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .result-item.highlight { font-weight: bold; font-size: 1.1em; color: var(--primary); }
+    .result-item.success { font-weight: bold; font-size: 1.2em; color: var(--success); border-bottom: none; }
+    
+    .toggle-group { display: flex; gap: 8px; margin-top: 8px; }
+    .toggle-btn {
+      flex: 1;
+      padding: 10px 4px;
+      text-align: center;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+    .toggle-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "MwSt-Rechner Österreich",
+    "description": "Berechnung von Brutto, Netto und Mehrwertsteuer (Umsatzsteuer) für Österreich (20%, 13%, 10%).",
+    "url": "https://rechnify.at/finanzen/mwst-rechner.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/">Finanzen</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">MwSt-Rechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">MwSt-Rechner (Österreich)</h1>
+      <p class="subtitle">Berechne Brutto, Netto und die enthaltene Mehrwertsteuer – mit den österreichischen Steuersätzen (20%, 13%, 10%).</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-group">
+          <label>Was möchtest du berechnen?</label>
+          <div class="toggle-group" id="mode-toggles">
+            <div class="toggle-btn active" data-mode="net2gross">Netto zu Brutto<br/><span style="font-size:11px;font-weight:normal;">(+ MwSt hinzufügen)</span></div>
+            <div class="toggle-btn" data-mode="gross2net">Brutto zu Netto<br/><span style="font-size:11px;font-weight:normal;">(- MwSt abziehen)</span></div>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <label id="amountLabel" for="amount">Nettobetrag (€)</label>
+            <input type="number" id="amount" min="0" step="0.01" placeholder="z. B. 100" value="100" />
+          </div>
+          
+          <div class="input-group">
+            <label>Steuersatz (Österreich)</label>
+            <select id="taxRate">
+              <option value="20" selected>20 % (Normalsteuersatz)</option>
+              <option value="13">13 % (Ermäßigt, z.B. Tierfutter, Kino)</option>
+              <option value="10">10 % (Ermäßigt, z.B. Lebensmittel, Miete)</option>
+              <option value="custom">Anderer Steuersatz...</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-group hidden" id="customRateWrapper">
+          <label for="customRate">Eigener Steuersatz (%)</label>
+          <input type="number" id="customRate" min="0" step="0.1" placeholder="z. B. 19" />
+          <div class="text-muted text-xs mt-4">Für Rechnungen ins Ausland (z.B. Deutschland 19%).</div>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <h3 style="margin-top:0; margin-bottom:16px; color:var(--primary);">Ergebnis</h3>
+          
+          <div class="result-item">
+            <span id="resNettoLabel">Nettobetrag (ohne MwSt)</span>
+            <span id="resNetto" class="highlight">100,00 €</span>
+          </div>
+          <div class="result-item">
+            <span>Zuzüglich <span id="resTaxPercent">20</span>% MwSt</span>
+            <span id="resTax">20,00 €</span>
+          </div>
+          <div class="result-item success" style="margin-top:8px;">
+            <span id="resBruttoLabel">Bruttobetrag (inkl. MwSt)</span>
+            <span id="resBrutto">120,00 €</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Umsatzsteuer in Österreich (USt)</h2>
+      <p>Die Mehrwertsteuer (in Österreich offiziell als Umsatzsteuer bzw. USt bezeichnet) ist eine Steuer, die auf den Austausch von Waren und Dienstleistungen erhoben wird. Unternehmen schlagen diese Steuer auf ihren Nettopreis auf, der Endverbraucher bezahlt den Bruttobetrag.</p>
+      
+      <h3>Die österreichischen Steuersätze</h3>
+      <p>In Österreich gelten aktuell (Stand 2026) hauptsächlich drei Steuersätze:</p>
+      <ul>
+        <li><strong>20 % Normalsteuersatz:</strong> Gilt für die meisten Waren und Dienstleistungen (z.B. Kleidung, Elektronik, Handwerkerleistungen, Möbel).</li>
+        <li><strong>10 % Ermäßigter Steuersatz:</strong> Gilt unter anderem für Lebensmittel, Mieten (für Wohnzwecke), Bücher, Medikamente und Personenbeförderung.</li>
+        <li><strong>13 % Ermäßigter Steuersatz:</strong> Gilt für Eintrittskarten (Kino, Theater), lebende Tiere, Tierfutter, Pflanzen, sowie Beherbergungen (Hotels).</li>
+      </ul>
+
+      <h3>Wie berechnet man die Mehrwertsteuer? (Formeln)</h3>
+      <p>Wenn du den Taschenrechner benutzt und keinen Online-Rechner zur Hand hast, kannst du folgende Formeln nutzen (Beispiel für 20%):</p>
+      
+      <div class="alert alert-info mt-16 mb-16">
+        <strong>Von Netto zu Brutto:</strong><br/>
+        Netto × 1,20 = Brutto<br/>
+        <em>Beispiel: 100 € × 1,20 = 120 €</em>
+      </div>
+
+      <div class="alert alert-info mt-16 mb-16">
+        <strong>Von Brutto zu Netto:</strong><br/>
+        Brutto ÷ 1,20 = Netto<br/>
+        <em>Beispiel: 120 € ÷ 1,20 = 100 €</em>
+      </div>
+
+      <div class="alert alert-info mt-16 mb-16">
+        <strong>MwSt aus dem Bruttobetrag herausrechnen:</strong><br/>
+        Willst du nur den Steuerbetrag aus einer Bruttorechnung (20%) ermitteln, teile den Bruttobetrag durch 6.<br/>
+        <em>Beispiel: 120 € ÷ 6 = 20 €</em>
+      </div>
+
+      <h2>FAQ</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Was ist der Unterschied zwischen Brutto und Netto?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <strong>Netto</strong> ist der Betrag <em>ohne</em> Steuern (meist relevant für Unternehmen). <strong>Brutto</strong> ist der Endbetrag <em>inklusive</em> aller Steuern (das, was der private Konsument schlussendlich bezahlt). 
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Was ist der Unterschied zwischen Mehrwertsteuer und Umsatzsteuer?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              In der Praxis bedeuten beide Begriffe dasselbe. Im österreichischen Steuerrecht (Gesetz) wird der Begriff <strong>Umsatzsteuer (USt)</strong> verwendet. Umgangssprachlich und auf vielen Kassenbelegen spricht man von der <strong>Mehrwertsteuer (MwSt)</strong>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const amountInput = document.getElementById('amount');
+      const amountLabel = document.getElementById('amountLabel');
+      const taxRateSelect = document.getElementById('taxRate');
+      const customRateWrapper = document.getElementById('customRateWrapper');
+      const customRateInput = document.getElementById('customRate');
+      const toggleBtns = document.querySelectorAll('.toggle-btn');
+      
+      let mode = 'net2gross';
+
+      const formatEuro = (num) => new Intl.NumberFormat('de-AT', { style: 'currency', currency: 'EUR' }).format(num);
+      
+      const calculate = () => {
+        let amount = parseFloat(amountInput.value.replace(',', '.')) || 0;
+        let rate = taxRateSelect.value;
+        
+        if (rate === 'custom') {
+          customRateWrapper.classList.remove('hidden');
+          rate = parseFloat(customRateInput.value.replace(',', '.')) || 0;
+        } else {
+          customRateWrapper.classList.add('hidden');
+          rate = parseFloat(rate);
+        }
+
+        let netto = 0;
+        let brutto = 0;
+        let tax = 0;
+
+        if (mode === 'net2gross') {
+          netto = amount;
+          tax = netto * (rate / 100);
+          brutto = netto + tax;
+        } else {
+          brutto = amount;
+          netto = brutto / (1 + (rate / 100));
+          tax = brutto - netto;
+        }
+
+        document.getElementById('resTaxPercent').textContent = rate.toString().replace('.', ',');
+        document.getElementById('resNetto').textContent = formatEuro(netto);
+        document.getElementById('resTax').textContent = formatEuro(tax);
+        document.getElementById('resBrutto').textContent = formatEuro(brutto);
+      };
+
+      // Event Listeners
+      amountInput.addEventListener('input', calculate);
+      taxRateSelect.addEventListener('change', calculate);
+      customRateInput.addEventListener('input', calculate);
+
+      toggleBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          toggleBtns.forEach(b => b.classList.remove('active'));
+          e.currentTarget.classList.add('active');
+          mode = e.currentTarget.dataset.mode;
+          
+          if (mode === 'net2gross') {
+            amountLabel.textContent = 'Nettobetrag (€)';
+            document.getElementById('resNettoLabel').style.fontWeight = 'bold';
+            document.getElementById('resNettoLabel').style.color = 'var(--text)';
+            document.getElementById('resBruttoLabel').style.fontWeight = 'normal';
+          } else {
+            amountLabel.textContent = 'Bruttobetrag (€)';
+            document.getElementById('resBruttoLabel').style.fontWeight = 'bold';
+            document.getElementById('resBruttoLabel').style.color = 'var(--text)';
+            document.getElementById('resNettoLabel').style.fontWeight = 'normal';
+          }
+          
+          calculate();
+        });
+      });
+
+      // Initial setup
+      document.getElementById('resNettoLabel').style.fontWeight = 'bold';
+      document.getElementById('resNettoLabel').style.color = 'var(--text)';
+      document.getElementById('resBruttoLabel').style.fontWeight = 'normal';
+      calculate();
+    });
+  </script>
+</body>
+</html>

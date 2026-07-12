@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaufkraftrechner & Inflationsrechner 2000-2026 | rechnify.at</title>
+  <meta name="description" content="Berechne kostenlos den Kaufkraftverlust des Euro und den Teuerungsausgleich für Österreich & Deutschland von 2000 bis 2026." />
+  <link rel="canonical" href="https://rechnify.at/alltag/kaufkraftrechner.html" />
+  <link rel="alternate" hreflang="de-at" href="https://rechnify.at/alltag/kaufkraftrechner.html" />
+
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    
+    .big-number { font-size: 32px; font-weight: 800; color: var(--primary); margin: 8px 0; }
+    .sub-number { font-size: 16px; color: var(--muted); }
+
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .result-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+
+    @media (max-width: 600px) {
+      .input-row, .result-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Kaufkraftrechner & Inflationsrechner",
+    "operatingSystem": "All",
+    "applicationCategory": "FinanceApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/familie/schwangerschaftsrechner.html">👶 Familie</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Kaufkraftrechner</span>
+  </nav>
+
+  <main class="site-main">
+    <div class="calculator-container">
+      <div class="calculator-card">
+        
+        <div class="calc-header">
+          <div class="calc-icon">📉</div>
+          <h1>Kaufkraft- & Inflationsrechner</h1>
+          <p>Berechne die historische Teuerung und den Kaufkraftverlust des Euro für Österreich & Deutschland.</p>
+        </div>
+
+        <div class="calc-body">
+          <div class="input-group">
+            <label for="amount">Ausgangsbetrag</label>
+            <div class="input-suffix">
+              <input type="number" id="amount" value="1000" min="1" step="100">
+              <span class="suffix">€</span>
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="input-group">
+              <label for="startYear">Startjahr</label>
+              <select id="startYear"></select>
+            </div>
+            <div class="input-group">
+              <label for="endYear">Zieljahr</label>
+              <select id="endYear"></select>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="country">Referenzland (Historische Inflationsdaten)</label>
+            <select id="country">
+              <option value="at">Österreich (Statistik Austria)</option>
+              <option value="de">Deutschland (Statistisches Bundesamt)</option>
+            </select>
+          </div>
+
+          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Kaufkraft berechnen</button>
+
+          <div id="result" class="result-box hidden">
+            <h3>Berechnungsergebnis</h3>
+            
+            <div class="result-grid">
+              <div class="result-card">
+                <div class="text-sm text-muted" id="labelCard1">Kaufkraftwert im Zieljahr</div>
+                <div class="big-number text-danger" id="resBuyingPower">-- €</div>
+                <div class="sub-number" id="resLossPercent">--% Kaufkraftverlust</div>
+              </div>
+              <div class="result-card">
+                <div class="text-sm text-muted" id="labelCard2">Erforderlicher Teuerungsausgleich</div>
+                <div class="big-number text-success" id="resCompensation">-- €</div>
+                <div class="sub-number">Um denselben Warenkorb zu kaufen</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 14px;" id="inflationDetails">
+              <strong>Kumulierte Inflation:</strong> <span id="resTotalInflation">--%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="help">
+          <strong>Hintergrund zur Inflation & Kaufkraft:</strong><br/>
+          Die Inflation bezeichnet den anhaltenden Prozess der Geldentwertung (Preissteigerung). Dadurch sinkt die Kaufkraft deines Geldes – du kannst dir für denselben Nennwert (z.B. 100 €) im Laufe der Jahre weniger Waren und Dienstleistungen kaufen. <br/><br/>
+          Dieser Rechner nutzt die offiziellen **Verbraucherpreisindizes (VPI)** der Statistik Austria und des Statistischen Bundesamtes (Destatis) von 2000 bis 2026.
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="site-logo-text">rechnify<span>.at</span></span>
+          <p>Kostenlose Online-Rechner und Tools für Österreich & Deutschland.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Alltag</h4>
+          <ul>
+            <li><a href="/alltag/altersrechner.html">Altersrechner</a></li>
+            <li><a href="/alltag/kaufkraftrechner.html">Kaufkraftrechner</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Info</h4>
+          <ul>
+            <li><a href="/ueber-uns.html">Über uns</a></li>
+            <li><a href="/kontakt.html">Kontakt</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    'use strict';
+
+    // Historical inflation rates (p.a.)
+    const INFLATION_DATA = {
+      at: {
+        2000: 0.023, 2001: 0.027, 2002: 0.018, 2003: 0.013, 2004: 0.021,
+        2005: 0.023, 2006: 0.015, 2007: 0.022, 2008: 0.032, 2009: 0.005,
+        2010: 0.018, 2011: 0.033, 2012: 0.024, 2013: 0.020, 2014: 0.017,
+        2015: 0.009, 2016: 0.009, 2017: 0.021, 2018: 0.020, 2019: 0.015,
+        2020: 0.014, 2021: 0.028, 2022: 0.086, 2023: 0.078, 2024: 0.029,
+        2025: 0.024, 2026: 0.020
+      },
+      de: {
+        2000: 0.014, 2001: 0.020, 2002: 0.014, 2003: 0.010, 2004: 0.017,
+        2005: 0.015, 2006: 0.016, 2007: 0.023, 2008: 0.026, 2009: 0.003,
+        2010: 0.011, 2011: 0.021, 2012: 0.020, 2013: 0.014, 2014: 0.009,
+        2015: 0.005, 2016: 0.005, 2017: 0.015, 2018: 0.018, 2019: 0.014,
+        2020: 0.005, 2021: 0.031, 2022: 0.069, 2023: 0.059, 2024: 0.022,
+        2025: 0.020, 2026: 0.018
+      }
+    };
+
+    const startSelect = document.getElementById('startYear');
+    const endSelect = document.getElementById('endYear');
+
+    // Populate years
+    for (let y = 2000; y <= 2026; y++) {
+      const optStart = document.createElement('option');
+      optStart.value = y;
+      optStart.textContent = y;
+      if (y === 2000) optStart.selected = true;
+      startSelect.appendChild(optStart);
+
+      const optEnd = document.createElement('option');
+      optEnd.value = y;
+      optEnd.textContent = y;
+      if (y === 2026) optEnd.selected = true;
+      endSelect.appendChild(optEnd);
+    }
+
+    // Dynamic country select bound to global.js country key
+    const currentCountry = localStorage.getItem('rechnify.country') || 'at';
+    document.getElementById('country').value = currentCountry;
+
+    document.getElementById('calculate').addEventListener('click', () => {
+      const initialAmount = parseFloat(document.getElementById('amount').value) || 0;
+      const startYear = parseInt(startSelect.value);
+      const endYear = parseInt(endSelect.value);
+      const country = document.getElementById('country').value;
+
+      if (startYear === endYear) {
+        alert("Bitte unterschiedliche Jahre auswählen.");
+        return;
+      }
+
+      const rates = INFLATION_DATA[country];
+      let factor = 1.0;
+
+      if (startYear < endYear) {
+        for (let y = startYear; y < endYear; y++) {
+          factor *= (1 + rates[y]);
+        }
+      } else {
+        // Backwards calculation
+        for (let y = endYear; y < startYear; y++) {
+          factor /= (1 + rates[y]);
+        }
+      }
+
+      const totalInflation = (factor - 1) * 100;
+      const buyingPower = startYear < endYear ? (initialAmount / factor) : (initialAmount * factor);
+      const compensation = startYear < endYear ? (initialAmount * factor) : (initialAmount / factor);
+      const lossPercent = Math.max(0, ((initialAmount - buyingPower) / initialAmount) * 100);
+
+      // UI Text Changes
+      document.getElementById('labelCard1').textContent = `Kaufkraft von ${initialAmount.toLocaleString('de-AT')} € (${startYear}) im Jahr ${endYear}`;
+      document.getElementById('labelCard2').textContent = `Nötiger Nennwert in ${endYear}`;
+      
+      document.getElementById('resBuyingPower').textContent = buyingPower.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resLossPercent').textContent = startYear < endYear ? `${lossPercent.toFixed(1)}% Kaufkraftverlust` : 'Kaufkraftgewinn (historisch)';
+      
+      document.getElementById('resCompensation').textContent = compensation.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resTotalInflation').textContent = (totalInflation >= 0 ? '+' : '') + totalInflation.toFixed(1) + '%';
+
+      document.getElementById('result').classList.remove('hidden');
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  </script>
+</body>
+</html>
