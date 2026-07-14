@@ -1,5 +1,18 @@
+# robots.txt — rechnify.at
+# https://rechnify.at/robots.txt
+
 User-agent: *
 Allow: /
 Disallow: /.netlify/
 
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/images/
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap (submit in Google Search Console: https://search.google.com/search-console)
 Sitemap: https://rechnify.at/sitemap.xml

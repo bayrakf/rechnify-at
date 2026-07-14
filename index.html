@@ -8,14 +8,20 @@
   <title>rechnify.at – Präzisionsrechner für Österreich 🇦🇹 & Deutschland 🇩🇪</title>
   <meta name="description" content="Kostenlose Online-Rechner für Österreich und Deutschland: Brutto-Netto, Überstunden, Krypto-Steuern, Elterngeld, MwSt und mehr. Direkt im Browser, keine Datenweitergabe." />
   <link rel="canonical" href="https://rechnify.at/" />
-  <link rel="alternate" hreflang="de-at" href="https://rechnify.at/" />
-  <link rel="alternate" hreflang="de" href="https://rechnify.at/" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/" />
+  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="rechnify.at – Präzisionsrechner für AT & DE" />
   <meta property="og:description" content="20+ kostenlose Rechner: Brutto-Netto, Überstunden, Krypto-Steuern, Elterngeld und mehr." />
   <meta property="og:url" content="https://rechnify.at/" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/apple-touch-icon.png" />
+  <meta property="og:image:alt" content="rechnify.at Logo" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://rechnify.at/assets/images/apple-touch-icon.png" />
   <meta property="og:locale" content="de_AT" />
   <meta property="og:site_name" content="rechnify.at" />
 
@@ -352,12 +358,41 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "rechnify.at",
-    "url": "https://rechnify.at",
-    "description": "Kostenlose Online-Rechner für Österreich und Deutschland.",
-    "inLanguage": "de",
-    "publisher": { "@type": "Organization", "name": "rechnify.at", "url": "https://rechnify.at" }
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://rechnify.at/#website",
+        "name": "rechnify.at",
+        "url": "https://rechnify.at/",
+        "description": "Kostenlose Online-Rechner für Österreich und Deutschland.",
+        "inLanguage": ["de-AT", "de-DE"],
+        "publisher": { "@id": "https://rechnify.at/#organization" }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://rechnify.at/#organization",
+        "name": "rechnify.at",
+        "url": "https://rechnify.at/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://rechnify.at/assets/images/logo.jpg",
+          "width": 512,
+          "height": 512
+        }
+      },
+      {
+        "@type": "ItemList",
+        "name": "Kostenlose Online-Rechner",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Brutto-Netto Gehaltsrechner", "url": "https://rechnify.at/finanzen/gehaltsrechner.html" },
+          { "@type": "ListItem", "position": 2, "name": "Stundenlohnrechner", "url": "https://rechnify.at/arbeitszeit/stundenlohn-rechner.html" },
+          { "@type": "ListItem", "position": 3, "name": "Überstundenrechner", "url": "https://rechnify.at/arbeitszeit/ueberstundenrechner.html" },
+          { "@type": "ListItem", "position": 4, "name": "MwSt-Rechner", "url": "https://rechnify.at/finanzen/mwst-rechner.html" },
+          { "@type": "ListItem", "position": 5, "name": "Krypto-Steuerrechner", "url": "https://rechnify.at/finanzen/kryptosteuerrechner.html" },
+          { "@type": "ListItem", "position": 6, "name": "Kommen-Gehen Rechner", "url": "https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html" }
+        ]
+      }
+    ]
   }
   </script>
 </head>

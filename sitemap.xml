@@ -1,224 +1,296 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Startseite -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://rechnify.at/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/"/>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- Info & Rechtliches -->
   <url>
-    <loc>https://rechnify.at/impressum.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://rechnify.at/alltag/altersrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/alltag/altersrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/altersrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://rechnify.at/datenschutz.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://rechnify.at/alltag/bmi-rechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/alltag/bmi-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/bmi-rechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://rechnify.at/ueber-uns.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
+    <loc>https://rechnify.at/alltag/einheitenrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/alltag/einheitenrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/einheitenrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://rechnify.at/kontakt.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
+    <loc>https://rechnify.at/alltag/kaufkraftrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/alltag/kaufkraftrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/kaufkraftrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
-
-  <!-- Arbeitszeit & Personal (AT) -->
   <url>
     <loc>https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/kommen-gehen-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/arbeitszeit/schichtplan-rechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/schichtplan-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/schichtplan-rechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/arbeitszeit/stundenlohn-rechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/stundenlohn-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/stundenlohn-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/stundenlohn-rechner.html"/>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://rechnify.at/arbeitszeit/ueberstundenrechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/ueberstundenrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/ueberstundenrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/ueberstundenrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://rechnify.at/arbeitszeit/urlaubstage-rechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/urlaubstage-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/urlaubstage-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/urlaubstage-rechner.html"/>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://rechnify.at/arbeitszeit/schichtplan-rechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
+    <loc>https://rechnify.at/datenschutz.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/datenschutz.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/datenschutz.html"/>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.3</priority>
   </url>
-
-  <!-- Mathematik & Allgemein -->
-  <url>
-    <loc>https://rechnify.at/mathematik/prozentrechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/mathematik/dreisatzrechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/mathematik/taschenrechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Finanzen & Steuern (AT) -->
-  <url>
-    <loc>https://rechnify.at/finanzen/gehaltsrechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/de/finanzen/gehaltsrechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/finanzen/mwst-rechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/finanzen/rabattrechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/finanzen/zinsrechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/finanzen/gehaltserhoehung-rechner.html</loc>
-    <lastmod>2026-07-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/finanzen/kryptosteuerrechner.html</loc>
-    <lastmod>2026-07-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Familie & Leben -->
-  <url>
-    <loc>https://rechnify.at/familie/schwangerschaftsrechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/familie/kinderbetreuungsgeld.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Alltag & Gesundheit -->
-  <url>
-    <loc>https://rechnify.at/alltag/bmi-rechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/alltag/einheitenrechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/alltag/altersrechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/alltag/kaufkraftrechner.html</loc>
-    <lastmod>2026-07-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Deutschland Versionen (DE Unterordner) -->
   <url>
     <loc>https://rechnify.at/de/arbeitszeit/kommen-gehen-rechner.html</loc>
-    <lastmod>2026-07-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/de/arbeitszeit/urlaubstage-rechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/de/arbeitszeit/ueberstundenrechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/de/finanzen/mwst-rechner.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/de/familie/elterngeld.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/de/finanzen/gehaltserhoehung-rechner.html</loc>
-    <lastmod>2026-07-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rechnify.at/de/finanzen/kryptosteuerrechner.html</loc>
-    <lastmod>2026-07-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Stundenlohnrechner — neu 2026-07-14 -->
-  <url>
-    <loc>https://rechnify.at/arbeitszeit/stundenlohn-rechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/kommen-gehen-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html"/>
     <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://rechnify.at/de/arbeitszeit/stundenlohn-rechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/stundenlohn-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/stundenlohn-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/stundenlohn-rechner.html"/>
     <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://rechnify.at/de/arbeitszeit/ueberstundenrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/ueberstundenrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/ueberstundenrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/ueberstundenrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/de/arbeitszeit/urlaubstage-rechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/urlaubstage-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/urlaubstage-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/urlaubstage-rechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/de/familie/elterngeld.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/familie/kinderbetreuungsgeld.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/familie/elterngeld.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/familie/kinderbetreuungsgeld.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/de/finanzen/gehaltserhoehung-rechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/gehaltserhoehung-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/gehaltserhoehung-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/gehaltserhoehung-rechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/de/finanzen/gehaltsrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/gehaltsrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/gehaltsrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/gehaltsrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/de/finanzen/kryptosteuerrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/kryptosteuerrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/kryptosteuerrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/kryptosteuerrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/de/finanzen/mwst-rechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/mwst-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/mwst-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/mwst-rechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/familie/kinderbetreuungsgeld.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/familie/kinderbetreuungsgeld.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/familie/elterngeld.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/familie/kinderbetreuungsgeld.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/familie/schwangerschaftsrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/familie/schwangerschaftsrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/familie/schwangerschaftsrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/finanzen/gehaltserhoehung-rechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/gehaltserhoehung-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/gehaltserhoehung-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/gehaltserhoehung-rechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/finanzen/gehaltsrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/gehaltsrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/gehaltsrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/gehaltsrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/finanzen/kryptosteuerrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/kryptosteuerrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/kryptosteuerrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/kryptosteuerrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/finanzen/mwst-rechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/mwst-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/mwst-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/mwst-rechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/finanzen/rabattrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/rabattrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/rabattrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/finanzen/zinsrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/zinsrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/zinsrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/impressum.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/impressum.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/impressum.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/kontakt.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/kontakt.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/kontakt.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/mathematik/dreisatzrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/mathematik/dreisatzrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/mathematik/dreisatzrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/mathematik/prozentrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/mathematik/prozentrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/mathematik/prozentrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/mathematik/taschenrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/mathematik/taschenrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/mathematik/taschenrechner.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/ueber-uns.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/ueber-uns.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/ueber-uns.html"/>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
 </urlset>
+
