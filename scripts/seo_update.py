@@ -45,10 +45,10 @@ ROBOTS_META = (
     '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />'
 )
 OG_TWITTER = """\
-<meta property="og:image" content="https://rechnify.at/assets/images/apple-touch-icon.png" />
+<meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
   <meta property="og:image:alt" content="rechnify.at Logo" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:image" content="https://rechnify.at/assets/images/apple-touch-icon.png" />"""
+  <meta name="twitter:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />"""
 
 
 def page_loc(rel: str) -> str:
