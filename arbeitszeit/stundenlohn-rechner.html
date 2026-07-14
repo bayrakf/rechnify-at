@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stundenlohnrechner Österreich – Monats- zu Stundenlohn | rechnify.at</title>
+  <meta name="description" content="Berechne deinen Stundenlohn aus Monatsgehalt oder Jahresgehalt für Österreich. Gratis Stundenlohnrechner mit Brutto-Netto-Schätzung." />
+  <link rel="canonical" href="https://rechnify.at/arbeitszeit/stundenlohn-rechner.html" />
+  <link rel="alternate" hreflang="de-at" href="https://rechnify.at/arbeitszeit/stundenlohn-rechner.html" />
+  <link rel="alternate" hreflang="de" href="https://rechnify.at/de/arbeitszeit/stundenlohn-rechner.html" />
+
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" /></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .result-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; text-align: center; }
+    .result-card .label { font-size: var(--text-sm); color: var(--muted); margin-bottom: 6px; }
+    .result-card .value { font-size: var(--text-2xl); font-weight: 700; color: var(--primary); }
+    .result-card .sub { font-size: var(--text-xs); color: var(--muted); margin-top: 3px; }
+    .result-card.highlight { border-color: var(--primary); background: var(--primary-light); }
+    .result-card.highlight .value { color: var(--primary); }
+    .info-box { background: var(--info-bg); border: 1px solid #bfdbfe; border-radius: 12px; padding: 14px 16px; font-size: var(--text-sm); color: var(--info); margin-top: 20px; }
+    @media (max-width: 600px) { .result-grid { grid-template-columns: 1fr; } }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Stundenlohnrechner Österreich",
+    "operatingSystem": "All",
+    "applicationCategory": "FinanceApplication",
+    "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "EUR" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Wie berechnet man den Stundenlohn aus dem Monatsgehalt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Formel: Stundenlohn = Monatsgehalt × 12 ÷ (Wochenstunden × 52). Beispiel: 3.000 € × 12 ÷ (38,5 × 52) = ca. 17,94 € Bruttostundenlohn."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Was ist der gesetzliche Mindestlohn in Österreich?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In Österreich gilt seit 2024 ein kollektivvertraglicher Mindestlohn von mindestens 2.000 € brutto pro Monat (Vollzeit). Das entspricht bei 38,5 Wochenstunden einem Stundenlohn von ca. 12,00 €."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Wie viele Arbeitsstunden hat ein Monat in Österreich?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Bei einer 38,5-Stunden-Woche (Vollzeit, Österreich) sind es durchschnittlich 38,5 × 52 ÷ 12 = ca. 166,83 Stunden pro Monat."
+      }
+    }]
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/familie/schwangerschaftsrechner.html">👶 Familie</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <div class="calculator-container">
+      <div class="calculator-card">
+
+        <div class="calc-header">
+          <div class="calc-icon">⚡</div>
+          <h1>Stundenlohnrechner Österreich</h1>
+          <p>Berechne deinen Brutto-Stundenlohn aus Monats- oder Jahresgehalt — und erhalte eine Netto-Schätzung.</p>
+        </div>
+
+        <div class="calc-body" style="padding: 24px;">
+
+          <!-- Eingabemethode -->
+          <div class="input-group">
+            <label for="inputMode">Eingabemethode</label>
+            <select id="inputMode" onchange="toggleMode()">
+              <option value="monthly">Monatsgehalt (Brutto)</option>
+              <option value="annual">Jahresgehalt (Brutto)</option>
+            </select>
+          </div>
+
+          <!-- Monatsgehalt -->
+          <div class="input-group" id="monthlyGroup">
+            <label for="monthly">Bruttomonatsgehalt</label>
+            <div class="input-suffix">
+              <input type="number" id="monthly" placeholder="z.B. 3.000" min="0" step="50" oninput="calculate()" />
+              <span class="suffix">€</span>
+            </div>
+          </div>
+
+          <!-- Jahresgehalt -->
+          <div class="input-group" id="annualGroup" style="display:none;">
+            <label for="annual">Bruttojahresgehalt</label>
+            <div class="input-suffix">
+              <input type="number" id="annual" placeholder="z.B. 36.000" min="0" step="500" oninput="calculate()" />
+              <span class="suffix">€</span>
+            </div>
+          </div>
+
+          <!-- Wochenstunden -->
+          <div class="input-group">
+            <label for="weekhours">Wochenstunden</label>
+            <select id="weekhours" onchange="calculate()">
+              <option value="40">40 Stunden (Vollzeit Standard)</option>
+              <option value="38.5" selected>38,5 Stunden (Vollzeit AT Standard)</option>
+              <option value="36">36 Stunden</option>
+              <option value="30">30 Stunden (Teilzeit)</option>
+              <option value="25">25 Stunden (Teilzeit)</option>
+              <option value="20">20 Stunden (Halbtags)</option>
+              <option value="custom">Andere...</option>
+            </select>
+          </div>
+
+          <div class="input-group" id="customHoursGroup" style="display:none;">
+            <label for="customHours">Wochenstunden (eigene Eingabe)</label>
+            <div class="input-suffix">
+              <input type="number" id="customHours" placeholder="z.B. 32" min="1" max="60" step="0.5" oninput="calculate()" />
+              <span class="suffix">Std.</span>
+            </div>
+          </div>
+
+          <!-- Sonderzahlungen -->
+          <div class="input-group">
+            <label for="sonder">13. &amp; 14. Gehalt (Urlaubs-/Weihnachtsgeld)</label>
+            <select id="sonder" onchange="calculate()">
+              <option value="yes">Ja (Standard in Österreich)</option>
+              <option value="no">Nein</option>
+            </select>
+          </div>
+
+          <!-- Ergebnis -->
+          <div class="result-box" id="result" style="display:none;">
+            <strong style="font-size: var(--text-base); color: var(--text);">⚡ Dein Stundenlohn</strong>
+            <div class="result-grid">
+              <div class="result-card highlight">
+                <div class="label">Brutto-Stundenlohn</div>
+                <div class="value" id="resHourlyBrutto">–</div>
+                <div class="sub">pro Stunde</div>
+              </div>
+              <div class="result-card">
+                <div class="label">Netto-Stundenlohn (ca.)</div>
+                <div class="value" id="resHourlyNetto">–</div>
+                <div class="sub">Schätzwert</div>
+              </div>
+              <div class="result-card">
+                <div class="label">Monatsstunden</div>
+                <div class="value" id="resMonthHours">–</div>
+                <div class="sub">Stunden/Monat</div>
+              </div>
+              <div class="result-card">
+                <div class="label">Jahresstunden</div>
+                <div class="value" id="resYearHours">–</div>
+                <div class="sub">Stunden/Jahr</div>
+              </div>
+            </div>
+
+            <div class="info-box" id="infoBox"></div>
+          </div>
+
+        </div><!-- /calc-body -->
+
+        <!-- FAQ -->
+        <div style="padding: 24px; border-top: 1px solid var(--border);">
+          <h2 style="font-size: var(--text-xl); margin-bottom: 16px; color: var(--text);">Häufige Fragen</h2>
+
+          <details style="margin-bottom: 12px;">
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie berechnet man den Stundenlohn aus dem Monatsgehalt?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Formel: <strong>Stundenlohn = Monatsgehalt × 12 ÷ (Wochenstunden × 52)</strong><br />
+              Beispiel bei 3.000 € und 38,5 h/Woche: 3.000 × 12 ÷ (38,5 × 52) = <strong>17,94 €/Stunde</strong> brutto.
+            </p>
+          </details>
+
+          <details style="margin-bottom: 12px;">
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Was ist der Mindestlohn in Österreich (2025)?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Der kollektivvertragliche Mindestlohn beträgt seit 2024 mindestens <strong>2.000 € brutto/Monat</strong> (Vollzeit, 38,5 h/Woche). Das entspricht ca. <strong>12,00 €/Stunde</strong>.
+            </p>
+          </details>
+
+          <details style="margin-bottom: 12px;">
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie viele Arbeitsstunden hat ein Monat in Österreich?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Bei einer 38,5-Stunden-Woche (Vollzeit AT): 38,5 × 52 ÷ 12 = <strong>ca. 166,8 Stunden/Monat</strong>.<br />
+              Bei 40 Stunden: 40 × 52 ÷ 12 = <strong>ca. 173,3 Stunden/Monat</strong>.
+            </p>
+          </details>
+
+          <details>
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie wird der Netto-Stundenlohn geschätzt?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Der Netto-Stundenlohn ist eine Schätzung basierend auf dem Brutto-Jahreseinkommen. Genauere Nettoberechnung findest du im <a href="/finanzen/gehaltsrechner.html">Brutto-Netto Gehaltsrechner</a>.
+            </p>
+          </details>
+        </div>
+
+      </div><!-- /calculator-card -->
+
+      <!-- Sidebar -->
+      <aside class="sidebar-nav">
+        <div class="sidebar-section">
+          <div class="sidebar-title">⏰ Arbeitszeit</div>
+          <a href="/arbeitszeit/ueberstundenrechner.html" class="sidebar-link">Überstundenrechner</a>
+          <a href="/arbeitszeit/urlaubstage-rechner.html" class="sidebar-link">Urlaubstagerechner</a>
+          <a href="/arbeitszeit/kommen-gehen-rechner.html" class="sidebar-link">Kommen-Gehen</a>
+          <a href="/arbeitszeit/schichtplan-rechner.html" class="sidebar-link">Schichtplanrechner</a>
+          <a href="/arbeitszeit/stundenlohn-rechner.html" class="sidebar-link active">Stundenlohnrechner</a>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title">💰 Finanzen</div>
+          <a href="/finanzen/gehaltsrechner.html" class="sidebar-link">Gehaltsrechner AT</a>
+          <a href="/finanzen/mwst-rechner.html" class="sidebar-link">MwSt-Rechner</a>
+          <a href="/finanzen/kryptosteuerrechner.html" class="sidebar-link">Krypto-Steuer</a>
+          <a href="/finanzen/zinsrechner.html" class="sidebar-link">Zinsrechner</a>
+          <a href="/finanzen/rabattrechner.html" class="sidebar-link">Rabattrechner</a>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title">🇩🇪 Deutschland</div>
+          <a href="/de/arbeitszeit/stundenlohn-rechner.html" class="sidebar-link">Stundenlohn DE</a>
+          <a href="/de/finanzen/gehaltsrechner.html" class="sidebar-link">Gehalt DE</a>
+        </div>
+      </aside>
+
+    </div><!-- /calculator-container -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2025 rechnify.at</span>
+      <div class="footer-links">
+        <a href="/impressum.html">Impressum</a>
+        <a href="/datenschutz.html">Datenschutz</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Dark mode ─────────────────────────────────────────────── */
+    const dt = document.getElementById('darkModeToggle');
+    const saved = localStorage.getItem('theme');
+    const prefDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (saved === 'dark' || (!saved && prefDark)) {
+      document.body.classList.add('dark');
+      dt.textContent = '☀️';
+    }
+    dt.addEventListener('click', () => {
+      const d = document.body.classList.toggle('dark');
+      localStorage.setItem('theme', d ? 'dark' : 'light');
+      dt.textContent = d ? '☀️' : '🌙';
+    });
+
+    /* ── Country toggle ────────────────────────────────────────── */
+    document.querySelectorAll('.country-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.country-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        localStorage.setItem('country', btn.dataset.country);
+        if (btn.dataset.country === 'de') {
+          window.location.href = '/de/arbeitszeit/stundenlohn-rechner.html';
+        }
+      });
+    });
+
+    /* Apply saved country */
+    const sc = localStorage.getItem('country');
+    if (sc) {
+      document.querySelectorAll('.country-pill').forEach(b => {
+        b.classList.toggle('active', b.dataset.country === sc);
+      });
+    }
+
+    /* ── Mobile hamburger ──────────────────────────────────────── */
+    const ham = document.getElementById('hamburger');
+    const nav = document.getElementById('siteNav');
+    ham.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      ham.setAttribute('aria-expanded', open);
+      ham.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+    });
+
+    /* ── Mode toggle ───────────────────────────────────────────── */
+    function toggleMode() {
+      const mode = document.getElementById('inputMode').value;
+      document.getElementById('monthlyGroup').style.display = mode === 'monthly' ? '' : 'none';
+      document.getElementById('annualGroup').style.display = mode === 'annual' ? '' : 'none';
+      calculate();
+    }
+
+    document.getElementById('weekhours').addEventListener('change', function() {
+      const cg = document.getElementById('customHoursGroup');
+      cg.style.display = this.value === 'custom' ? '' : 'none';
+      calculate();
+    });
+
+    /* ── Austrian Netto estimator ──────────────────────────────── */
+    function estimateNetto(jahresbrutto) {
+      // SV-Beitrag: 18.07% (gedeckelt bei 6930 €/Monat = 83160/Jahr)
+      const hbg = 83160;
+      const svRate = 0.1807;
+      const sv = Math.min(jahresbrutto, hbg) * svRate;
+      const basis = jahresbrutto - sv;
+
+      // Lohnsteuer 2025 (Jahrestabelle vereinfacht)
+      let lst = 0;
+      if (basis <= 12816) {
+        lst = 0;
+      } else if (basis <= 20818) {
+        lst = (basis - 12816) * 0.20;
+      } else if (basis <= 34513) {
+        lst = 1600 + (basis - 20818) * 0.30;
+      } else if (basis <= 66612) {
+        lst = 5709 + (basis - 34513) * 0.40;
+      } else if (basis <= 99266) {
+        lst = 18549 + (basis - 66612) * 0.48;
+      } else if (basis <= 1000000) {
+        lst = 34216 + (basis - 99266) * 0.50;
+      } else {
+        lst = 484550 + (basis - 1000000) * 0.55;
+      }
+
+      // AVAB/Verkehrsabsetzbetrag etc. (pauschale ~700 €)
+      lst = Math.max(0, lst - 700);
+
+      return jahresbrutto - sv - lst;
+    }
+
+    function fmt(n) {
+      return n.toFixed(2).replace('.', ',') + ' €';
+    }
+
+    function calculate() {
+      const mode = document.getElementById('inputMode').value;
+      const weekSel = document.getElementById('weekhours').value;
+      const weekH = weekSel === 'custom'
+        ? parseFloat(document.getElementById('customHours').value) || 0
+        : parseFloat(weekSel);
+
+      let monthBrutto = 0;
+      if (mode === 'monthly') {
+        monthBrutto = parseFloat(document.getElementById('monthly').value) || 0;
+      } else {
+        monthBrutto = (parseFloat(document.getElementById('annual').value) || 0) / 12;
+      }
+
+      if (!monthBrutto || !weekH) {
+        document.getElementById('result').style.display = 'none';
+        return;
+      }
+
+      const hasSonder = document.getElementById('sonder').value === 'yes';
+      // Jahresbrutto inkl. Sonderzahlungen
+      const yearBrutto = hasSonder ? monthBrutto * 14 : monthBrutto * 12;
+
+      const weeklyH  = weekH;
+      const yearH    = weeklyH * 52;
+      const monthH   = yearH / 12;
+
+      // Stundenlohn Brutto = Jahresbrutto / Jahresstunden
+      const hourlyBrutto = yearBrutto / yearH;
+
+      // Netto schätzen
+      const yearNetto  = estimateNetto(yearBrutto);
+      const hourlyNetto = yearNetto / yearH;
+
+      document.getElementById('resHourlyBrutto').textContent = fmt(hourlyBrutto);
+      document.getElementById('resHourlyNetto').textContent  = fmt(hourlyNetto);
+      document.getElementById('resMonthHours').textContent   = monthH.toFixed(1).replace('.', ',') + ' h';
+      document.getElementById('resYearHours').textContent    = yearH.toFixed(0) + ' h';
+
+      const minLohn = 12.00;
+      let info = '';
+      if (hourlyBrutto < minLohn) {
+        info = `⚠️ Dein Stundenlohn (${fmt(hourlyBrutto)}) liegt unter dem österreichischen KV-Mindestlohn von ca. ${fmt(minLohn)}.`;
+      } else {
+        info = `✅ Dein Brutto-Stundenlohn liegt bei ${fmt(hourlyBrutto)}. Der Netto-Stundenlohn (ca. ${fmt(hourlyNetto)}) ist eine Schätzung — für eine genaue Berechnung nutze unseren <a href="/finanzen/gehaltsrechner.html">Gehaltsrechner</a>.`;
+      }
+      document.getElementById('infoBox').innerHTML = info;
+      document.getElementById('result').style.display = '';
+    }
+  </script>
+
+</body>
+</html>

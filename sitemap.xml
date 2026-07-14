@@ -207,4 +207,18 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Stundenlohnrechner — neu 2026-07-14 -->
+  <url>
+    <loc>https://rechnify.at/arbeitszeit/stundenlohn-rechner.html</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/de/arbeitszeit/stundenlohn-rechner.html</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
 </urlset>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stundenlohnrechner Deutschland – Monats- zu Stundenlohn | rechnify.at</title>
+  <meta name="description" content="Berechne deinen Stundenlohn aus Monatsgehalt oder Jahresgehalt für Deutschland. Kostenloser Stundenlohnrechner mit Brutto-Netto-Schätzung nach deutschem Recht." />
+  <link rel="canonical" href="https://rechnify.at/de/arbeitszeit/stundenlohn-rechner.html" />
+  <link rel="alternate" hreflang="de" href="https://rechnify.at/de/arbeitszeit/stundenlohn-rechner.html" />
+  <link rel="alternate" hreflang="de-at" href="https://rechnify.at/arbeitszeit/stundenlohn-rechner.html" />
+
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" /></noscript>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .result-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; text-align: center; }
+    .result-card .label { font-size: var(--text-sm); color: var(--muted); margin-bottom: 6px; }
+    .result-card .value { font-size: var(--text-2xl); font-weight: 700; color: var(--primary); }
+    .result-card .sub { font-size: var(--text-xs); color: var(--muted); margin-top: 3px; }
+    .result-card.highlight { border-color: var(--primary); background: var(--primary-light); }
+    .info-box { background: var(--info-bg); border: 1px solid #bfdbfe; border-radius: 12px; padding: 14px 16px; font-size: var(--text-sm); color: var(--info); margin-top: 20px; }
+    @media (max-width: 600px) { .result-grid { grid-template-columns: 1fr; } }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Stundenlohnrechner Deutschland",
+    "operatingSystem": "All",
+    "applicationCategory": "FinanceApplication",
+    "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "EUR" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Wie berechnet man den Stundenlohn aus dem Monatsgehalt in Deutschland?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Formel: Stundenlohn = Monatsgehalt × 12 ÷ (Wochenstunden × 52). Beispiel: 3.000 € × 12 ÷ (40 × 52) = 17,31 € Bruttostundenlohn."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Was ist der gesetzliche Mindestlohn in Deutschland 2025?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Der gesetzliche Mindestlohn in Deutschland beträgt seit Januar 2025 12,82 € brutto pro Stunde."
+      }
+    }]
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify.at Logo" style="height: 48px; width: auto;" />
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/de/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/de/familie/elterngeld.html">👶 Familie</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill active" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <div class="calculator-container">
+      <div class="calculator-card">
+
+        <div class="calc-header">
+          <div class="calc-icon">⚡</div>
+          <h1>Stundenlohnrechner Deutschland</h1>
+          <p>Berechne deinen Brutto-Stundenlohn aus Monats- oder Jahresgehalt nach deutschem Recht — mit Netto-Schätzung.</p>
+        </div>
+
+        <div class="calc-body" style="padding: 24px;">
+
+          <div class="input-group">
+            <label for="inputMode">Eingabemethode</label>
+            <select id="inputMode" onchange="toggleMode()">
+              <option value="monthly">Monatsgehalt (Brutto)</option>
+              <option value="annual">Jahresgehalt (Brutto)</option>
+            </select>
+          </div>
+
+          <div class="input-group" id="monthlyGroup">
+            <label for="monthly">Bruttomonatsgehalt</label>
+            <div class="input-suffix">
+              <input type="number" id="monthly" placeholder="z.B. 3.000" min="0" step="50" oninput="calculate()" />
+              <span class="suffix">€</span>
+            </div>
+          </div>
+
+          <div class="input-group" id="annualGroup" style="display:none;">
+            <label for="annual">Bruttojahresgehalt</label>
+            <div class="input-suffix">
+              <input type="number" id="annual" placeholder="z.B. 36.000" min="0" step="500" oninput="calculate()" />
+              <span class="suffix">€</span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="weekhours">Wochenstunden</label>
+            <select id="weekhours" onchange="calculate()">
+              <option value="40" selected>40 Stunden (Vollzeit Standard DE)</option>
+              <option value="38.5">38,5 Stunden</option>
+              <option value="36">36 Stunden</option>
+              <option value="30">30 Stunden (Teilzeit)</option>
+              <option value="25">25 Stunden (Teilzeit)</option>
+              <option value="20">20 Stunden (Halbtags)</option>
+              <option value="custom">Andere...</option>
+            </select>
+          </div>
+
+          <div class="input-group" id="customHoursGroup" style="display:none;">
+            <label for="customHours">Wochenstunden (eigene Eingabe)</label>
+            <div class="input-suffix">
+              <input type="number" id="customHours" placeholder="z.B. 32" min="1" max="60" step="0.5" oninput="calculate()" />
+              <span class="suffix">Std.</span>
+            </div>
+          </div>
+
+          <!-- Steuerklasse DE -->
+          <div class="input-group">
+            <label for="stklasse">Steuerklasse</label>
+            <select id="stklasse" onchange="calculate()">
+              <option value="1">Klasse I (ledig, keine Kinder)</option>
+              <option value="3">Klasse III (verheiratet, Partner ohne Einkommen)</option>
+              <option value="4">Klasse IV (verheiratet, beide berufstätig)</option>
+              <option value="5">Klasse V (Zweitverdienst, Ehe)</option>
+            </select>
+          </div>
+
+          <!-- Ergebnis -->
+          <div class="result-box" id="result" style="display:none;">
+            <strong style="font-size: var(--text-base); color: var(--text);">⚡ Dein Stundenlohn</strong>
+            <div class="result-grid">
+              <div class="result-card highlight">
+                <div class="label">Brutto-Stundenlohn</div>
+                <div class="value" id="resHourlyBrutto">–</div>
+                <div class="sub">pro Stunde</div>
+              </div>
+              <div class="result-card">
+                <div class="label">Netto-Stundenlohn (ca.)</div>
+                <div class="value" id="resHourlyNetto">–</div>
+                <div class="sub">Schätzwert</div>
+              </div>
+              <div class="result-card">
+                <div class="label">Monatsstunden</div>
+                <div class="value" id="resMonthHours">–</div>
+                <div class="sub">Stunden/Monat</div>
+              </div>
+              <div class="result-card">
+                <div class="label">Jahresstunden</div>
+                <div class="value" id="resYearHours">–</div>
+                <div class="sub">Stunden/Jahr</div>
+              </div>
+            </div>
+            <div class="info-box" id="infoBox"></div>
+          </div>
+
+        </div>
+
+        <!-- FAQ -->
+        <div style="padding: 24px; border-top: 1px solid var(--border);">
+          <h2 style="font-size: var(--text-xl); margin-bottom: 16px;">Häufige Fragen</h2>
+
+          <details style="margin-bottom: 12px;">
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie berechnet man den Stundenlohn in Deutschland?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              <strong>Stundenlohn = Monatsgehalt × 12 ÷ (Wochenstunden × 52)</strong><br />
+              Beispiel: 3.000 € × 12 ÷ (40 × 52) = <strong>17,31 €/Stunde</strong> brutto.
+            </p>
+          </details>
+
+          <details style="margin-bottom: 12px;">
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie hoch ist der Mindestlohn in Deutschland 2025?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Der gesetzliche Mindestlohn beträgt seit Januar 2025 <strong>12,82 € brutto/Stunde</strong>.
+            </p>
+          </details>
+
+          <details>
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie viele Arbeitsstunden hat ein Monat in Deutschland?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Bei 40 h/Woche (Vollzeit DE): 40 × 52 ÷ 12 = <strong>ca. 173,3 Stunden/Monat</strong>.
+            </p>
+          </details>
+        </div>
+
+      </div><!-- /calculator-card -->
+
+      <!-- Sidebar -->
+      <aside class="sidebar-nav">
+        <div class="sidebar-section">
+          <div class="sidebar-title">⏰ Arbeitszeit DE</div>
+          <a href="/de/arbeitszeit/ueberstundenrechner.html" class="sidebar-link">Überstunden DE</a>
+          <a href="/de/arbeitszeit/urlaubstage-rechner.html" class="sidebar-link">Urlaubstage DE</a>
+          <a href="/de/arbeitszeit/kommen-gehen-rechner.html" class="sidebar-link">Kommen-Gehen DE</a>
+          <a href="/de/arbeitszeit/stundenlohn-rechner.html" class="sidebar-link active">Stundenlohn DE</a>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title">💶 Finanzen DE</div>
+          <a href="/de/finanzen/gehaltsrechner.html" class="sidebar-link">Gehaltsrechner DE</a>
+          <a href="/de/finanzen/mwst-rechner.html" class="sidebar-link">MwSt DE</a>
+          <a href="/de/finanzen/kryptosteuerrechner.html" class="sidebar-link">Krypto-Steuer DE</a>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title">🇦🇹 Österreich</div>
+          <a href="/arbeitszeit/stundenlohn-rechner.html" class="sidebar-link">Stundenlohn AT</a>
+          <a href="/finanzen/gehaltsrechner.html" class="sidebar-link">Gehalt AT</a>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2025 rechnify.at</span>
+      <div class="footer-links">
+        <a href="/impressum.html">Impressum</a>
+        <a href="/datenschutz.html">Datenschutz</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Dark mode ──────────────────────────────────────────────── */
+    const dt = document.getElementById('darkModeToggle');
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.body.classList.add('dark'); dt.textContent = '☀️';
+    }
+    dt.addEventListener('click', () => {
+      const d = document.body.classList.toggle('dark');
+      localStorage.setItem('theme', d ? 'dark' : 'light');
+      dt.textContent = d ? '☀️' : '🌙';
+    });
+
+    /* ── Country toggle ─────────────────────────────────────────── */
+    document.querySelectorAll('.country-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.country-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        localStorage.setItem('country', btn.dataset.country);
+        if (btn.dataset.country === 'at') {
+          window.location.href = '/arbeitszeit/stundenlohn-rechner.html';
+        }
+      });
+    });
+
+    /* ── Hamburger ──────────────────────────────────────────────── */
+    const ham = document.getElementById('hamburger');
+    const nav = document.getElementById('siteNav');
+    ham.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      ham.setAttribute('aria-expanded', open);
+    });
+
+    /* ── Mode toggle ────────────────────────────────────────────── */
+    function toggleMode() {
+      const mode = document.getElementById('inputMode').value;
+      document.getElementById('monthlyGroup').style.display = mode === 'monthly' ? '' : 'none';
+      document.getElementById('annualGroup').style.display  = mode === 'annual'  ? '' : 'none';
+      calculate();
+    }
+
+    document.getElementById('weekhours').addEventListener('change', function() {
+      document.getElementById('customHoursGroup').style.display = this.value === 'custom' ? '' : 'none';
+      calculate();
+    });
+
+    /* ── German Netto estimator (Steuerklasse I simplified) ─────── */
+    function estimateNettoDE(jahresbrutto, stklasse) {
+      // SV-Beiträge (AN-Anteil, 2025)
+      // KV: 7.3% + ZB 1.7% = ~8.9%, RV: 9.3%, AV: 1.3%, PV: 1.875% = ~21.375%
+      // Deckelung: KV/PV 5175/Monat=62100/Jahr, RV/AV 7450/Monat=89400/Jahr
+      const svRate = 0.2118; // approximated incl. PflegeV
+      const sv = Math.min(jahresbrutto, 89400) * svRate;
+      const zvBeitrag = 0; // vereinfacht
+
+      const basis = jahresbrutto - sv;
+
+      // Lohnsteuer DE 2025 (vereinfacht, Steuerklasse I/IV)
+      let lst = 0;
+      if (stklasse === '1' || stklasse === '4') {
+        const gd = basis;
+        if (gd <= 12096) {
+          lst = 0;
+        } else if (gd <= 17443) {
+          const y = (gd - 12096) / 10000;
+          lst = (1320.6 * y + 263.1) * y;
+        } else if (gd <= 66761) {
+          const z = (gd - 17443) / 10000;
+          lst = (200.0 * z + 2397.0) * z + 1025.38;
+        } else if (gd <= 277825) {
+          lst = 0.42 * gd - 10602.13;
+        } else {
+          lst = 0.45 * gd - 18936.88;
+        }
+      } else if (stklasse === '3') {
+        // Klasse III: doppelter Grundfreibetrag (24192 €)
+        const gd = basis;
+        if (gd <= 24192) {
+          lst = 0;
+        } else if (gd <= 34886) {
+          const y = (gd - 24192) / 10000;
+          lst = (1320.6 * y + 263.1) * y;
+        } else if (gd <= 133522) {
+          const z = (gd - 34886) / 10000;
+          lst = (200.0 * z + 2397.0) * z + 1025.38;
+        } else {
+          lst = 0.42 * gd - 21204.26;
+        }
+      } else if (stklasse === '5') {
+        // Klasse V: kein Grundfreibetrag, stärker besteuert
+        lst = basis > 0 ? basis * 0.35 : 0;
+      }
+
+      // Solidaritätszuschlag (ab 2021 für die meisten weggefallen, pauschal 0 für Vereinfachung)
+      const soli = 0;
+      // Kirchensteuer: nicht berücksichtigt
+
+      return Math.max(0, jahresbrutto - sv - lst - soli);
+    }
+
+    function fmt(n) {
+      return n.toFixed(2).replace('.', ',') + ' €';
+    }
+
+    function calculate() {
+      const mode = document.getElementById('inputMode').value;
+      const weekSel = document.getElementById('weekhours').value;
+      const weekH = weekSel === 'custom'
+        ? parseFloat(document.getElementById('customHours').value) || 0
+        : parseFloat(weekSel);
+
+      let monthBrutto = 0;
+      if (mode === 'monthly') {
+        monthBrutto = parseFloat(document.getElementById('monthly').value) || 0;
+      } else {
+        monthBrutto = (parseFloat(document.getElementById('annual').value) || 0) / 12;
+      }
+
+      const stklasse = document.getElementById('stklasse').value;
+
+      if (!monthBrutto || !weekH) {
+        document.getElementById('result').style.display = 'none';
+        return;
+      }
+
+      const yearBrutto  = monthBrutto * 12;
+      const yearH       = weekH * 52;
+      const monthH      = yearH / 12;
+      const hourlyBrutto = yearBrutto / yearH;
+
+      const yearNetto   = estimateNettoDE(yearBrutto, stklasse);
+      const hourlyNetto = yearNetto / yearH;
+
+      document.getElementById('resHourlyBrutto').textContent = fmt(hourlyBrutto);
+      document.getElementById('resHourlyNetto').textContent  = fmt(hourlyNetto);
+      document.getElementById('resMonthHours').textContent   = monthH.toFixed(1).replace('.', ',') + ' h';
+      document.getElementById('resYearHours').textContent    = yearH.toFixed(0) + ' h';
+
+      const minDE = 12.82;
+      let info = '';
+      if (hourlyBrutto < minDE) {
+        info = `⚠️ Dein Stundenlohn (${fmt(hourlyBrutto)}) liegt unter dem deutschen Mindestlohn von ${fmt(minDE)} (Stand: 2025).`;
+      } else {
+        info = `✅ Dein Brutto-Stundenlohn liegt bei ${fmt(hourlyBrutto)}. Der Netto-Stundenlohn (ca. ${fmt(hourlyNetto)}) ist eine Schätzung — für eine genaue Berechnung nutze unseren <a href="/de/finanzen/gehaltsrechner.html">Gehaltsrechner DE</a>.`;
+      }
+
+      document.getElementById('infoBox').innerHTML = info;
+      document.getElementById('result').style.display = '';
+    }
+  </script>
+
+</body>
+</html>
