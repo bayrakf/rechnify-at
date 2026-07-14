@@ -9,8 +9,7 @@ const DARK_MODE_KEY = 'rechnify.darkMode';
 
 function initDarkMode() {
   const saved = localStorage.getItem(DARK_MODE_KEY);
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const isDark = saved !== null ? saved === 'true' : prefersDark;
+  const isDark = saved === 'true';
   if (isDark) document.body.classList.add('dark');
   updateDarkModeBtn();
 }

@@ -31,60 +31,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Base CSS (used by all subpages – kept intact) -->
+  <link rel="stylesheet" href="/tokens.css" />
   <link rel="stylesheet" href="/assets/css/global.css" />
 
   <style>
-    /* Hallmark · macrostructure: Bento Grid · tone: utilitarian-precise · anchor hue: cobalt oklch(48% 0.22 255)
+    /* Hallmark · macrostructure: Bento Grid · genre: modern-minimal · design-system: design.md · designed-as-app
+     * theme: Cobalt · tone: utilitarian-precise · anchor hue: cobalt 255°
      * Pre-emit critique: P5 H5 E5 S4 R5 V5 */
-
-    /* ── OKLCH Token Layer (index-only, additive) ───────────────────── */
-    :root {
-      --c-paper:   oklch(98.5% 0.005 240);
-      --c-paper2:  oklch(95%   0.010 240);
-      --c-paper3:  oklch(91%   0.013 240);
-      --c-ink:     oklch(15%   0.040 255);
-      --c-ink2:    oklch(40%   0.028 255);
-      --c-ink3:    oklch(60%   0.018 255);
-      --c-accent:  oklch(48%   0.220 255);
-      --c-accent-h:oklch(42%   0.220 255);
-      --c-accent-s:oklch(96%   0.050 255);
-      --c-accent-t:oklch(100%  0     0  );
-      --c-rule:    oklch(88%   0.012 240);
-      --c-at:      oklch(56%   0.190 22 );
-      --c-de:      oklch(50%   0.150 148);
-
-      --f-display: 'Space Grotesk', system-ui, sans-serif;
-      --f-body:    'Inter', system-ui, sans-serif;
-
-      --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;
-      --sp6:24px;--sp8:32px;--sp10:40px;--sp12:48px;--sp16:64px;--sp20:80px;
-
-      --r-sm:8px;--r-md:14px;--r-lg:20px;--r-xl:28px;--r-full:9999px;
-
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-      --dur: 200ms;
-
-      --sh-sm: 0 1px 4px  oklch(0% 0 0 / .07);
-      --sh-md: 0 5px 22px oklch(0% 0 0 / .09);
-      --sh-lg: 0 16px 48px oklch(0% 0 0 / .12);
-    }
-
-    body.dark {
-      --c-paper:   oklch(14%  0.040 255);
-      --c-paper2:  oklch(19%  0.038 255);
-      --c-paper3:  oklch(24%  0.034 255);
-      --c-ink:     oklch(95%  0.007 240);
-      --c-ink2:    oklch(68%  0.014 240);
-      --c-ink3:    oklch(48%  0.018 240);
-      --c-accent:  oklch(65%  0.220 255);
-      --c-accent-h:oklch(72%  0.220 255);
-      --c-accent-s:oklch(22%  0.070 255);
-      --c-rule:    oklch(26%  0.038 255);
-      --sh-sm: 0 1px 4px  oklch(0% 0 0 / .40);
-      --sh-md: 0 5px 22px oklch(0% 0 0 / .50);
-      --sh-lg: 0 16px 48px oklch(0% 0 0 / .65);
-    }
 
     /* ── Reset (index scope) ──────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; }
@@ -96,8 +49,9 @@
       color: var(--c-ink);
       line-height: 1.6;
       overflow-x: clip;
-      /* override global.css flex column so hero vh works */
-      display: block;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     /* ── FLOATING PILL NAV ────────────────────────────────────────── */
@@ -138,11 +92,20 @@
     }
 
     .pill-logo img {
-      width: 26px;
-      height: 26px;
-      border-radius: 6px;
-      object-fit: cover;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
       flex-shrink: 0;
+      object-fit: contain;
+      background: var(--c-paper);
+    }
+
+    .pill-logo span {
+      font-family: var(--f-display);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      color: var(--c-ink);
     }
 
     .pill-country {
@@ -170,8 +133,8 @@
 
     .c-btn:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
 
-    .c-btn.active[data-c="at"] { background: oklch(94% .07 22);  color: var(--c-at); }
-    .c-btn.active[data-c="de"] { background: oklch(94% .06 148); color: var(--c-de); }
+    .c-btn.active[data-c="at"] { background: var(--color-at-bg); color: var(--color-at); }
+    .c-btn.active[data-c="de"] { background: var(--color-de-bg); color: var(--color-de); }
 
     .pill-actions { display:flex; align-items:center; gap:var(--sp2); }
 
@@ -191,7 +154,7 @@
 
     /* ── HERO ─────────────────────────────────────────────────────── */
     .hero {
-      min-height: 100svh;
+      min-height: 62svh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -335,235 +298,27 @@
       flex-shrink: 0;
     }
 
-    /* ── BENTO SECTION ────────────────────────────────────────────── */
-    .tools-wrap {
-      max-width: 1160px;
+    /* ── FRONTPAGE LAYOUT (sidebar + categories) ─────────────────── */
+    .frontpage-layout {
+      max-width: 1300px;
       margin: 0 auto;
-      padding: 0 20px var(--sp20);
+      padding: 0 var(--space-md) var(--space-3xl);
     }
 
-    .sec-label {
-      font-family: var(--f-display);
-      font-size: .72rem;
-      font-weight: 700;
-      color: var(--c-ink3);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      margin-bottom: var(--sp5);
-      display: flex;
-      align-items: center;
-      gap: var(--sp3);
+    .frontpage-layout .sidebar-nav {
+      top: 72px;
     }
 
-    .sec-label::after {
-      content: '';
+    .main-content-grid {
+      min-width: 0;
+    }
+
+    .index-page-main {
       flex: 1;
-      height: 1px;
-      background: var(--c-rule);
     }
-
-    .bento {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 13px;
-      margin-bottom: var(--sp16);
-    }
-
-    /* Base card */
-    .bc {
-      background: var(--c-paper);
-      border: 1px solid var(--c-rule);
-      border-radius: var(--r-lg);
-      padding: 22px;
-      text-decoration: none;
-      color: var(--c-ink);
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp2);
-      transition: transform var(--dur) var(--ease-out),
-                  box-shadow var(--dur) var(--ease-out),
-                  border-color var(--dur) var(--ease-out);
-      position: relative;
-      overflow: hidden;
-      min-height: 138px;
-      box-shadow: var(--sh-sm);
-    }
-
-    .bc:hover {
-      transform: translateY(-3px);
-      border-color: color-mix(in oklch, var(--c-accent) 45%, transparent);
-      box-shadow: var(--sh-md);
-    }
-
-    .bc:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
-    .bc:active { transform: translateY(-1px); }
-
-    /* Featured (dark) card */
-    .bc-feat {
-      grid-column: span 2;
-      grid-row: span 2;
-      min-height: 276px;
-      background: var(--c-ink);
-      border-color: transparent;
-      padding: var(--sp8);
-      justify-content: flex-end;
-      gap: var(--sp3);
-    }
-
-    .bc-feat:hover {
-      border-color: transparent;
-      box-shadow: var(--sh-lg);
-    }
-
-    .bc-feat .ci { font-size: 2.2rem; margin-bottom: 4px; }
-
-    .bc-feat .ct {
-      font-family: var(--f-display);
-      font-size: 1.55rem;
-      font-weight: 700;
-      line-height: 1.1;
-      color: oklch(95% .006 240);
-    }
-
-    .bc-feat .cd { color: oklch(62% .014 240); font-size: .9rem; }
-
-    .feat-cta {
-      margin-top: var(--sp4);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--c-accent);
-      color: white;
-      font-size: .82rem;
-      font-weight: 600;
-      font-family: var(--f-display);
-      padding: 8px 16px;
-      border-radius: var(--r-full);
-      text-decoration: none;
-      width: fit-content;
-      transition: background var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
-    }
-
-    .feat-cta:hover { background: var(--c-accent-h); transform: translateX(2px); }
-
-    /* New product card */
-    .bc-new {
-      border-style: dashed;
-      border-color: color-mix(in oklch, var(--c-accent) 40%, transparent);
-      background: var(--c-accent-s);
-    }
-
-    /* Coming soon */
-    .bc-soon {
-      opacity: .55;
-      pointer-events: none;
-      cursor: default;
-    }
-
-    /* Card parts */
-    .cbadge {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      font-size: .65rem;
-      font-weight: 700;
-      font-family: var(--f-display);
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: var(--r-full);
-      width: fit-content;
-      margin-bottom: 2px;
-    }
-
-    .badge-pop  { background: var(--c-accent-s); color: var(--c-accent); }
-    .badge-new  { background: oklch(92% .11 145); color: oklch(38% .14 145); }
-    .badge-soon { background: var(--c-paper3); color: var(--c-ink3); }
-
-    .ci { font-size: 1.45rem; line-height: 1; }
-
-    .ct {
-      font-family: var(--f-display);
-      font-size: .98rem;
-      font-weight: 600;
-      line-height: 1.2;
-      color: var(--c-ink);
-    }
-
-    .cd { font-size: .78rem; color: var(--c-ink2); line-height: 1.35; }
-
-    .carr {
-      margin-top: auto;
-      font-size: .8rem;
-      color: var(--c-ink3);
-      transition: transform var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
-    }
-
-    .bc:hover .carr { transform: translateX(4px); color: var(--c-accent); }
-
-    /* ── FOOTER ───────────────────────────────────────────────────── */
-    .foot {
-      border-top: 1px solid var(--c-rule);
-      padding: var(--sp10) var(--sp6);
-    }
-
-    .foot-inner {
-      max-width: 1160px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: var(--sp4);
-    }
-
-    .foot-logo {
-      font-family: var(--f-display);
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: var(--c-ink);
-      text-decoration: none;
-    }
-
-    .foot-links {
-      display: flex;
-      gap: var(--sp5);
-      list-style: none;
-      flex-wrap: wrap;
-    }
-
-    .foot-links a {
-      font-size: .82rem;
-      color: var(--c-ink3);
-      text-decoration: none;
-      transition: color var(--dur);
-    }
-
-    .foot-links a:hover { color: var(--c-ink); }
-
-    .foot-copy { font-size: .78rem; color: var(--c-ink3); }
 
     /* ── RESPONSIVE ───────────────────────────────────────────────── */
-    @media (max-width: 960px) {
-      .bento { grid-template-columns: repeat(2, 1fr); }
-      .bc-feat { grid-column: span 2; }
-    }
-
     @media (max-width: 600px) {
-      .bento {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .bc-feat {
-        grid-column: 1;
-        grid-row: span 1;
-        min-height: 210px;
-        padding: var(--sp6);
-      }
-
-      .bc-feat .ct { font-size: 1.3rem; }
-
       .pill-nav {
         width: calc(100% - 20px);
         top: 8px;
@@ -581,8 +336,6 @@
 
       .v-strip { flex-direction: column; }
       .v-item + .v-item { border-left: none; border-top: 1px solid var(--c-rule); }
-
-      .foot-inner { flex-direction: column; align-items: flex-start; gap: var(--sp3); }
     }
 
     @media (max-width: 414px) {
@@ -614,7 +367,7 @@
   <nav class="pill-nav" aria-label="Hauptnavigation">
     <div class="pill-nav-inner">
       <a href="/" class="pill-logo" aria-label="rechnify Startseite">
-        <img src="/assets/images/logo.jpg" alt="" width="26" height="26" />
+        <img src="/assets/images/logo.jpg" alt="rechnify Logo" width="36" height="36" />
         <span>rechnify</span>
       </a>
       <div class="pill-country" role="group" aria-label="Land auswählen">
@@ -633,8 +386,8 @@
     <h1 class="hero-h1">Rechne.<br><span class="accent">Sofort.</span></h1>
     <p class="hero-sub">Kostenlose Präzisionsrechner für Österreich und Deutschland — direkt im Browser, ohne Datenweitergabe.</p>
     <div class="hero-btns">
-      <a href="#at-tools" class="btn-p" id="heroAt">🇦🇹 Österreichische Rechner</a>
-      <a href="#de-tools" class="btn-s" id="heroDe">🇩🇪 Deutsche Rechner</a>
+      <a href="#arbeitszeit" class="btn-p" id="heroAt">🇦🇹 Österreichische Rechner</a>
+      <a href="#finanzen" class="btn-s" id="heroDe">🇩🇪 Deutsche Rechner</a>
     </div>
     <div class="scroll-hint" aria-hidden="true">
       <span>Entdecken</span>
@@ -650,298 +403,262 @@
     <div class="v-item"><span class="v-dot"></span>20+ Rechner</div>
   </div>
 
-  <!-- ── TOOLS — ÖSTERREICH ───────────────────────────────────────── -->
-  <main class="tools-wrap">
-    <p class="sec-label" id="at-tools">🇦🇹 Österreich — Alle Rechner</p>
+  <!-- ── TOOLS + SIDEBAR ──────────────────────────────────────────── -->
+  <main class="frontpage-layout index-page-main" id="main-content">
 
-    <div class="bento" role="list">
+    <aside class="sidebar-nav" aria-label="Kategorien">
+      <h3>Kategorien</h3>
+      <a href="#arbeitszeit"><span class="icon">⏰</span> Arbeitszeit</a>
+      <a href="#finanzen"><span class="icon">💶</span> Finanzen &amp; Steuern</a>
+      <a href="#mathematik"><span class="icon">📐</span> Mathematik</a>
+      <a href="#familie"><span class="icon">👶</span> Familie</a>
+      <a href="#alltag"><span class="icon">⚖️</span> Alltag &amp; Gesundheit</a>
+    </aside>
 
-      <!-- Featured: Gehaltsrechner AT -->
-      <a href="/finanzen/gehaltsrechner.html" class="bc bc-feat" role="listitem" id="card-gehalt-at">
-        <span class="cbadge badge-pop">⭐ Beliebt</span>
-        <div class="ci">💰</div>
-        <h2 class="ct">Brutto-Netto<br>Gehaltsrechner</h2>
-        <p class="cd">Nettogehalt nach österreichischem Steuerrecht — inkl. SV-Beiträge &amp; Lohnsteuer.</p>
-        <span class="feat-cta">Jetzt berechnen →</span>
-      </a>
+    <div class="main-content-grid">
 
-      <!-- Überstunden -->
-      <a href="/arbeitszeit/ueberstundenrechner.html" class="bc" role="listitem" id="card-ueber-at">
-        <div class="ci">⏰</div>
-        <h2 class="ct">Überstunden&shy;rechner</h2>
-        <p class="cd">Zuschlag &amp; Auszahlung</p>
-        <span class="carr">→</span>
-      </a>
+      <section class="category-section" id="arbeitszeit">
+        <div class="category-header">
+          <span style="font-size:24px;">⏰</span>
+          <h2>Arbeitszeit &amp; Personal</h2>
+          <div class="category-header-line"></div>
+        </div>
+        <div class="tool-grid">
+          <a href="/arbeitszeit/kommen-gehen-rechner.html" class="tool-card">
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <div class="tool-card-icon">🕐</div>
+            <div class="tool-card-title">Kommen-Gehen Rechner</div>
+            <div class="tool-card-desc">Arbeitszeit erfassen, Pausen und Überstunden berechnen.</div>
+          </a>
+          <a href="/arbeitszeit/ueberstundenrechner.html" class="tool-card">
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <div class="tool-card-icon">⏰</div>
+            <div class="tool-card-title">Überstundenrechner</div>
+            <div class="tool-card-desc">Zuschlag und Auszahlung nach Arbeitsrecht.</div>
+          </a>
+          <a href="/arbeitszeit/urlaubstage-rechner.html" class="tool-card">
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <div class="tool-card-icon">🏖️</div>
+            <div class="tool-card-title">Urlaubstage-Rechner</div>
+            <div class="tool-card-desc">Urlaubsanspruch gesetzlich berechnen.</div>
+          </a>
+          <a href="/arbeitszeit/stundenlohn-rechner.html" class="tool-card">
+            <span class="tool-card-badge badge-new">✦ Neu</span>
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <div class="tool-card-icon">⚡</div>
+            <div class="tool-card-title">Stundenlohnrechner</div>
+            <div class="tool-card-desc">Monatsgehalt in Stundenlohn umrechnen.</div>
+          </a>
+          <a href="/de/arbeitszeit/stundenlohn-rechner.html" class="tool-card">
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
+            <div class="tool-card-icon">⚡</div>
+            <div class="tool-card-title">Stundenlohnrechner DE</div>
+            <div class="tool-card-desc">Brutto-Stundenlohn für Deutschland.</div>
+          </a>
+          <a href="/arbeitszeit/schichtplan-rechner.html" class="tool-card">
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <div class="tool-card-icon">🔄</div>
+            <div class="tool-card-title">Schichtplan-Rechner</div>
+            <div class="tool-card-desc">Wochenschichten planen und Gesamtstunden berechnen.</div>
+          </a>
+        </div>
+      </section>
 
-      <!-- MwSt -->
-      <a href="/finanzen/mwst-rechner.html" class="bc" role="listitem" id="card-mwst-at">
-        <div class="ci">🧾</div>
-        <h2 class="ct">MwSt-Rechner</h2>
-        <p class="cd">20 % / 10 % / 13 %</p>
-        <span class="carr">→</span>
-      </a>
+      <section class="category-section" id="finanzen">
+        <div class="category-header">
+          <span style="font-size:24px;">💶</span>
+          <h2>Finanzen &amp; Steuern</h2>
+          <div class="category-header-line"></div>
+        </div>
+        <div class="tool-grid">
+          <a href="/finanzen/gehaltsrechner.html" class="tool-card">
+            <span class="tool-card-badge badge-popular">⭐ Beliebt</span>
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <div class="tool-card-icon">💰</div>
+            <div class="tool-card-title">Brutto-Netto Gehaltsrechner</div>
+            <div class="tool-card-desc">Nettogehalt inkl. 13./14. Gehalt für Österreich.</div>
+          </a>
+          <a href="/de/finanzen/gehaltsrechner.html" class="tool-card">
+            <span class="tool-card-badge badge-popular">⭐ Beliebt</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
+            <div class="tool-card-icon">💶</div>
+            <div class="tool-card-title">Brutto-Netto Gehaltsrechner DE</div>
+            <div class="tool-card-desc">Nettogehalt nach deutschem Steuerrecht.</div>
+          </a>
+          <a href="/finanzen/gehaltserhoehung-rechner.html" class="tool-card">
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <div class="tool-card-icon">📈</div>
+            <div class="tool-card-title">Gehaltserhöhung Rechner</div>
+            <div class="tool-card-desc">Netto-Effekt einer Gehaltserhöhung berechnen.</div>
+          </a>
+          <a href="/finanzen/kryptosteuerrechner.html" class="tool-card">
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <div class="tool-card-icon">₿</div>
+            <div class="tool-card-title">Krypto-Steuerrechner</div>
+            <div class="tool-card-desc">Steuern auf Kryptogewinne berechnen.</div>
+          </a>
+          <a href="/finanzen/mwst-rechner.html" class="tool-card">
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <div class="tool-card-icon">🧾</div>
+            <div class="tool-card-title">MwSt-Rechner</div>
+            <div class="tool-card-desc">Brutto und Netto nach Mehrwertsteuersätzen.</div>
+          </a>
+          <a href="/finanzen/rabattrechner.html" class="tool-card">
+            <div class="tool-card-icon">🏷️</div>
+            <div class="tool-card-title">Rabattrechner</div>
+            <div class="tool-card-desc">Ersparnis und Endpreis berechnen.</div>
+          </a>
+          <a href="/finanzen/zinsrechner.html" class="tool-card">
+            <div class="tool-card-icon">🏦</div>
+            <div class="tool-card-title">Zinsrechner</div>
+            <div class="tool-card-desc">Zinsen, Zinseszins und Endkapital.</div>
+          </a>
+        </div>
+      </section>
 
-      <!-- Urlaubstage -->
-      <a href="/arbeitszeit/urlaubstage-rechner.html" class="bc" role="listitem" id="card-urlaub-at">
-        <div class="ci">🏖️</div>
-        <h2 class="ct">Urlaubstage&shy;rechner</h2>
-        <p class="cd">Gesetzlicher Anspruch</p>
-        <span class="carr">→</span>
-      </a>
+      <section class="category-section" id="mathematik">
+        <div class="category-header">
+          <span style="font-size:24px;">📐</span>
+          <h2>Mathematik</h2>
+          <div class="category-header-line"></div>
+        </div>
+        <div class="tool-grid">
+          <a href="/mathematik/prozentrechner.html" class="tool-card">
+            <div class="tool-card-icon">📐</div>
+            <div class="tool-card-title">Prozentrechner</div>
+            <div class="tool-card-desc">Prozente, Prozentwert und Grundwert.</div>
+          </a>
+          <a href="/mathematik/dreisatzrechner.html" class="tool-card">
+            <div class="tool-card-icon">✖️</div>
+            <div class="tool-card-title">Dreisatzrechner</div>
+            <div class="tool-card-desc">Verhältnisse einfach berechnen.</div>
+          </a>
+          <a href="/mathematik/taschenrechner.html" class="tool-card">
+            <div class="tool-card-icon">🔢</div>
+            <div class="tool-card-title">Taschenrechner</div>
+            <div class="tool-card-desc">Online-Taschenrechner mit Verlauf.</div>
+          </a>
+        </div>
+      </section>
 
-      <!-- Kommen-Gehen -->
-      <a href="/arbeitszeit/kommen-gehen-rechner.html" class="bc" role="listitem" id="card-komgeh-at">
-        <div class="ci">🕐</div>
-        <h2 class="ct">Kommen-Gehen</h2>
-        <p class="cd">Arbeitszeit erfassen</p>
-        <span class="carr">→</span>
-      </a>
+      <section class="category-section" id="familie">
+        <div class="category-header">
+          <span style="font-size:24px;">👶</span>
+          <h2>Familie &amp; Leben</h2>
+          <div class="category-header-line"></div>
+        </div>
+        <div class="tool-grid">
+          <a href="/familie/schwangerschaftsrechner.html" class="tool-card">
+            <div class="tool-card-icon">🤰</div>
+            <div class="tool-card-title">Schwangerschaftsrechner</div>
+            <div class="tool-card-desc">SSW, Geburtstermin und Meilensteine.</div>
+          </a>
+          <a href="/familie/kinderbetreuungsgeld.html" class="tool-card">
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <div class="tool-card-icon">👶</div>
+            <div class="tool-card-title">Kinderbetreuungsgeld</div>
+            <div class="tool-card-desc">KBG-Konto und eaKBG für Österreich.</div>
+          </a>
+          <a href="/de/familie/elterngeld.html" class="tool-card">
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
+            <div class="tool-card-icon">🍼</div>
+            <div class="tool-card-title">Elterngeld Rechner</div>
+            <div class="tool-card-desc">Basiselterngeld und ElterngeldPlus.</div>
+          </a>
+        </div>
+      </section>
 
-      <!-- Stundenlohn NEU -->
-      <a href="/arbeitszeit/stundenlohn-rechner.html" class="bc bc-new" role="listitem" id="card-std-at">
-        <span class="cbadge badge-new">✦ Neu</span>
-        <div class="ci">⚡</div>
-        <h2 class="ct">Stundenlohn&shy;rechner</h2>
-        <p class="cd">Monats- zu Stundenlohn</p>
-        <span class="carr">→</span>
-      </a>
+      <section class="category-section" id="alltag">
+        <div class="category-header">
+          <span style="font-size:24px;">⚖️</span>
+          <h2>Alltag &amp; Gesundheit</h2>
+          <div class="category-header-line"></div>
+        </div>
+        <div class="tool-grid">
+          <a href="/alltag/bmi-rechner.html" class="tool-card">
+            <div class="tool-card-icon">⚖️</div>
+            <div class="tool-card-title">BMI-Rechner</div>
+            <div class="tool-card-desc">Body-Mass-Index und Normalgewicht.</div>
+          </a>
+          <a href="/alltag/kaufkraftrechner.html" class="tool-card">
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <div class="tool-card-icon">💸</div>
+            <div class="tool-card-title">Kaufkraftrechner</div>
+            <div class="tool-card-desc">Kaufkraftverlust und Inflation.</div>
+          </a>
+          <a href="/alltag/einheitenrechner.html" class="tool-card">
+            <div class="tool-card-icon">📏</div>
+            <div class="tool-card-title">Einheitenrechner</div>
+            <div class="tool-card-desc">Längen, Gewichte, Temperaturen umrechnen.</div>
+          </a>
+          <a href="/alltag/altersrechner.html" class="tool-card">
+            <div class="tool-card-icon">🎂</div>
+            <div class="tool-card-title">Altersrechner</div>
+            <div class="tool-card-desc">Exaktes Alter in Tagen und Monaten.</div>
+          </a>
+        </div>
+      </section>
 
-      <!-- Schichtplan -->
-      <a href="/arbeitszeit/schichtplan-rechner.html" class="bc" role="listitem" id="card-schicht">
-        <div class="ci">🔄</div>
-        <h2 class="ct">Schichtplan&shy;rechner</h2>
-        <p class="cd">Schichten planen</p>
-        <span class="carr">→</span>
-      </a>
+    </div>
+  </main>
 
-      <!-- Krypto -->
-      <a href="/finanzen/kryptosteuerrechner.html" class="bc" role="listitem" id="card-krypto-at">
-        <div class="ci">₿</div>
-        <h2 class="ct">Krypto-Steuer</h2>
-        <p class="cd">Steuer auf Kryptogewinne</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Gehalterhöhung -->
-      <a href="/finanzen/gehaltserhoehung-rechner.html" class="bc" role="listitem" id="card-gerhoe-at">
-        <div class="ci">📈</div>
-        <h2 class="ct">Gehalts&shy;erhöhung</h2>
-        <p class="cd">Netto-Effekt berechnen</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Zins -->
-      <a href="/finanzen/zinsrechner.html" class="bc" role="listitem" id="card-zins">
-        <div class="ci">🏦</div>
-        <h2 class="ct">Zins&shy;rechner</h2>
-        <p class="cd">Zinsen &amp; Sparanlagen</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Rabatt -->
-      <a href="/finanzen/rabattrechner.html" class="bc" role="listitem" id="card-rabatt">
-        <div class="ci">🏷️</div>
-        <h2 class="ct">Rabatt&shy;rechner</h2>
-        <p class="cd">Ersparnis &amp; Endpreis</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Prozent -->
-      <a href="/mathematik/prozentrechner.html" class="bc" role="listitem" id="card-proz">
-        <div class="ci">📐</div>
-        <h2 class="ct">Prozent&shy;rechner</h2>
-        <p class="cd">Schnell &amp; präzise</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Dreisatz -->
-      <a href="/mathematik/dreisatzrechner.html" class="bc" role="listitem" id="card-drei">
-        <div class="ci">✖️</div>
-        <h2 class="ct">Dreisatz&shy;rechner</h2>
-        <p class="cd">Verhältnisse berechnen</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Taschenrechner -->
-      <a href="/mathematik/taschenrechner.html" class="bc" role="listitem" id="card-tasch">
-        <div class="ci">🔢</div>
-        <h2 class="ct">Taschen&shy;rechner</h2>
-        <p class="cd">Wissenschaftlich</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- BMI -->
-      <a href="/alltag/bmi-rechner.html" class="bc" role="listitem" id="card-bmi">
-        <div class="ci">⚖️</div>
-        <h2 class="ct">BMI-Rechner</h2>
-        <p class="cd">Body-Mass-Index</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Altersrechner -->
-      <a href="/alltag/altersrechner.html" class="bc" role="listitem" id="card-alter">
-        <div class="ci">🎂</div>
-        <h2 class="ct">Alters&shy;rechner</h2>
-        <p class="cd">Alter &amp; Geburtstage</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Einheiten -->
-      <a href="/alltag/einheitenrechner.html" class="bc" role="listitem" id="card-einh">
-        <div class="ci">📏</div>
-        <h2 class="ct">Einheiten&shy;rechner</h2>
-        <p class="cd">Umrechnen leicht gemacht</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Kaufkraft -->
-      <a href="/alltag/kaufkraftrechner.html" class="bc" role="listitem" id="card-kauf">
-        <div class="ci">💸</div>
-        <h2 class="ct">Kaufkraft&shy;rechner</h2>
-        <p class="cd">Inflation &amp; Wert</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Schwangerschaft -->
-      <a href="/familie/schwangerschaftsrechner.html" class="bc" role="listitem" id="card-schw">
-        <div class="ci">🤱</div>
-        <h2 class="ct">Schwanger&shy;schafts&shy;rechner</h2>
-        <p class="cd">SSW &amp; Geburtstermin</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Kinderbetreuungsgeld -->
-      <a href="/familie/kinderbetreuungsgeld.html" class="bc" role="listitem" id="card-kbg">
-        <div class="ci">👶</div>
-        <h2 class="ct">Kinderbetreu&shy;ungsgeld</h2>
-        <p class="cd">Österreich 2025</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Demnächst: Rentenrechner -->
-      <div class="bc bc-soon" role="listitem" aria-label="Rentenrechner – Demnächst verfügbar">
-        <span class="cbadge badge-soon">Demnächst</span>
-        <div class="ci">🏛️</div>
-        <h2 class="ct">Renten&shy;rechner</h2>
-        <p class="cd">In Kürze verfügbar</p>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="site-logo-text">rechnify<span>.at</span></span>
+          <p>Kostenlose Online-Rechner für Österreich &amp; Deutschland. Alle Berechnungen laufen lokal im Browser.</p>
+          <span class="footer-privacy-badge">🔒 100% Datenschutz</span>
+        </div>
+        <div class="footer-col">
+          <h3>Tools</h3>
+          <ul>
+            <li><a href="/finanzen/gehaltsrechner.html">Gehaltsrechner</a></li>
+            <li><a href="/arbeitszeit/stundenlohn-rechner.html">Stundenlohn</a></li>
+            <li><a href="/finanzen/mwst-rechner.html">MwSt-Rechner</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Info</h3>
+          <ul>
+            <li><a href="/ueber-uns.html">Über uns</a></li>
+            <li><a href="/kontakt.html">Kontakt</a></li>
+            <li><a href="/impressum.html">Impressum</a></li>
+            <li><a href="/datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </div>
       </div>
-
-      <!-- Demnächst: Mietrechner -->
-      <div class="bc bc-soon" role="listitem" aria-label="Mietrechner – Demnächst verfügbar">
-        <span class="cbadge badge-soon">Demnächst</span>
-        <div class="ci">🏠</div>
-        <h2 class="ct">Miet&shy;rechner</h2>
-        <p class="cd">In Kürze verfügbar</p>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
       </div>
-
-    </div><!-- /bento AT -->
-
-    <!-- ── TOOLS — DEUTSCHLAND ────────────────────────────────────── -->
-    <p class="sec-label" id="de-tools">🇩🇪 Deutschland — Spezifische Rechner</p>
-
-    <div class="bento" role="list">
-
-      <!-- Featured: Gehaltsrechner DE -->
-      <a href="/de/finanzen/gehaltsrechner.html" class="bc bc-feat" role="listitem" id="card-gehalt-de">
-        <span class="cbadge badge-pop">⭐ Beliebt</span>
-        <div class="ci">💶</div>
-        <h2 class="ct">Brutto-Netto<br>Gehaltsrechner DE</h2>
-        <p class="cd">Nettogehalt nach deutschem Steuerrecht — mit Sozialversicherung &amp; Lohnsteuer.</p>
-        <span class="feat-cta">Jetzt berechnen →</span>
-      </a>
-
-      <!-- MwSt DE -->
-      <a href="/de/finanzen/mwst-rechner.html" class="bc" role="listitem" id="card-mwst-de">
-        <div class="ci">🧾</div>
-        <h2 class="ct">MwSt DE</h2>
-        <p class="cd">19 % / 7 %</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Elterngeld -->
-      <a href="/de/familie/elterngeld.html" class="bc" role="listitem" id="card-eltern">
-        <div class="ci">👨‍👩‍👧</div>
-        <h2 class="ct">Elterngeld</h2>
-        <p class="cd">BEEG konform</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Überstunden DE -->
-      <a href="/de/arbeitszeit/ueberstundenrechner.html" class="bc" role="listitem" id="card-ueber-de">
-        <div class="ci">⏰</div>
-        <h2 class="ct">Überstunden DE</h2>
-        <p class="cd">Deutsches Arbeitsrecht</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Urlaubstage DE -->
-      <a href="/de/arbeitszeit/urlaubstage-rechner.html" class="bc" role="listitem" id="card-urlaub-de">
-        <div class="ci">🏖️</div>
-        <h2 class="ct">Urlaubstage DE</h2>
-        <p class="cd">BUrlG konform</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Gehalterhöhung DE -->
-      <a href="/de/finanzen/gehaltserhoehung-rechner.html" class="bc" role="listitem" id="card-gerhoe-de">
-        <div class="ci">📈</div>
-        <h2 class="ct">Gehalts&shy;erhöhung DE</h2>
-        <p class="cd">Netto-Effekt DE</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Krypto DE -->
-      <a href="/de/finanzen/kryptosteuerrechner.html" class="bc" role="listitem" id="card-krypto-de">
-        <div class="ci">₿</div>
-        <h2 class="ct">Krypto-Steuer DE</h2>
-        <p class="cd">§ 23 EStG Deutschland</p>
-        <span class="carr">→</span>
-      </a>
-
-      <!-- Kommen-Gehen DE -->
-      <a href="/de/arbeitszeit/kommen-gehen-rechner.html" class="bc" role="listitem" id="card-komgeh-de">
-        <div class="ci">🕐</div>
-        <h2 class="ct">Kommen-Gehen DE</h2>
-        <p class="cd">ArbZG konform</p>
-        <span class="carr">→</span>
-      </a>
-
-    </div><!-- /bento DE -->
-
-  </main><!-- /tools-wrap -->
-
-  <!-- ── FOOTER ─────────────────────────────────────────────────── -->
-  <footer class="foot">
-    <div class="foot-inner">
-      <a href="/" class="foot-logo">rechnify</a>
-      <ul class="foot-links">
-        <li><a href="/impressum.html">Impressum</a></li>
-        <li><a href="/datenschutz.html">Datenschutz</a></li>
-        <li><a href="/ueber-uns.html">Über uns</a></li>
-        <li><a href="/kontakt.html">Kontakt</a></li>
-      </ul>
-      <p class="foot-copy">© 2025 rechnify.at</p>
     </div>
   </footer>
 
   <script>
-    /* ── Dark mode ─────────────────────────────────────────────────── */
+    /* ── Dark mode (light default, synced with global.js key) ─────── */
+    const DARK_MODE_KEY = 'rechnify.darkMode';
     const darkBtn = document.getElementById('darkBtn');
 
     function applyTheme(dark) {
       document.body.classList.toggle('dark', dark);
       darkBtn.textContent = dark ? '☀️' : '🌙';
-      darkBtn.setAttribute('aria-label', dark ? 'Hellmodus aktivieren' : 'Dunklelmodus aktivieren');
+      darkBtn.setAttribute('aria-label', dark ? 'Hellmodus aktivieren' : 'Dunkelmodus aktivieren');
     }
 
-    const saved = localStorage.getItem('theme');
-    const prefDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    applyTheme(saved === 'dark' || (!saved && prefDark));
+    localStorage.removeItem('theme');
+    applyTheme(localStorage.getItem(DARK_MODE_KEY) === 'true');
 
     darkBtn.addEventListener('click', () => {
-      const dark = document.body.classList.toggle('dark');
-      localStorage.setItem('theme', dark ? 'dark' : 'light');
-      darkBtn.textContent = dark ? '☀️' : '🌙';
+      const dark = !document.body.classList.contains('dark');
+      applyTheme(dark);
+      localStorage.setItem(DARK_MODE_KEY, dark ? 'true' : 'false');
     });
 
     /* ── Country detection + toggle ───────────────────────────────── */
@@ -961,35 +678,42 @@
       try {
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
         country = tz.includes('Vienna') ? 'at' : 'de';
-      } catch(e) { country = 'at'; }
+      } catch (e) { country = 'at'; }
     }
 
     setCountry(country, false);
-
     btnAt.addEventListener('click', () => setCountry('at', true));
     btnDe.addEventListener('click', () => setCountry('de', true));
 
-    /* ── Scroll-reveal for bento cards ─────────────────────────────── */
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.style.opacity = '1';
-            e.target.style.transform = 'translateY(0)';
-            obs.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.05 });
+    /* ── Sticky sidebar: active category on scroll ─────────────────── */
+    const sections = document.querySelectorAll('.category-section');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+    const nav = document.querySelector('.sidebar-nav');
 
-      document.querySelectorAll('.bc').forEach((card, i) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(18px)';
-        card.style.transitionProperty = 'opacity, transform, box-shadow, border-color';
-        card.style.transitionDuration = `0.45s, 0.45s, ${200}ms, ${200}ms`;
-        card.style.transitionTimingFunction = 'cubic-bezier(0.16,1,0.3,1)';
-        card.style.transitionDelay = `${i * 35}ms, ${i * 35}ms, 0ms, 0ms`;
-        obs.observe(card);
-      });
+    if (sections.length && navLinks.length) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const activeId = entry.target.id;
+          navLinks.forEach((link) => {
+            const href = link.getAttribute('href').slice(1);
+            const isActive = href === activeId;
+            link.classList.toggle('active', isActive);
+            if (isActive && window.innerWidth <= 1150 && nav) {
+              const x = link.offsetLeft - nav.offsetWidth / 2 + link.offsetWidth / 2;
+              nav.scrollTo({ left: x, behavior: 'smooth' });
+            }
+          });
+        });
+      }, { root: null, rootMargin: '-100px 0px -55% 0px', threshold: 0 });
+
+      sections.forEach((section) => observer.observe(section));
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY < 80) {
+          navLinks.forEach((link, idx) => link.classList.toggle('active', idx === 0));
+        }
+      }, { passive: true });
     }
   </script>
 </body>

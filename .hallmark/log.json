@@ -1,6 +1,15 @@
 [
   {
     "date": "2026-07-14",
+    "scope": "app",
+    "macrostructure": "Bento Grid + Workbench + Long Document",
+    "theme": "Cobalt",
+    "theme_axes": "near-white / grotesk-sans / cool cobalt 255°",
+    "enrichment": "none",
+    "brief": "Full-site redesign — design.md locked system across 34 pages"
+  },
+  {
+    "date": "2026-07-14",
     "macrostructure": "Bento Grid",
     "theme": "custom",
     "theme_axes": "near-white / utilitarian-precise / cobalt 255°",

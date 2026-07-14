@@ -1,0 +1,8 @@
+{
+  "date": "2026-07-14",
+  "font_stack": "Space Grotesk + Inter (Google Fonts)",
+  "palette": "OKLCH tokens in tokens.css + design.md",
+  "motion": "motion-cut (no framer-motion)",
+  "spacing": "4pt named scale (--space-*)",
+  "framework": "vanilla HTML static site (GitHub Pages)"
+}
