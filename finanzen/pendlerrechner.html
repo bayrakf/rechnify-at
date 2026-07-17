@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pendlerrechner Österreich – Pendlerpauschale berechnen | rechnify.at</title>
+  <meta name="description" content="Berechne deine Pendlerpauschale und den Pendlereuro für Österreich nach den aktuellen steuerlichen Richtlinien für 2026." />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Pendlerrechner Österreich – Pendlerpauschale berechnen | rechnify.at" />
+  <meta property="og:description" content="Berechne deine Pendlerpauschale und den Pendlereuro für Österreich nach den aktuellen steuerlichen Richtlinien für 2026." />
+  <meta property="og:url" content="https://rechnify.at/finanzen/pendlerrechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:image:alt" content="rechnify.at Logo" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:image:alt" content="rechnify.at Logo" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <link rel="canonical" href="https://rechnify.at/finanzen/pendlerrechner.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/pendlerrechner.html" />
+  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/pendlerrechner.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/pendlerrechner.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" crossorigin="anonymous"></script>
+
+
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .result-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; text-align: center; }
+    .result-card .label { font-size: var(--text-sm); color: var(--muted); margin-bottom: 6px; }
+    .result-card .value { font-size: var(--text-2xl); font-weight: 700; color: var(--primary); }
+    .result-card .sub { font-size: var(--text-xs); color: var(--muted); margin-top: 3px; }
+    .result-card.highlight { border-color: var(--primary); background: var(--primary-light); }
+    .info-box { background: var(--info-bg); border: 1px solid #bfdbfe; border-radius: 12px; padding: 14px 16px; font-size: var(--text-sm); color: var(--info); margin-top: 20px; }
+    @media (max-width: 600px) { .result-grid { grid-template-columns: 1fr; } }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Pendlerrechner Österreich",
+    "operatingSystem": "All",
+    "applicationCategory": "FinanceApplication",
+    "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify Logo" width="36" height="36" />
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/familie/schwangerschaftsrechner.html">👶 Familie</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <div class="calculator-container">
+      <div class="calculator-card">
+
+        <div class="calc-header">
+          <div class="calc-icon">🚗</div>
+          <h1>Pendlerrechner Österreich</h1>
+          <p>Berechne deine Pendlerpauschale und den zustehenden Pendlereuro für das Jahr 2026.</p>
+        </div>
+
+        <div class="calc-body" style="padding: 24px;">
+
+          <!-- Entfernung -->
+          <div class="input-group">
+            <label for="distance">Einfache Fahrtstrecke (Arbeitsweg in km)</label>
+            <div class="input-suffix">
+              <input type="number" id="distance" placeholder="z.B. 25" min="0" step="1" oninput="calculate()" />
+              <span class="suffix">km</span>
+            </div>
+          </div>
+
+          <!-- Zumutbarkeit Öffis -->
+          <div class="input-group">
+            <label for="publicTransport">Benutzung von öffentlichen Verkehrsmitteln</label>
+            <select id="publicTransport" onchange="calculate()">
+              <option value="reasonable">Zumutbar (Kleine Pendlerpauschale)</option>
+              <option value="unreasonable">Unzumutbar (Große Pendlerpauschale)</option>
+            </select>
+          </div>
+
+          <!-- Pendeltage -->
+          <div class="input-group">
+            <label for="daysPerMonth">Pendeltage pro Kalendermonat</label>
+            <select id="daysPerMonth" onchange="calculate()">
+              <option value="full">Mindestens 11 Tage (Voller Anspruch)</option>
+              <option value="two-thirds">8 bis 10 Tage (2/3 Anspruch)</option>
+              <option value="one-third">4 bis 7 Tage (1/3 Anspruch)</option>
+              <option value="none">Weniger als 4 Tage (Kein Anspruch)</option>
+            </select>
+          </div>
+
+          <!-- Ergebnis -->
+          <div class="result-box" id="result" style="display:none;">
+            <strong style="font-size: var(--text-base); color: var(--text);">📊 Berechnungsergebnis (monatlich)</strong>
+            <div class="result-grid">
+              <div class="result-card highlight">
+                <div class="label">Pendlerpauschale (LSt-Minderung)</div>
+                <div class="value" id="resPauschaleValue">–</div>
+                <div class="sub">reduziert das Steuerbrutto</div>
+              </div>
+              <div class="result-card">
+                <div class="label">Pendlereuro (Direkt-Abzug)</div>
+                <div class="value" id="resEuroValue">–</div>
+                <div class="sub">zieht Steuer direkt ab</div>
+              </div>
+            </div>
+            <div class="info-box" id="infoBox"></div>
+          </div>
+
+        </div>
+
+        <!-- FAQ -->
+        <div style="padding: 24px; border-top: 1px solid var(--border);">
+          <h2 style="font-size: var(--text-xl); margin-bottom: 16px;">Häufig gestellte Fragen (FAQs)</h2>
+
+          <details style="margin-bottom: 12px;">
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Was ist der Unterschied zwischen kleiner und großer Pendlerpauschale?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Die **kleine Pendlerpauschale** steht zu, wenn die Benützung öffentlicher Verkehrsmittel zumutbar ist und der Arbeitsweg mindestens 20 km beträgt. Die **große Pendlerpauschale** wird gewährt, wenn Öffis unzumutbar sind und der Weg mindestens 2 km lang ist.
+            </p>
+          </details>
+
+          <details style="margin-bottom: 12px;">
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie funktioniert der Pendlereuro?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Der Pendlereuro ist ein direkter Absetzbetrag, der deine Lohnsteuer eins zu eins verringert. Er beträgt **2,00 Euro pro Jahr und Kilometer** der einfachen Wegstrecke.
+            </p>
+          </details>
+
+          <details style="margin-bottom: 12px;">
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie wirken sich Homeoffice-Tage auf die Pendlerpauschale aus?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Der Anspruch richtet sich nach den tatsächlichen Pendeltagen im Monat. Arbeitest du viel im Homeoffice und fährst nur an 4–7 Tagen ins Büro, steht dir nur ein Drittel (1/3) der Pauschale zu. Bei 8–10 Tagen sind es zwei Drittel (2/3) und ab 11 Tagen der volle Anspruch.
+            </p>
+          </details>
+        </div>
+
+      </div><!-- /calculator-card -->
+
+      <!-- Sidebar -->
+      <aside class="sidebar-nav">
+        <div class="sidebar-section">
+          <div class="sidebar-title">💰 Finanzen</div>
+          <a href="/finanzen/gehaltsrechner.html" class="sidebar-link">Gehaltsrechner AT</a>
+          <a href="/finanzen/sachbezugsrechner.html" class="sidebar-link">Sachbezugsrechner</a>
+          <a href="/finanzen/pendlerrechner.html" class="sidebar-link active">Pendlerrechner</a>
+          <a href="/finanzen/mwst-rechner.html" class="sidebar-link">MwSt-Rechner</a>
+          <a href="/finanzen/kryptosteuerrechner.html" class="sidebar-link">Krypto-Steuer</a>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 rechnify.at</span>
+      <div class="footer-links">
+        <a href="/impressum.html">Impressum</a>
+        <a href="/datenschutz.html">Datenschutz</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    function calculate() {
+      const dist = parseFloat(document.getElementById('distance').value) || 0;
+      const pub = document.getElementById('publicTransport').value;
+      const days = document.getElementById('daysPerMonth').value;
+
+      const resBox = document.getElementById('result');
+      const resPauschale = document.getElementById('resPauschaleValue');
+      const resEuro = document.getElementById('resEuroValue');
+      const info = document.getElementById('infoBox');
+
+      if (!dist || dist < 0) {
+        resBox.style.display = 'none';
+        return;
+      }
+
+      let pauschaleYear = 0;
+      let isUnreasonable = pub === 'unreasonable';
+
+      if (isUnreasonable) {
+        // Große Pendlerpauschale
+        if (dist >= 2 && dist < 20) {
+          pauschaleYear = 372;
+        } else if (dist >= 20 && dist < 40) {
+          pauschaleYear = 1476;
+        } else if (dist >= 40 && dist < 60) {
+          pauschaleYear = 2568;
+        } else if (dist >= 60) {
+          pauschaleYear = 3672;
+        }
+      } else {
+        // Kleine Pendlerpauschale
+        if (dist >= 20 && dist < 40) {
+          pauschaleYear = 696;
+        } else if (dist >= 40 && dist < 60) {
+          pauschaleYear = 1356;
+        } else if (dist >= 60) {
+          pauschaleYear = 2016;
+        }
+      }
+
+      let euroYear = dist * 2;
+
+      // Adjust for partial days
+      let multiplier = 1.0;
+      if (days === 'two-thirds') {
+        multiplier = 2 / 3;
+      } else if (days === 'one-third') {
+        multiplier = 1 / 3;
+      } else if (days === 'none') {
+        multiplier = 0.0;
+      }
+
+      const pauschaleMonth = (pauschaleYear / 12) * multiplier;
+      const euroMonth = (euroYear / 12) * multiplier;
+
+      resBox.style.display = '';
+      resPauschale.textContent = pauschaleMonth.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      resEuro.textContent = euroMonth.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+
+      let text = `Du erhältst eine monatliche Lohnsteuer-Minderung von <strong>${pauschaleMonth.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong> und zusätzlich einen Direkt-Abzug von der Lohnsteuer (Pendlereuro) in Höhe von <strong>${euroMonth.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong>.`;
+      if (multiplier < 1.0) {
+        text += ` (Aliquotiert auf ${days === 'two-thirds' ? '2/3' : '1/3'} wegen Teilanwesenheit/Homeoffice).`;
+      }
+      info.innerHTML = text;
+    }
+  </script>
+
+</body>
+</html>

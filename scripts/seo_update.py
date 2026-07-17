@@ -23,6 +23,7 @@ HREFLANG_PAIRS: dict[str, str] = {
     "finanzen/mwst-rechner.html": "de/finanzen/mwst-rechner.html",
     "familie/kinderbetreuungsgeld.html": "de/familie/elterngeld.html",
     "finanzen/sachbezugsrechner.html": "de/finanzen/sachbezugsrechner.html",
+    "finanzen/pendlerrechner.html": "de/finanzen/pendlerrechner.html",
 }
 
 DE_TO_AT = {de: at for at, de in HREFLANG_PAIRS.items()}
@@ -44,6 +45,10 @@ LOW_PRIORITY = {
 
 ROBOTS_META = (
     '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />'
+)
+ADSENSE_SCRIPT = (
+    '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" '
+    'crossorigin="anonymous"></script>'
 )
 OG_TWITTER = """\
 <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
@@ -170,6 +175,8 @@ def patch_html(path: Path, rel: str) -> bool:
         if ROBOTS_META not in text:
             seo_lines.append(f"  {ROBOTS_META}")
     seo_lines.append(hreflang_block(rel))
+    if ADSENSE_SCRIPT not in text:
+        seo_lines.append(f"  {ADSENSE_SCRIPT}")
 
     # Replace first canonical occurrence with full block
     text = text.replace(canonical_tag, "\n".join(seo_lines), 1)

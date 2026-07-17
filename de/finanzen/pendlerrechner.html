@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sachbezugsrechner Deutschland – 1% Regelung Firmenwagen | rechnify.at</title>
-  <meta name="description" content="Berechne die Versteuerung deines Firmenwagens in Deutschland nach der 1% Regelung (0.25%, 0.5% oder 1.0%) für 2026." />
+  <title>Pendlerrechner Deutschland – Entfernungspauschale berechnen | rechnify.at</title>
+  <meta name="description" content="Berechne deine Entfernungspauschale (Pendlerpauschale) für Deutschland nach den aktuellen Richtlinien für 2026." />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Sachbezugsrechner Deutschland – 1% Regelung Firmenwagen | rechnify.at" />
-  <meta property="og:description" content="Berechne die Versteuerung deines Firmenwagens in Deutschland nach der 1% Regelung (0.25%, 0.5% oder 1.0%) für 2026." />
-  <meta property="og:url" content="https://rechnify.at/de/finanzen/sachbezugsrechner.html" />
+  <meta property="og:title" content="Pendlerrechner Deutschland – Entfernungspauschale berechnen | rechnify.at" />
+  <meta property="og:description" content="Berechne deine Entfernungspauschale (Pendlerpauschale) für Deutschland nach den aktuellen Richtlinien für 2026." />
+  <meta property="og:url" content="https://rechnify.at/de/finanzen/pendlerrechner.html" />
   <meta property="og:locale" content="de_AT" />
   <meta property="og:site_name" content="rechnify.at" />
   <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
@@ -20,20 +20,14 @@
   <meta property="og:image:alt" content="rechnify.at Logo" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
-  <link rel="canonical" href="https://rechnify.at/de/finanzen/sachbezugsrechner.html" />
-  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/sachbezugsrechner.html" />
-  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/sachbezugsrechner.html" />
-  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/sachbezugsrechner.html" />
-
-
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" crossorigin="anonymous"></script>
-
-
-
-
+  <link rel="canonical" href="https://rechnify.at/de/finanzen/pendlerrechner.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/pendlerrechner.html" />
+  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/pendlerrechner.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/pendlerrechner.html" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
 
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" crossorigin="anonymous"></script>
 
 
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
@@ -63,7 +57,7 @@
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "Sachbezugsrechner Deutschland",
+    "name": "Pendlerrechner Deutschland",
     "operatingSystem": "All",
     "applicationCategory": "FinanceApplication",
     "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "EUR" }
@@ -102,59 +96,52 @@
 
         <div class="calc-header">
           <div class="calc-icon">🚗</div>
-          <h1>1% Sachbezugsrechner Deutschland</h1>
-          <p>Berechne die Dienstwagenbesteuerung nach der 1% Regelung (0.25%, 0.5% oder 1.0%) für Deutschland.</p>
+          <h1>Entfernungspauschale Rechner Deutschland</h1>
+          <p>Berechne die steuerliche Absetzbarkeit deines Arbeitswegs (Werbungskosten) für Deutschland.</p>
         </div>
 
         <div class="calc-body" style="padding: 24px;">
 
-          <!-- Fahrzeugantrieb -->
+          <!-- Entfernung -->
           <div class="input-group">
-            <label for="engineType">Antriebsart des Dienstwagens</label>
-            <select id="engineType" onchange="calculate()">
-              <option value="combustion">Verbrennungsmotor / Hybrid ohne Förderung (1,0%)</option>
-              <option value="hybrid">Plug-in-Hybrid gefördert (0,5%)</option>
-              <option value="electric_low">Reines E-Auto bis 70.000 € Bruttolistenpreis (0,25%)</option>
-              <option value="electric_high">Reines E-Auto über 70.000 € Bruttolistenpreis (0,5%)</option>
-            </select>
-          </div>
-
-          <!-- Bruttolistenpreis -->
-          <div class="input-group">
-            <label for="listPrice">Inländischer Bruttolistenpreis (BLP zum Zeitpunkt der Erstzulassung)</label>
+            <label for="distance">Einfache Entfernung zum Arbeitsplatz (in km)</label>
             <div class="input-suffix">
-              <input type="number" id="listPrice" placeholder="z.B. 50000" min="0" step="1000" oninput="calculate()" />
-              <span class="suffix">€</span>
-            </div>
-          </div>
-
-          <!-- Entfernungskilometer -->
-          <div class="input-group">
-            <label for="workDistance">Entfernung zwischen Wohnung und erster Tätigkeitsstätte</label>
-            <div class="input-suffix">
-              <input type="number" id="workDistance" placeholder="z.B. 15" min="0" max="200" step="1" oninput="calculate()" />
+              <input type="number" id="distance" placeholder="z.B. 25" min="0" step="1" oninput="calculate()" />
               <span class="suffix">km</span>
             </div>
           </div>
 
+          <!-- Arbeitstage -->
+          <div class="input-group">
+            <label for="workdays">Arbeitstage pro Jahr (an denen du gependelt bist)</label>
+            <div class="input-suffix">
+              <input type="number" id="workdays" value="220" min="0" max="365" step="1" oninput="calculate()" />
+              <span class="suffix">Tage</span>
+            </div>
+          </div>
+
+          <!-- Pkw Nutzung -->
+          <div class="input-group">
+            <label for="vehicle">Verwendetes Verkehrsmittel</label>
+            <select id="vehicle" onchange="calculate()">
+              <option value="car">Eigener Pkw oder Firmenwagen (kein Cap)</option>
+              <option value="public">Öffentliche Verkehrsmittel / Sonstige (max. 4.500 €)</option>
+            </select>
+          </div>
+
           <!-- Ergebnis -->
           <div class="result-box" id="result" style="display:none;">
-            <strong style="font-size: var(--text-base); color: var(--text);">📊 Berechnungsergebnis (monatlich)</strong>
+            <strong style="font-size: var(--text-base); color: var(--text);">📊 Berechnungsergebnis (Werbungskosten)</strong>
             <div class="result-grid">
               <div class="result-card highlight">
-                <div class="label">Pauschalwert (1% Regelung)</div>
-                <div class="value" id="resPauschalValue">–</div>
-                <div class="sub">vom Listenpreis</div>
+                <div class="label">Entfernungspauschale pro Jahr</div>
+                <div class="value" id="resYearValue">–</div>
+                <div class="sub">mindert zu versteuerndes Einkommen</div>
               </div>
               <div class="result-card">
-                <div class="label">Wohnung/Arbeit (0,03% / km)</div>
-                <div class="value" id="resDistanceValue">–</div>
-                <div class="sub">für Pendelstrecke</div>
-              </div>
-              <div class="result-card" style="grid-column: span 2;">
-                <div class="label">Gesamter Geldwerter Vorteil</div>
-                <div class="value" id="resTotalValue" style="color: var(--primary);">–</div>
-                <div class="sub">dieser Betrag erhöht dein zu versteuerndes Brutto</div>
+                <div class="label">Monatlicher Anteil (Schnitt)</div>
+                <div class="value" id="resMonthValue">–</div>
+                <div class="sub">pro Monat</div>
               </div>
             </div>
             <div class="info-box" id="infoBox"></div>
@@ -167,23 +154,23 @@
           <h2 style="font-size: var(--text-xl); margin-bottom: 16px;">Häufig gestellte Fragen (FAQs)</h2>
 
           <details style="margin-bottom: 12px;">
-            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie funktioniert die 1% Regelung in Deutschland?</summary>
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie hoch ist die Entfernungspauschale in Deutschland?</summary>
             <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
-              Mit der 1%-Regelung wird der geldwerte Vorteil der privaten Nutzung eines Dienstwagens pauschal versteuert. Jeden Monat wird 1% des Bruttolistenpreises (abgerundet auf volle 100 Euro) dem Bruttogehalt hinzugerechnet und versteuert.
+              Die Entfernungspauschale beträgt **0,30 Euro** für die ersten 20 km der einfachen Wegstrecke. Ab dem 21. Kilometer erhöht sich die Pauschale auf **0,38 Euro** pro Kilometer.
             </p>
           </details>
 
           <details style="margin-bottom: 12px;">
-            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Was ist die 0,25% Regelung für E-Autos?</summary>
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Gilt der Höchstbetrag von 4.500 Euro immer?</summary>
             <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
-              Reine Elektrofahrzeuge (BEV) bis zu einem Bruttolistenpreis von **70.000 €** müssen monatlich nur mit **0,25%** des Bruttolistenpreises versteuert werden. Übersteigt der Listenpreis 70.000 €, gilt die **0,5%** Versteuerung.
+              Nein. Der Höchstbetrag von **4.500 Euro** pro Jahr gilt nur, wenn du öffentliche Verkehrsmittel, das Fahrrad oder eine Fahrgemeinschaft nutzt. Fährst du mit dem eigenen (oder überlassenen) Pkw, gilt diese Grenze nicht – du kannst auch höhere Beträge voll absetzen.
             </p>
           </details>
 
           <details style="margin-bottom: 12px;">
-            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie werden die Fahrten zur Arbeit versteuert?</summary>
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Kann ich auch Homeoffice-Tage geltend machen?</summary>
             <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
-              Zusätzlich zu den 1% fallen monatlich **0,03%** des Bruttolistenpreises pro Entfernungskilometer für Fahrten zwischen Wohnung und erster Tätigkeitsstätte an. Dieser Betrag erhöht ebenfalls das steuerpflichtige Bruttogehalt.
+              Für Tage im Homeoffice steht dir keine Entfernungspauschale zu. Du kannst für diese Tage jedoch die **Homeoffice-Pauschale** (6 Euro pro Tag, max. 1.260 Euro pro Jahr) in deiner Steuererklärung angeben.
             </p>
           </details>
         </div>
@@ -195,8 +182,8 @@
         <div class="sidebar-section">
           <div class="sidebar-title">💶 Finanzen DE</div>
           <a href="/de/finanzen/gehaltsrechner.html" class="sidebar-link">Gehaltsrechner DE</a>
-          <a href="/de/finanzen/sachbezugsrechner.html" class="sidebar-link active">Sachbezug DE</a>
-          <a href="/de/finanzen/pendlerrechner.html" class="sidebar-link">Pendlerrechner DE</a>
+          <a href="/de/finanzen/sachbezugsrechner.html" class="sidebar-link">Sachbezug DE</a>
+          <a href="/de/finanzen/pendlerrechner.html" class="sidebar-link active">Pendlerrechner DE</a>
           <a href="/de/finanzen/mwst-rechner.html" class="sidebar-link">MwSt DE</a>
           <a href="/de/finanzen/kryptosteuerrechner.html" class="sidebar-link">Krypto-Steuer DE</a>
         </div>
@@ -219,53 +206,42 @@
   <script src="/assets/js/global.js"></script>
   <script>
     function calculate() {
-      const type = document.getElementById('engineType').value;
-      const price = parseFloat(document.getElementById('listPrice').value) || 0;
-      const dist = parseFloat(document.getElementById('workDistance').value) || 0;
+      const dist = parseFloat(document.getElementById('distance').value) || 0;
+      const days = parseFloat(document.getElementById('workdays').value) || 0;
+      const vehicle = document.getElementById('vehicle').value;
 
       const resBox = document.getElementById('result');
-      const resPauschal = document.getElementById('resPauschalValue');
-      const resDist = document.getElementById('resDistanceValue');
-      const resTotal = document.getElementById('resTotalValue');
+      const resYear = document.getElementById('resYearValue');
+      const resMonth = document.getElementById('resMonthValue');
       const info = document.getElementById('infoBox');
 
-      if (!price) {
+      if (!dist || dist < 0 || !days || days < 0) {
         resBox.style.display = 'none';
         return;
       }
 
-      // Bruttolistenpreis für die Berechnung wird auf volle 100 EUR abgerundet
-      const blpRounded = Math.floor(price / 100) * 100;
-
-      let rate = 0.01; // 1%
-      let rateText = '1,0 %';
-
-      if (type === 'hybrid') {
-        rate = 0.005;
-        rateText = '0,5 %';
-      } else if (type === 'electric_low') {
-        rate = 0.0025;
-        rateText = '0,25 %';
-      } else if (type === 'electric_high') {
-        rate = 0.005;
-        rateText = '0,5 %';
+      // Berechnung der Pauschale pro Tag
+      let dailyPauschale = 0;
+      if (dist <= 20) {
+        dailyPauschale = dist * 0.30;
+      } else {
+        dailyPauschale = (20 * 0.30) + ((dist - 20) * 0.38);
       }
 
-      // 1. Pauschalwert
-      const pauschal = blpRounded * rate;
+      let totalYear = dailyPauschale * days;
 
-      // 2. Entfernungskilometer: 0,03% des BLP (voll versteuert) oder reduziert?
-      // Bei E-Autos/Hybriden wird die Entfernungspauschale auf Basis des reduzierten BLPs berechnet.
-      const distVal = blpRounded * rate * 0.03 * dist;
+      // Cap berücksichtigen bei öffentlichen Verkehrsmitteln
+      if (vehicle === 'public' && totalYear > 4500) {
+        totalYear = 4500;
+      }
 
-      const total = pauschal + distVal;
+      const totalMonth = totalYear / 12;
 
       resBox.style.display = '';
-      resPauschal.textContent = pauschal.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
-      resDist.textContent = distVal.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
-      resTotal.textContent = total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      resYear.textContent = totalYear.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      resMonth.textContent = totalMonth.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 
-      info.innerHTML = `Bei der 1%-Pauschalmethode beträgt dein geldwerter Vorteil insgesamt <strong>${total.toLocaleString('de-DE', { maximumFractionDigits: 2 })} €</strong> im Monat. Diesen Betrag versteuerst du individuell über deine Lohnsteuer.`;
+      info.innerHTML = `Deine Entfernungspauschale beträgt insgesamt <strong>${totalYear.toLocaleString('de-DE', { maximumFractionDigits: 2 })} €</strong> für das Kalenderjahr. Diesen Betrag kannst du als Werbungskosten geltend machen, um dein steuerpflichtiges Einkommen zu senken.`;
     }
   </script>
 
