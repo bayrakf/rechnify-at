@@ -76,29 +76,59 @@
 
         <div class="calc-body">
           <div class="input-group">
-            <label for="kidsUnder18">Anzahl Kinder (unter 18 Jahre)</label>
-            <input type="number" id="kidsUnder18" placeholder="z.B. 2" min="0" value="1">
+            <label for="kidsUnder18">Anzahl Kinder unter 18 (volles Jahr)</label>
+            <input type="number" id="kidsUnder18" placeholder="z.B. 1" min="0" value="1">
           </div>
 
           <div class="input-group">
-            <label for="kidsOver18">Anzahl Kinder (über 18 Jahre, mit Familienbeihilfe)</label>
-            <input type="number" id="kidsOver18" placeholder="z.B. 1" min="0" value="0">
+            <label for="kidsOver18">Anzahl Kinder über 18 (volles Jahr, mit Familienbeihilfe)</label>
+            <input type="number" id="kidsOver18" placeholder="z.B. 0" min="0" value="0">
+          </div>
+
+          <div class="input-group">
+            <label for="newbornMonth">Neugeborenes Kind (Geburtsmonat in diesem Jahr)</label>
+            <select id="newbornMonth" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem;">
+              <option value="0">Kein Neugeborenes</option>
+              <option value="1">Jänner (12 Monate Anspruch)</option>
+              <option value="2">Februar (11 Monate Anspruch)</option>
+              <option value="3">März (10 Monate Anspruch)</option>
+              <option value="4">April (9 Monate Anspruch)</option>
+              <option value="5">Mai (8 Monate Anspruch)</option>
+              <option value="6">Juni (7 Monate Anspruch)</option>
+              <option value="7">Juli (6 Monate Anspruch)</option>
+              <option value="8">August (5 Monate Anspruch)</option>
+              <option value="9">September (4 Monate Anspruch)</option>
+              <option value="10">Oktober (3 Monate Anspruch)</option>
+              <option value="11">November (2 Monate Anspruch)</option>
+              <option value="12">Dezember (1 Monat Anspruch)</option>
+            </select>
           </div>
 
           <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Berechnen</button>
 
           <div id="result" class="result-box hidden">
-            <div class="text-sm text-muted">Maximale Steuerersparnis (pro Jahr)</div>
+            <div class="text-sm text-muted">Maximale Steuerersparnis für das aktuelle Jahr</div>
             <div class="big-number text-success" id="resYearly">-- €</div>
-            <div class="sub-number" id="resMonthly">entspricht -- € monatlich</div>
+            
+            <div style="margin-top: 16px; font-size: 0.9rem; text-align: left; background: white; padding: 12px; border-radius: 8px; border: 1px solid var(--border);">
+              <strong>Aufschlüsselung:</strong>
+              <ul style="margin: 8px 0 0 0; padding-left: 20px; color: var(--text);">
+                <li id="breakdownUnder18"></li>
+                <li id="breakdownOver18"></li>
+                <li id="breakdownNewborn"></li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div class="help">
+        <div class="help" style="margin-top: 24px;">
+          <h3 style="margin-top: 0;">Häufige Fragen (FAQ)</h3>
+          <strong>Wie wird der Geburtsmonat berechnet?</strong><br/>
+          In Österreich gibt es keine tagesgenaue Abrechnung beim Familienbonus. Sobald ein Kind an einem Tag im Monat auf der Welt ist (z.B. Geburt am 31. Mai), steht der Familienbonus für den <strong>gesamten Monat Mai</strong> in voller Höhe (166,68 €) zu. Wird das Kind im Mai geboren, erhält man den Bonus für 8 Monate des Jahres.<br/><br/>
+          
           <strong>Regeln 2024 - 2026:</strong><br/>
           Pro Kind unter 18 Jahren: max. 2.000 € / Jahr (166,68 € / Monat).<br/>
-          Pro Kind über 18 Jahren (wenn Familienbeihilfe bezogen wird): max. 650 € / Jahr (54,18 € / Monat).<br/>
-          Der Familienbonus ist ein Absetzbetrag, der die Lohnsteuer reduziert. Er kann nicht höher sein als deine zu zahlende Steuer (Ausnahme: Kindermehrbetrag bei sehr geringem Einkommen).
+          Pro Kind über 18 Jahren (wenn Familienbeihilfe bezogen wird): max. 650 € / Jahr (54,18 € / Monat).
         </div>
 
       </div>
@@ -131,12 +161,47 @@
     document.getElementById('calculate').addEventListener('click', () => {
       const u18 = parseInt(document.getElementById('kidsUnder18').value) || 0;
       const o18 = parseInt(document.getElementById('kidsOver18').value) || 0;
+      const newbornMonth = parseInt(document.getElementById('newbornMonth').value) || 0;
       
-      const yearly = (u18 * 2000) + (o18 * 650);
-      const monthly = yearly / 12;
+      const yearlyU18 = u18 * 2000;
+      const yearlyO18 = o18 * 650;
+      
+      let yearlyNewborn = 0;
+      let newbornMonthsCount = 0;
+      if (newbornMonth > 0 && newbornMonth <= 12) {
+        newbornMonthsCount = 12 - newbornMonth + 1;
+        yearlyNewborn = newbornMonthsCount * (2000 / 12);
+      }
+      
+      const totalYearly = yearlyU18 + yearlyO18 + yearlyNewborn;
 
-      document.getElementById('resYearly').textContent = yearly.toLocaleString('de-AT', {minimumFractionDigits: 2}) + ' €';
-      document.getElementById('resMonthly').textContent = 'entspricht ' + monthly.toLocaleString('de-AT', {minimumFractionDigits: 2}) + ' € monatlich';
+      document.getElementById('resYearly').textContent = totalYearly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      
+      // Breakdown logic
+      const bdUnder18 = document.getElementById('breakdownUnder18');
+      const bdOver18 = document.getElementById('breakdownOver18');
+      const bdNewborn = document.getElementById('breakdownNewborn');
+      
+      if (u18 > 0) {
+        bdUnder18.style.display = 'list-item';
+        bdUnder18.textContent = u18 + 'x Kind(er) unter 18 (volles Jahr): ' + yearlyU18.toLocaleString('de-AT') + ' €';
+      } else {
+        bdUnder18.style.display = 'none';
+      }
+      
+      if (o18 > 0) {
+        bdOver18.style.display = 'list-item';
+        bdOver18.textContent = o18 + 'x Kind(er) über 18 (volles Jahr): ' + yearlyO18.toLocaleString('de-AT') + ' €';
+      } else {
+        bdOver18.style.display = 'none';
+      }
+      
+      if (newbornMonth > 0) {
+        bdNewborn.style.display = 'list-item';
+        bdNewborn.textContent = '1x Neugeborenes (' + newbornMonthsCount + ' Monate à 166,68 €): ' + yearlyNewborn.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      } else {
+        bdNewborn.style.display = 'none';
+      }
       
       document.getElementById('result').classList.remove('hidden');
     });
