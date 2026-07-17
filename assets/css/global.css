@@ -585,7 +585,7 @@ body.dark .site-logo img {
 
 .tool-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: var(--space-md);
   margin-top: var(--space-xl);
 }
@@ -1098,7 +1098,7 @@ label {
 }
 
 /* ── Responsive ───────────────────────────────────────────────── */
-@media (max-width: 1150px) {
+@media (max-width: 800px) {
   .frontpage-layout {
     display: flex;
     flex-direction: column;
