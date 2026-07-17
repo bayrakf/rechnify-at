@@ -226,4 +226,47 @@ document.addEventListener('DOMContentLoaded', () => {
     // Trigger initial calculation
     setTimeout(() => calcBtn.click(), 100);
   }
+
+  // Inject Share Button into result box if present
+  const resultBoxes = document.querySelectorAll('.result-box');
+  resultBoxes.forEach(box => {
+    if (!box.querySelector('.share-btn')) {
+      const shareBtn = document.createElement('button');
+      shareBtn.className = 'btn share-btn';
+      shareBtn.style.marginTop = '24px';
+      shareBtn.style.width = '100%';
+      shareBtn.style.backgroundColor = '#25D366'; // WhatsApp Green
+      shareBtn.style.color = '#fff';
+      shareBtn.style.display = 'flex';
+      shareBtn.style.alignItems = 'center';
+      shareBtn.style.justifyContent = 'center';
+      shareBtn.style.gap = '8px';
+      shareBtn.innerHTML = '<span style="font-size: 18px;">📲</span> Ergebnis teilen (Link kopieren)';
+      
+      shareBtn.addEventListener('click', async () => {
+         const url = window.location.href;
+         const title = document.title;
+         let text = 'Schau dir das mal an: ';
+         
+         // Special text for Gehaltsrechner
+         const netMonthly = document.getElementById('resNetMonthly');
+         if (netMonthly && netMonthly.textContent !== '-- €') {
+             text = `Mein berechnetes Netto: ${netMonthly.textContent}! Schau mal hier: `;
+         }
+
+         if (navigator.share) {
+             try {
+                 await navigator.share({ title: title, text: text, url: url });
+             } catch (err) { }
+         } else {
+             navigator.clipboard.writeText(text + url);
+             const oldHtml = shareBtn.innerHTML;
+             shareBtn.innerHTML = '<span>✅</span> Link erfolgreich kopiert!';
+             setTimeout(() => shareBtn.innerHTML = oldHtml, 2500);
+         }
+      });
+      box.appendChild(shareBtn);
+    }
+  });
 });
+
