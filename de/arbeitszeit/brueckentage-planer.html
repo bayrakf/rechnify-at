@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brückentage-Planer (Deutschland) – Urlaub verdoppeln | rechnify.at</title>
+  <meta name="description" content="Nutze Brückentage clever! Finde heraus, wie du in (Deutschland) mit minimalen Urlaubstagen die meiste freie Zeit herausholst." />
+  <link rel="canonical" href="https://rechnify.at/de/arbeitszeit/brueckentage-planer.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/brueckentage-planer.html" />
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" crossorigin="anonymous"></script>
+
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Brückentage-Planer (Deutschland) | rechnify.at" />
+  <meta property="og:description" content="Verdopple deinen Urlaub mit cleveren Brückentagen." />
+  <meta property="og:url" content="https://rechnify.at/de/arbeitszeit/brueckentage-planer.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/images/favicon-512x512.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--color-ink); }
+    .input-group input, .input-group select { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--color-rule); 
+      border-radius: 10px; 
+      background: var(--color-paper); 
+      color: var(--color-ink); 
+      font-size: 16px; 
+    }
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+
+    .bridge-card {
+        background: var(--color-paper-2);
+        border: 1px solid var(--color-rule);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    .bridge-card h3 { margin-top: 0; color: var(--color-primary); margin-bottom: 8px; }
+    .bridge-stats {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 12px;
+        font-weight: bold;
+    }
+    .bridge-stat-box {
+        background: var(--color-paper);
+        border: 1px solid var(--color-rule);
+        border-radius: 8px;
+        padding: 8px 12px;
+        flex: 1;
+        text-align: center;
+    }
+    .bridge-stat-box span { display: block; font-size: 0.8rem; font-weight: normal; color: var(--color-ink-2); }
+    .bridge-dates {
+        font-size: 0.95rem;
+        color: var(--color-ink);
+        background: rgba(22, 163, 74, 0.1);
+        padding: 10px;
+        border-radius: 6px;
+        border-left: 4px solid #16a34a;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo">
+        <img src="/assets/images/logo.jpg" alt="rechnify Logo" width="36" height="36" />
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/finanzen/gehaltsrechner.html">💰 Finanzen</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill " data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill active" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/#arbeitszeit">Arbeitszeit</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Brückentage</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Brückentage-Planer (Deutschland)</h1>
+      <p class="subtitle">Setze deine Urlaubstage clever ein und maximiere deine freie Zeit.</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="year">Jahr</label>
+            <select id="year">
+                <option value="2024">2024</option>
+                <option value="2025" selected>2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+            </select>
+          </div>
+          
+          <div class="input-group">
+            <label for="bundesland">Bundesland</label>
+            <select id="bundesland">
+              <option value="ALL">Alle / Einheitlich</option>
+              <option value="BW">Baden-Württemberg</option>
+              <option value="BY">Bayern</option>
+              <option value="BE">Berlin</option>
+              <option value="NW">Nordrhein-Westfalen</option>
+              <option value="HE">Hessen</option>
+              <option value="RP">Rheinland-Pfalz</option>
+              <option value="SL">Saarland</option>
+              <option value="ST">Sachsen-Anhalt</option>
+            </select>
+          </div>
+    
+        </div>
+
+        <div id="bridgeResults">
+            <!-- Results injected here -->
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <section class="content-section">
+      <h2>Urlaub verdoppeln</h2>
+      <p>Mit der richtigen Planung kannst du aus wenigen Urlaubstagen (z.B. 4 Tage rund um Christi Himmelfahrt) ganze 9 Tage am Stück frei bekommen. Unser Algorithmus scannt das Jahr und schlägt dir die optimalen Zeiträume vor.</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    const COUNTRY = 'DE'; // 'AT' or 'DE'
+    
+    function getEaster(year) {
+        const f = Math.floor, G = year % 19, C = f(year / 100);
+        const H = (C - f(C / 4) - f((8 * C + 13) / 25) + 19 * G + 15) % 30;
+        const I = H - f(H / 28) * (1 - f(29 / (H + 1)) * f((21 - G) / 11));
+        const J = (year + f(year / 4) + I + 2 - C + f(C / 4)) % 7;
+        const L = I - J, month = 3 + f((L + 40) / 44), day = L + 28 - 31 * f(month / 4);
+        return new Date(year, month - 1, day);
+    }
+    
+    function addDays(date, days) {
+        const d = new Date(date);
+        d.setDate(d.getDate() + days);
+        return d;
+    }
+
+    function getHolidays(year, bundesland = null) {
+        const easter = getEaster(year);
+        let holidays = [];
+        
+        const add = (name, date) => holidays.push({name, date: new Date(year, date.getMonth(), date.getDate())});
+        
+        add("Neujahr", new Date(year, 0, 1));
+        
+        if(COUNTRY === 'AT') {
+            add("Heilige Drei Könige", new Date(year, 0, 6));
+            add("Ostermontag", addDays(easter, 1));
+            add("Staatsfeiertag", new Date(year, 4, 1));
+            add("Christi Himmelfahrt", addDays(easter, 39));
+            add("Pfingstmontag", addDays(easter, 50));
+            add("Fronleichnam", addDays(easter, 60));
+            add("Mariä Himmelfahrt", new Date(year, 7, 15));
+            add("Nationalfeiertag", new Date(year, 9, 26));
+            add("Allerheiligen", new Date(year, 10, 1));
+            add("Mariä Empfängnis", new Date(year, 11, 8));
+            add("Christtag", new Date(year, 11, 25));
+            add("Stefanitag", new Date(year, 11, 26));
+        } else if (COUNTRY === 'DE') {
+            add("Karfreitag", addDays(easter, -2));
+            add("Ostermontag", addDays(easter, 1));
+            add("Tag der Arbeit", new Date(year, 4, 1));
+            add("Christi Himmelfahrt", addDays(easter, 39));
+            add("Pfingstmontag", addDays(easter, 50));
+            add("Tag der Deutschen Einheit", new Date(year, 9, 3));
+            add("1. Weihnachtsfeiertag", new Date(year, 11, 25));
+            add("2. Weihnachtsfeiertag", new Date(year, 11, 26));
+            
+            if (['BW', 'BY', 'ST'].includes(bundesland)) add("Heilige Drei Könige", new Date(year, 0, 6));
+            if (['BW', 'BY', 'NW', 'RP', 'SL', 'HE'].includes(bundesland)) add("Fronleichnam", addDays(easter, 60));
+            if (['BY', 'SL'].includes(bundesland)) add("Mariä Himmelfahrt", new Date(year, 7, 15));
+            if (['BW', 'BY', 'NW', 'RP', 'SL'].includes(bundesland)) add("Allerheiligen", new Date(year, 10, 1));
+        }
+        return holidays;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const yIn = document.getElementById('year');
+        const blIn = document.getElementById('bundesland');
+        const res = document.getElementById('bridgeResults');
+
+        // Simple hardcoded suggestions logic based on common patterns.
+        // A true algorithm would search window by window. We do simple pattern matching on holidays.
+        
+        const formatD = d => d.toLocaleDateString('de-DE', {day:'2-digit', month:'2-digit'});
+        
+        const calculate = () => {
+            const year = parseInt(yIn.value);
+            const bl = blIn ? blIn.value : null;
+            const holidays = getHolidays(year, bl);
+            
+            // Generate list of suggestions
+            let html = '';
+            
+            holidays.forEach(h => {
+                const dayOfWeek = h.date.getDay(); // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+                
+                if (dayOfWeek === 2 || dayOfWeek === 4) {
+                    // Tuesday or Thursday holiday -> 1 day off = 4 days free
+                    const takeOffDate = addDays(h.date, dayOfWeek === 2 ? -1 : 1);
+                    const freeStart = addDays(h.date, dayOfWeek === 2 ? -3 : 0);
+                    const freeEnd = addDays(h.date, dayOfWeek === 2 ? 0 : 3);
+                    
+                    html += `
+                    <div class="bridge-card">
+                        <h3>Rund um ${h.name}</h3>
+                        <div class="bridge-stats">
+                            <div class="bridge-stat-box" style="border-color:#fca5a5; background: #fee2e2;">
+                                ${1} Urlaubstag <span>einreichen</span>
+                            </div>
+                            <div class="bridge-stat-box" style="border-color:#86efac; background: #dcfce7;">
+                                ${4} freie Tage <span>am Stück genießen</span>
+                            </div>
+                        </div>
+                        <div class="bridge-dates">
+                            🏝️ Frei von <strong>${formatD(freeStart)} bis ${formatD(freeEnd)}</strong><br>
+                            👉 Nimm frei am: ${formatD(takeOffDate)}
+                        </div>
+                    </div>`;
+                }
+                
+                // Extra check for Ostern (Good Friday / Easter Monday)
+                if (h.name === "Ostermontag") {
+                    html += `
+                    <div class="bridge-card">
+                        <h3>Oster-Spezial</h3>
+                        <div class="bridge-stats">
+                            <div class="bridge-stat-box" style="border-color:#fca5a5; background: #fee2e2;">
+                                ${4} Urlaubstage <span>einreichen</span>
+                            </div>
+                            <div class="bridge-stat-box" style="border-color:#86efac; background: #dcfce7;">
+                                ${9} freie Tage <span>am Stück genießen</span>
+                            </div>
+                        </div>
+                        <div class="bridge-dates">
+                            🏝️ Frei von Samstag bis Sonntag der Folgewoche.<br>
+                            👉 Nimm frei: Di-Fr nach Ostermontag
+                        </div>
+                    </div>`;
+                }
+                
+                // Weihnachten complex check
+                if (h.name === "Christtag" || h.name === "1. Weihnachtsfeiertag") {
+                    html += `
+                    <div class="bridge-card">
+                        <h3>Weihnachten & Silvester</h3>
+                        <div class="bridge-stats">
+                            <div class="bridge-stat-box" style="border-color:#fca5a5; background: #fee2e2;">
+                                Urlaub <span>rund um die Feiertage</span>
+                            </div>
+                            <div class="bridge-stat-box" style="border-color:#86efac; background: #dcfce7;">
+                                Max. Ausbeute <span>mit wenig Tagen</span>
+                            </div>
+                        </div>
+                        <div class="bridge-dates">
+                            Weihnachten fällt dieses Jahr auf einen ${h.date.toLocaleDateString('de-DE', {weekday:'long'})}. Schnapp dir die Tage dazwischen bis ins neue Jahr!
+                        </div>
+                    </div>`;
+                }
+            });
+            
+            if (html === '') html = '<p>Leider keine offensichtlichen 1-Tages-Brücken in diesem Jahr gefunden.</p>';
+            
+            res.innerHTML = html;
+        };
+
+        yIn.addEventListener('change', calculate);
+        if (blIn) blIn.addEventListener('change', calculate);
+        
+        calculate();
+    });
+  </script>
+</body>
+</html>

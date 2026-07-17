@@ -91,7 +91,10 @@ const TOOL_MAPPING = {
   '/finanzen/etf-sparplan-rechner.html': '/de/finanzen/etf-sparplan-rechner.html',
   '/finanzen/leasingrechner.html': '/de/finanzen/leasingrechner.html',
   '/finanzen/pendlerrechner.html': '/de/finanzen/pendlerrechner.html',
-  '/arbeitszeit/teilzeitrechner.html': '/de/arbeitszeit/teilzeitrechner.html'
+  '/arbeitszeit/teilzeitrechner.html': '/de/arbeitszeit/teilzeitrechner.html',
+  '/finanzen/kreditrechner.html': '/de/finanzen/kreditrechner.html',
+  '/arbeitszeit/arbeitstage-rechner.html': '/de/arbeitszeit/arbeitstage-rechner.html',
+  '/arbeitszeit/brueckentage-planer.html': '/de/arbeitszeit/brueckentage-planer.html'
 };
 
 function initCountryToggle() {
