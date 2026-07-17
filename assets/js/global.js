@@ -441,11 +441,50 @@ function initGehaltsVergleich() {
   }
 }
 
+// --- Inject Newsletter Opt-In ---
+function injectNewsletterOptIn() {
+  const main = document.querySelector('.site-main');
+  if (!main) return;
+  // Only inject if we are on a calculator page or index
+  if (document.getElementById('newsletter-box')) return;
+
+  const isDe = window.location.pathname.startsWith('/de/');
+  const countryCode = isDe ? 'DE' : 'AT';
+
+  const nlBox = document.createElement('div');
+  nlBox.id = 'newsletter-box';
+  nlBox.style.marginTop = '40px';
+  nlBox.style.marginBottom = '20px';
+  nlBox.style.padding = '24px';
+  nlBox.style.background = 'linear-gradient(135deg, var(--color-paper), var(--color-paper-2))';
+  nlBox.style.borderRadius = '12px';
+  nlBox.style.border = '1px solid var(--color-primary)';
+  nlBox.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)';
+  nlBox.style.textAlign = 'center';
+
+  nlBox.innerHTML = `
+    <h3 style="margin-top:0; margin-bottom:8px; color:var(--color-primary);">✉️ Bleib up-to-date!</h3>
+    <p style="margin:0 0 16px 0; font-size:14px; color:var(--color-ink-2);">
+      Hol dir die besten Spartipps, Finanz-Hacks und Updates zu neuen Rechnern (${countryCode}) direkt in dein Postfach.
+    </p>
+    <form action="#" method="POST" style="display:flex; gap:8px; max-width:400px; margin:0 auto;" onsubmit="alert('Danke für die Anmeldung! (Dummy-Formular)'); return false;">
+      <input type="email" placeholder="Deine E-Mail Adresse" required style="flex:1; padding:10px 12px; border:1px solid var(--color-rule); border-radius:8px; font-size:14px;" />
+      <button type="submit" class="btn" style="padding:10px 16px; border-radius:8px;">Abonnieren</button>
+    </form>
+    <p style="margin:8px 0 0 0; font-size:11px; color:var(--color-ink-3);">Kein Spam. Abmeldung jederzeit möglich.</p>
+  `;
+
+  // Insert before the footer or inside main at the bottom
+  main.appendChild(nlBox);
+}
+
+
 // Auto-calculate on input change
 document.addEventListener('DOMContentLoaded', () => {
   injectBreadcrumbs();
   injectRelatedTools();
   initGehaltsVergleich();
+  injectNewsletterOptIn();
 
   const calcBtn = document.getElementById('calculate');
   if (calcBtn) {
@@ -472,47 +511,38 @@ document.addEventListener('DOMContentLoaded', () => {
       actionDiv.style.marginTop = '24px';
       actionDiv.style.flexWrap = 'wrap';
 
-      // Share Button
-      const shareBtn = document.createElement('button');
-      shareBtn.className = 'btn share-btn';
-      shareBtn.style.flex = '1';
-      shareBtn.style.flex = '1';
-      shareBtn.style.backgroundColor = '#25D366'; // WhatsApp Green
-      shareBtn.style.color = '#fff';
-      shareBtn.style.display = 'flex';
-      shareBtn.style.alignItems = 'center';
-      shareBtn.style.justifyContent = 'center';
-      shareBtn.style.gap = '8px';
-      shareBtn.innerHTML = '<span style="font-size: 18px;">📲</span> Ergebnis teilen';
-      
-      shareBtn.addEventListener('click', async () => {
-         const url = window.location.href;
-         const title = document.title;
-         let text = 'Schau dir das mal an: ';
-         
-         // Special text for Gehaltsrechner
-         const netMonthly = document.getElementById('resNetMonthly');
-         if (netMonthly && netMonthly.textContent !== '-- €') {
-             text = `Mein berechnetes Netto: ${netMonthly.textContent}! Schau mal hier: `;
-         }
+      // Advanced Social Share Buttons
+      const shareUrl = encodeURIComponent(window.location.href);
+      const shareText = encodeURIComponent(document.title + ' – Schau dir das mal an:');
 
-         if (navigator.share) {
-             try {
-                 await navigator.share({ title: title, text: text, url: url });
-             } catch (err) { }
-         } else {
-             navigator.clipboard.writeText(text + url);
-             const oldHtml = shareBtn.innerHTML;
-             shareBtn.innerHTML = '<span>✅</span> Link kopiert!';
-             setTimeout(() => shareBtn.innerHTML = oldHtml, 2500);
-         }
-      });
+      const socialHTML = `
+        <div style="width: 100%; display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; justify-content: center;">
+          <a href="whatsapp://send?text=${shareText}%20${shareUrl}" target="_blank" rel="noopener" class="btn" style="flex:1; background:#25D366; color:#fff; border:none; display:flex; align-items:center; justify-content:center; gap:6px; min-width:120px;">
+            <span style="font-size:1.2em;">💬</span> WhatsApp
+          </a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noopener" class="btn" style="flex:1; background:#1877F2; color:#fff; border:none; display:flex; align-items:center; justify-content:center; gap:6px; min-width:120px;">
+            <span style="font-size:1.2em;">📘</span> Facebook
+          </a>
+          <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}" target="_blank" rel="noopener" class="btn" style="flex:1; background:#000000; color:#fff; border:none; display:flex; align-items:center; justify-content:center; gap:6px; min-width:120px;">
+            <span style="font-size:1.2em;">𝕏</span> Twitter
+          </a>
+          <a href="https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareText}" target="_blank" rel="noopener" class="btn" style="flex:1; background:#0A66C2; color:#fff; border:none; display:flex; align-items:center; justify-content:center; gap:6px; min-width:120px;">
+            <span style="font-size:1.2em;">💼</span> LinkedIn
+          </a>
+          <a href="mailto:?subject=${shareText}&body=${shareUrl}" class="btn" style="flex:1; background:var(--color-ink-3); color:#fff; border:none; display:flex; align-items:center; justify-content:center; gap:6px; min-width:120px;">
+            <span style="font-size:1.2em;">✉️</span> E-Mail
+          </a>
+        </div>
+      `;
+      
+      const socialWrapper = document.createElement('div');
+      socialWrapper.style.width = '100%';
+      socialWrapper.innerHTML = socialHTML;
+      actionDiv.appendChild(socialWrapper);
 
       // Print Button
       const printBtn = document.createElement('button');
       printBtn.className = 'btn print-btn';
-      // Let flexbox handle the widths on mobile
-      shareBtn.style.flex = '1';
       printBtn.style.flex = '1';
       printBtn.style.backgroundColor = 'var(--color-ink-2)';
       printBtn.style.color = '#fff';
@@ -520,13 +550,12 @@ document.addEventListener('DOMContentLoaded', () => {
       printBtn.style.alignItems = 'center';
       printBtn.style.justifyContent = 'center';
       printBtn.style.gap = '8px';
-      printBtn.innerHTML = '<span style="font-size: 18px;">🖨️</span> PDF / Drucken';
+      printBtn.innerHTML = '<span style="font-size: 18px;">🖨️</span> Als PDF speichern / Drucken';
       
       printBtn.addEventListener('click', () => {
          window.print();
       });
 
-      actionDiv.appendChild(shareBtn);
       actionDiv.appendChild(printBtn);
       box.appendChild(actionDiv);
     }
