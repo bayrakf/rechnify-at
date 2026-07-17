@@ -143,6 +143,7 @@ function initCountryToggle() {
   });
 
   updateCountryUI(pills, currentCountry);
+  applyCountryFilter(currentCountry);
 
   pills.forEach(pill => {
     pill.addEventListener('click', () => {
@@ -177,6 +178,22 @@ function updateCountryUI(pills, country) {
       pill.classList.add('active');
     } else {
       pill.classList.remove('active');
+    }
+  });
+}
+
+function applyCountryFilter(country) {
+  document.querySelectorAll('.tool-card').forEach(card => {
+    const hasAt = card.querySelector('.badge-at');
+    const hasDe = card.querySelector('.badge-de');
+    if (hasAt || hasDe) {
+      if (country === 'at' && hasDe && !hasAt) {
+        card.style.display = 'none';
+      } else if (country === 'de' && hasAt && !hasDe) {
+        card.style.display = 'none';
+      } else {
+        card.style.display = '';
+      }
     }
   });
 }
