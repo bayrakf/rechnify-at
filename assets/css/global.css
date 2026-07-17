@@ -561,7 +561,6 @@ body.dark .site-logo img {
   font-weight: 600;
   font-size: var(--text-sm);
   text-decoration: none;
-  white-space: nowrap;
   transition: background var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
 }
 
@@ -708,7 +707,6 @@ body.dark .site-logo img {
   justify-content: space-between;
   align-items: center;
   gap: var(--space-sm);
-  white-space: nowrap;
   transition: background var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
 }
 
@@ -775,7 +773,6 @@ body.dark .site-logo img {
   color: var(--color-ink);
   font-size: var(--text-sm);
   font-weight: 500;
-  white-space: nowrap;
   transition: border-color var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
 }
 
@@ -802,7 +799,6 @@ button, .btn {
   font-weight: 600;
   cursor: pointer;
   min-height: 42px;
-  white-space: nowrap;
   text-decoration: none;
   transition: background var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), opacity var(--dur-short) var(--ease-out);
 }
@@ -1145,6 +1141,15 @@ label {
 
 @media (max-width: 640px) {
   .site-nav { display: none; }
+  
+  .site-main { padding: var(--space-md) var(--space-sm) var(--space-xl); }
+  .calc-body { padding: var(--space-md) var(--space-sm); }
+  .calc-header { padding: var(--space-md) var(--space-sm); }
+  .content-section { padding: var(--space-md); }
+  .card, .calculator-card { border-radius: var(--radius-md); }
+  .tool-grid { gap: var(--space-sm); }
+  
+  .site-logo-text { display: none; } /* Saves space in the header */
 
   .site-nav.open {
     display: flex;

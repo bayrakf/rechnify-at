@@ -470,7 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const shareBtn = document.createElement('button');
       shareBtn.className = 'btn share-btn';
       shareBtn.style.flex = '1';
-      shareBtn.style.minWidth = '200px';
+      shareBtn.style.flex = '1';
       shareBtn.style.backgroundColor = '#25D366'; // WhatsApp Green
       shareBtn.style.color = '#fff';
       shareBtn.style.display = 'flex';
@@ -505,8 +505,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // Print Button
       const printBtn = document.createElement('button');
       printBtn.className = 'btn print-btn';
+      // Let flexbox handle the widths on mobile
+      shareBtn.style.flex = '1';
       printBtn.style.flex = '1';
-      printBtn.style.minWidth = '150px';
       printBtn.style.backgroundColor = 'var(--color-ink-2)';
       printBtn.style.color = '#fff';
       printBtn.style.display = 'flex';
