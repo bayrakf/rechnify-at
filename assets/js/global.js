@@ -81,11 +81,13 @@ const TOOL_MAPPING = {
   '/arbeitszeit/kommen-gehen-rechner.html': '/de/arbeitszeit/kommen-gehen-rechner.html',
   '/arbeitszeit/urlaubstage-rechner.html': '/de/arbeitszeit/urlaubstage-rechner.html',
   '/arbeitszeit/ueberstundenrechner.html': '/de/arbeitszeit/ueberstundenrechner.html',
+  '/arbeitszeit/stundenlohn-rechner.html': '/de/arbeitszeit/stundenlohn-rechner.html',
   '/finanzen/mwst-rechner.html': '/de/finanzen/mwst-rechner.html',
   '/familie/kinderbetreuungsgeld.html': '/de/familie/elterngeld.html',
   '/finanzen/gehaltsrechner.html': '/de/finanzen/gehaltsrechner.html',
   '/finanzen/gehaltserhoehung-rechner.html': '/de/finanzen/gehaltserhoehung-rechner.html',
-  '/finanzen/kryptosteuerrechner.html': '/de/finanzen/kryptosteuerrechner.html'
+  '/finanzen/kryptosteuerrechner.html': '/de/finanzen/kryptosteuerrechner.html',
+  '/finanzen/sachbezugsrechner.html': '/de/finanzen/sachbezugsrechner.html'
 };
 
 function initCountryToggle() {

@@ -22,6 +22,7 @@ HREFLANG_PAIRS: dict[str, str] = {
     "finanzen/kryptosteuerrechner.html": "de/finanzen/kryptosteuerrechner.html",
     "finanzen/mwst-rechner.html": "de/finanzen/mwst-rechner.html",
     "familie/kinderbetreuungsgeld.html": "de/familie/elterngeld.html",
+    "finanzen/sachbezugsrechner.html": "de/finanzen/sachbezugsrechner.html",
 }
 
 DE_TO_AT = {de: at for at, de in HREFLANG_PAIRS.items()}

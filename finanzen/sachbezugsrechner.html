@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sachbezugsrechner Österreich – Firmenwagen berechnen | rechnify.at</title>
+  <meta name="description" content="Berechne den Sachbezug für deinen Dienstwagen in Österreich (E-Auto, Verbrenner, Dienstrad) nach den aktuellen Regeln für 2026." />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sachbezugsrechner Österreich – Firmenwagen berechnen | rechnify.at" />
+  <meta property="og:description" content="Berechne den Sachbezug für deinen Dienstwagen in Österreich (E-Auto, Verbrenner, Dienstrad) nach den aktuellen Regeln für 2026." />
+  <meta property="og:url" content="https://rechnify.at/finanzen/sachbezugsrechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:image:alt" content="rechnify.at Logo" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:image:alt" content="rechnify.at Logo" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <link rel="canonical" href="https://rechnify.at/finanzen/sachbezugsrechner.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/sachbezugsrechner.html" />
+  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/sachbezugsrechner.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/sachbezugsrechner.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+
+
+
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .result-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; text-align: center; }
+    .result-card .label { font-size: var(--text-sm); color: var(--muted); margin-bottom: 6px; }
+    .result-card .value { font-size: var(--text-2xl); font-weight: 700; color: var(--primary); }
+    .result-card .sub { font-size: var(--text-xs); color: var(--muted); margin-top: 3px; }
+    .result-card.highlight { border-color: var(--primary); background: var(--primary-light); }
+    .info-box { background: var(--info-bg); border: 1px solid #bfdbfe; border-radius: 12px; padding: 14px 16px; font-size: var(--text-sm); color: var(--info); margin-top: 20px; }
+    @media (max-width: 600px) { .result-grid { grid-template-columns: 1fr; } }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Sachbezugsrechner Österreich",
+    "operatingSystem": "All",
+    "applicationCategory": "FinanceApplication",
+    "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify Logo" width="36" height="36" />
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/familie/schwangerschaftsrechner.html">👶 Familie</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <div class="calculator-container">
+      <div class="calculator-card">
+
+        <div class="calc-header">
+          <div class="calc-icon">🚗</div>
+          <h1>Sachbezugsrechner Österreich</h1>
+          <p>Berechne die steuerlichen Auswirkungen deines Firmenwagens (Dienstwagens) für das Jahr 2026.</p>
+        </div>
+
+        <div class="calc-body" style="padding: 24px;">
+
+          <!-- Fahrzeugtyp -->
+          <div class="input-group">
+            <label for="carType">Fahrzeugtyp</label>
+            <select id="carType" onchange="toggleCarFields()">
+              <option value="verbrenner">Dienstwagen (Benzin, Diesel, Hybrid)</option>
+              <option value="elektro">Elektroauto (CO2-Ausstoß = 0 g/km)</option>
+              <option value="fahrrad">Dienstfahrrad / E-Bike</option>
+            </select>
+          </div>
+
+          <!-- Anschaffungspreis -->
+          <div class="input-group" id="priceGroup">
+            <label for="carPrice">Tatsächliche Anschaffungskosten (inkl. USt &amp; NoVA)</label>
+            <div class="input-suffix">
+              <input type="number" id="carPrice" placeholder="z.B. 45000" min="0" step="1000" oninput="calculate()" />
+              <span class="suffix">€</span>
+            </div>
+          </div>
+
+          <!-- CO2 Ausstoß -->
+          <div class="input-group" id="co2Group">
+            <label for="co2Limits">CO2-Ausstoß (WLTP-Grenzwert)</label>
+            <select id="co2Limits" onchange="calculate()">
+              <option value="low">Bis zu 129 g/km (1,5% Sachbezug)</option>
+              <option value="high">Über 129 g/km (2,0% Sachbezug)</option>
+            </select>
+          </div>
+
+          <!-- Kilometerleistung privat -->
+          <div class="input-group" id="kmGroup">
+            <label for="privateKm">Private Nutzung pro Jahr</label>
+            <select id="privateKm" onchange="calculate()">
+              <option value="full">Mehr als 6.000 km / Jahr (Voller Sachbezug)</option>
+              <option value="half">Bis zu 6.000 km / Jahr (Halber Sachbezug - Nachweis nötig)</option>
+            </select>
+          </div>
+
+          <!-- Ergebnis -->
+          <div class="result-box" id="result" style="display:none;">
+            <strong style="font-size: var(--text-base); color: var(--text);">📊 Berechnungsergebnis</strong>
+            <div class="result-grid">
+              <div class="result-card highlight">
+                <div class="label">Monatlicher Sachbezug</div>
+                <div class="value" id="resMonthlyValue">–</div>
+                <div class="sub">erhöht das Bruttogehalt</div>
+              </div>
+              <div class="result-card">
+                <div class="label">Sachbezugssatz</div>
+                <div class="value" id="resPercentRate">–</div>
+                <div class="sub">vom Anschaffungspreis</div>
+              </div>
+            </div>
+            <div class="info-box" id="infoBox"></div>
+          </div>
+
+        </div>
+
+        <!-- FAQ -->
+        <div style="padding: 24px; border-top: 1px solid var(--border);">
+          <h2 style="font-size: var(--text-xl); margin-bottom: 16px;">Häufig gestellte Fragen (FAQs)</h2>
+
+          <details style="margin-bottom: 12px;">
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Was ist der Sachbezug bei einem Dienstwagen?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Wenn du das Firmenauto deines Arbeitgebers auch privat nutzen darfst, gilt dies als Sachbezug (geldwerter Vorteil). Dieser Wert wird dem Bruttogehalt hinzugerechnet und erhöht somit die Lohnsteuer und Sozialversicherung.
+            </p>
+          </details>
+
+          <details style="margin-bottom: 12px;">
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie hoch ist der Sachbezug für Elektroautos in Österreich?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Für reine Elektroautos (CO2-Ausstoß = 0 g/km) fällt in Österreich **kein Sachbezug** (0%) an. Auch für Dienstfahrräder und E-Bikes gilt die 0%-Regelung.
+            </p>
+          </details>
+
+          <details style="margin-bottom: 12px;">
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wann gilt der halbe Sachbezug (bis 6.000 km)?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Fährst du nachweislich (z.B. mittels lückenlosem Fahrtenbuch) weniger als 6.000 Kilometer pro Jahr (durchschnittlich 500 km im Monat) privat mit dem Dienstwagen, halbiert sich der Sachbezug auf 0,75% (max. 360 €) bzw. 1,0% (max. 480 €).
+            </p>
+          </details>
+
+          <details>
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie hoch ist der maximale Sachbezugswert?</summary>
+            <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
+              Der maximale Sachbezug bei Verbrennern liegt bei **960 € im Monat** (für Autos mit über 129g CO2/km bei vollem Sachbezug) bzw. **720 € im Monat** (für schadstoffarme Autos bis 129g CO2/km).
+            </p>
+          </details>
+        </div>
+
+      </div><!-- /calculator-card -->
+
+      <!-- Sidebar -->
+      <aside class="sidebar-nav">
+        <div class="sidebar-section">
+          <div class="sidebar-title">💰 Finanzen</div>
+          <a href="/finanzen/gehaltsrechner.html" class="sidebar-link">Gehaltsrechner AT</a>
+          <a href="/finanzen/sachbezugsrechner.html" class="sidebar-link active">Sachbezugsrechner</a>
+          <a href="/finanzen/mwst-rechner.html" class="sidebar-link">MwSt-Rechner</a>
+          <a href="/finanzen/kryptosteuerrechner.html" class="sidebar-link">Krypto-Steuer</a>
+          <a href="/finanzen/zinsrechner.html" class="sidebar-link">Zinsrechner</a>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 rechnify.at</span>
+      <div class="footer-links">
+        <a href="/impressum.html">Impressum</a>
+        <a href="/datenschutz.html">Datenschutz</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    function toggleCarFields() {
+      const type = document.getElementById('carType').value;
+      const showPrice = type === 'verbrenner' || type === 'elektro';
+      const showCO2 = type === 'verbrenner';
+      const showKm = type === 'verbrenner';
+
+      document.getElementById('priceGroup').style.display = showPrice ? '' : 'none';
+      document.getElementById('co2Group').style.display = showCO2 ? '' : 'none';
+      document.getElementById('kmGroup').style.display = showKm ? '' : 'none';
+
+      calculate();
+    }
+
+    function calculate() {
+      const type = document.getElementById('carType').value;
+      const price = parseFloat(document.getElementById('carPrice').value) || 0;
+      const co2 = document.getElementById('co2Limits').value;
+      const km = document.getElementById('privateKm').value;
+
+      const resBox = document.getElementById('result');
+      const resVal = document.getElementById('resMonthlyValue');
+      const resRate = document.getElementById('resPercentRate');
+      const info = document.getElementById('infoBox');
+
+      if (type === 'fahrrad') {
+        resBox.style.display = '';
+        resVal.textContent = '0,00 €';
+        resRate.textContent = '0,00 %';
+        info.innerHTML = '✅ Dienstfahrräder und E-Bikes sind in Österreich komplett sachbezugsfrei.';
+        return;
+      }
+
+      if (type === 'elektro') {
+        resBox.style.display = '';
+        resVal.textContent = '0,00 €';
+        resRate.textContent = '0,00 %';
+        info.innerHTML = '✅ reine Elektroautos (CO2 = 0 g/km) sind in Österreich komplett befreit vom Sachbezug.';
+        return;
+      }
+
+      if (!price) {
+        resBox.style.display = 'none';
+        return;
+      }
+
+      let rate = 0.02; // 2.0%
+      let maxVal = 960;
+
+      if (co2 === 'low') {
+        rate = 0.015; // 1.5%
+        maxVal = 720;
+      }
+
+      if (km === 'half') {
+        rate = rate / 2;
+        maxVal = maxVal / 2;
+      }
+
+      let value = price * rate;
+      if (value > maxVal) {
+        value = maxVal;
+      }
+
+      resBox.style.display = '';
+      resVal.textContent = value.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      resRate.textContent = (rate * 100).toFixed(2).replace('.', ',') + ' %';
+
+      info.innerHTML = `Dieser Sachbezugswert von <strong>${value.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong> wird monatlich deinem Bruttogehalt zugeschlagen und erhöht die Lohnsteuer-Bemessungsgrundlage.`;
+    }
+
+    // Init fields
+    toggleCarFields();
+  </script>
+
+</body>
+</html>

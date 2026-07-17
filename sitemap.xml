@@ -176,6 +176,15 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://rechnify.at/de/finanzen/sachbezugsrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/sachbezugsrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/sachbezugsrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/sachbezugsrechner.html"/>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://rechnify.at/familie/kinderbetreuungsgeld.html</loc>
     <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/familie/kinderbetreuungsgeld.html"/>
     <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/familie/elterngeld.html"/>
@@ -232,6 +241,15 @@
     <loc>https://rechnify.at/finanzen/rabattrechner.html</loc>
     <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/rabattrechner.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/rabattrechner.html"/>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/finanzen/sachbezugsrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/sachbezugsrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/sachbezugsrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/sachbezugsrechner.html"/>
     <lastmod>2026-07-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
