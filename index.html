@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de-AT">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- SEO -->
-  <title>rechnify.at – Präzisionsrechner für Österreich 🇦🇹 & Deutschland 🇩🇪</title>
+  <title>rechnify.at – Präzisionsrechner für Österreich &amp; Deutschland</title>
   <meta name="description" content="Kostenlose Online-Rechner für Österreich und Deutschland: Brutto-Netto, Überstunden, Krypto-Steuern, Elterngeld, MwSt und mehr. Direkt im Browser, keine Datenweitergabe." />
   <link rel="canonical" href="https://rechnify.at/" />
   <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/" />
@@ -14,44 +14,24 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" crossorigin="anonymous"></script>
 
-
-
-
-
-
-
-
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-
-
+  <meta name="google-adsense-account" content="ca-pub-5052220565736445" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="rechnify.at – Präzisionsrechner für AT & DE" />
+  <meta property="og:title" content="rechnify.at – Präzisionsrechner für AT &amp; DE" />
   <meta property="og:description" content="20+ kostenlose Rechner: Brutto-Netto, Überstunden, Krypto-Steuern, Elterngeld und mehr." />
   <meta property="og:url" content="https://rechnify.at/" />
   <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
   <meta property="og:image:alt" content="rechnify.at Logo" />
   <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="rechnify.at – Präzisionsrechner für AT &amp; DE" />
+  <meta name="twitter:description" content="20+ kostenlose Rechner für Österreich und Deutschland." />
   <meta name="twitter:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
   <meta property="og:locale" content="de_AT" />
+  <meta property="og:locale:alternate" content="de_DE" />
   <meta property="og:site_name" content="rechnify.at" />
 
   <!-- Web icons -->
@@ -69,13 +49,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/tokens.css?v=1.1" />
-  <link rel="stylesheet" href="/assets/css/global.css?v=2.2" />
+  <link rel="stylesheet" href="/tokens.css?v=1.2" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=2.3" />
 
   <style>
     /* Hallmark · macrostructure: Bento Grid · genre: modern-minimal · design-system: design.md · designed-as-app
      * theme: Cobalt · tone: utilitarian-precise · anchor hue: cobalt 255°
-     * Pre-emit critique: P5 H5 E5 S4 R5 V5 */
+     * Pre-emit critique: P5 H5 E5 S5 R5 V4 */
 
     /* ── Reset (index scope) ──────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; }
@@ -83,13 +63,21 @@
 
     body {
       font-family: var(--f-body);
-      background: var(--c-paper);
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -18%, color-mix(in oklch, var(--c-accent) 12%, transparent), transparent 70%),
+        var(--c-paper);
       color: var(--c-ink);
       line-height: 1.6;
       overflow-x: clip;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+    }
+
+    body.dark {
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -18%, color-mix(in oklch, var(--c-accent) 18%, transparent), transparent 70%),
+        var(--c-paper);
     }
 
     /* ── FLOATING PILL NAV ────────────────────────────────────────── */
@@ -192,51 +180,53 @@
 
     /* ── HERO ─────────────────────────────────────────────────────── */
     .hero {
-      min-height: 62svh;
+      min-height: 72svh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 120px 24px 100px;
+      padding: 120px 24px 88px;
       position: relative;
     }
 
-    .hero-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--sp2);
-      background: var(--c-accent-s);
-      color: var(--c-accent);
-      font-size: .72rem;
-      font-weight: 600;
+    .hero-brand {
       font-family: var(--f-display);
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: 5px 13px;
-      border-radius: var(--r-full);
-      border: 1px solid color-mix(in oklch, var(--c-accent) 25%, transparent);
-      margin-bottom: var(--sp8);
+      font-weight: 700;
+      font-size: clamp(3.6rem, 12vw, 7.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      color: var(--c-ink);
+      margin: 0 0 var(--sp4);
+      overflow-wrap: anywhere;
+      min-width: 0;
+      animation: hero-in 700ms var(--ease-out) both;
+    }
+
+    .hero-brand .dot {
+      color: var(--c-accent);
     }
 
     .hero-h1 {
       font-family: var(--f-display);
-      font-weight: 700;
-      font-size: clamp(3.8rem, 11vw, 8rem);
-      line-height: .93;
-      letter-spacing: -.03em;
-      color: var(--c-ink);
-      margin-bottom: var(--sp6);
+      font-style: normal;
+      font-weight: 600;
+      font-size: clamp(1.15rem, 2.8vw, 1.55rem);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--c-ink2);
+      margin: 0 0 var(--sp5);
+      max-width: 28ch;
+      animation: hero-in 700ms var(--ease-out) 80ms both;
     }
 
-    .hero-h1 .accent { color: var(--c-accent); }
-
     .hero-sub {
-      font-size: clamp(1rem, 2.2vw, 1.18rem);
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
       color: var(--c-ink2);
-      max-width: 500px;
+      max-width: 34rem;
       line-height: 1.65;
-      margin-bottom: var(--sp10);
+      margin: 0 0 var(--sp10);
+      animation: hero-in 700ms var(--ease-out) 140ms both;
     }
 
     .hero-btns {
@@ -245,6 +235,12 @@
       gap: var(--sp3);
       flex-wrap: wrap;
       justify-content: center;
+      animation: hero-in 700ms var(--ease-out) 200ms both;
+    }
+
+    @keyframes hero-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .btn-p {
@@ -259,7 +255,9 @@
       padding: 12px 22px;
       border-radius: var(--r-full);
       text-decoration: none;
-      transition: all var(--dur) var(--ease-out);
+      border: none;
+      cursor: pointer;
+      transition: background var(--dur) var(--ease-out), transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
       box-shadow: 0 4px 16px color-mix(in oklch, var(--c-accent) 35%, transparent);
     }
 
@@ -280,7 +278,8 @@
       text-decoration: none;
       background: var(--c-paper2);
       border: 1px solid var(--c-rule);
-      transition: all var(--dur) var(--ease-out);
+      cursor: pointer;
+      transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
     }
 
     .btn-s:hover { background: var(--c-paper3); color: var(--c-ink); }
@@ -288,7 +287,7 @@
 
     .scroll-hint {
       position: absolute;
-      bottom: 32px;
+      bottom: 28px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -374,21 +373,22 @@
 
       .c-btn { padding: 5px 10px; font-size: .72rem; }
 
-      .hero { padding: 100px 20px 90px; }
+      .hero { padding: 100px 20px 80px; min-height: 68svh; }
 
-      .hero-h1 { font-size: clamp(3.2rem, 18vw, 5rem); }
+      .hero-brand { font-size: clamp(3rem, 16vw, 4.6rem); }
 
       .v-strip { flex-direction: column; }
       .v-item + .v-item { border-left: none; border-top: 1px solid var(--c-rule); }
     }
 
     @media (max-width: 414px) {
-      .hero-h1 { letter-spacing: -.02em; }
+      .hero-h1 { font-size: 1.05rem; }
       .hero-sub { font-size: .95rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+      .hero-brand, .hero-h1, .hero-sub, .hero-btns { animation: none; opacity: 1; transform: none; }
     }
   </style>
 
@@ -421,13 +421,16 @@
       {
         "@type": "ItemList",
         "name": "Kostenlose Online-Rechner",
+        "numberOfItems": 8,
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Brutto-Netto Gehaltsrechner", "url": "https://rechnify.at/finanzen/gehaltsrechner.html" },
-          { "@type": "ListItem", "position": 2, "name": "Stundenlohnrechner", "url": "https://rechnify.at/arbeitszeit/stundenlohn-rechner.html" },
-          { "@type": "ListItem", "position": 3, "name": "Überstundenrechner", "url": "https://rechnify.at/arbeitszeit/ueberstundenrechner.html" },
-          { "@type": "ListItem", "position": 4, "name": "MwSt-Rechner", "url": "https://rechnify.at/finanzen/mwst-rechner.html" },
-          { "@type": "ListItem", "position": 5, "name": "Krypto-Steuerrechner", "url": "https://rechnify.at/finanzen/kryptosteuerrechner.html" },
-          { "@type": "ListItem", "position": 6, "name": "Kommen-Gehen Rechner", "url": "https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html" }
+          { "@type": "ListItem", "position": 1, "name": "Brutto-Netto Gehaltsrechner Österreich", "url": "https://rechnify.at/finanzen/gehaltsrechner.html" },
+          { "@type": "ListItem", "position": 2, "name": "Brutto-Netto Gehaltsrechner Deutschland", "url": "https://rechnify.at/de/finanzen/gehaltsrechner.html" },
+          { "@type": "ListItem", "position": 3, "name": "Stundenlohnrechner", "url": "https://rechnify.at/arbeitszeit/stundenlohn-rechner.html" },
+          { "@type": "ListItem", "position": 4, "name": "Überstundenrechner", "url": "https://rechnify.at/arbeitszeit/ueberstundenrechner.html" },
+          { "@type": "ListItem", "position": 5, "name": "MwSt-Rechner Österreich", "url": "https://rechnify.at/finanzen/mwst-rechner.html" },
+          { "@type": "ListItem", "position": 6, "name": "MwSt-Rechner Deutschland", "url": "https://rechnify.at/de/finanzen/mwst-rechner.html" },
+          { "@type": "ListItem", "position": 7, "name": "Krypto-Steuerrechner", "url": "https://rechnify.at/finanzen/kryptosteuerrechner.html" },
+          { "@type": "ListItem", "position": 8, "name": "Kommen-Gehen Rechner", "url": "https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html" }
         ]
       }
     ]
@@ -455,12 +458,12 @@
 
   <!-- ── HERO ─────────────────────────────────────────────────────── -->
   <section class="hero" aria-label="Hero">
-    <div class="hero-pill">🇦🇹 Österreich &nbsp;·&nbsp; 🇩🇪 Deutschland</div>
-    <h1 class="hero-h1">Rechne.<br><span class="accent">Sofort.</span></h1>
-    <p class="hero-sub">Kostenlose Präzisionsrechner für Österreich und Deutschland — direkt im Browser, ohne Datenweitergabe.</p>
+    <p class="hero-brand">rechnify<span class="dot">.</span>at</p>
+    <h1 class="hero-h1">Präzisionsrechner für Österreich und Deutschland</h1>
+    <p class="hero-sub">Brutto-Netto, Überstunden, MwSt und mehr — lokal im Browser, ohne Datenweitergabe.</p>
     <div class="hero-btns">
-      <a href="#arbeitszeit" class="btn-p" id="heroAt">🇦🇹 Österreichische Rechner</a>
-      <a href="#finanzen" class="btn-s" id="heroDe">🇩🇪 Deutsche Rechner</a>
+      <button type="button" class="btn-p" id="heroAt">Österreich wählen</button>
+      <button type="button" class="btn-s" id="heroDe">Deutschland wählen</button>
     </div>
     <div class="scroll-hint" aria-hidden="true">
       <span>Entdecken</span>
@@ -525,35 +528,35 @@
           </a>
           <a href="/finanzen/gehaltserhoehung-rechner.html" class="tool-card">
             <span class="tool-card-badge badge-at">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">📈</div>
             <div class="tool-card-title">Gehaltserhöhung Rechner</div>
             <div class="tool-card-desc">Netto-Effekt einer Gehaltserhöhung berechnen.</div>
           </a>
           <a href="/finanzen/sachbezugsrechner.html" class="tool-card">
             <span class="tool-card-badge badge-at">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">🚗</div>
             <div class="tool-card-title">Sachbezugsrechner</div>
             <div class="tool-card-desc">Firmenwagen &amp; 1% Regelung versteuern (AT/DE).</div>
           </a>
           <a href="/finanzen/pendlerrechner.html" class="tool-card">
             <span class="tool-card-badge badge-at">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">🚗</div>
             <div class="tool-card-title">Pendlerrechner</div>
             <div class="tool-card-desc">Pendlerpauschale &amp; Entfernungspauschale berechnen (AT/DE).</div>
           </a>
           <a href="/finanzen/kryptosteuerrechner.html" class="tool-card">
             <span class="tool-card-badge badge-at">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">₿</div>
             <div class="tool-card-title">Krypto-Steuerrechner</div>
             <div class="tool-card-desc">Steuern auf Kryptogewinne berechnen.</div>
           </a>
           <a href="/finanzen/mwst-rechner.html" class="tool-card">
             <span class="tool-card-badge badge-at">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">🧾</div>
             <div class="tool-card-title">MwSt-Rechner</div>
             <div class="tool-card-desc">Brutto und Netto nach Mehrwertsteuersätzen.</div>
@@ -565,16 +568,16 @@
           </a>
           <a href="/finanzen/etf-sparplan-rechner.html" class="tool-card">
             <span class="tool-card-badge badge-new">✦ Neu</span>
-            <span class="tool-card-badge badge-at" style="right:70px;">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:120px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">📈</div>
             <div class="tool-card-title">ETF Sparplan Rechner</div>
             <div class="tool-card-desc">Zinseszins berechnen und Vermögen visualisieren.</div>
           </a>
           <a href="/finanzen/leasingrechner.html" class="tool-card">
             <span class="tool-card-badge badge-new">✦ Neu</span>
-            <span class="tool-card-badge badge-at" style="right:70px;">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:120px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">🚗</div>
             <div class="tool-card-title">Leasingrechner</div>
             <div class="tool-card-desc">Leasingrate & Gesamtkosten (inkl. Gebühren) berechnen.</div>
@@ -586,8 +589,8 @@
           </a>
           <a href="/finanzen/kreditrechner.html" class="tool-card">
             <span class="tool-card-badge badge-new">✦ Neu</span>
-            <span class="tool-card-badge badge-at" style="right:70px;">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:120px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">💸</div>
             <div class="tool-card-title">Kreditrechner</div>
             <div class="tool-card-desc">Monatliche Rate für Annuitätendarlehen berechnen.</div>
@@ -604,21 +607,21 @@
         <div class="tool-grid">
           <a href="/arbeitszeit/kommen-gehen-rechner.html" class="tool-card">
             <span class="tool-card-badge badge-at">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">🕐</div>
             <div class="tool-card-title">Kommen-Gehen Rechner</div>
             <div class="tool-card-desc">Arbeitszeit erfassen, Pausen und Überstunden berechnen.</div>
           </a>
           <a href="/arbeitszeit/ueberstundenrechner.html" class="tool-card">
             <span class="tool-card-badge badge-at">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">⏰</div>
             <div class="tool-card-title">Überstundenrechner</div>
             <div class="tool-card-desc">Zuschlag und Auszahlung nach Arbeitsrecht.</div>
           </a>
           <a href="/arbeitszeit/urlaubstage-rechner.html" class="tool-card">
             <span class="tool-card-badge badge-at">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">🏖️</div>
             <div class="tool-card-title">Urlaubstage-Rechner</div>
             <div class="tool-card-desc">Urlaubsanspruch gesetzlich berechnen.</div>
@@ -644,24 +647,24 @@
           </a>
           <a href="/arbeitszeit/teilzeitrechner.html" class="tool-card">
             <span class="tool-card-badge badge-new">✦ Neu</span>
-            <span class="tool-card-badge badge-at" style="right:70px;">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:120px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">📉</div>
             <div class="tool-card-title">Teilzeitrechner</div>
             <div class="tool-card-desc">Gehalt bei Stundenreduzierung (Teilzeit) berechnen.</div>
           </a>
           <a href="/arbeitszeit/arbeitstage-rechner.html" class="tool-card">
             <span class="tool-card-badge badge-new">✦ Neu</span>
-            <span class="tool-card-badge badge-at" style="right:70px;">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:120px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">📅</div>
             <div class="tool-card-title">Arbeitstage-Rechner</div>
             <div class="tool-card-desc">Werktage inkl. Feiertage berechnen.</div>
           </a>
           <a href="/arbeitszeit/brueckentage-planer.html" class="tool-card">
             <span class="tool-card-badge badge-new">✦ Neu</span>
-            <span class="tool-card-badge badge-at" style="right:70px;">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:120px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-at">🇦🇹 AT</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">🏝️</div>
             <div class="tool-card-title">Brückentage-Planer</div>
             <div class="tool-card-desc">Hol das Maximum aus deinem Urlaub raus.</div>
@@ -735,7 +738,7 @@
           </a>
           <a href="/alltag/kaufkraftrechner.html" class="tool-card">
             <span class="tool-card-badge badge-at">🇦🇹 AT</span>
-            <span class="tool-card-badge badge-de" style="right:50px;">🇩🇪 DE</span>
+            <span class="tool-card-badge badge-de">🇩🇪 DE</span>
             <div class="tool-card-icon">💸</div>
             <div class="tool-card-title">Kaufkraftrechner</div>
             <div class="tool-card-desc">Kaufkraftverlust und Inflation.</div>
@@ -818,13 +821,19 @@
       '/arbeitszeit/urlaubstage-rechner': '/de/arbeitszeit/urlaubstage-rechner',
       '/arbeitszeit/ueberstundenrechner': '/de/arbeitszeit/ueberstundenrechner',
       '/arbeitszeit/stundenlohn-rechner': '/de/arbeitszeit/stundenlohn-rechner',
+      '/arbeitszeit/teilzeitrechner': '/de/arbeitszeit/teilzeitrechner',
+      '/arbeitszeit/arbeitstage-rechner': '/de/arbeitszeit/arbeitstage-rechner',
+      '/arbeitszeit/brueckentage-planer': '/de/arbeitszeit/brueckentage-planer',
       '/finanzen/mwst-rechner': '/de/finanzen/mwst-rechner',
       '/familie/kinderbetreuungsgeld': '/de/familie/elterngeld',
       '/finanzen/gehaltsrechner': '/de/finanzen/gehaltsrechner',
       '/finanzen/gehaltserhoehung-rechner': '/de/finanzen/gehaltserhoehung-rechner',
       '/finanzen/kryptosteuerrechner': '/de/finanzen/kryptosteuerrechner',
       '/finanzen/sachbezugsrechner': '/de/finanzen/sachbezugsrechner',
-      '/finanzen/pendlerrechner': '/de/finanzen/pendlerrechner'
+      '/finanzen/pendlerrechner': '/de/finanzen/pendlerrechner',
+      '/finanzen/etf-sparplan-rechner': '/de/finanzen/etf-sparplan-rechner',
+      '/finanzen/leasingrechner': '/de/finanzen/leasingrechner',
+      '/finanzen/kreditrechner': '/de/finanzen/kreditrechner'
     };
     const INV_MAPPING = Object.fromEntries(Object.entries(TOOL_MAPPING).map(([k,v]) => [v,k]));
 
@@ -878,6 +887,14 @@
     setCountry(country, false);
     btnAt.addEventListener('click', () => setCountry('at', true));
     btnDe.addEventListener('click', () => setCountry('de', true));
+
+    function pickCountryAndScroll(c) {
+      setCountry(c, true);
+      const target = document.getElementById('finanzen') || document.getElementById('main-content');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    document.getElementById('heroAt')?.addEventListener('click', () => pickCountryAndScroll('at'));
+    document.getElementById('heroDe')?.addEventListener('click', () => pickCountryAndScroll('de'));
 
     /* ── Sticky sidebar: active category on scroll ─────────────────── */
     const sections = document.querySelectorAll('.category-section');

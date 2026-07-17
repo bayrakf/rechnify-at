@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de-AT">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +11,7 @@
   <meta property="og:description" content="Brutto-Netto-Rechner für Österreich. Berechne dein Nettoeinkommen, Sozialversicherung und Lohnsteuer für Angestellte und Arbeiter (inkl. 13./14. Gehalt)." />
   <meta property="og:url" content="https://rechnify.at/finanzen/gehaltsrechner.html" />
   <meta property="og:locale" content="de_AT" />
+  <meta property="og:locale:alternate" content="de_DE" />
   <meta property="og:site_name" content="rechnify.at" />
   
   <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
@@ -22,35 +23,9 @@
   <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/gehaltsrechner.html" />
   <link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/gehaltsrechner.html" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" crossorigin="anonymous"></script>
 
-
-
-
-
-
-
-
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-
-
 
   <!-- Web icons -->
   <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
@@ -64,43 +39,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/tokens.css" />
-  <link rel="stylesheet" href="/assets/css/global.css?v=2.2" />
+  <link rel="stylesheet" href="/tokens.css?v=1.2" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=2.3" />
 
   <style>
     .calc-body { padding: 24px; }
     .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
     .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-    .result-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
-
-    .affiliate-banner {
-      margin-top: 24px;
-      padding: 16px;
-      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-      border: 1px solid #bae6fd;
-      border-radius: 12px;
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
-    .affiliate-banner .icon { font-size: 28px; }
-    .affiliate-banner .content { flex: 1; font-size: 14px; }
-    .affiliate-banner .btn-aff {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-    .affiliate-banner .btn-aff:hover { background: var(--primary-hover); }
+    .result-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
 
     @media (max-width: 600px) {
       .result-grid { grid-template-columns: 1fr; }
-      .affiliate-banner { flex-direction: column; text-align: center; }
     }
   </style>
 

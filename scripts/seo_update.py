@@ -17,13 +17,19 @@ HREFLANG_PAIRS: dict[str, str] = {
     "arbeitszeit/urlaubstage-rechner.html": "de/arbeitszeit/urlaubstage-rechner.html",
     "arbeitszeit/ueberstundenrechner.html": "de/arbeitszeit/ueberstundenrechner.html",
     "arbeitszeit/stundenlohn-rechner.html": "de/arbeitszeit/stundenlohn-rechner.html",
+    "arbeitszeit/teilzeitrechner.html": "de/arbeitszeit/teilzeitrechner.html",
+    "arbeitszeit/arbeitstage-rechner.html": "de/arbeitszeit/arbeitstage-rechner.html",
+    "arbeitszeit/brueckentage-planer.html": "de/arbeitszeit/brueckentage-planer.html",
     "finanzen/gehaltsrechner.html": "de/finanzen/gehaltsrechner.html",
     "finanzen/gehaltserhoehung-rechner.html": "de/finanzen/gehaltserhoehung-rechner.html",
     "finanzen/kryptosteuerrechner.html": "de/finanzen/kryptosteuerrechner.html",
     "finanzen/mwst-rechner.html": "de/finanzen/mwst-rechner.html",
-    "familie/kinderbetreuungsgeld.html": "de/familie/elterngeld.html",
     "finanzen/sachbezugsrechner.html": "de/finanzen/sachbezugsrechner.html",
     "finanzen/pendlerrechner.html": "de/finanzen/pendlerrechner.html",
+    "finanzen/etf-sparplan-rechner.html": "de/finanzen/etf-sparplan-rechner.html",
+    "finanzen/leasingrechner.html": "de/finanzen/leasingrechner.html",
+    "finanzen/kreditrechner.html": "de/finanzen/kreditrechner.html",
+    "familie/kinderbetreuungsgeld.html": "de/familie/elterngeld.html",
 }
 
 DE_TO_AT = {de: at for at, de in HREFLANG_PAIRS.items()}
@@ -160,6 +166,36 @@ def patch_html(path: Path, rel: str) -> bool:
     orig = text
     is_noindex = rel in ("impressum.html", "datenschutz.html")
 
+    # Collapse blank-line spam left by prior SEO patches
+    text = re.sub(r"\n{3,}", "\n\n", text)
+
+    # Regional lang + OG locale on DE twins
+    if rel.startswith("de/"):
+        text = re.sub(r'<html\s+lang="de(?:-AT)?"', '<html lang="de-DE"', text, count=1)
+        text = re.sub(
+            r'<meta property="og:locale" content="de_AT" />',
+            '<meta property="og:locale" content="de_DE" />\n  <meta property="og:locale:alternate" content="de_AT" />',
+            text,
+            count=1,
+        )
+    elif rel != "index.html" and not rel.startswith("de/"):
+        text = re.sub(r'<html\s+lang="de(?:-DE)?"', '<html lang="de-AT"', text, count=1)
+        if 'og:locale:alternate' not in text:
+            text = re.sub(
+                r'(<meta property="og:locale" content="de_AT" />)',
+                r'\1\n  <meta property="og:locale:alternate" content="de_DE" />',
+                text,
+                count=1,
+            )
+
+    # Cache-bust shared CSS
+    text = re.sub(
+        r'/assets/css/global\.css(?:\?v=[^"\']+)?',
+        "/assets/css/global.css?v=2.3",
+        text,
+    )
+    text = re.sub(r"/tokens\.css(?:\?v=[^\"'\\s>]+)?", "/tokens.css?v=1.2", text)
+
     # Remove old hreflang variants (case inconsistent)
     text = re.sub(r'\s*<link rel="alternate" hreflang="[^"]+" href="[^"]+" />\n?', "\n", text)
 
@@ -224,6 +260,7 @@ def patch_html(path: Path, rel: str) -> bool:
             )
 
     if text != orig:
+        text = re.sub(r"\n{3,}", "\n\n", text)
         path.write_text(text, encoding="utf-8")
         return True
     return False
