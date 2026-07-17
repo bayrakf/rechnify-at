@@ -1118,6 +1118,10 @@ label {
 
   .sidebar-nav::-webkit-scrollbar { display: none; }
   .sidebar-nav h3 { display: none; }
+  .sidebar-nav a {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 900px) {
