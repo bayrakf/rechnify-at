@@ -50,7 +50,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
-  <link rel="stylesheet" href="/assets/css/global.css?v=2.5" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=2.6" />
 
   <style>
     /* Hallmark · macrostructure: Bento Grid · genre: modern-minimal · design-system: design.md · designed-as-app
@@ -876,11 +876,9 @@
         } catch(e) {}
       });
 
-      document.querySelectorAll('.tool-grid').forEach(g => g.classList.remove('is-expanded'));
       organizeGrids();
     }
 
-    const VISIBLE_LIMIT = 6;
     let gridsSorted = false;
 
     function organizeGrids() {
@@ -899,35 +897,7 @@
           cards.forEach((c) => grid.appendChild(c));
         }
 
-        cards.forEach((c) => c.classList.remove('is-overflow'));
         const shown = cards.filter((c) => c.style.display !== 'none');
-
-        let btn = grid.nextElementSibling;
-        if (!btn || !btn.classList.contains('tool-grid-more')) {
-          btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'tool-grid-more';
-          grid.after(btn);
-          btn.addEventListener('click', () => {
-            grid.classList.toggle('is-expanded');
-            organizeGrids();
-          });
-        }
-
-        if (shown.length <= VISIBLE_LIMIT) {
-          btn.classList.remove('is-visible');
-          btn.hidden = true;
-        } else if (grid.classList.contains('is-expanded')) {
-          btn.hidden = false;
-          btn.classList.add('is-visible');
-          btn.textContent = 'Weniger anzeigen';
-        } else {
-          shown.slice(VISIBLE_LIMIT).forEach((c) => c.classList.add('is-overflow'));
-          btn.hidden = false;
-          btn.classList.add('is-visible');
-          btn.textContent = `+${shown.length - VISIBLE_LIMIT} weitere Rechner`;
-        }
-
         const header = grid.closest('.category-section')?.querySelector('.category-header h2');
         if (header) {
           let countEl = header.querySelector('.category-count');

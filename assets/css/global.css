@@ -718,37 +718,6 @@ body.dark .site-logo img {
   overflow: hidden;
 }
 
-.tool-grid:not(.is-expanded) .tool-card.is-overflow {
-  display: none !important;
-}
-
-.tool-grid-more {
-  display: none;
-  margin: var(--space-md) auto 0;
-  padding: 8px 18px;
-  border: 1px solid var(--color-rule);
-  border-radius: var(--radius-pill);
-  background: var(--color-paper);
-  color: var(--color-ink-2);
-  font-family: var(--font-display);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  cursor: pointer;
-  transition: background var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
-}
-
-.tool-grid-more:hover {
-  background: var(--color-paper-2);
-  color: var(--color-ink);
-}
-
-.tool-grid-more:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
-}
-
-.tool-grid-more.is-visible { display: inline-flex; }
-
 .category-count {
   font-family: var(--font-body);
   font-size: var(--text-sm);
