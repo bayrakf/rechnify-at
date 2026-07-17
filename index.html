@@ -50,7 +50,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
-  <link rel="stylesheet" href="/assets/css/global.css?v=2.3" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=2.4" />
 
   <style>
     /* Hallmark · macrostructure: Bento Grid · genre: modern-minimal · design-system: design.md · designed-as-app
@@ -88,7 +88,7 @@
       transform: translateX(-50%);
       z-index: 200;
       width: calc(100% - 40px);
-      max-width: 860px;
+      max-width: min(100% - 40px, 1100px);
     }
 
     .pill-nav-inner {
@@ -337,9 +337,10 @@
 
     /* ── FRONTPAGE LAYOUT (sidebar + categories) ─────────────────── */
     .frontpage-layout {
-      max-width: 1300px;
+      width: min(100% - 2rem, 1680px);
+      max-width: none;
       margin: 0 auto;
-      padding: 0 var(--space-md) var(--space-3xl);
+      padding: 0 0 var(--space-3xl);
     }
 
     .frontpage-layout .sidebar-nav {
