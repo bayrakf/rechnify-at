@@ -228,8 +228,19 @@
               <span>Brutto-Auszahlung gesamt</span>
               <span id="resTotalPayout">300,00 €</span>
             </div>
+
+            <!-- Premium Feature: Steuerfreibetrag -->
+            <div id="taxFreeBlock" style="margin-top: 24px; padding: 16px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 12px; display: none;">
+              <h4 style="margin-top: 0; color: #2e7d32; display: flex; align-items: center; gap: 8px;"><span>🎁</span> Steuerfreibetrag (1:1 Netto)</h4>
+              <p id="taxFreeText" style="font-size: 13px; color: #1b5e20; margin-bottom: 12px; line-height: 1.4;">In Österreich ist der Zuschlag der ersten 18 Überstunden komplett steuerfrei. Dieser Teil fließt 1:1 netto auf dein Konto!</p>
+              <div style="display:flex; justify-content:space-between; font-size: 15px; font-weight: 600;">
+                <span style="color: #2e7d32;">Steuerfrei (Dein Netto-Vorteil):</span>
+                <strong id="resTaxFree" style="color: #2e7d32; font-size: 1.1em;">-- €</strong>
+              </div>
+            </div>
+
             <div class="text-muted text-xs mt-16">
-              Hinweis: Es handelt sich um einen Brutto-Betrag. Steuern und Sozialversicherung werden davon noch abgezogen. Die ersten 18 Überstunden pro Monat sind steuerlich begünstigt (bis max. 200€ steuerfrei).
+              Hinweis: Der restliche Betrag ist lohnsteuer- und sozialversicherungspflichtig. Die genaue Netto-Auszahlung am Ende hängt von deinem Gesamteinkommen ab.
             </div>
           </div>
 
@@ -344,6 +355,37 @@
           document.getElementById('resSurchargePercent').textContent = surchargePercent;
           document.getElementById('resSurchargeAmount').textContent = formatEuro(surchargeAmount);
           document.getElementById('resTotalPayout').textContent = formatEuro(total);
+
+          // Premium Feature Logic: Steuerfreibetrag (§ 68 EStG)
+          const taxFreeBlock = document.getElementById('taxFreeBlock');
+          const taxFreeText = document.getElementById('taxFreeText');
+          const resTaxFree = document.getElementById('resTaxFree');
+          
+          if (currentFactor === 1.5) {
+             // 50% surcharge: first 18 hours (max 200 EUR) tax free
+             const eligibleHours = Math.min(hours, 18);
+             const taxFreeAmount = Math.min(eligibleHours * wage * 0.5, 200);
+             if (taxFreeAmount > 0) {
+               resTaxFree.textContent = formatEuro(taxFreeAmount);
+               taxFreeBlock.style.display = 'block';
+               taxFreeText.innerHTML = 'In Österreich ist der 50%-Zuschlag der ersten 18 Überstunden (max. 200 €) komplett steuerfrei. Dieser Teil fließt 1:1 brutto für netto auf dein Konto!';
+             } else {
+               taxFreeBlock.style.display = 'none';
+             }
+          } else if (currentFactor === 2.0) {
+             // 100% surcharge: fully tax free up to 400 EUR
+             const taxFreeAmount = Math.min(surchargeAmount, 400);
+             if (taxFreeAmount > 0) {
+               resTaxFree.textContent = formatEuro(taxFreeAmount);
+               taxFreeBlock.style.display = 'block';
+               taxFreeText.innerHTML = 'Nacht-, Sonntags- und Feiertagszuschläge (100%) sind in Österreich bis zu satten <strong>400 € pro Monat</strong> komplett steuerfrei (brutto für netto)!';
+             } else {
+               taxFreeBlock.style.display = 'none';
+             }
+          } else {
+             taxFreeBlock.style.display = 'none';
+          }
+
         } else {
           document.getElementById('payoutResult').classList.add('hidden');
           document.getElementById('timeResult').classList.remove('hidden');
