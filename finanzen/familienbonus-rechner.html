@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Familienbonus Plus Rechner Österreich | rechnify.at</title>
+  <meta name="description" content="Berechne deinen Anspruch auf den Familienbonus Plus in Österreich. Bis zu 2.000 € pro Kind unter 18 Jahren an Steuern sparen." />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Familienbonus Plus Rechner Österreich | rechnify.at" />
+  <meta property="og:description" content="Berechne deinen Anspruch auf den Familienbonus Plus in Österreich. Bis zu 2.000 € pro Kind unter 18 Jahren an Steuern sparen." />
+  <meta property="og:url" content="https://rechnify.at/finanzen/familienbonus-rechner.html" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:image:alt" content="rechnify.at Logo" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:image:alt" content="rechnify.at Logo" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <link rel="canonical" href="https://rechnify.at/finanzen/familienbonus-rechner.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/familienbonus-rechner.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/familienbonus-rechner.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" crossorigin="anonymous"></script>
+  
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/images/favicon-512x512.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="stylesheet" href="/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; text-align: center; }
+    .big-number { font-size: 2.5rem; font-weight: 700; line-height: 1.1; margin-bottom: 4px; }
+    .sub-number { font-size: 0.95rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo">
+        <img src="/assets/images/logo.jpg" alt="rechnify Logo" width="36" height="36" />
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" type="button"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <div class="calculator-container">
+      <div class="calculator-card">
+        
+        <div class="calc-header">
+          <div class="calc-icon">👨‍👩‍👧‍👦</div>
+          <h1>Familienbonus Plus Rechner</h1>
+          <p>Berechne deine Steuerersparnis durch den Familienbonus Plus (Österreich).</p>
+        </div>
+
+        <div class="calc-body">
+          <div class="input-group">
+            <label for="kidsUnder18">Anzahl Kinder (unter 18 Jahre)</label>
+            <input type="number" id="kidsUnder18" placeholder="z.B. 2" min="0" value="1">
+          </div>
+
+          <div class="input-group">
+            <label for="kidsOver18">Anzahl Kinder (über 18 Jahre, mit Familienbeihilfe)</label>
+            <input type="number" id="kidsOver18" placeholder="z.B. 1" min="0" value="0">
+          </div>
+
+          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Berechnen</button>
+
+          <div id="result" class="result-box hidden">
+            <div class="text-sm text-muted">Maximale Steuerersparnis (pro Jahr)</div>
+            <div class="big-number text-success" id="resYearly">-- €</div>
+            <div class="sub-number" id="resMonthly">entspricht -- € monatlich</div>
+          </div>
+        </div>
+
+        <div class="help">
+          <strong>Regeln 2024 - 2026:</strong><br/>
+          Pro Kind unter 18 Jahren: max. 2.000 € / Jahr (166,68 € / Monat).<br/>
+          Pro Kind über 18 Jahren (wenn Familienbeihilfe bezogen wird): max. 650 € / Jahr (54,18 € / Monat).<br/>
+          Der Familienbonus ist ein Absetzbetrag, der die Lohnsteuer reduziert. Er kann nicht höher sein als deine zu zahlende Steuer (Ausnahme: Kindermehrbetrag bei sehr geringem Einkommen).
+        </div>
+
+      </div>
+
+      <!-- Passende Rechner -->
+      <div class="related-tools" style="margin-top: 32px; padding: 24px; background: white; border-radius: 12px; border: 1px solid var(--border);">
+        <h3 style="margin-top: 0;">🔗 Passende Rechner</h3>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+          <li><a href="/finanzen/gehaltsrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Brutto-Netto Gehaltsrechner AT</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="site-logo-text">rechnify<span>.at</span></span>
+          <p>Kostenlose Online-Rechner und Tools für Österreich & Deutschland.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    'use strict';
+    document.getElementById('calculate').addEventListener('click', () => {
+      const u18 = parseInt(document.getElementById('kidsUnder18').value) || 0;
+      const o18 = parseInt(document.getElementById('kidsOver18').value) || 0;
+      
+      const yearly = (u18 * 2000) + (o18 * 650);
+      const monthly = yearly / 12;
+
+      document.getElementById('resYearly').textContent = yearly.toLocaleString('de-AT', {minimumFractionDigits: 2}) + ' €';
+      document.getElementById('resMonthly').textContent = 'entspricht ' + monthly.toLocaleString('de-AT', {minimumFractionDigits: 2}) + ' € monatlich';
+      
+      document.getElementById('result').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
