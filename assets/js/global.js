@@ -211,8 +211,236 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// --- Breadcrumbs (SEO) ---
+function injectBreadcrumbs() {
+  const path = window.location.pathname;
+  if (path === '/' || path === '/index.html') return;
+  
+  const parts = path.split('/').filter(p => p && p !== 'de' && p !== 'index.html');
+  const itemListElement = [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Startseite",
+    "item": "https://rechnify.at/"
+  }];
+  
+  let currentPath = "https://rechnify.at";
+  let pos = 2;
+  const isDe = path.startsWith('/de/');
+  if (isDe) currentPath += '/de';
+  
+  if (parts.length > 0) {
+     const category = parts[0];
+     currentPath += `/${category}`;
+     itemListElement.push({
+       "@type": "ListItem",
+       "position": pos++,
+       "name": category.charAt(0).toUpperCase() + category.slice(1),
+       "item": currentPath
+     });
+  }
+  
+  if (parts.length > 1) {
+     const tool = parts[1].replace('.html', '').replace(/-/g, ' ');
+     currentPath += `/${parts[1]}`;
+     itemListElement.push({
+       "@type": "ListItem",
+       "position": pos++,
+       "name": tool.charAt(0).toUpperCase() + tool.slice(1),
+       "item": currentPath
+     });
+  }
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": itemListElement
+  };
+
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.text = JSON.stringify(schema);
+  document.head.appendChild(script);
+}
+
+// --- Inject Related Tools ---
+function injectRelatedTools() {
+  if (!document.querySelector('.calc-body')) return;
+  if (document.querySelector('.related-tools')) return;
+
+  const main = document.querySelector('.site-main');
+  if (!main) return;
+
+  const isDe = window.location.pathname.startsWith('/de/');
+  const lang = isDe ? '/de' : '';
+  
+  const relatedDiv = document.createElement('div');
+  relatedDiv.className = 'related-tools';
+  relatedDiv.style.marginTop = '32px';
+  relatedDiv.style.padding = '24px';
+  relatedDiv.style.background = 'var(--color-paper)';
+  relatedDiv.style.borderRadius = '12px';
+  relatedDiv.style.border = '1px solid var(--color-rule)';
+  
+  const title = document.createElement('h3');
+  title.style.marginTop = '0';
+  title.style.marginBottom = '16px';
+  title.style.fontSize = '1.1rem';
+  title.innerText = '🔗 Passende Rechner';
+  relatedDiv.appendChild(title);
+
+  const links = [
+    { text: '➔ Brutto-Netto Gehaltsrechner', href: `${lang}/finanzen/gehaltsrechner.html` },
+    { text: '➔ Überstundenrechner', href: `${lang}/arbeitszeit/ueberstundenrechner.html` },
+    { text: '➔ Stundenlohnrechner', href: `${lang}/arbeitszeit/stundenlohn-rechner.html` },
+    { text: '➔ Pendlerrechner', href: `${lang}/finanzen/pendlerrechner.html` }
+  ];
+
+  const ul = document.createElement('ul');
+  ul.style.listStyle = 'none';
+  ul.style.padding = '0';
+  ul.style.margin = '0';
+  ul.style.display = 'flex';
+  ul.style.flexDirection = 'column';
+  ul.style.gap = '10px';
+
+  let added = 0;
+  links.forEach(l => {
+    if (window.location.pathname.includes(l.href.split('/').pop())) return; // skip self
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = l.href;
+    a.style.textDecoration = 'none';
+    a.style.color = 'var(--primary)';
+    a.style.fontWeight = '500';
+    a.innerText = l.text;
+    li.appendChild(a);
+    ul.appendChild(li);
+    added++;
+  });
+
+  if (added > 0) {
+    relatedDiv.appendChild(ul);
+    main.appendChild(relatedDiv);
+  }
+}
+
+// --- Gehalts-Vergleich (A/B Test) ---
+function initGehaltsVergleich() {
+  if (!window.location.pathname.includes('gehaltsrechner')) return;
+
+  const resultBox = document.querySelector('.result-box');
+  if (!resultBox) return;
+
+  // Comparison Container
+  const compDiv = document.createElement('div');
+  compDiv.id = 'ab-comparison-box';
+  compDiv.style.display = 'none';
+  compDiv.style.marginTop = '24px';
+  compDiv.style.padding = '16px';
+  compDiv.style.background = 'var(--color-paper-3)';
+  compDiv.style.border = '2px dashed var(--color-rule)';
+  compDiv.style.borderRadius = '12px';
+  
+  const title = document.createElement('h4');
+  title.style.margin = '0 0 8px 0';
+  title.style.display = 'flex';
+  title.style.alignItems = 'center';
+  title.style.gap = '8px';
+  title.innerHTML = '<span>⚖️</span> A/B Gehalts-Vergleich';
+  compDiv.appendChild(title);
+
+  const compText = document.createElement('p');
+  compText.style.margin = '0 0 12px 0';
+  compText.style.fontSize = '14px';
+  compText.id = 'ab-comparison-text';
+  compDiv.appendChild(compText);
+
+  const resetBtn = document.createElement('button');
+  resetBtn.className = 'btn';
+  resetBtn.style.padding = '6px 12px';
+  resetBtn.style.fontSize = '12px';
+  resetBtn.style.background = 'var(--color-ink-3)';
+  resetBtn.innerHTML = 'Vergleich zurücksetzen';
+  resetBtn.addEventListener('click', () => {
+    localStorage.removeItem('rechnify.abTestNetto');
+    compDiv.style.display = 'none';
+  });
+  compDiv.appendChild(resetBtn);
+
+  resultBox.appendChild(compDiv);
+
+  // Save Button Container
+  const saveBtnContainer = document.createElement('div');
+  saveBtnContainer.style.marginTop = '16px';
+  
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'btn';
+  saveBtn.style.width = '100%';
+  saveBtn.style.background = 'var(--color-paper)';
+  saveBtn.style.color = 'var(--color-ink)';
+  saveBtn.style.border = '1px solid var(--color-rule)';
+  saveBtn.innerHTML = '📌 Dieses Netto für Vergleich merken';
+  
+  saveBtn.addEventListener('click', () => {
+    const netEl = document.getElementById('resNetMonthly');
+    if (!netEl) return;
+    const netStr = netEl.textContent.replace(/[^\d,-]/g, '').replace(',', '.');
+    const netVal = parseFloat(netStr);
+    if (!isNaN(netVal) && netVal > 0) {
+      localStorage.setItem('rechnify.abTestNetto', netVal);
+      saveBtn.innerHTML = '✅ Gemerkt! Gib jetzt ein anderes Gehalt ein.';
+      setTimeout(() => saveBtn.innerHTML = '📌 Dieses Netto für Vergleich merken', 3000);
+      updateComparisonUI();
+    }
+  });
+
+  saveBtnContainer.appendChild(saveBtn);
+  // Insert before the share/print buttons
+  resultBox.appendChild(saveBtnContainer);
+
+  function updateComparisonUI() {
+    const saved = localStorage.getItem('rechnify.abTestNetto');
+    if (!saved) {
+      compDiv.style.display = 'none';
+      return;
+    }
+    const savedNet = parseFloat(saved);
+    const netEl = document.getElementById('resNetMonthly');
+    if (!netEl) return;
+    const currStr = netEl.textContent.replace(/[^\d,-]/g, '').replace(',', '.');
+    const currNet = parseFloat(currStr);
+    
+    if (!isNaN(currNet) && currNet > 0 && currNet !== savedNet) {
+      const diff = currNet - savedNet;
+      const isPositive = diff > 0;
+      const color = isPositive ? 'var(--color-success)' : 'var(--color-danger)';
+      const sign = isPositive ? '+' : '';
+      
+      compText.innerHTML = `Gespeichertes Netto: <strong>${savedNet.toLocaleString('de-DE', {minimumFractionDigits:2})} €</strong><br/>
+      Aktuelles Netto: <strong>${currNet.toLocaleString('de-DE', {minimumFractionDigits:2})} €</strong><br/>
+      Differenz: <strong style="color: ${color}; font-size: 1.1em;">${sign}${diff.toLocaleString('de-DE', {minimumFractionDigits:2})} € im Monat</strong> (${sign}${(diff * 12).toLocaleString('de-DE', {minimumFractionDigits:0})} € im Jahr)`;
+      compDiv.style.display = 'block';
+    } else {
+      compDiv.style.display = 'none';
+    }
+  }
+
+  // Hook into the calculate button to trigger comparison update
+  const calcBtn = document.getElementById('calculate');
+  if (calcBtn) {
+    calcBtn.addEventListener('click', () => {
+      setTimeout(updateComparisonUI, 50); // slight delay to let other scripts update the DOM
+    });
+  }
+}
+
 // Auto-calculate on input change
 document.addEventListener('DOMContentLoaded', () => {
+  injectBreadcrumbs();
+  injectRelatedTools();
+  initGehaltsVergleich();
+
   const calcBtn = document.getElementById('calculate');
   if (calcBtn) {
     // Hide the calculate button visually since it auto-calculates
@@ -227,21 +455,29 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => calcBtn.click(), 100);
   }
 
-  // Inject Share Button into result box if present
+  // Inject Share & Print Buttons into result box if present
   const resultBoxes = document.querySelectorAll('.result-box');
   resultBoxes.forEach(box => {
     if (!box.querySelector('.share-btn')) {
+      // Action Container
+      const actionDiv = document.createElement('div');
+      actionDiv.style.display = 'flex';
+      actionDiv.style.gap = '8px';
+      actionDiv.style.marginTop = '24px';
+      actionDiv.style.flexWrap = 'wrap';
+
+      // Share Button
       const shareBtn = document.createElement('button');
       shareBtn.className = 'btn share-btn';
-      shareBtn.style.marginTop = '24px';
-      shareBtn.style.width = '100%';
+      shareBtn.style.flex = '1';
+      shareBtn.style.minWidth = '200px';
       shareBtn.style.backgroundColor = '#25D366'; // WhatsApp Green
       shareBtn.style.color = '#fff';
       shareBtn.style.display = 'flex';
       shareBtn.style.alignItems = 'center';
       shareBtn.style.justifyContent = 'center';
       shareBtn.style.gap = '8px';
-      shareBtn.innerHTML = '<span style="font-size: 18px;">📲</span> Ergebnis teilen (Link kopieren)';
+      shareBtn.innerHTML = '<span style="font-size: 18px;">📲</span> Ergebnis teilen';
       
       shareBtn.addEventListener('click', async () => {
          const url = window.location.href;
@@ -261,12 +497,31 @@ document.addEventListener('DOMContentLoaded', () => {
          } else {
              navigator.clipboard.writeText(text + url);
              const oldHtml = shareBtn.innerHTML;
-             shareBtn.innerHTML = '<span>✅</span> Link erfolgreich kopiert!';
+             shareBtn.innerHTML = '<span>✅</span> Link kopiert!';
              setTimeout(() => shareBtn.innerHTML = oldHtml, 2500);
          }
       });
-      box.appendChild(shareBtn);
+
+      // Print Button
+      const printBtn = document.createElement('button');
+      printBtn.className = 'btn print-btn';
+      printBtn.style.flex = '1';
+      printBtn.style.minWidth = '150px';
+      printBtn.style.backgroundColor = 'var(--color-ink-2)';
+      printBtn.style.color = '#fff';
+      printBtn.style.display = 'flex';
+      printBtn.style.alignItems = 'center';
+      printBtn.style.justifyContent = 'center';
+      printBtn.style.gap = '8px';
+      printBtn.innerHTML = '<span style="font-size: 18px;">🖨️</span> PDF / Drucken';
+      
+      printBtn.addEventListener('click', () => {
+         window.print();
+      });
+
+      actionDiv.appendChild(shareBtn);
+      actionDiv.appendChild(printBtn);
+      box.appendChild(actionDiv);
     }
   });
 });
-
