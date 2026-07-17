@@ -763,7 +763,7 @@ def create_brueckentage_planer():
                    .replace("{DE_ACTIVE}", "") \
                    .replace("{ALT_LINKS}", alt_links_at) \
                    .replace("{ISO_CODE}", "AT") \
-                   .replace("{SEO_TITLE}", "Fenstertage-Planer 2024 / 2025") \
+                   .replace("{SEO_TITLE}", "Fenstertage-Planer") \
                    .replace("{SEO_KEYWORD}", "Fenstertage") \
                    .replace("{EXTRA_INPUTS}", "")
     
@@ -794,7 +794,7 @@ def create_brueckentage_planer():
                    .replace("{DE_ACTIVE}", "active") \
                    .replace("{ALT_LINKS}", alt_links_de) \
                    .replace("{ISO_CODE}", "DE") \
-                   .replace("{SEO_TITLE}", "Brückentage-Planer 2024 / 2025") \
+                   .replace("{SEO_TITLE}", "Brückentage-Planer") \
                    .replace("{SEO_KEYWORD}", "Brückentage") \
                    .replace("{EXTRA_INPUTS}", extra_de)
     
