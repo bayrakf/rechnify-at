@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brückentage-Planer (Deutschland) – Urlaub verdoppeln | rechnify.at</title>
+  <title>Brückentage-Planer 2024 / 2025 – Urlaub verdoppeln | rechnify.at</title>
   <meta name="description" content="Nutze Brückentage clever! Finde heraus, wie du in (Deutschland) mit minimalen Urlaubstagen die meiste freie Zeit herausholst." />
   <link rel="canonical" href="https://rechnify.at/de/arbeitszeit/brueckentage-planer.html" />
   <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/brueckentage-planer.html" />
@@ -13,7 +13,7 @@
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Brückentage-Planer (Deutschland) | rechnify.at" />
+  <meta property="og:title" content="Brückentage-Planer 2024 / 2025 | rechnify.at" />
   <meta property="og:description" content="Verdopple deinen Urlaub mit cleveren Brückentagen." />
   <meta property="og:url" content="https://rechnify.at/de/arbeitszeit/brueckentage-planer.html" />
   <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
@@ -117,7 +117,7 @@
   <main class="site-main">
     
     <div class="page-hero" style="padding-top:10px;">
-      <h1 style="margin-bottom:8px;">Brückentage-Planer (Deutschland)</h1>
+      <h1 style="margin-bottom:8px;" id="pageTitle">Brückentage-Planer 2024 / 2025</h1>
       <p class="subtitle">Setze deine Urlaubstage clever ein und maximiere deine freie Zeit.</p>
     </div>
 
@@ -259,6 +259,28 @@
             holidays.forEach(h => {
                 const dayOfWeek = h.date.getDay(); // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
                 
+                if (dayOfWeek === 1 || dayOfWeek === 5) {
+                    // Monday or Friday -> Langes Wochenende (0 days off = 3 days free)
+                    const freeStart = addDays(h.date, dayOfWeek === 1 ? -2 : 0);
+                    const freeEnd = addDays(h.date, dayOfWeek === 1 ? 0 : 2);
+                    html += `
+                    <div class="bridge-card">
+                        <h3>Langes Wochenende: ${h.name}</h3>
+                        <div class="bridge-stats">
+                            <div class="bridge-stat-box" style="border-color:#fca5a5; background: #fee2e2;">
+                                ${0} Urlaubstage <span>einreichen</span>
+                            </div>
+                            <div class="bridge-stat-box" style="border-color:#86efac; background: #dcfce7;">
+                                ${3} freie Tage <span>am Stück genießen</span>
+                            </div>
+                        </div>
+                        <div class="bridge-dates">
+                            🏝️ Frei von <strong>${formatD(freeStart)} bis ${formatD(freeEnd)}</strong><br>
+                            👉 Feiertag fällt auf einen ${dayOfWeek === 1 ? 'Montag' : 'Freitag'}!
+                        </div>
+                    </div>`;
+                }
+
                 if (dayOfWeek === 2 || dayOfWeek === 4) {
                     // Tuesday or Thursday holiday -> 1 day off = 4 days free
                     const takeOffDate = addDays(h.date, dayOfWeek === 2 ? -1 : 1);
@@ -267,7 +289,7 @@
                     
                     html += `
                     <div class="bridge-card">
-                        <h3>Rund um ${h.name}</h3>
+                        <h3>Klassischer Fenstertag: ${h.name}</h3>
                         <div class="bridge-stats">
                             <div class="bridge-stat-box" style="border-color:#fca5a5; background: #fee2e2;">
                                 ${1} Urlaubstag <span>einreichen</span>
@@ -279,6 +301,29 @@
                         <div class="bridge-dates">
                             🏝️ Frei von <strong>${formatD(freeStart)} bis ${formatD(freeEnd)}</strong><br>
                             👉 Nimm frei am: ${formatD(takeOffDate)}
+                        </div>
+                    </div>`;
+                }
+
+                if (dayOfWeek === 3) {
+                    // Wednesday holiday -> 2 days off = 5 days free
+                    const freeStart = addDays(h.date, -3); // previous weekend
+                    const freeEnd = addDays(h.date, 4); // next weekend
+                    
+                    html += `
+                    <div class="bridge-card">
+                        <h3>Wochenmitte-Hack: ${h.name}</h3>
+                        <div class="bridge-stats">
+                            <div class="bridge-stat-box" style="border-color:#fca5a5; background: #fee2e2;">
+                                ${2} Urlaubstage <span>einreichen</span>
+                            </div>
+                            <div class="bridge-stat-box" style="border-color:#86efac; background: #dcfce7;">
+                                ${5} freie Tage <span>am Stück genießen</span>
+                            </div>
+                        </div>
+                        <div class="bridge-dates">
+                            🏝️ Frei von <strong>${formatD(addDays(h.date, -2))} bis ${formatD(addDays(h.date, 2))}</strong> (inkl. ein Wochenende)<br>
+                            👉 Nimm 2 Tage frei: Mo+Di <strong>oder</strong> Do+Fr
                         </div>
                     </div>`;
                 }

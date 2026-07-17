@@ -484,7 +484,6 @@ document.addEventListener('DOMContentLoaded', () => {
   injectBreadcrumbs();
   injectRelatedTools();
   initGehaltsVergleich();
-  injectNewsletterOptIn();
 
   const calcBtn = document.getElementById('calculate');
   if (calcBtn) {
