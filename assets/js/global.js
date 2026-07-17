@@ -4,6 +4,13 @@
    rechnify.at — Global JavaScript Utilities
    ============================================================ */
 
+const RECHNIFY_CONFIG = Object.assign({
+  plausibleDomain: 'rechnify.at',
+  ga4Id: '',
+  adsenseSlotInArticle: '',
+  adsenseClient: 'ca-pub-5052220565736445'
+}, window.RECHNIFY_CONFIG || {});
+
 // --- Dark Mode ---
 const DARK_MODE_KEY = 'rechnify.darkMode';
 
@@ -211,6 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initFaqAccordion();
   setActiveNavLink();
   initCountryToggle();
+  initAnalytics();
+  registerServiceWorker();
+  injectHowToSchema();
 
   const darkModeToggle = document.getElementById('darkModeToggle');
   if (darkModeToggle) darkModeToggle.addEventListener('click', toggleDarkMode);
@@ -297,9 +307,12 @@ function injectRelatedTools() {
 
   const links = [
     { text: '➔ Brutto-Netto Gehaltsrechner', href: `${lang}/finanzen/gehaltsrechner.html` },
+    { text: '➔ AT vs DE Vergleich 2026', href: `/finanzen/brutto-netto-oesterreich-vs-deutschland.html` },
     { text: '➔ Überstundenrechner', href: `${lang}/arbeitszeit/ueberstundenrechner.html` },
     { text: '➔ Stundenlohnrechner', href: `${lang}/arbeitszeit/stundenlohn-rechner.html` },
-    { text: '➔ Pendlerrechner', href: `${lang}/finanzen/pendlerrechner.html` }
+    { text: '➔ Pendlerrechner', href: `${lang}/finanzen/pendlerrechner.html` },
+    { text: '➔ MwSt-Rechner', href: `${lang}/finanzen/mwst-rechner.html` },
+    { text: '➔ Gehaltserhöhung', href: `${lang}/finanzen/gehaltserhoehung-rechner.html` }
   ];
 
   const ul = document.createElement('ul');
@@ -499,64 +512,129 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => calcBtn.click(), 100);
   }
 
-  // Inject Share & Print Buttons into result box if present
-  const resultBoxes = document.querySelectorAll('.result-box');
-  resultBoxes.forEach(box => {
-    if (!box.querySelector('.share-btn')) {
-      // Action Container
-      const actionDiv = document.createElement('div');
-      actionDiv.style.display = 'flex';
-      actionDiv.style.gap = '8px';
-      actionDiv.style.marginTop = '24px';
-      actionDiv.style.flexWrap = 'wrap';
+  // Inject Share / Bookmark / Print / Ad under result
+  document.querySelectorAll('.result-box').forEach((box) => {
+    if (box.querySelector('.share-btn')) return;
 
-      // Advanced Social Share Buttons
-      const shareUrl = encodeURIComponent(window.location.href);
-      const shareText = encodeURIComponent(document.title + ' – Schau dir das mal an:');
+    const actionDiv = document.createElement('div');
+    actionDiv.className = 'result-actions';
+    actionDiv.style.cssText = 'display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;';
 
-      const socialHTML = `
-        <div style="width: 100%; display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; justify-content: center;">
-          <a href="whatsapp://send?text=${shareText}%20${shareUrl}" target="_blank" rel="noopener" class="btn" style="flex:1; background:#25D366; color:#fff; border:none; display:flex; align-items:center; justify-content:center; gap:6px; min-width:120px;">
-            <span style="font-size:1.2em;">💬</span> WhatsApp
-          </a>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noopener" class="btn" style="flex:1; background:#1877F2; color:#fff; border:none; display:flex; align-items:center; justify-content:center; gap:6px; min-width:120px;">
-            <span style="font-size:1.2em;">📘</span> Facebook
-          </a>
-          <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}" target="_blank" rel="noopener" class="btn" style="flex:1; background:#000000; color:#fff; border:none; display:flex; align-items:center; justify-content:center; gap:6px; min-width:120px;">
-            <span style="font-size:1.2em;">𝕏</span> Twitter
-          </a>
-          <a href="https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareText}" target="_blank" rel="noopener" class="btn" style="flex:1; background:#0A66C2; color:#fff; border:none; display:flex; align-items:center; justify-content:center; gap:6px; min-width:120px;">
-            <span style="font-size:1.2em;">💼</span> LinkedIn
-          </a>
-          <a href="mailto:?subject=${shareText}&body=${shareUrl}" class="btn" style="flex:1; background:var(--color-ink-3); color:#fff; border:none; display:flex; align-items:center; justify-content:center; gap:6px; min-width:120px;">
-            <span style="font-size:1.2em;">✉️</span> E-Mail
-          </a>
-        </div>
-      `;
-      
-      const socialWrapper = document.createElement('div');
-      socialWrapper.style.width = '100%';
-      socialWrapper.innerHTML = socialHTML;
-      actionDiv.appendChild(socialWrapper);
+    const shareUrl = window.location.href;
+    const shareText = document.title + ' – berechnet mit rechnify.at';
 
-      // Print Button
-      const printBtn = document.createElement('button');
-      printBtn.className = 'btn print-btn';
-      printBtn.style.flex = '1';
-      printBtn.style.backgroundColor = 'var(--color-ink-2)';
-      printBtn.style.color = '#fff';
-      printBtn.style.display = 'flex';
-      printBtn.style.alignItems = 'center';
-      printBtn.style.justifyContent = 'center';
-      printBtn.style.gap = '8px';
-      printBtn.innerHTML = '<span style="font-size: 18px;">🖨️</span> Als PDF speichern / Drucken';
-      
-      printBtn.addEventListener('click', () => {
-         window.print();
-      });
+    const nativeBtn = document.createElement('button');
+    nativeBtn.type = 'button';
+    nativeBtn.className = 'btn share-btn';
+    nativeBtn.textContent = 'Teilen';
+    nativeBtn.style.cssText = 'flex:1;min-width:120px;';
+    nativeBtn.addEventListener('click', async () => {
+      if (navigator.share) {
+        try { await navigator.share({ title: document.title, text: shareText, url: shareUrl }); return; } catch (e) {}
+      }
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        nativeBtn.textContent = 'Link kopiert';
+        setTimeout(() => { nativeBtn.textContent = 'Teilen'; }, 1600);
+      } catch (e) {
+        window.prompt('Link kopieren:', shareUrl);
+      }
+    });
 
-      actionDiv.appendChild(printBtn);
-      box.appendChild(actionDiv);
-    }
+    const bookmarkBtn = document.createElement('button');
+    bookmarkBtn.type = 'button';
+    bookmarkBtn.className = 'btn';
+    bookmarkBtn.textContent = 'Seite merken';
+    bookmarkBtn.style.cssText = 'flex:1;min-width:120px;';
+    bookmarkBtn.addEventListener('click', () => {
+      const tip = 'Lesezeichen: Cmd/Ctrl+D — oder diesen Link speichern.';
+      try {
+        localStorage.setItem('rechnify.bookmarkHint', shareUrl);
+      } catch (e) {}
+      bookmarkBtn.textContent = 'Cmd/Ctrl+D';
+      bookmarkBtn.title = tip;
+      setTimeout(() => { bookmarkBtn.textContent = 'Seite merken'; }, 2200);
+    });
+
+    const printBtn = document.createElement('button');
+    printBtn.type = 'button';
+    printBtn.className = 'btn print-btn';
+    printBtn.textContent = 'Drucken / PDF';
+    printBtn.style.cssText = 'flex:1;min-width:120px;';
+    printBtn.addEventListener('click', () => window.print());
+
+    const wa = document.createElement('a');
+    wa.className = 'btn';
+    wa.href = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+    wa.target = '_blank';
+    wa.rel = 'noopener';
+    wa.textContent = 'WhatsApp';
+    wa.style.cssText = 'flex:1;min-width:120px;text-align:center;';
+
+    actionDiv.append(nativeBtn, bookmarkBtn, printBtn, wa);
+    box.appendChild(actionDiv);
+    injectAdSlot(box);
   });
 });
+
+function initAnalytics() {
+  const cfg = RECHNIFY_CONFIG;
+  if (cfg.plausibleDomain) {
+    const s = document.createElement('script');
+    s.defer = true;
+    s.dataset.domain = cfg.plausibleDomain;
+    s.src = 'https://plausible.io/js/script.js';
+    document.head.appendChild(s);
+  }
+  if (cfg.ga4Id) {
+    const s1 = document.createElement('script');
+    s1.async = true;
+    s1.src = `https://www.googletagmanager.com/gtag/js?id=${cfg.ga4Id}`;
+    document.head.appendChild(s1);
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', cfg.ga4Id, { anonymize_ip: true });
+  }
+}
+
+function registerServiceWorker() {
+  if (!('serviceWorker' in navigator)) return;
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+
+function injectHowToSchema() {
+  if (!document.querySelector('.calc-body') || document.getElementById('howto-schema')) return;
+  const name = document.title.replace(/\s*\|\s*rechnify\.at$/, '').trim();
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: name,
+    description: document.querySelector('meta[name="description"]')?.content || name,
+    step: [
+      { '@type': 'HowToStep', position: 1, name: 'Werte eingeben', text: 'Trage Brutto, Stunden oder Beträge in die Felder ein.' },
+      { '@type': 'HowToStep', position: 2, name: 'Ergebnis prüfen', text: 'Das Netto- bzw. Ergebnis erscheint sofort lokal im Browser.' },
+      { '@type': 'HowToStep', position: 3, name: 'Teilen oder speichern', text: 'Nutze Teilen, Drucken oder setze ein Lesezeichen.' }
+    ]
+  };
+  const script = document.createElement('script');
+  script.id = 'howto-schema';
+  script.type = 'application/ld+json';
+  script.text = JSON.stringify(schema);
+  document.head.appendChild(script);
+}
+
+function injectAdSlot(afterEl) {
+  const slot = RECHNIFY_CONFIG.adsenseSlotInArticle;
+  const client = RECHNIFY_CONFIG.adsenseClient;
+  if (!slot || !client || afterEl.parentElement?.querySelector('.ad-slot-inarticle')) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'ad-slot-inarticle';
+  wrap.style.cssText = 'margin:20px 0;min-height:90px;text-align:center;';
+  wrap.innerHTML = `<ins class="adsbygoogle" style="display:block" data-ad-client="${client}" data-ad-slot="${slot}" data-ad-format="auto" data-full-width-responsive="true"></ins>`;
+  afterEl.insertAdjacentElement('afterend', wrap);
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+}

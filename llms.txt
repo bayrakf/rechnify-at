@@ -1,0 +1,32 @@
+# rechnify.at
+
+> Kostenlose Präzisionsrechner für Österreich und Deutschland. Alle Berechnungen laufen lokal im Browser.
+
+Site: https://rechnify.at/
+Locales: de-AT (root), de-DE (/de/)
+
+## Top tools
+
+- [Brutto-Netto Österreich](https://rechnify.at/finanzen/gehaltsrechner.html): Nettogehalt inkl. 13./14. Gehalt
+- [Brutto-Netto Deutschland](https://rechnify.at/de/finanzen/gehaltsrechner.html): Nettogehalt nach DE-Steuerrecht
+- [AT vs DE Vergleich](https://rechnify.at/finanzen/brutto-netto-oesterreich-vs-deutschland.html): Unterschiede Gehalt & Abzüge
+- [MwSt-Rechner AT](https://rechnify.at/finanzen/mwst-rechner.html)
+- [MwSt-Rechner DE](https://rechnify.at/de/finanzen/mwst-rechner.html)
+- [Überstundenrechner](https://rechnify.at/arbeitszeit/ueberstundenrechner.html)
+- [Stundenlohnrechner](https://rechnify.at/arbeitszeit/stundenlohn-rechner.html)
+- [Kommen-Gehen](https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html)
+- [Pendlerrechner](https://rechnify.at/finanzen/pendlerrechner.html)
+- [Krypto-Steuerrechner](https://rechnify.at/finanzen/kryptosteuerrechner.html)
+
+## Categories
+
+- Finanzen: /finanzen/ and /de/finanzen/
+- Arbeitszeit: /arbeitszeit/ and /de/arbeitszeit/
+- Familie: /familie/ and /de/familie/
+- Mathematik: /mathematik/
+- Alltag: /alltag/
+
+## Optional
+
+- Sitemap: https://rechnify.at/sitemap.xml
+- Privacy: https://rechnify.at/datenschutz.html

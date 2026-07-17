@@ -42,6 +42,7 @@ HIGH_PRIORITY = {
     "de/arbeitszeit/stundenlohn-rechner.html",
     "finanzen/gehaltsrechner.html",
     "de/finanzen/gehaltsrechner.html",
+    "finanzen/brutto-netto-oesterreich-vs-deutschland.html",
 }
 
 LOW_PRIORITY = {
@@ -57,10 +58,12 @@ ADSENSE_SCRIPT = (
     'crossorigin="anonymous"></script>'
 )
 OG_TWITTER = """\
-<meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
-  <meta property="og:image:alt" content="rechnify.at Logo" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />"""
+<meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="rechnify.at – Präzisionsrechner für AT & DE" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://rechnify.at/assets/images/og-share.png" />"""
 
 
 def page_loc(rel: str) -> str:
@@ -191,7 +194,7 @@ def patch_html(path: Path, rel: str) -> bool:
     # Cache-bust shared CSS
     text = re.sub(
         r'/assets/css/global\.css(?:\?v=[^"\']+)?',
-        "/assets/css/global.css?v=2.6",
+        "/assets/css/global.css?v=2.7",
         text,
     )
     text = re.sub(r"/tokens\.css(?:\?v=[^\"'\\s>]+)?", "/tokens.css?v=1.2", text)

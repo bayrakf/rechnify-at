@@ -12,8 +12,6 @@
   <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/" />
   <link rel="alternate" hreflang="x-default" href="https://rechnify.at/" />
 
-
-
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" crossorigin="anonymous"></script>
 
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -24,12 +22,14 @@
   <meta property="og:title" content="rechnify.at – Präzisionsrechner für AT &amp; DE" />
   <meta property="og:description" content="20+ kostenlose Rechner: Brutto-Netto, Überstunden, Krypto-Steuern, Elterngeld und mehr." />
   <meta property="og:url" content="https://rechnify.at/" />
-  <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
-  <meta property="og:image:alt" content="rechnify.at Logo" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="rechnify.at – Präzisionsrechner für AT &amp; DE" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="rechnify.at – Präzisionsrechner für AT &amp; DE" />
   <meta name="twitter:description" content="20+ kostenlose Rechner für Österreich und Deutschland." />
-  <meta name="twitter:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta name="twitter:image" content="https://rechnify.at/assets/images/og-share.png" />
   <meta property="og:locale" content="de_AT" />
   <meta property="og:locale:alternate" content="de_DE" />
   <meta property="og:site_name" content="rechnify.at" />
@@ -47,10 +47,12 @@
   <!-- Fonts: Space Grotesk + Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" /></noscript>
 
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
-  <link rel="stylesheet" href="/assets/css/global.css?v=2.6" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=2.7" />
 
   <style>
     /* Hallmark · macrostructure: Bento Grid · genre: modern-minimal · design-system: design.md · designed-as-app
@@ -485,6 +487,10 @@
 
     <aside class="sidebar-nav" aria-label="Kategorien">
       <h3>Kategorien</h3>
+      <label class="tool-search-wrap" for="toolSearch">
+        <span class="visually-hidden">Rechner suchen</span>
+        <input type="search" id="toolSearch" class="tool-search" placeholder="Rechner suchen…" autocomplete="off" />
+      </label>
       <a href="#finanzen"><span class="icon">💶</span> Finanzen &amp; Steuern</a>
       <a href="#arbeitszeit"><span class="icon">⏰</span> Arbeitszeit</a>
       <a href="#mathematik"><span class="icon">📐</span> Mathematik</a>
@@ -514,6 +520,12 @@
             <div class="tool-card-icon">💶</div>
             <div class="tool-card-title">Brutto-Netto Gehaltsrechner DE</div>
             <div class="tool-card-desc">Nettogehalt nach deutschem Steuerrecht.</div>
+          </a>
+          <a href="/finanzen/brutto-netto-oesterreich-vs-deutschland.html" class="tool-card">
+            <span class="tool-card-badge badge-new">✦ Neu</span>
+            <div class="tool-card-icon">⚖️</div>
+            <div class="tool-card-title">Brutto-Netto AT vs DE 2026</div>
+            <div class="tool-card-desc">Unterschiede Sonderzahlungen, SV und Steuer im Vergleich.</div>
           </a>
           <a href="/finanzen/familienbonus-rechner.html" class="tool-card">
             <span class="tool-card-badge badge-at">🇦🇹 AT</span>
@@ -852,16 +864,20 @@
       document.querySelectorAll('.tool-card').forEach(card => {
         const hasAt = card.querySelector('.badge-at');
         const hasDe = card.querySelector('.badge-de');
+        let hide = false;
         if (hasAt || hasDe) {
-          if (c === 'at' && hasDe && !hasAt) {
-            card.style.display = 'none';
-          } else if (c === 'de' && hasAt && !hasDe) {
-            card.style.display = 'none';
-          } else {
-            card.style.display = '';
-          }
+          if (c === 'at' && hasDe && !hasAt) hide = true;
+          else if (c === 'de' && hasAt && !hasDe) hide = true;
+        }
+        if (hide) {
+          card.style.display = 'none';
+          card.dataset.countryHidden = '1';
+        } else {
+          delete card.dataset.countryHidden;
+          if (card.dataset.searchHidden !== '1') card.style.display = '';
         }
       });
+      if (typeof filterTools === 'function') filterTools();
 
       // 2. Rewrite links dynamically
       document.querySelectorAll('a.tool-card').forEach(link => {
@@ -923,6 +939,39 @@
     setCountry(country, false);
     btnAt.addEventListener('click', () => setCountry('at', true));
     btnDe.addEventListener('click', () => setCountry('de', true));
+
+    /* ── Tool search filter ───────────────────────────────────────── */
+    const toolSearch = document.getElementById('toolSearch');
+    function filterTools() {
+      const q = (toolSearch?.value || '').trim().toLowerCase();
+      document.querySelectorAll('.tool-card').forEach((card) => {
+        if (card.dataset.countryHidden === '1') {
+          card.style.display = 'none';
+          return;
+        }
+        const text = (card.textContent || '').toLowerCase();
+        const match = !q || text.includes(q);
+        if (!match) {
+          card.style.display = 'none';
+          card.dataset.searchHidden = '1';
+        } else {
+          card.style.display = '';
+          delete card.dataset.searchHidden;
+        }
+      });
+      document.querySelectorAll('.category-section').forEach((sec) => {
+        const any = [...sec.querySelectorAll('.tool-card')].some((c) => c.style.display !== 'none');
+        sec.style.display = !q || any ? '' : 'none';
+      });
+      if (typeof organizeGrids === 'function') organizeGrids();
+    }
+    toolSearch?.addEventListener('input', filterTools);
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        toolSearch?.focus();
+      }
+    });
 
     function pickCountryAndScroll(c) {
       setCountry(c, true);
