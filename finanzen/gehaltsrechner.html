@@ -279,8 +279,11 @@
                 <span class="text-muted">- Lohnsteuer:</span>
                 <strong id="resTaxYear" style="color: var(--danger);">-- €</strong>
               </div>
-            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
-              <h3>Detaillierte Jahresabrechnung</h3>
+              <div style="display:flex; justify-content:space-between; margin-top: 12px; padding-top: 8px; border-top: 1px dashed var(--border);">
+                <span><strong>Netto (gesamt pro Jahr):</strong></span>
+                <strong id="resNetYear" class="text-success" style="font-size: 1.2em;">-- €</strong>
+              </div>
+            </div>
 
             <!-- Premium Feature: Dienstgeberkosten -->
             <div style="margin-top: 24px; padding: 16px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 12px;">
@@ -572,7 +575,6 @@
       if (partTimeBox) partTimeBox.innerHTML = partTimeHtml;
 
       document.getElementById('result').classList.remove('hidden');
-      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   </script>
 </body>

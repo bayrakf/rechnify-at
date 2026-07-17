@@ -209,3 +209,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const darkModeToggle = document.getElementById('darkModeToggle');
   if (darkModeToggle) darkModeToggle.addEventListener('click', toggleDarkMode);
 });
+
+
+// Auto-calculate on input change
+document.addEventListener('DOMContentLoaded', () => {
+  const calcBtn = document.getElementById('calculate');
+  if (calcBtn) {
+    // Hide the calculate button visually since it auto-calculates
+    calcBtn.style.display = 'none';
+
+    document.querySelectorAll('.calc-body input, .calc-body select').forEach(el => {
+      el.addEventListener('input', () => {
+        calcBtn.click();
+      });
+    });
+    // Trigger initial calculation
+    setTimeout(() => calcBtn.click(), 100);
+  }
+});
