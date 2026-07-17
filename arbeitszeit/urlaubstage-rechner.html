@@ -222,10 +222,40 @@
           <div class="text-muted text-xs mt-4">Wichtig: In den ersten 6 Monaten des ersten Arbeitsjahres entsteht der Urlaub anteilig (pro Monat). Bei Austritt während des Jahres wird ebenfalls anteilig berechnet.</div>
         </div>
 
+        <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">
+          <h3 style="margin-top: 0; display: flex; align-items: center; gap: 8px;"><span>💸</span> Resturlaub & Auszahlung (Premium)</h3>
+          <p class="text-sm text-muted" style="margin-bottom: 16px;">Wenn du kündigst, muss offener Urlaub ausbezahlt werden (Urlaubsersatzleistung). Finde heraus, wie viel er wert ist.</p>
+          
+          <div class="input-group">
+            <label for="consumedDays">Wie viele Urlaubstage hast du heuer schon verbraucht?</label>
+            <input type="number" id="consumedDays" min="0" value="0" step="0.5" />
+          </div>
+
+          <div class="input-group">
+            <label for="grossSalary">Dein Brutto-Monatsgehalt (€) (optional)</label>
+            <input type="number" id="grossSalary" min="0" placeholder="z.B. 2500" />
+            <div class="text-muted text-xs mt-4">Wird benötigt, um den Euro-Wert deines Resturlaubs zu berechnen.</div>
+          </div>
+        </div>
+
         <div class="result-box" id="resultBox">
-          <div class="result-label" id="resLabel">Dein Urlaubsanspruch beträgt:</div>
+          <div class="result-label" id="resLabel">Dein Gesamt-Urlaubsanspruch:</div>
           <div class="result-value" id="resValue">25 Tage</div>
           <div class="text-muted text-sm mt-8" id="resDetail">bei 5 Wochen für ein volles Urlaubsjahr.</div>
+          
+          <div id="premiumResult" style="margin-top: 24px; padding-top: 24px; border-top: 1px dashed var(--border); display: none; text-align: left;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+              <span style="font-weight: 600; color: var(--text);">Davon offener Resturlaub:</span>
+              <span id="resRemainingDays" style="font-weight: bold; font-size: 1.1em; color: var(--primary);">0 Tage</span>
+            </div>
+            <div id="payoutRow" style="display: flex; justify-content: space-between; padding: 12px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 8px; margin-top: 8px;">
+              <span style="font-weight: 600; color: #2e7d32;">Wert bei Auszahlung (Brutto):</span>
+              <span id="resPayoutValue" style="font-weight: 800; font-size: 1.2em; color: #2e7d32;">-- €</span>
+            </div>
+            <div class="text-muted text-xs mt-8" id="payoutNote" style="display: none;">
+              <strong>Hinweis:</strong> Die Urlaubsersatzleistung wird inklusive der aliquoten Sonderzahlungen (Urlaubs- und Weihnachtsgeld) berechnet. Sie ist jedoch lohnsteuer- und sozialversicherungspflichtig!
+            </div>
+          </div>
         </div>
 
       </div>
@@ -341,9 +371,47 @@
 
         document.getElementById('resValue').textContent = `${totalDays.toString().replace('.', ',')} Tage`;
         document.getElementById('resDetail').textContent = detailText;
+
+        // Premium Feature: Resturlaub & Urlaubsersatzleistung
+        const consumedDaysInput = document.getElementById('consumedDays');
+        const grossSalaryInput = document.getElementById('grossSalary');
+        
+        const consumed = parseFloat(consumedDaysInput.value) || 0;
+        const gross = parseFloat(grossSalaryInput.value) || 0;
+        
+        let remainingDays = totalDays - consumed;
+        if (remainingDays < 0) remainingDays = 0;
+        
+        document.getElementById('resRemainingDays').textContent = `${remainingDays.toString().replace('.', ',')} Tage`;
+        
+        const premiumResult = document.getElementById('premiumResult');
+        const payoutNote = document.getElementById('payoutNote');
+        const resPayoutValue = document.getElementById('resPayoutValue');
+        
+        if (consumed > 0 || gross > 0) {
+          premiumResult.style.display = 'block';
+        } else {
+          premiumResult.style.display = 'none';
+        }
+
+        if (gross > 0 && remainingDays > 0) {
+          // Calculation for AT:
+          // 1 working day = (Gross / 21.66) * (14/12) for a 5-day week.
+          // Or more general: (Gross / (4.33 * daysPerWeek)) * (14/12)
+          const dailyRate = (gross / (4.33 * daysPerWeek)) * (14 / 12);
+          const payoutValue = remainingDays * dailyRate;
+          
+          resPayoutValue.textContent = new Intl.NumberFormat('de-AT', { style: 'currency', currency: 'EUR' }).format(payoutValue);
+          payoutNote.style.display = 'block';
+        } else {
+          resPayoutValue.textContent = '-- €';
+          payoutNote.style.display = 'none';
+        }
       };
 
       // Event Listeners
+      document.getElementById('consumedDays').addEventListener('input', calculate);
+      document.getElementById('grossSalary').addEventListener('input', calculate);
       workdaysSelect.addEventListener('change', calculate);
       
       calcModeSelect.addEventListener('change', (e) => {
