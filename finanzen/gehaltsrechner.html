@@ -260,6 +260,20 @@
               </div>
             </div>
 
+            <!-- Premium Feature: Dienstgeberkosten -->
+            <div style="margin-top: 24px; padding: 16px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 12px;">
+              <h4 style="margin-top: 0; color: #b08d00; display: flex; align-items: center; gap: 8px;"><span>🏢</span> Was du deinen Arbeitgeber wirklich kostest</h4>
+              <p style="font-size: 13px; color: #8f7200; margin-bottom: 12px; line-height: 1.4;">Zusätzlich zu deinem Bruttogehalt zahlt dein Arbeitgeber noch hohe <strong>Lohnnebenkosten</strong> (SV-Dienstgeberanteil, Kommunalsteuer, DB, DZ, Vorsorgekasse). Wichtig für Gehaltsverhandlungen!</p>
+              <div style="display:flex; justify-content:space-between; font-size: 14px;">
+                <span style="color: #b08d00;">Lohnnebenkosten (pro Jahr):</span>
+                <strong id="resLnkYear" style="color: #b08d00;">-- €</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size: 15px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ffe082;">
+                <strong style="color: #b08d00;">Gesamtkosten für den Arbeitgeber:</strong>
+                <strong id="resTotalCostYear" style="color: #b08d00; font-size: 1.1em;">-- €</strong>
+              </div>
+            </div>
+
             <!-- Premium Girokonto Affiliate Box -->
             <div class="affiliate-banner">
               <div class="icon">💳</div>
@@ -461,6 +475,23 @@
       const totalTaxYear = (taxMonthly * 12) + (taxSonder * 2);
       const totalNetYear = totalGrossYear - totalSvYear - totalTaxYear;
 
+      // Premium Feature: Dienstgeberkosten Logic
+      let svDgMonthly = grossMonthly * 0.2103;
+      if (grossMonthly > BBG_MONTHLY) svDgMonthly = BBG_MONTHLY * 0.2103;
+      let otherLnkMonthly = grossMonthly * 0.0859; // DB 3.7%, DZ 0.36%, KommSt 3.0%, MVK 1.53%
+      let totalLnkMonthly = svDgMonthly + otherLnkMonthly;
+
+      let totalLnkSonder = 0;
+      if (hasSonder) {
+         let svDgSonder = grossMonthly * 0.2053; // SZ SV-DG is ~0.5% lower
+         if (grossMonthly > BBG_MONTHLY) svDgSonder = BBG_MONTHLY * 0.2053;
+         let otherLnkSonder = grossMonthly * 0.0859;
+         totalLnkSonder = (svDgSonder + otherLnkSonder) * 2;
+      }
+      
+      const lnkYearly = (totalLnkMonthly * 12) + totalLnkSonder;
+      const totalCostYearly = totalGrossYear + lnkYearly;
+
       document.getElementById('resNetMonthly').textContent = netMonthly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       
       if (hasSonder) {
@@ -474,6 +505,9 @@
       document.getElementById('resSvYear').textContent = '- ' + totalSvYear.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       document.getElementById('resTaxYear').textContent = '- ' + totalTaxYear.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       document.getElementById('resNetYear').textContent = totalNetYear.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+
+      document.getElementById('resLnkYear').textContent = '+ ' + lnkYearly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resTotalCostYear').textContent = totalCostYearly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
 
       document.getElementById('result').classList.remove('hidden');
       document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
