@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leasingrechner online – Leasingrate berechnen | rechnify.at</title>
+  <meta name="description" content="Kostenloser Leasingrechner für (Deutschland). Berechne deine monatliche Leasingrate, Gesamtkosten und Zinsen für dein neues Auto." />
+  <link rel="canonical" href="https://rechnify.at/de/finanzen/leasingrechner.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/leasingrechner.html" />
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" crossorigin="anonymous"></script>
+
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Leasingrechner online | rechnify.at" />
+  <meta property="og:description" content="Berechne schnell und einfach deine monatliche Leasingrate." />
+  <meta property="og:url" content="https://rechnify.at/de/finanzen/leasingrechner.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/images/favicon-512x512.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--color-ink); }
+    .input-group input, .input-group select { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--color-rule); 
+      border-radius: 10px; 
+      background: var(--color-paper); 
+      color: var(--color-ink); 
+      font-size: 16px; 
+    }
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--color-paper-2); 
+      border: 1px solid var(--color-rule); 
+      border-radius: 12px; 
+      padding: 24px; 
+    }
+    
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--color-rule);
+    }
+    .result-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .result-item.highlight { font-weight: bold; font-size: 1.3em; color: var(--color-primary); border-bottom: none; }
+    .result-item.success { font-weight: bold; font-size: 1.1em; color: var(--color-success); }
+    .result-item.muted { color: var(--color-ink-3); font-size: 0.9em; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Leasingrechner",
+    "description": "Rechner zur Berechnung der Leasingrate für Autos und andere Güter.",
+    "url": "https://rechnify.at/de/finanzen/leasingrechner.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de_DE",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify Logo" width="36" height="36" />
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/finanzen/gehaltsrechner.html">💰 Finanzen</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill " data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill active" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/#finanzen">Finanzen</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Leasingrechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Leasingrechner (Deutschland)</h1>
+      <p class="subtitle">Berechne deine monatliche Auto-Leasingrate und die wahren Gesamtkosten.</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="kaufpreis">Kaufpreis / Anschaffungswert (€)</label>
+            <input type="number" id="kaufpreis" min="0" step="100" placeholder="z. B. 30000" value="30000" />
+          </div>
+          
+          <div class="input-group">
+            <label for="anzahlung">Anzahlung / Sonderzahlung (€)</label>
+            <input type="number" id="anzahlung" min="0" step="100" placeholder="z. B. 5000" value="5000" />
+          </div>
+        </div>
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="laufzeit">Laufzeit (in Monaten)</label>
+            <input type="number" id="laufzeit" min="1" max="120" step="1" placeholder="z. B. 36" value="36" />
+          </div>
+          
+          <div class="input-group">
+            <label for="restwert">Kalkulierter Restwert (€)</label>
+            <input type="number" id="restwert" min="0" step="100" placeholder="z. B. 15000" value="15000" />
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <label for="zins">Effektiver Jahreszins (%)</label>
+            <input type="number" id="zins" min="0" step="0.1" placeholder="z. B. 4.9" value="4.9" />
+          </div>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <h3 style="margin-top:0; margin-bottom:16px; color:var(--color-primary);">Ergebnis</h3>
+          
+          <div class="result-item highlight">
+            <span>Monatliche Leasingrate</span>
+            <span id="resRate">-- €</span>
+          </div>
+          
+          <div class="result-item">
+            <span>Summe aller Leasingraten</span>
+            <span id="resSumRates">-- €</span>
+          </div>
+          <div class="result-item success" style="margin-top:8px;">
+            <span>Gesamtkosten (inkl. Kauf)</span>
+            <span id="resTotal">-- €</span>
+          </div>
+          <div class="result-item muted">
+            <span>Davon Zinsen / Gebühren</span>
+            <span id="resCosts">-- €</span>
+          </div>
+          <div class="text-muted text-xs mt-16 text-center">
+            Hinweis: Alle Angaben sind Schätzwerte und ohne Gewähr. Leasingraten werden i.d.R. vorschüssig berechnet.
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Wie funktioniert der Leasingrechner?</h2>
+      <p>Mit unserem kostenlosen Leasingrechner kannst du die monatliche Belastung für dein Traumauto berechnen. Gib einfach den Kaufpreis, deine geplante Anzahlung (Leasingsonderzahlung), den Restwert am Ende der Laufzeit sowie den Zinssatz ein.</p>
+      
+      <h3>Restwertleasing vs. Kilometerleasing</h3>
+      <ul>
+        <li><strong>Restwertleasing:</strong> Hier wird zu Beginn ein voraussichtlicher Restwert des Fahrzeugs vereinbart. Ist das Auto am Ende der Laufzeit weniger wert (z. B. wegen Marktschwankungen oder Kratzern), musst du die Differenz nachzahlen.</li>
+        <li><strong>Kilometerleasing:</strong> Du vereinbarst eine feste Laufleistung (z. B. 15.000 km pro Jahr). Fährst du mehr, zahlst du pro Mehrkilometer drauf. Fährst du weniger, bekommst du oft Geld zurück. Das Risiko des Wertverlustes liegt beim Leasinggeber.</li>
+      </ul>
+
+      
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const inputs = ['kaufpreis', 'anzahlung', 'laufzeit', 'restwert', 'zins'].map(id => document.getElementById(id));
+      
+      const formatEuro = (num) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(num);
+      
+      const calculate = () => {
+        const kaufpreis = parseFloat(inputs[0].value) || 0;
+        const anzahlung = parseFloat(inputs[1].value) || 0;
+        const monate = parseInt(inputs[2].value) || 0;
+        const restwert = parseFloat(inputs[3].value) || 0;
+        const zinsPA = parseFloat(inputs[4].value) || 0;
+        
+        if(monate <= 0) return;
+
+        let rate = 0;
+        
+        if (zinsPA === 0) {
+            rate = (kaufpreis - anzahlung - restwert) / monate;
+        } else {
+            // Effektiver Jahreszins -> monatlicher Zinsfaktor
+            const q_y = 1 + (zinsPA / 100);
+            const q = Math.pow(q_y, 1/12);
+            
+            const L = kaufpreis - anzahlung;
+            
+            // Vorschüssige Annuität
+            // L - R/(q^n) = r * (q^n - 1) / (q^(n) * (q - 1)) * q
+            // r = (L - R/(q^n)) / ( (q^n - 1) / (q^(n-1) * (q - 1)) )
+            
+            const r_pv = restwert / Math.pow(q, monate);
+            const barwert = L - r_pv;
+            
+            const rentenbarwertfaktor = (Math.pow(q, monate) - 1) / (Math.pow(q, monate - 1) * (q - 1));
+            rate = barwert / rentenbarwertfaktor;
+        }
+        
+        if(rate < 0) rate = 0;
+
+        const sumRates = rate * monate;
+        
+        
+        const total = anzahlung + sumRates + restwert;
+        const zusatzkosten = total - kaufpreis;
+    
+
+        document.getElementById('resRate').textContent = formatEuro(rate);
+        document.getElementById('resSumRates').textContent = formatEuro(sumRates);
+        document.getElementById('resTotal').textContent = formatEuro(total);
+        document.getElementById('resCosts').textContent = formatEuro(zusatzkosten);
+        
+        
+      };
+
+      inputs.forEach(el => el.addEventListener('input', calculate));
+      calculate();
+    });
+  </script>
+</body>
+</html>
