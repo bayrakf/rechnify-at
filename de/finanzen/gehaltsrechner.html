@@ -274,6 +274,31 @@
               </div>
             </div>
 
+            <!-- Premium Insight: Ranking -->
+            <div id="salaryRankingInsight" class="premium-insight" style="display: none; margin-top: 24px; padding: 16px; background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 1px solid #fde047; border-radius: 12px;">
+              <h4 style="margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>📊</span> Premium-Wissen: Gehalts-Ranking DE</h4>
+              <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #854d0e;">
+                <span id="salaryRankingText"></span>
+              </p>
+            </div>
+
+            <!-- Premium Insight: Teilzeit-Simulator -->
+            <div id="partTimeSimulator" class="premium-insight" style="display: none; margin-top: 16px; padding: 16px; background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border: 1px solid #5eead4; border-radius: 12px;">
+              <h4 style="margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>⚖️</span> Premium-Wissen: Teilzeit-Simulator</h4>
+              <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #0f766e;">
+                Lohnt sich Teilzeit? Das deutsche Steuersystem (Steuerprogression) "bestraft" Vollzeit und "belohnt" Teilzeit. Hier die Berechnung, wenn das obige dein Vollzeit-Gehalt (40h) ist:<br/><br/>
+                <span id="partTimeText"></span>
+              </p>
+            </div>
+
+            <!-- Premium Insight: Kaufkraft Schock -->
+            <div id="inflationInsight" class="premium-insight" style="display: none; margin-top: 16px; padding: 16px; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border: 1px solid #fca5a5; border-radius: 12px;">
+              <h4 style="margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>📉</span> Premium-Wissen: Inflations-Schock</h4>
+              <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #991b1b;">
+                <span id="inflationText"></span>
+              </p>
+            </div>
+
             <!-- Premium Girokonto Affiliate Box -->
             <div class="affiliate-banner">
               <div class="icon">💳</div>
@@ -392,8 +417,7 @@
   <script>
     'use strict';
 
-    document.getElementById('calculate').addEventListener('click', () => {
-      const grossMonthly = parseFloat(document.getElementById('grossMonthly').value) || 0;
+    function calcTaxesDE(grossMonthly) {
       const taxClass = document.getElementById('taxClass').value;
       const churchTaxInput = document.getElementById('churchTax').value === 'ja';
       
@@ -443,14 +467,88 @@
       const netMonthly = grossMonthly - svMonthly - taxMonthly - churchTaxMonthly;
       const deductions = svMonthly + taxMonthly + churchTaxMonthly;
 
-      document.getElementById('resNetMonthly').textContent = netMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resDeductionsMonthly').textContent = deductions.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      return { netMonthly, deductions, taxMonthly, churchTaxMonthly, svMonthly };
+    }
+
+    document.getElementById('calculate').addEventListener('click', () => {
+      const grossMonthly = parseFloat(document.getElementById('grossMonthly').value) || 0;
+      if (!grossMonthly) {
+        document.getElementById('result').classList.add('hidden');
+        return;
+      }
+
+      const res = calcTaxesDE(grossMonthly);
+
+      document.getElementById('resNetMonthly').textContent = res.netMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resDeductionsMonthly').textContent = res.deductions.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       
       document.getElementById('resGrossMonthlyDetail').textContent = grossMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resTaxMonthly').textContent = '- ' + taxMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resChurchTaxMonthly').textContent = '- ' + churchTaxMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resSvMonthly').textContent = '- ' + svMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resNetMonthlyDetail').textContent = netMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resTaxMonthly').textContent = '- ' + res.taxMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resChurchTaxMonthly').textContent = '- ' + res.churchTaxMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resSvMonthly').textContent = '- ' + res.svMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resNetMonthlyDetail').textContent = res.netMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+
+      // --- Premium Insight: Ranking ---
+      const rankingInsight = document.getElementById('salaryRankingInsight');
+      const rankingText = document.getElementById('salaryRankingText');
+      // DE Median is around 4100
+      if (grossMonthly > 0) {
+        let text = "";
+        const medianDE = 4100;
+        if (grossMonthly < medianDE) {
+          const diff = medianDE - grossMonthly;
+          text = `Dein Gehalt liegt aktuell unter dem deutschen Durchschnitt (Median-Brutto für Vollzeit: ca. <strong>4.100 €</strong>). Dir fehlen noch <strong>${diff.toLocaleString('de-DE')} €</strong> bis zur "Mitte" der Gesellschaft. Ein guter Grund für die nächste Gehaltsverhandlung!`;
+        } else if (grossMonthly >= medianDE && grossMonthly < 6000) {
+          text = `Stark! Du verdienst mehr als der Median (Mitte) der Deutschen (Vollzeit: ca. <strong>4.100 €</strong>). Du gehörst zur soliden Mittel- bis Oberschicht.`;
+        } else if (grossMonthly >= 6000 && grossMonthly < 8000) {
+          text = `Respekt! Mit diesem Gehalt gehörst du zu den absoluten Top-Verdienern (Top 10-15%) in Deutschland. Dein Einkommen ist weit überdurchschnittlich.`;
+        } else {
+          text = `Wow. Du verdienst mehr als ca. 95% der Angestellten in Deutschland. Du zählst zur absoluten Einkommens-Elite.`;
+        }
+        rankingText.innerHTML = text;
+        rankingInsight.style.display = 'block';
+      } else {
+        rankingInsight.style.display = 'none';
+      }
+
+      // --- Premium Insight: Teilzeit-Simulator ---
+      const partTimeSimulator = document.getElementById('partTimeSimulator');
+      const partTimeText = document.getElementById('partTimeText');
+      if (grossMonthly > 1500) {
+        // Assume 40h is 100%
+        const gross30h = grossMonthly * 0.75;
+        const res30h = calcTaxesDE(gross30h);
+        
+        const gross20h = grossMonthly * 0.50;
+        const res20h = calcTaxesDE(gross20h);
+
+        const perc30h = ((res30h.netMonthly / res.netMonthly) * 100).toFixed(1);
+        const perc20h = ((res20h.netMonthly / res.netMonthly) * 100).toFixed(1);
+
+        partTimeText.innerHTML = `
+          <strong>30 Stunden (75% Arbeit):</strong> Du verdienst <strong>${res30h.netMonthly.toLocaleString('de-DE', {minimumFractionDigits:0, maximumFractionDigits:0})} € netto</strong>.<br/>
+          <em>Aha-Effekt:</em> Du arbeitest 25% weniger, verlierst aber nur <strong>${(100 - perc30h).toFixed(1)}%</strong> von deinem Netto! Du behältst ${perc30h}% deines Geldes.<br/><br/>
+          
+          <strong>20 Stunden (50% Arbeit):</strong> Du verdienst <strong>${res20h.netMonthly.toLocaleString('de-DE', {minimumFractionDigits:0, maximumFractionDigits:0})} € netto</strong>.<br/>
+          <em>Aha-Effekt:</em> Du arbeitest nur die Hälfte, behältst aber stolze <strong>${perc20h}%</strong> deines Nettos!
+        `;
+        partTimeSimulator.style.display = 'block';
+      } else {
+        partTimeSimulator.style.display = 'none';
+      }
+
+      // --- Premium Insight: Inflations-Schock ---
+      const inflationInsight = document.getElementById('inflationInsight');
+      const inflationText = document.getElementById('inflationText');
+      if (res.netMonthly > 0) {
+        // 2.5% inflation per year for 5 years
+        const purchasingPower = res.netMonthly * Math.pow(1 - 0.025, 5);
+        const lost = res.netMonthly - purchasingPower;
+        inflationText.innerHTML = `Wenn du in den nächsten 5 Jahren keine Gehaltserhöhung bekommst, ist dein aktuelles Netto durch die Inflation (EZB-Ziel 2,5%) in 5 Jahren nur noch ca. <strong>${purchasingPower.toLocaleString('de-DE', {maximumFractionDigits:0})} €</strong> wert. Du verlierst schleichend <strong>${lost.toLocaleString('de-DE', {maximumFractionDigits:0})} €</strong> an Kaufkraft pro Monat!`;
+        inflationInsight.style.display = 'block';
+      } else {
+        inflationInsight.style.display = 'none';
+      }
 
       document.getElementById('result').classList.remove('hidden');
     });

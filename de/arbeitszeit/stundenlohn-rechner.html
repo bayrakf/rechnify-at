@@ -256,6 +256,14 @@
               </div>
             </div>
             <div class="info-box" id="infoBox"></div>
+
+            <!-- Premium Insight: Freelancer Check -->
+            <div id="freelancerInsight" class="premium-insight" style="display: none; margin-top: 24px; padding: 16px; background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border: 1px solid #5eead4; border-radius: 12px;">
+              <h4 style="margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>💼</span> Premium-Wissen: Der Freelancer-Check (DE)</h4>
+              <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #0f766e;">
+                <span id="freelancerText"></span>
+              </p>
+            </div>
           </div>
 
         </div>
@@ -507,6 +515,19 @@
       }
 
       document.getElementById('infoBox').innerHTML = info;
+
+      // Premium Insight: Freelancer Check
+      const freelancerInsight = document.getElementById('freelancerInsight');
+      const freelancerText = document.getElementById('freelancerText');
+      if (hourlyBrutto > 0) {
+        // In DE Freelancer-Faktor often 2.5 due to health insurance & trade tax
+        const freelanceRate = hourlyBrutto * 2.5;
+        freelancerText.innerHTML = `Überlegst du, dich in Deutschland selbstständig zu machen? Um dein aktuelles Angestellten-Niveau zu halten (inkl. Krankenversicherung, Urlaub, Rente, Steuern), müsstest du als Freelancer <strong>mindestens ${fmt(freelanceRate)} pro Stunde</strong> von deinen Kunden verlangen (Faktor 2,5).`;
+        freelancerInsight.style.display = 'block';
+      } else {
+        freelancerInsight.style.display = 'none';
+      }
+
       document.getElementById('result').style.display = '';
     }
   </script>
