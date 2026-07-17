@@ -181,59 +181,6 @@ function updateCountryUI(pills, country) {
   });
 }
 
-// --- Cookie Consent Banner ---
-const COOKIE_CONSENT_KEY = 'rechnify.cookie_consent';
-
-function initCookieBanner() {
-  const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
-  if (!consent) {
-    showCookieBanner();
-  }
-}
-
-function showCookieBanner() {
-  const bannerHtml = `
-    <div class="cookie-banner" id="cookieBanner">
-      <div class="cookie-banner-content">
-        <div class="cookie-banner-text">
-          <strong style="font-size: 16px; margin-bottom: 4px; display: block;">Privatsphäre & Cookies</strong>
-          Wir verwenden technisch notwendige Cookies sowie Technologien für anonyme Auswertungen und die Darstellung relevanter Angebote. Durch Klick auf „Alle akzeptieren“ stimmst du dem zu. Details findest du in der <a href="/datenschutz.html" style="color: var(--primary); text-decoration: underline;">Datenschutzerklärung</a>.
-        </div>
-        <div class="cookie-banner-actions">
-          <button class="btn" id="btnAcceptCookies">Alle akzeptieren</button>
-          <button class="btn btn-secondary" style="background: var(--secondary); color: white;" id="btnDeclineCookies">Nur essenzielle</button>
-        </div>
-      </div>
-    </div>
-  `;
-  document.body.insertAdjacentHTML('beforeend', bannerHtml);
-  
-  // Animate in
-  setTimeout(() => {
-    document.getElementById('cookieBanner').classList.add('show');
-  }, 100);
-
-  document.getElementById('btnAcceptCookies').addEventListener('click', () => {
-    localStorage.setItem(COOKIE_CONSENT_KEY, 'all');
-    closeCookieBanner();
-  });
-
-  document.getElementById('btnDeclineCookies').addEventListener('click', () => {
-    localStorage.setItem(COOKIE_CONSENT_KEY, 'essential');
-    closeCookieBanner();
-  });
-}
-
-function closeCookieBanner() {
-  const banner = document.getElementById('cookieBanner');
-  if (banner) {
-    banner.classList.remove('show');
-    setTimeout(() => {
-      banner.remove();
-    }, 400); // Wait for transition
-  }
-}
-
 // --- Init all ---
 document.addEventListener('DOMContentLoaded', () => {
   initDarkMode();
@@ -241,7 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initFaqAccordion();
   setActiveNavLink();
   initCountryToggle();
-  initCookieBanner();
 
   const darkModeToggle = document.getElementById('darkModeToggle');
   if (darkModeToggle) darkModeToggle.addEventListener('click', toggleDarkMode);
