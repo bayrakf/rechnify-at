@@ -69,6 +69,14 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://rechnify.at/arbeitszeit/teilzeitrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/teilzeitrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/teilzeitrechner.html"/>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://rechnify.at/arbeitszeit/ueberstundenrechner.html</loc>
     <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/ueberstundenrechner.html"/>
     <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/ueberstundenrechner.html"/>
@@ -111,6 +119,14 @@
     <lastmod>2026-07-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/de/arbeitszeit/teilzeitrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/de/arbeitszeit/teilzeitrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/de/arbeitszeit/teilzeitrechner.html"/>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://rechnify.at/de/arbeitszeit/ueberstundenrechner.html</loc>
@@ -548,6 +564,14 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://rechnify.at/de/finanzen/etf-sparplan-rechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/de/finanzen/etf-sparplan-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/de/finanzen/etf-sparplan-rechner.html"/>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://rechnify.at/de/finanzen/gehalt/architekt-gehalt-netto.html</loc>
     <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/de/finanzen/gehalt/architekt-gehalt-netto.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/de/finanzen/gehalt/architekt-gehalt-netto.html"/>
@@ -698,6 +722,14 @@
     <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/kryptosteuerrechner.html"/>
     <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/kryptosteuerrechner.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/kryptosteuerrechner.html"/>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/de/finanzen/leasingrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/de/finanzen/leasingrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/de/finanzen/leasingrechner.html"/>
     <lastmod>2026-07-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1155,6 +1187,14 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://rechnify.at/finanzen/etf-sparplan-rechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/etf-sparplan-rechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/etf-sparplan-rechner.html"/>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://rechnify.at/finanzen/familienbonus-rechner.html</loc>
     <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/familienbonus-rechner.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/familienbonus-rechner.html"/>
@@ -1305,6 +1345,14 @@
     <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/kryptosteuerrechner.html"/>
     <xhtml:link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/kryptosteuerrechner.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/kryptosteuerrechner.html"/>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rechnify.at/finanzen/leasingrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/leasingrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/leasingrechner.html"/>
     <lastmod>2026-07-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
