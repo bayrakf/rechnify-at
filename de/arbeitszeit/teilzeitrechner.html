@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teilzeitrechner (Deutschland) – Gehalt bei Stundenreduzierung berechnen | rechnify.at</title>
+  <meta name="description" content="Kostenloser Teilzeitrechner für (Deutschland). Finde heraus, wie viel Netto dir bleibt, wenn du deine Arbeitszeit (Stunden) reduzierst." />
+  <link rel="canonical" href="https://rechnify.at/de/arbeitszeit/teilzeitrechner.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/teilzeitrechner.html" />
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" crossorigin="anonymous"></script>
+
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Teilzeitrechner (Deutschland) | rechnify.at" />
+  <meta property="og:description" content="Finde heraus, wie viel Netto dir bleibt, wenn du deine Arbeitszeit reduzierst." />
+  <meta property="og:url" content="https://rechnify.at/de/arbeitszeit/teilzeitrechner.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/images/favicon-512x512.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+
+  <style>
+    .calc-body { padding: 24px; }
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--color-ink); }
+    .input-group input, .input-group select { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--color-rule); 
+      border-radius: 10px; 
+      background: var(--color-paper); 
+      color: var(--color-ink); 
+      font-size: 16px; 
+    }
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--color-paper-2); 
+      border: 1px solid var(--color-rule); 
+      border-radius: 12px; 
+      padding: 24px; 
+    }
+    
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--color-rule);
+    }
+    .result-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .result-item.highlight { font-weight: bold; font-size: 1.3em; color: var(--color-primary); border-bottom: none; }
+    .result-item.success { font-weight: bold; font-size: 1.1em; color: var(--color-success); }
+    .result-item.muted { color: var(--color-ink-3); font-size: 0.9em; }
+    
+    .comparison-box {
+        background: #e0f2fe;
+        border: 1px solid #bae6fd;
+        border-radius: 12px;
+        padding: 16px;
+        margin-top: 24px;
+        color: #0369a1;
+    }
+    .dark-theme .comparison-box {
+        background: rgba(14, 165, 233, 0.1);
+        border: 1px solid rgba(14, 165, 233, 0.2);
+        color: #38bdf8;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify Logo" width="36" height="36" />
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/finanzen/gehaltsrechner.html">💰 Finanzen</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill " data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill active" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/#arbeitszeit">Arbeitszeit</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Teilzeitrechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Teilzeitrechner (Deutschland)</h1>
+      <p class="subtitle">Wie viel Gehalt verlierst du bei Teilzeit? Berechne deinen neuen Netto-Lohn.</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="brutto">Aktuelles Bruttogehalt (€ / Monat)</label>
+            <input type="number" id="brutto" min="0" step="100" placeholder="z. B. 3500" value="3500" />
+          </div>
+        </div>
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="stunden_alt">Bisherige Wochenstunden</label>
+            <input type="number" id="stunden_alt" min="1" max="60" step="0.5" placeholder="z. B. 38.5" value="38.5" />
+          </div>
+          
+          <div class="input-group">
+            <label for="stunden_neu">Neue Wochenstunden (Teilzeit)</label>
+            <input type="number" id="stunden_neu" min="1" max="60" step="0.5" placeholder="z. B. 30" value="30" />
+          </div>
+        </div>
+
+        
+
+        <div class="result-box" id="resultBox">
+          <h3 style="margin-top:0; margin-bottom:16px; color:var(--color-primary);">Vergleich</h3>
+          
+          <div class="result-item">
+            <span>Bisheriges Netto (Vollzeit)</span>
+            <span id="resNettoAlt">-- €</span>
+          </div>
+          <div class="result-item highlight">
+            <span>Neues Netto (Teilzeit)</span>
+            <span id="resNettoNeu">-- €</span>
+          </div>
+          
+          <div id="comparisonBox" class="comparison-box">
+              <h4 style="margin-top:0; margin-bottom:8px;">Fazit</h4>
+              <p id="resFazit" style="margin:0; font-size:15px;"></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Lohnt sich Teilzeit?</h2>
+      <p>Oft verzichten Arbeitnehmer auf Gehalt, um mehr Freizeit zu haben. Das Gute: Wegen der Steuerprogression in Deutschland sinkt das Nettogehalt prozentual weniger als das Bruttogehalt.</p>
+      
+      <h3>Ein Beispiel:</h3>
+      <p>Reduzierst du deine Arbeitszeit von 100 % auf 80 %, verlierst du exakt 20 % deines Bruttogehalts. Dein Nettogehalt sinkt jedoch oft nur um ca. 12 bis 15 %. Du tauschst also einen relativ kleinen Teil deines Nettoeinkommens gegen einen freien Tag in der Woche!</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    function calcTaxesDE(grossMonthly) {
+      const taxClass = document.getElementById('taxClass').value;
+      const churchTaxInput = document.getElementById('churchTax').value === 'ja';
+      
+      const grossYearly = grossMonthly * 12;
+      
+      let kvBase = grossMonthly > 5812.50 ? 5812.50 : grossMonthly;
+      let rvBase = grossMonthly > 8450 ? 8450 : grossMonthly;
+      
+      const kv = kvBase * 0.0815;
+      const pv = kvBase * 0.022;
+      const rv = rvBase * 0.093;
+      const av = rvBase * 0.013;
+      
+      const svMonthly = kv + pv + rv + av;
+      
+      let freibetrag = 12348;
+      if (taxClass === '3') freibetrag = 24696;
+      if (taxClass === '5') freibetrag = 0;
+      
+      let taxableIncome = grossYearly - (svMonthly * 12) - freibetrag;
+      if (taxableIncome < 0) taxableIncome = 0;
+      
+      let taxYearly = 0;
+      if (taxClass === '5') {
+        taxYearly = taxableIncome * 0.35;
+      } else {
+        if (taxableIncome > 277826) {
+          taxYearly += (taxableIncome - 277826) * 0.45;
+          taxYearly += (277826 - 69878) * 0.42;
+          taxYearly += (69878 - 17799) * 0.24;
+          taxYearly += (17799 - 0) * 0.14;
+        } else if (taxableIncome > 69878) {
+          taxYearly += (taxableIncome - 69878) * 0.42;
+          taxYearly += (69878 - 17799) * 0.24;
+          taxYearly += (17799 - 0) * 0.14;
+        } else if (taxableIncome > 17799) {
+          taxYearly += (taxableIncome - 17799) * 0.24;
+          taxYearly += (17799 - 0) * 0.14;
+        } else if (taxableIncome > 0) {
+          taxYearly += taxableIncome * 0.14;
+        }
+      }
+      
+      let taxMonthly = taxYearly / 12;
+      let churchTaxMonthly = churchTaxInput ? taxMonthly * 0.09 : 0;
+      
+      const netMonthly = grossMonthly - svMonthly - taxMonthly - churchTaxMonthly;
+      const deductions = svMonthly + taxMonthly + churchTaxMonthly;
+
+      return { netMonthly, deductions, taxMonthly, churchTaxMonthly, svMonthly };
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const bruttoIn = document.getElementById('brutto');
+      const stdAltIn = document.getElementById('stunden_alt');
+      const stdNeuIn = document.getElementById('stunden_neu');
+      const hasSonder = document.getElementById('hasSonder') ? document.getElementById('hasSonder').value === 'ja' : false;
+      
+      const formatEuro = (num) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(num);
+      
+      const calculate = () => {
+        const brutto = parseFloat(bruttoIn.value) || 0;
+        const stdAlt = parseFloat(stdAltIn.value) || 0;
+        const stdNeu = parseFloat(stdNeuIn.value) || 0;
+        const sonderzahlungen = document.getElementById('hasSonder') ? document.getElementById('hasSonder').value === 'ja' : false;
+        
+        if(stdAlt <= 0 || stdNeu <= 0) return;
+
+        const neuesBrutto = (brutto / stdAlt) * stdNeu;
+        
+        
+        const resAlt = calcTaxes(brutto, false, 1, false, 0); // basic call
+        const resNeu = calcTaxes(neuesBrutto, false, 1, false, 0);
+        const nettoAlt = resAlt.netMonthly;
+        const nettoNeu = resNeu.netMonthly;
+    
+
+        document.getElementById('resNettoAlt').textContent = formatEuro(nettoAlt);
+        document.getElementById('resNettoNeu').textContent = formatEuro(nettoNeu);
+        
+        const bruttoDiffPct = ((brutto - neuesBrutto) / brutto) * 100;
+        const nettoDiffPct = ((nettoAlt - nettoNeu) / nettoAlt) * 100;
+        const nettoVerlust = nettoAlt - nettoNeu;
+        const freizeitGewinn = stdAlt - stdNeu;
+        
+        const fazit = `Du verlierst <strong>${bruttoDiffPct.toFixed(1)} %</strong> deines Bruttos, aber dank Steuerprogression nur <strong>${nettoDiffPct.toFixed(1)} %</strong> deines Nettos (-${formatEuro(nettoVerlust)}). Dafür gewinnst du <strong>${freizeitGewinn} Stunden</strong> Freizeit pro Woche!`;
+        
+        document.getElementById('resFazit').innerHTML = fazit;
+      };
+
+      [bruttoIn, stdAltIn, stdNeuIn].forEach(el => el.addEventListener('input', calculate));
+      if (document.getElementById('hasSonder')) document.getElementById('hasSonder').addEventListener('change', calculate);
+      calculate();
+    });
+  </script>
+</body>
+</html>

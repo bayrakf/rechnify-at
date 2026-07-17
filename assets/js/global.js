@@ -88,8 +88,10 @@ const TOOL_MAPPING = {
   '/finanzen/gehaltserhoehung-rechner.html': '/de/finanzen/gehaltserhoehung-rechner.html',
   '/finanzen/kryptosteuerrechner.html': '/de/finanzen/kryptosteuerrechner.html',
   '/finanzen/sachbezugsrechner.html': '/de/finanzen/sachbezugsrechner.html',
+  '/finanzen/etf-sparplan-rechner.html': '/de/finanzen/etf-sparplan-rechner.html',
   '/finanzen/leasingrechner.html': '/de/finanzen/leasingrechner.html',
-  '/finanzen/pendlerrechner.html': '/de/finanzen/pendlerrechner.html'
+  '/finanzen/pendlerrechner.html': '/de/finanzen/pendlerrechner.html',
+  '/arbeitszeit/teilzeitrechner.html': '/de/arbeitszeit/teilzeitrechner.html'
 };
 
 function initCountryToggle() {

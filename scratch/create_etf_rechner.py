@@ -1,0 +1,438 @@
+import os
+
+template = """<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETF Sparplan Rechner – Zinseszins & Vermögensaufbau | rechnify.at</title>
+  <meta name="description" content="Kostenloser ETF Sparplan Rechner für {COUNTRY_NAME}. Berechne Zinseszins, Endkapital und visualisiere deinen Vermögensaufbau mit Chart." />
+  <link rel="canonical" href="https://rechnify.at/{PATH_PREFIX}finanzen/etf-sparplan-rechner.html" />
+  {ALT_LINKS}
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" crossorigin="anonymous"></script>
+
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="ETF Sparplan Rechner | rechnify.at" />
+  <meta property="og:description" content="Berechne schnell und einfach deinen Zinseszins." />
+  <meta property="og:url" content="https://rechnify.at/{PATH_PREFIX}finanzen/etf-sparplan-rechner.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/favicon-512x512.png" />
+  <meta property="og:locale" content="{LOCALE}" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/images/favicon-512x512.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    .calc-body { padding: 24px; }
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--color-ink); }
+    .input-group input { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid var(--color-rule); 
+      border-radius: 10px; 
+      background: var(--color-paper); 
+      color: var(--color-ink); 
+      font-size: 16px; 
+    }
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+
+    .result-box { 
+      margin-top: 24px; 
+      background: var(--color-paper-2); 
+      border: 1px solid var(--color-rule); 
+      border-radius: 12px; 
+      padding: 24px; 
+    }
+    
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--color-rule);
+    }
+    .result-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .result-item.highlight { font-weight: bold; font-size: 1.4em; color: var(--color-primary); border-bottom: none; }
+    .result-item.success { font-weight: bold; font-size: 1.1em; color: var(--color-success); }
+    .result-item.muted { color: var(--color-ink-3); font-size: 0.9em; }
+    
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+        margin-top: 24px;
+    }
+    
+    .broker-ad {
+        margin-top: 24px;
+        padding: 16px;
+        background: #fdfae6;
+        border: 1px solid #fceca4;
+        border-radius: 12px;
+        text-align: center;
+    }
+    .broker-ad h4 { margin-top:0; color: #b48600; margin-bottom:8px; }
+    .broker-btn {
+        display: inline-block;
+        margin-top: 12px;
+        background: #eab308;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .broker-btn:hover { background: #ca8a04; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <img src="/assets/images/logo.jpg" alt="rechnify Logo" width="36" height="36" />
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/finanzen/gehaltsrechner.html">💰 Finanzen</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill {AT_ACTIVE}" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill {DE_ACTIVE}" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/#finanzen">Finanzen</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">ETF Sparplan Rechner</span>
+  </nav>
+
+  <main class="site-main">
+    
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">ETF Sparplan Rechner {COUNTRY_NAME}</h1>
+      <p class="subtitle">Berechne den Zinseszinseffekt und visualisiere deinen Vermögensaufbau.</p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="card">
+      <div class="calc-body">
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="startkapital">Startkapital (€)</label>
+            <input type="number" id="startkapital" min="0" step="100" placeholder="z. B. 5000" value="5000" />
+          </div>
+          
+          <div class="input-group">
+            <label for="sparrate">Monatliche Sparrate (€)</label>
+            <input type="number" id="sparrate" min="0" step="50" placeholder="z. B. 200" value="200" />
+          </div>
+        </div>
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="laufzeit">Anlagedauer (Jahre)</label>
+            <input type="number" id="laufzeit" min="1" max="50" step="1" placeholder="z. B. 15" value="15" />
+          </div>
+          
+          <div class="input-group">
+            <label for="rendite">Erwartete Rendite (% p.a.)</label>
+            <input type="number" id="rendite" min="0" step="0.1" placeholder="z. B. 7.0" value="7.0" />
+          </div>
+        </div>
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="kosten">TER / Kosten (% p.a.)</label>
+            <input type="number" id="kosten" min="0" step="0.01" placeholder="z. B. 0.20" value="0.20" />
+          </div>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <h3 style="margin-top:0; margin-bottom:16px; color:var(--color-primary);">Ergebnis nach <span id="resJahre">15</span> Jahren</h3>
+          
+          <div class="result-item highlight">
+            <span>Endkapital</span>
+            <span id="resEndkapital">-- €</span>
+          </div>
+          <div class="result-item">
+            <span>Eigene Einzahlungen</span>
+            <span id="resEinzahlungen">-- €</span>
+          </div>
+          <div class="result-item success">
+            <span>Davon Zinserträge</span>
+            <span id="resZinsen">-- €</span>
+          </div>
+          <div class="result-item muted">
+            <span>Abgezogene Kosten (TER)</span>
+            <span id="resKosten">-- €</span>
+          </div>
+          
+          {AT_KEST}
+
+          <div class="chart-container">
+             <canvas id="etfChart"></canvas>
+          </div>
+          
+          <div class="broker-ad">
+              <h4>Noch keinen passenden Broker gefunden?</h4>
+              <p style="font-size:14px; margin:0;">Starte jetzt deinen ETF-Sparplan kostengünstig und komplett online.</p>
+              <a href="{BROKER_LINK}" target="_blank" rel="noopener nofollow" class="broker-btn">{BROKER_NAME} entdecken</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALCULATOR -->
+
+    <!-- SEO CONTENT -->
+    <section class="content-section">
+      <h2>Warum ein ETF Sparplan?</h2>
+      <p>Ein ETF (Exchange Traded Fund) ist ein börsengehandelter Indexfonds, der die Wertentwicklung eines Index (z. B. MSCI World) nachbildet. Mit einem Sparplan investierst du regelmäßig (z. B. monatlich) einen festen Betrag.</p>
+      
+      <h3>Der Zinseszinseffekt</h3>
+      <p>Das Geheimnis des langfristigen Vermögensaufbaus ist der Zinseszinseffekt. Wenn du die erzielten Renditen (Dividenden und Kursgewinne) nicht entnimmst, sondern im ETF belässt, generieren diese im Folgejahr ebenfalls Renditen. Dadurch wächst dein Vermögen exponentiell, wie du im obigen Chart eindrucksvoll sehen kannst.</p>
+
+      {AT_INFO}
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/global.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const inputs = ['startkapital', 'sparrate', 'laufzeit', 'rendite', 'kosten'].map(id => document.getElementById(id));
+      
+      const formatEuro = (num) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(num);
+      
+      let etfChart = null;
+
+      const calculate = () => {
+        const startkapital = parseFloat(inputs[0].value) || 0;
+        const sparrate = parseFloat(inputs[1].value) || 0;
+        const jahre = parseInt(inputs[2].value) || 0;
+        const renditePA = parseFloat(inputs[3].value) || 0;
+        const kostenPA = parseFloat(inputs[4].value) || 0;
+        
+        if(jahre <= 0) return;
+
+        const monate = jahre * 12;
+        const netRenditePA = renditePA - kostenPA;
+        
+        // Zinsfaktoren (monatlich)
+        const q_brutto = 1 + (renditePA / 100) / 12;
+        const q_netto = 1 + (netRenditePA / 100) / 12;
+        const q_kosten = 1 + (kostenPA / 100) / 12;
+
+        let kapital = startkapital;
+        let kapitalBrutto = startkapital; // Ohne Kosten
+        let totalEinzahlung = startkapital;
+        
+        const labels = [];
+        const einzahlungenData = [];
+        const zinsenData = [];
+
+        // Für Jahr 0
+        labels.push(0);
+        einzahlungenData.push(totalEinzahlung);
+        zinsenData.push(0);
+
+        for (let m = 1; m <= monate; m++) {
+            kapital = kapital * q_netto + sparrate;
+            kapitalBrutto = kapitalBrutto * q_brutto + sparrate;
+            totalEinzahlung += sparrate;
+            
+            if (m % 12 === 0) {
+                labels.push(m / 12);
+                einzahlungenData.push(totalEinzahlung);
+                zinsenData.push(kapital - totalEinzahlung);
+            }
+        }
+        
+        const totalZinsen = kapital - totalEinzahlung;
+        const totalKosten = kapitalBrutto - kapital;
+        
+        {CALC_AT_LOGIC}
+
+        document.getElementById('resJahre').textContent = jahre;
+        document.getElementById('resEndkapital').textContent = formatEuro(kapital);
+        document.getElementById('resEinzahlungen').textContent = formatEuro(totalEinzahlung);
+        document.getElementById('resZinsen').textContent = formatEuro(totalZinsen);
+        document.getElementById('resKosten').textContent = formatEuro(totalKosten);
+        
+        {UPDATE_AT_UI}
+        
+        updateChart(labels, einzahlungenData, zinsenData);
+      };
+      
+      const updateChart = (labels, einzahlungenData, zinsenData) => {
+          const ctx = document.getElementById('etfChart').getContext('2d');
+          
+          if (etfChart) {
+              etfChart.destroy();
+          }
+          
+          const isDark = document.body.classList.contains('dark-theme');
+          const textColor = isDark ? '#f1f5f9' : '#0f172a';
+          const gridColor = isDark ? '#334155' : '#e2e8f0';
+          
+          etfChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels: labels,
+                  datasets: [
+                      {
+                          label: 'Eigene Einzahlungen',
+                          data: einzahlungenData,
+                          backgroundColor: '#3b82f6', // blue-500
+                          stack: 'Stack 0',
+                      },
+                      {
+                          label: 'Zinserträge',
+                          data: zinsenData,
+                          backgroundColor: '#10b981', // emerald-500
+                          stack: 'Stack 0',
+                      }
+                  ]
+              },
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  interaction: { intersect: false, mode: 'index' },
+                  scales: {
+                      x: { stacked: true, grid: { display: false }, ticks: { color: textColor } },
+                      y: { 
+                          stacked: true, 
+                          grid: { color: gridColor }, 
+                          ticks: { 
+                              color: textColor,
+                              callback: function(value) {
+                                  if (value >= 1000) return value / 1000 + 'k €';
+                                  return value + ' €';
+                              }
+                          } 
+                      }
+                  },
+                  plugins: {
+                      legend: { labels: { color: textColor } },
+                      tooltip: {
+                          callbacks: {
+                              label: function(context) {
+                                  let label = context.dataset.label || '';
+                                  if (label) { label += ': '; }
+                                  if (context.parsed.y !== null) {
+                                      label += new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(context.parsed.y);
+                                  }
+                                  return label;
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+      };
+
+      inputs.forEach(el => el.addEventListener('input', calculate));
+      
+      // Update chart on theme toggle
+      document.getElementById('darkModeToggle').addEventListener('click', () => {
+          setTimeout(calculate, 10);
+      });
+      
+      calculate();
+    });
+  </script>
+</body>
+</html>
+"""
+
+def generate_at():
+    alt_links = '<link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/finanzen/etf-sparplan-rechner.html" />'
+    at_kest = '<div class="result-item" style="border-top:1px solid var(--color-rule); margin-top:8px; padding-top:12px;"><span>Abzugsfähige KESt (27,5% auf Zinsen)</span><span id="resKest">-- €</span></div>'
+    at_info = """
+      <h3>Steuern in Österreich (KESt)</h3>
+      <p>Kapitalerträge wie Dividenden und realisierte Kursgewinne aus ETFs unterliegen in Österreich der Kapitalertragsteuer (KESt) von 27,5 %. Unser Rechner zeigt dir den maximal möglichen KESt-Abzug an, der anfällt, wenn du deine gesamten Gewinne am Ende der Laufzeit auf einmal realisieren würdest (Thesaurierung ausgenommen).</p>
+    """
+    calc_at_logic = """
+        const kest = totalZinsen > 0 ? totalZinsen * 0.275 : 0;
+    """
+    update_at_ui = "document.getElementById('resKest').textContent = '- ' + formatEuro(kest);"
+    
+    html = template.replace("{PATH_PREFIX}", "") \
+                   .replace("{LOCALE}", "de_AT") \
+                   .replace("{COUNTRY_NAME}", "(Österreich)") \
+                   .replace("{AT_ACTIVE}", "active") \
+                   .replace("{DE_ACTIVE}", "") \
+                   .replace("{ALT_LINKS}", alt_links) \
+                   .replace("{AT_KEST}", at_kest) \
+                   .replace("{AT_INFO}", at_info) \
+                   .replace("{CALC_AT_LOGIC}", calc_at_logic) \
+                   .replace("{UPDATE_AT_UI}", update_at_ui) \
+                   .replace("{BROKER_LINK}", "https://www.flatex.at/produkte-handel/produkte/etf/") \
+                   .replace("{BROKER_NAME}", "Flatex.at")
+    
+    with open("finanzen/etf-sparplan-rechner.html", "w") as f:
+        f.write(html)
+
+def generate_de():
+    alt_links = '<link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/etf-sparplan-rechner.html" />'
+    
+    html = template.replace("{PATH_PREFIX}", "de/") \
+                   .replace("{LOCALE}", "de_DE") \
+                   .replace("{COUNTRY_NAME}", "(Deutschland)") \
+                   .replace("{AT_ACTIVE}", "") \
+                   .replace("{DE_ACTIVE}", "active") \
+                   .replace("{ALT_LINKS}", alt_links) \
+                   .replace("{AT_KEST}", "") \
+                   .replace("{AT_INFO}", "") \
+                   .replace("{CALC_AT_LOGIC}", "") \
+                   .replace("{UPDATE_AT_UI}", "") \
+                   .replace("{BROKER_LINK}", "https://www.traderepublic.com/de-de") \
+                   .replace("{BROKER_NAME}", "Trade Republic")
+    
+    with open("de/finanzen/etf-sparplan-rechner.html", "w") as f:
+        f.write(html)
+
+generate_at()
+generate_de()
+print("Created etf-sparplan-rechner.html for AT and DE")
