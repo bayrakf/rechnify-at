@@ -408,8 +408,17 @@ body.dark .site-logo img {
   border: 0;
 }
 
-.ad-slot-inarticle {
-  contain: layout;
+.hub-list {
+  columns: 2;
+  gap: var(--space-lg);
+  margin: var(--space-md) 0;
+  padding-left: 1.2rem;
+}
+
+.hub-list li { margin-bottom: 0.35rem; }
+
+@media (max-width: 640px) {
+  .hub-list { columns: 1; }
 }
 
 .page-hero {
@@ -1334,8 +1343,84 @@ label {
   html { scroll-behavior: auto; }
 }
 
+.calc-explain {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+}
+
+.calc-explain summary {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  color: var(--color-ink);
+}
+
+.calc-explain summary:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.calc-explain p {
+  margin: var(--space-2xs) 0 0;
+  font-size: var(--text-sm);
+  color: var(--color-ink-2);
+  line-height: 1.55;
+}
+
+.print-brand {
+  display: none;
+}
+
 @media print {
-  .site-header, .site-footer, .related-tools, .cookie-banner, button, .btn { display: none !important; }
+  .site-header,
+  .site-footer,
+  .related-tools,
+  .cookie-banner,
+  .result-actions,
+  .ad-slot-inarticle,
+  .pill-nav,
+  .sidebar-nav,
+  button,
+  .btn,
+  .dark-btn,
+  .country-toggle-group { display: none !important; }
+
+  .print-brand {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #1858C7;
+    font-family: system-ui, sans-serif;
+    font-size: 12px;
+    color: #111;
+  }
+
+  .print-brand img {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+  }
+
+  .print-brand strong {
+    font-size: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .print-brand span:last-child {
+    margin-left: auto;
+    max-width: 45%;
+    text-align: right;
+    color: #444;
+  }
+
+  .calc-explain { break-inside: avoid; }
+
   body { background: white; color: black; }
-  .card, .calculator-card { box-shadow: none; border: 1px solid #ccc; }
+  .card, .calculator-card, .result-box { box-shadow: none; border: 1px solid #ccc; }
 }

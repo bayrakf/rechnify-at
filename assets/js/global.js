@@ -5,7 +5,8 @@
    ============================================================ */
 
 const RECHNIFY_CONFIG = Object.assign({
-  plausibleDomain: 'rechnify.at',
+  /* GoatCounter site code → https://CODE.goatcounter.com */
+  goatcounterCode: 'rechnify',
   ga4Id: '',
   adsenseSlotInArticle: '',
   adsenseClient: 'ca-pub-5052220565736445'
@@ -221,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAnalytics();
   registerServiceWorker();
   injectHowToSchema();
+  injectPrintBrand();
 
   const darkModeToggle = document.getElementById('darkModeToggle');
   if (darkModeToggle) darkModeToggle.addEventListener('click', toggleDarkMode);
@@ -573,30 +575,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
     actionDiv.append(nativeBtn, bookmarkBtn, printBtn, wa);
     box.appendChild(actionDiv);
+    injectCalcExplain(box);
     injectAdSlot(box);
   });
 });
 
 function initAnalytics() {
-  const cfg = RECHNIFY_CONFIG;
-  if (cfg.plausibleDomain) {
-    const s = document.createElement('script');
-    s.defer = true;
-    s.dataset.domain = cfg.plausibleDomain;
-    s.src = 'https://plausible.io/js/script.js';
-    document.head.appendChild(s);
+  const code = RECHNIFY_CONFIG.goatcounterCode;
+  if (!code) return;
+  window.goatcounter = { path: location.pathname + location.search + location.hash };
+  const s = document.createElement('script');
+  s.async = true;
+  s.dataset.goatcounter = `https://${code}.goatcounter.com/count`;
+  s.src = 'https://gc.zgo.at/count.js';
+  document.head.appendChild(s);
+}
+
+function injectCalcExplain(box) {
+  if (box.parentElement?.querySelector('.calc-explain')) return;
+  const path = window.location.pathname;
+  let title = 'Wie gerechnet?';
+  let body =
+    'Berechnung läuft lokal in deinem Browser. Ergebnis ist eine Orientierung — keine Steuer- oder Rechtsberatung.';
+
+  if (/gehalt|brutto-netto/i.test(path)) {
+    body =
+      'Vom Brutto werden Sozialversicherungsbeiträge und Lohnsteuer abgezogen. In Österreich kommen oft 13./14. Gehalt mit begünstigter Besteuerung dazu; in Deutschland gelten EstG, SV-Bemessungsgrenzen und ggf. Kirchensteuer/Soli. Stand der Formeln: 2026.';
+  } else if (/mwst/i.test(path)) {
+    body = 'Brutto = Netto × (1 + MwSt-Satz). Netto = Brutto ÷ (1 + MwSt-Satz). Sätze je nach Land (AT/DE).';
+  } else if (/ueberstunden|stundenlohn|kommen-gehen|teilzeit|urlaub/i.test(path)) {
+    body = 'Aus Stunden, Zuschlägen und vereinbartem Satz wird der Betrag bzw. die Zeitbilanz berechnet. Tarifliche Sonderregeln können abweichen.';
+  } else if (/krypto/i.test(path)) {
+    body = 'Gewinn ≈ Verkaufserlös − Anschaffungskosten (vereinfacht). Haltefristen und Länderregeln (AT/DE) können die Steuerpflicht ändern.';
+  } else if (/pendler/i.test(path)) {
+    body = 'Pauschale aus Entfernung und Tagen (AT Pendlerpauschale / DE Entfernungspauschale). Individuelle Grenzen prüfen.';
   }
-  if (cfg.ga4Id) {
-    const s1 = document.createElement('script');
-    s1.async = true;
-    s1.src = `https://www.googletagmanager.com/gtag/js?id=${cfg.ga4Id}`;
-    document.head.appendChild(s1);
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { window.dataLayer.push(arguments); }
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', cfg.ga4Id, { anonymize_ip: true });
-  }
+
+  const el = document.createElement('details');
+  el.className = 'calc-explain';
+  el.innerHTML = `<summary>${title}</summary><p>${body}</p>`;
+  box.insertAdjacentElement('afterend', el);
+}
+
+function injectPrintBrand() {
+  if (document.querySelector('.print-brand')) return;
+  const brand = document.createElement('div');
+  brand.className = 'print-brand';
+  brand.setAttribute('aria-hidden', 'true');
+  const d = new Date();
+  const date = d.toLocaleDateString('de-AT', { year: 'numeric', month: 'long', day: 'numeric' });
+  brand.innerHTML = `<img src="/assets/images/logo.jpg" alt="" width="28" height="28" /><strong>rechnify.at</strong><span>${date}</span><span>${document.title}</span>`;
+  document.body.prepend(brand);
 }
 
 function registerServiceWorker() {

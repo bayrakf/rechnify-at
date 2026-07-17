@@ -194,7 +194,7 @@ def patch_html(path: Path, rel: str) -> bool:
     # Cache-bust shared CSS
     text = re.sub(
         r'/assets/css/global\.css(?:\?v=[^"\']+)?',
-        "/assets/css/global.css?v=2.7",
+        "/assets/css/global.css?v=2.8",
         text,
     )
     text = re.sub(r"/tokens\.css(?:\?v=[^\"'\\s>]+)?", "/tokens.css?v=1.2", text)
