@@ -199,6 +199,8 @@
               <span><strong>Nettogewinn (nach Steuern):</strong></span>
               <strong class="text-success" style="font-size: 1.2em;" id="resNetProfit">-- €</strong>
             </div>
+            
+            <div id="altbestandInfo"></div>
 
             <!-- Premium Broker Affiliate Box -->
             <div class="affiliate-banner">
@@ -283,6 +285,12 @@
       document.getElementById('resProfit').textContent = profit.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       document.getElementById('resTax').textContent = tax.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       document.getElementById('resNetProfit').textContent = netProfit.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+
+      if (!isNew && profit > 0) {
+        document.getElementById('altbestandInfo').innerHTML = `<div style="margin-top: 16px; padding: 12px; background: #dcfce7; border: 1px solid #86efac; border-radius: 8px; color: #166534; font-size: 14px;"><strong>🎉 Altbestand-Retter (Premium Info):</strong> Gekauft vor dem 01.03.2021? Dann sind deine Gewinne komplett <strong>steuerfrei (0% KESt)</strong>, egal wie hoch sie sind!</div>`;
+      } else {
+        document.getElementById('altbestandInfo').innerHTML = '';
+      }
 
       document.getElementById('result').classList.remove('hidden');
       document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });

@@ -508,6 +508,14 @@
       } else {
         info = `✅ Dein Brutto-Stundenlohn liegt bei ${fmt(hourlyBrutto)}. Der Netto-Stundenlohn (ca. ${fmt(hourlyNetto)}) ist eine Schätzung — für eine genaue Berechnung nutze unseren <a href="/finanzen/gehaltsrechner.html">Gehaltsrechner</a>.`;
       }
+      
+      // Premium Feature: Freelancer Check
+      const freelancerRate = hourlyBrutto * 2.2;
+      info += `<div style="margin-top: 16px; padding: 12px; background: #e0f2fe; border: 1px solid #bae6fd; border-radius: 8px; color: #0369a1; font-size: 14px;">
+        <strong>🚀 Freelancer-Check (Premium Info)</strong><br/>
+        Um als Selbstständiger/Freelancer das gleiche Netto wie jetzt zu haben (inkl. Urlaubsanspruch, Krankenstand, 13./14. Gehalt und SVS-Risiko), müsstest du deinen Kunden mindestens <strong>${fmt(freelancerRate)} / Stunde</strong> in Rechnung stellen.
+      </div>`;
+
       document.getElementById('infoBox').innerHTML = info;
       document.getElementById('result').style.display = '';
     }

@@ -181,6 +181,7 @@
             <span>Neuer Preis (Endbetrag)</span>
             <span id="resNewPrice">80,00 €</span>
           </div>
+          <div id="skontoInfo"></div>
         </div>
 
       </div>
@@ -265,6 +266,13 @@
         document.getElementById('resOldPrice').textContent = formatEuro(price);
         document.getElementById('resSaved').textContent = formatEuro(totalSaved);
         document.getElementById('resNewPrice').textContent = formatEuro(finalPrice);
+
+        if (discount2 > 0) {
+          const effRate = ((discount2 / 16) * 360).toFixed(0);
+          document.getElementById('skontoInfo').innerHTML = `<div style="margin-top: 16px; padding: 12px; background: #fef08a; border: 1px solid #facc15; border-radius: 8px; color: #854d0e; font-size: 14px;"><strong>🚀 Skonto-Booster (Premium Info):</strong> ${discount2}% Skonto entsprechen bei Standard-Fristen einem effektiven Jahreszinssatz von ca. <strong>${effRate}%</strong>. Wer Skonto nicht zieht, verbrennt bares Geld!</div>`;
+        } else {
+          document.getElementById('skontoInfo').innerHTML = '';
+        }
       };
 
       priceInput.addEventListener('input', calculate);

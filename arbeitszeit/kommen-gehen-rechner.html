@@ -698,6 +698,11 @@
         warnings.push(`Anwesenheit über 6 Stunden: Es werden automatisch zusätzlich ${minutesToText(autoBreakDeduction)} Mittagspause abgezogen, weil bisher nur ${minutesToText(breakMinutes)} Pause eingetragen ist.`);
       }
 
+      // Premium Feature: Arbeitszeitgesetz-Wächter
+      if (currentWorked > 10 * 60) {
+        warnings.push(`🚨 <strong style="color:var(--danger)">Premium-Gesetzes-Wächter:</strong> Du hast über 10 Stunden Netto-Arbeitszeit erreicht. Dies verstößt in den meisten Fällen gegen die zulässige Höchstarbeitszeit laut österreichischem AZG!`);
+      }
+
       return {
         dateString,
         sollMinutes,

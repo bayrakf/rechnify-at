@@ -322,7 +322,18 @@
       resVal.textContent = value.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
       resRate.textContent = (rate * 100).toFixed(2).replace('.', ',') + ' %';
 
-      info.innerHTML = `Dieser Sachbezugswert von <strong>${value.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong> wird monatlich deinem Bruttogehalt zugeschlagen und erhöht die Lohnsteuer-Bemessungsgrundlage.`;
+      let htmlContent = `Dieser Sachbezugswert von <strong>${value.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong> wird monatlich deinem Bruttogehalt zugeschlagen und erhöht die Lohnsteuer-Bemessungsgrundlage.`;
+      
+      // Premium Feature: E-Auto Netto-Booster
+      if (type === 'verbrenner') {
+        const yearlyGross = value * 12;
+        const approxNetLoss = yearlyGross * 0.42; // assume ~42% marginal tax rate
+        htmlContent += `<div style="margin-top: 16px; padding: 12px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 8px; color: #1b5e20;">
+          <strong>💡 E-Auto Netto-Booster (Premium Info)</strong><br/>
+          Hättest du stattdessen ein E-Auto für denselben Preis gewählt (0% Sachbezug), hättest du im Jahr ca. <strong>${approxNetLoss.toLocaleString('de-AT', { maximumFractionDigits: 0 })} € mehr netto</strong> auf deinem Konto!
+        </div>`;
+      }
+      info.innerHTML = htmlContent;
     }
 
     // Init fields

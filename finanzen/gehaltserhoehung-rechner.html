@@ -428,6 +428,23 @@
       document.getElementById('resGrossYearlyDiff').textContent = '+ ' + grossYearlyDiff.toLocaleString('de-AT', {maximumFractionDigits: 0}) + ' €';
       document.getElementById('resNetYearlyDiff').textContent = '+ ' + netYearlyDiff.toLocaleString('de-AT', {maximumFractionDigits: 0}) + ' €';
 
+      // Premium Feature: Inflations-Wahrheit
+      const assumedInflation = 0.035; // 3.5%
+      const inflationLoss = oldCalc.totalNetYear * assumedInflation;
+      const realNetDiff = netYearlyDiff - inflationLoss;
+      let inflationHtml = `<div style="margin-top: 20px; padding: 12px; background: #fff3e0; border: 1px solid #ffe0b2; border-radius: 8px; color: #e65100; font-size: 14px;">
+        <strong>📉 Inflations-Wahrheit (Premium Info)</strong><br/>
+        Bei einer angenommenen Inflation von 3,5% verliert dein bisheriges Nettogehalt jährlich ca. <strong>${inflationLoss.toLocaleString('de-AT', {maximumFractionDigits: 0})} €</strong> an Kaufkraft.<br/>
+        Deine <strong>reale, kaufkraftbereinigte Erhöhung</strong> beträgt somit ca. <strong>${realNetDiff.toLocaleString('de-AT', {maximumFractionDigits: 0})} €</strong> netto im Jahr.
+      </div>`;
+      let infDiv = document.getElementById('premiumInflationBox');
+      if (!infDiv) {
+        infDiv = document.createElement('div');
+        infDiv.id = 'premiumInflationBox';
+        document.getElementById('result').insertBefore(infDiv, document.querySelector('.affiliate-banner'));
+      }
+      infDiv.innerHTML = inflationHtml;
+
       document.getElementById('result').classList.remove('hidden');
       document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });

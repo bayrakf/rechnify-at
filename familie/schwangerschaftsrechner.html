@@ -306,6 +306,15 @@
               </div>
             </div>
 
+            <div class="milestone" style="border-color: #818cf8; background: #e0e7ff;">
+              <div class="milestone-icon" style="background: #c7d2fe;">👨‍🍼</div>
+              <div class="milestone-content">
+                <h3 style="color: #3730a3; margin: 0 0 4px 0;">Papa-Monat Fenster (Premium)</h3>
+                <div class="milestone-date" id="msPapaMonat" style="color: #4f46e5;">--</div>
+                <div class="milestone-desc">Der Familienzeitbonus (Papa-Monat) muss zwingend innerhalb von 91 Tagen nach der Geburt konsumiert werden!</div>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -511,6 +520,11 @@
       document.getElementById('msMutterschutz').textContent = mutterschutz.toLocaleDateString('de-DE');
 
       document.getElementById('msGeburt').textContent = egtDate.toLocaleDateString('de-DE');
+
+      // Premium Feature: Papa-Monat Fenster
+      const papaMonatEnd = new Date(egtDate);
+      papaMonatEnd.setDate(papaMonatEnd.getDate() + 91);
+      document.getElementById('msPapaMonat').textContent = `Bis spätestens ${papaMonatEnd.toLocaleDateString('de-DE')}`;
 
       document.getElementById('result').classList.remove('hidden');
       

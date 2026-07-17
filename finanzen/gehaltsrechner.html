@@ -222,9 +222,34 @@
             </select>
           </div>
 
+          <div style="margin: 20px 0; padding: 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;">
+            <label style="display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--primary);">
+              <input type="checkbox" id="simulatePartTime" style="width: 18px; height: 18px; margin: 0; cursor: pointer;">
+              ⚖️ Teilzeit-Simulator (Premium Feature)
+            </label>
+            <div id="partTimeInputs" style="margin-top: 16px; display: none; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="input-group" style="margin: 0;">
+                <label for="hoursCurrent">Aktuelle Stunden</label>
+                <div class="input-suffix">
+                  <input type="number" id="hoursCurrent" value="40" min="1" max="60">
+                  <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
+                </div>
+              </div>
+              <div class="input-group" style="margin: 0;">
+                <label for="hoursTarget">Ziel-Stunden</label>
+                <div class="input-suffix">
+                  <input type="number" id="hoursTarget" value="32" min="1" max="60">
+                  <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Berechnen</button>
 
           <div id="result" class="result-box hidden">
+            <div id="partTimeResultBox"></div>
+            
             <h3>Dein Netto-Gehalt</h3>
             
             <div class="result-grid">
@@ -254,11 +279,8 @@
                 <span class="text-muted">- Lohnsteuer:</span>
                 <strong id="resTaxYear" style="color: var(--danger);">-- €</strong>
               </div>
-              <div style="display:flex; justify-content:space-between; margin-top: 12px; padding-top: 8px; border-top: 1px dashed var(--border);">
-                <span><strong>Netto (gesamt pro Jahr):</strong></span>
-                <strong id="resNetYear" class="text-success" style="font-size: 1.2em;">-- €</strong>
-              </div>
-            </div>
+            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+              <h3>Detaillierte Jahresabrechnung</h3>
 
             <!-- Premium Feature: Dienstgeberkosten -->
             <div style="margin-top: 24px; padding: 16px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 12px;">
@@ -394,14 +416,11 @@
   <script>
     'use strict';
 
-    document.getElementById('calculate').addEventListener('click', () => {
-      const grossMonthly = parseFloat(document.getElementById('grossMonthly').value) || 0;
-      const hasSonder = document.getElementById('hasSonderzahlungen').value === 'ja';
-      
+    function calcTaxes(grossMonthly, hasSonder) {
       const SV_RATE = 0.1807;
       const SV_RATE_SONDER = 0.1707;
       const BBG_MONTHLY = 6930;
-      const VAB_MONTHLY = 496 / 12; // 41.33
+      const VAB_MONTHLY = 496 / 12; 
       
       let svMonthly = grossMonthly * SV_RATE;
       if (grossMonthly > BBG_MONTHLY) svMonthly = BBG_MONTHLY * SV_RATE;
@@ -437,10 +456,7 @@
 
       const netMonthly = grossMonthly - svMonthly - taxMonthly;
       
-      let grossSonder = 0;
-      let svSonder = 0;
-      let taxSonder = 0;
-      let netSonder = 0;
+      let grossSonder = 0, svSonder = 0, taxSonder = 0, netSonder = 0;
 
       if (hasSonder) {
         grossSonder = grossMonthly;
@@ -477,15 +493,14 @@
       const totalTaxYear = (taxMonthly * 12) + (taxSonder * 2);
       const totalNetYear = totalGrossYear - totalSvYear - totalTaxYear;
 
-      // Premium Feature: Dienstgeberkosten Logic
       let svDgMonthly = grossMonthly * 0.2103;
       if (grossMonthly > BBG_MONTHLY) svDgMonthly = BBG_MONTHLY * 0.2103;
-      let otherLnkMonthly = grossMonthly * 0.0859; // DB 3.7%, DZ 0.36%, KommSt 3.0%, MVK 1.53%
+      let otherLnkMonthly = grossMonthly * 0.0859;
       let totalLnkMonthly = svDgMonthly + otherLnkMonthly;
 
       let totalLnkSonder = 0;
       if (hasSonder) {
-         let svDgSonder = grossMonthly * 0.2053; // SZ SV-DG is ~0.5% lower
+         let svDgSonder = grossMonthly * 0.2053; 
          if (grossMonthly > BBG_MONTHLY) svDgSonder = BBG_MONTHLY * 0.2053;
          let otherLnkSonder = grossMonthly * 0.0859;
          totalLnkSonder = (svDgSonder + otherLnkSonder) * 2;
@@ -494,22 +509,67 @@
       const lnkYearly = (totalLnkMonthly * 12) + totalLnkSonder;
       const totalCostYearly = totalGrossYear + lnkYearly;
 
-      document.getElementById('resNetMonthly').textContent = netMonthly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      return { netMonthly, netSonder, totalGrossYear, totalSvYear, totalTaxYear, totalNetYear, lnkYearly, totalCostYearly };
+    }
+
+    document.getElementById('simulatePartTime').addEventListener('change', (e) => {
+      document.getElementById('partTimeInputs').style.display = e.target.checked ? 'grid' : 'none';
+    });
+
+    document.getElementById('calculate').addEventListener('click', () => {
+      const baseGross = parseFloat(document.getElementById('grossMonthly').value) || 0;
+      const hasSonder = document.getElementById('hasSonderzahlungen').value === 'ja';
+      const isPartTime = document.getElementById('simulatePartTime').checked;
+      
+      let calcGross = baseGross;
+      let hoursOld = parseFloat(document.getElementById('hoursCurrent').value) || 40;
+      let hoursNew = parseFloat(document.getElementById('hoursTarget').value) || 32;
+
+      let partTimeHtml = '';
+
+      if (isPartTime && hoursOld > 0 && hoursNew > 0) {
+        calcGross = (baseGross / hoursOld) * hoursNew;
+        const resOld = calcTaxes(baseGross, hasSonder);
+        const resNew = calcTaxes(calcGross, hasSonder);
+
+        const bruttoLossPct = ((baseGross - calcGross) / baseGross) * 100;
+        const nettoLossPct = ((resOld.netMonthly - resNew.netMonthly) / resOld.netMonthly) * 100;
+        const bruttoDiff = baseGross - calcGross;
+        const nettoDiff = resOld.netMonthly - resNew.netMonthly;
+
+        partTimeHtml = `<div style="margin-bottom: 24px; padding: 16px; background: #e0f2fe; border: 1px solid #bae6fd; border-radius: 12px; color: #0369a1;">
+          <h4 style="margin-top: 0; color: #0284c7; display: flex; align-items: center; gap: 8px;"><span>⚖️</span> Teilzeit-Ergebnis (${hoursNew}h statt ${hoursOld}h)</h4>
+          <p style="font-size: 14px; margin-bottom: 12px;">Du verzichtest auf <strong>${bruttoLossPct.toFixed(1)}%</strong> deines Bruttogehalts (-${bruttoDiff.toLocaleString('de-AT', {maximumFractionDigits:0})} €), verlierst aber durch die Steuerprogression nur <strong>${nettoLossPct.toFixed(1)}%</strong> deines Nettos (-${nettoDiff.toLocaleString('de-AT', {maximumFractionDigits:0})} €)!</p>
+          <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px; margin-bottom: 4px;">
+            <span>Neues Brutto:</span> <strong>${calcGross.toLocaleString('de-AT', {maximumFractionDigits:2})} €</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px;">
+            <span>Neues Netto:</span> <strong style="color:var(--success);">${resNew.netMonthly.toLocaleString('de-AT', {maximumFractionDigits:2})} €</strong>
+          </div>
+        </div>`;
+      }
+      
+      const res = calcTaxes(calcGross, hasSonder);
+
+      document.getElementById('resNetMonthly').textContent = res.netMonthly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       
       if (hasSonder) {
         document.getElementById('cardSonder').classList.remove('hidden');
-        document.getElementById('resNetSonder').textContent = netSonder.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+        document.getElementById('resNetSonder').textContent = res.netSonder.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       } else {
         document.getElementById('cardSonder').classList.add('hidden');
       }
 
-      document.getElementById('resGrossYear').textContent = totalGrossYear.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resSvYear').textContent = '- ' + totalSvYear.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resTaxYear').textContent = '- ' + totalTaxYear.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resNetYear').textContent = totalNetYear.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resGrossYear').textContent = res.totalGrossYear.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resSvYear').textContent = '- ' + res.totalSvYear.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resTaxYear').textContent = '- ' + res.totalTaxYear.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resNetYear').textContent = res.totalNetYear.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
 
-      document.getElementById('resLnkYear').textContent = '+ ' + lnkYearly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resTotalCostYear').textContent = totalCostYearly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resLnkYear').textContent = '+ ' + res.lnkYearly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resTotalCostYear').textContent = res.totalCostYearly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+
+      const partTimeBox = document.getElementById('partTimeResultBox');
+      if (partTimeBox) partTimeBox.innerHTML = partTimeHtml;
 
       document.getElementById('result').classList.remove('hidden');
       document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
