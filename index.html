@@ -755,16 +755,63 @@
     /* ── Country detection + toggle ───────────────────────────────── */
     const btnAt = document.getElementById('cBtnAt');
     const btnDe = document.getElementById('cBtnDe');
+    const COUNTRY_KEY = 'rechnify.country';
+
+    const TOOL_MAPPING = {
+      '/arbeitszeit/kommen-gehen-rechner': '/de/arbeitszeit/kommen-gehen-rechner',
+      '/arbeitszeit/urlaubstage-rechner': '/de/arbeitszeit/urlaubstage-rechner',
+      '/arbeitszeit/ueberstundenrechner': '/de/arbeitszeit/ueberstundenrechner',
+      '/arbeitszeit/stundenlohn-rechner': '/de/arbeitszeit/stundenlohn-rechner',
+      '/finanzen/mwst-rechner': '/de/finanzen/mwst-rechner',
+      '/familie/kinderbetreuungsgeld': '/de/familie/elterngeld',
+      '/finanzen/gehaltsrechner': '/de/finanzen/gehaltsrechner',
+      '/finanzen/gehaltserhoehung-rechner': '/de/finanzen/gehaltserhoehung-rechner',
+      '/finanzen/kryptosteuerrechner': '/de/finanzen/kryptosteuerrechner',
+      '/finanzen/sachbezugsrechner': '/de/finanzen/sachbezugsrechner',
+      '/finanzen/pendlerrechner': '/de/finanzen/pendlerrechner'
+    };
+    const INV_MAPPING = Object.fromEntries(Object.entries(TOOL_MAPPING).map(([k,v]) => [v,k]));
 
     function setCountry(c, persist) {
-      if (persist) localStorage.setItem('country', c);
+      if (persist) {
+        localStorage.setItem('country', c);
+        localStorage.setItem(COUNTRY_KEY, c);
+      }
       btnAt.classList.toggle('active', c === 'at');
       btnDe.classList.toggle('active', c === 'de');
       btnAt.setAttribute('aria-pressed', c === 'at' ? 'true' : 'false');
       btnDe.setAttribute('aria-pressed', c === 'de' ? 'true' : 'false');
+
+      // 1. Hide/Show Cards based on badges
+      document.querySelectorAll('.tool-card').forEach(card => {
+        const hasAt = card.querySelector('.badge-at');
+        const hasDe = card.querySelector('.badge-de');
+        if (hasAt || hasDe) {
+          if (c === 'at' && hasDe && !hasAt) {
+            card.style.display = 'none';
+          } else if (c === 'de' && hasAt && !hasDe) {
+            card.style.display = 'none';
+          } else {
+            card.style.display = '';
+          }
+        }
+      });
+
+      // 2. Rewrite links dynamically
+      document.querySelectorAll('a.tool-card').forEach(link => {
+        try {
+          const url = new URL(link.href, window.location.origin);
+          if (url.origin === window.location.origin) {
+            let path = url.pathname.replace(/\.html$/, '');
+            let baseAt = INV_MAPPING[path] || path;
+            let target = (c === 'de' && TOOL_MAPPING[baseAt]) ? TOOL_MAPPING[baseAt] : baseAt;
+            link.href = target;
+          }
+        } catch(e) {}
+      });
     }
 
-    let country = localStorage.getItem('country');
+    let country = localStorage.getItem(COUNTRY_KEY) || localStorage.getItem('country');
     if (!country) {
       try {
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
