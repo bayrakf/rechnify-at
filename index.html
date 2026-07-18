@@ -511,7 +511,15 @@
         "url": "https://rechnify.at/",
         "description": "Kostenlose Online-Rechner für Österreich und Deutschland.",
         "inLanguage": ["de-AT", "de-DE"],
-        "publisher": { "@id": "https://rechnify.at/#organization" }
+        "publisher": { "@id": "https://rechnify.at/#organization" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://rechnify.at/?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
       },
       {
         "@type": "Organization",
@@ -523,7 +531,10 @@
           "url": "https://rechnify.at/assets/images/logo.jpg",
           "width": 512,
           "height": 512
-        }
+        },
+        "sameAs": [
+          "https://github.com/bayrakf/rechnify-at"
+        ]
       },
       {
         "@type": "ItemList",
@@ -887,7 +898,7 @@
             <div class="tool-card-title">Einheitenrechner</div>
             <div class="tool-card-desc">Längen, Gewichte, Temperaturen umrechnen.</div>
           </a>
-          <a href="/alltag/altersrechner.html" class="tool-card">
+          <a href="/alltag/waehrungsumrechner.html" class="tool-card"><span class="tool-card-badge badge-new">✦ Neu</span><div class="tool-card-icon">💱</div><div class="tool-card-title">Währungsumrechner</div><div class="tool-card-desc">Live Wechselkurse: EUR, USD, CHF und mehr.</div></a><a href="/alltag/altersrechner.html" class="tool-card">
             <div class="tool-card-icon">🎂</div>
             <div class="tool-card-title">Altersrechner</div>
             <div class="tool-card-desc">Exaktes Alter in Tagen und Monaten.</div>

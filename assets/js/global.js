@@ -221,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCountryToggle();
   initAnalytics();
   registerServiceWorker();
+  initPWAInstall();
   injectHowToSchema();
   injectPrintBrand();
   if ('requestIdleCallback' in window) requestIdleCallback(loadAdSense, { timeout: 4000 });
@@ -650,3 +651,51 @@ function injectAdSlot(afterEl) {
   afterEl.insertAdjacentElement('afterend', wrap);
   try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) { }
 }
+
+
+// --- PWA Install Prompt ---
+let deferredPrompt = null;
+function initPWAInstall() {
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (localStorage.getItem('rechnify.pwaDismissed') === '1') return;
+    setTimeout(showPWAInstallBanner, 3000);
+  });
+  window.addEventListener('appinstalled', () => {
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.remove();
+    deferredPrompt = null;
+  });
+}
+function showPWAInstallBanner() {
+  if (document.getElementById('pwa-install-banner')) return;
+  if (window.matchMedia('(display-mode: standalone)').matches) return;
+  const banner = document.createElement('div');
+  banner.id = 'pwa-install-banner';
+  banner.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:300;background:var(--color-accent);color:var(--color-accent-ink);padding:12px 20px;border-radius:var(--radius-pill);box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:12px;max-width:90vw;font-size:14px;font-family:var(--font-display);font-weight:600;';
+  banner.innerHTML = '<span>📱 rechnify.at installieren</span>';
+  const installBtn = document.createElement('button');
+  installBtn.textContent = 'Installieren';
+  installBtn.style.cssText = 'background:rgba(255,255,255,0.2);border:none;color:inherit;padding:6px 14px;border-radius:var(--radius-pill);cursor:pointer;font-weight:700;font-size:13px;';
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'dismissed') localStorage.setItem('rechnify.pwaDismissed', '1');
+    deferredPrompt = null;
+    banner.remove();
+  });
+  banner.appendChild(installBtn);
+  const closeBtn = document.createElement('button');
+  closeBtn.textContent = '✕';
+  closeBtn.style.cssText = 'background:none;border:none;color:inherit;cursor:pointer;font-size:18px;opacity:0.7;';
+  closeBtn.addEventListener('click', () => {
+    localStorage.setItem('rechnify.pwaDismissed', '1');
+    banner.remove();
+  });
+  banner.appendChild(closeBtn);
+  document.body.appendChild(banner);
+  setTimeout(() => { if (banner.parentNode) banner.remove(); }, 15000);
+}
+

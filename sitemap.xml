@@ -1231,4 +1231,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/schulnotenrechner.html"/>
     <lastmod>2026-07-18</lastmod>
   </url>
+  <url>
+    <loc>https://rechnify.at/alltag/waehrungsumrechner.html\</loc\>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/alltag/waehrungsumrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/waehrungsumrechner.html"/>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://rechnify.at/arbeitszeit/\</loc\>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/"/>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://rechnify.at/embed.html\</loc\>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/embed.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/embed.html"/>
+    <lastmod>2026-07-18</lastmod>
+  </url>
 </urlset>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de-AT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Währungsumrechner – Live Wechselkurse | rechnify.at</title>
+  <meta name="description" content="Kostenloser Währungsumrechner: EUR, USD, CHF, GBP und mehr. Live-Kurse, einfach Betrag eingeben und umrechnen. Lokal im Browser." />
+  <link rel="canonical" href="https://rechnify.at/alltag/waehrungsumrechner.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/alltag/waehrungsumrechner.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/waehrungsumrechner.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Währungsumrechner – Live Wechselkurse | rechnify.at" />
+  <meta property="og:description" content="Kostenloser Währungsumrechner: EUR, USD, CHF, GBP und mehr." />
+  <meta property="og:url" content="https://rechnify.at/alltag/waehrungsumrechner.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" /></noscript>
+  <link rel="stylesheet" href="/tokens.css?v=1.2" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=3.1" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="/assets/css/global.css?v=3.1" /></noscript>
+  <script type="application/ld+json">
+  { "@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Währungsumrechner", "operatingSystem": "All", "applicationCategory": "FinanceApplication", "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "EUR" } }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at">
+        <picture><source srcset="/assets/images/logo-72.webp" type="image/webp" /><img src="/assets/images/logo-72.jpg" alt="rechnify Logo" width="36" height="36" decoding="async" /></picture>
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/#finanzen">💶 Finanzen</a>
+        <a href="/#arbeitszeit">⏰ Arbeitszeit</a>
+        <a href="/#familie">👶 Familie</a>
+        <a href="/#mathematik">📐 Mathematik</a>
+        <a href="/#alltag">⚖️ Alltag</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus" type="button">🌙</button>
+      </div>
+    </div>
+  </header>
+  <nav class="breadcrumb" aria-label="Brotkrumen">
+    <a href="/">Start</a><span class="breadcrumb-sep">/</span>
+    <a href="/#alltag">Alltag</a><span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current">Währungsumrechner</span>
+  </nav>
+  <main class="site-main">
+    <div class="calculator-container">
+      <div class="calculator-card">
+        <div class="calc-header">
+          <div class="calc-icon">💱</div>
+          <h1 style="margin-bottom:8px;">Währungsumrechner</h1>
+          <p>Rechne Beträge zwischen Währungen um. Live-Kurse von der Europäischen Zentralbank.</p>
+        </div>
+        <div class="calc-body">
+          <div class="input-group">
+            <label for="amount">Betrag</label>
+            <div class="input-suffix">
+              <input type="number" id="amount" value="100" min="0" step="0.01">
+              <span class="suffix" id="fromCurrency">EUR</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="from">Von</label>
+            <select id="from">
+              <option value="EUR" selected>EUR – Euro</option>
+              <option value="USD">USD – US-Dollar</option>
+              <option value="CHF">CHF – Schweizer Franken</option>
+              <option value="GBP">GBP – Britisches Pfund</option>
+              <option value="JPY">JPY – Japanischer Yen</option>
+              <option value="CNY">CNY – Chinesischer Yuan</option>
+              <option value="CAD">CAD – Kanadischer Dollar</option>
+              <option value="AUD">AUD – Australischer Dollar</option>
+              <option value="SEK">SEK – Schwedische Krone</option>
+              <option value="NOK">NOK – Norwegische Krone</option>
+              <option value="DKK">DKK – Dänische Krone</option>
+              <option value="PLN">PLN – Polnischer Zloty</option>
+              <option value="CZK">CZK – Tschechische Krone</option>
+              <option value="HUF">HUF – Ungarischer Forint</option>
+              <option value="TRY">TRY – Türkische Lira</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="to">Nach</label>
+            <select id="to">
+              <option value="EUR">EUR – Euro</option>
+              <option value="USD" selected>USD – US-Dollar</option>
+              <option value="CHF">CHF – Schweizer Franken</option>
+              <option value="GBP">GBP – Britisches Pfund</option>
+              <option value="JPY">JPY – Japanischer Yen</option>
+              <option value="CNY">CNY – Chinesischer Yuan</option>
+              <option value="CAD">CAD – Kanadischer Dollar</option>
+              <option value="AUD">AUD – Australischer Dollar</option>
+              <option value="SEK">SEK – Schwedische Krone</option>
+              <option value="NOK">NOK – Norwegische Krone</option>
+              <option value="DKK">DKK – Dänische Krone</option>
+              <option value="PLN">PLN – Polnischer Zloty</option>
+              <option value="CZK">CZK – Tschechische Krone</option>
+              <option value="HUF">HUF – Ungarischer Forint</option>
+              <option value="TRY">TRY – Türkische Lira</option>
+            </select>
+          </div>
+          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Umrechnen</button>
+          <div id="result" class="result-box hidden">
+            <h3>Ergebnis</h3>
+            <div class="result-grid">
+              <div class="result-card">
+                <div class="text-sm text-muted">Umgerechnet</div>
+                <div class="big-number text-success" id="resConverted">--</div>
+                <div class="sub-number" id="resRate">--</div>
+              </div>
+            </div>
+            <div style="margin-top: 16px; font-size: 12px; color: var(--text-muted);" id="resUpdated">Kurse werden geladen...</div>
+          </div>
+        </div>
+        <div class="help">
+          <strong>Wie wird berechnet?</strong><br />
+          Kurse von der Europäischen Zentralbank (EZB). Werden täglich aktualisiert. Lokal im Browser berechnet — keine Datenweitergabe.
+        </div>
+      </div>
+      <section class="content-section" style="margin-top: 32px;">
+        <h2>Wie funktioniert der Währungsumrechner?</h2>
+        <p>Unser Währungsumrechner verwendet die offiziellen Wechselkurse der <strong>Europäischen Zentralbank (EZB)</strong>. Diese werden jeden Werktag um 16:00 Uhr MEZ aktualisiert.</p>
+        <h3>Unterstützte Währungen</h3>
+        <p>Der Rechner unterstützt 15 wichtige Währungen: Euro (EUR), US-Dollar (USD), Schweizer Franken (CHF), Britisches Pfund (GBP), Japanischer Yen (JPY), Chinesischer Yuan (CNY) und viele mehr.</p>
+        <h3>Tipps für Reisende</h3>
+        <ul>
+          <li><strong>Vor der Reise umrechnen:</strong> So weißt du, wie viel Budget dir im Zielland zur Verfügung steht</li>
+          <li><strong>Karten-Gebühren:</strong> Viele Banken verlangen 1-2% Auslandseinsatzgebühr</li>
+          <li><strong>Bargeld vs. Karte:</strong> Karten haben oft bessere Kurse als Wechselstuben am Flughafen</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="site-logo-text">rechnify<span>.at</span></span>
+          <p>Kostenlose Online-Rechner für Österreich & Deutschland.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Alltag</h3>
+          <ul>
+            <li><a href="/alltag/waehrungsumrechner.html">Währungsumrechner</a></li>
+            <li><a href="/alltag/kalorienrechner.html">Kalorienrechner</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Info</h3>
+          <ul>
+            <li><a href="/ueber-uns.html">Über uns</a></li>
+            <li><a href="/kontakt.html">Kontakt</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/global.js?v=3.1"></script>
+  <script>
+    'use strict';
+    let rates = {};
+    let lastUpdate = '';
+    async function loadRates() {
+      try {
+        const res = await fetch('https://api.frankfurter.app/latest?from=EUR');
+        const data = await res.json();
+        rates = data.rates;
+        rates['EUR'] = 1;
+        lastUpdate = data.date;
+        document.getElementById('resUpdated').textContent = 'Kurse vom ' + lastUpdate + ' (EZB)';
+      } catch(e) {
+        rates = {EUR:1, USD:1.08, CHF:0.95, GBP:0.85, JPY:162, CNY:7.8, CAD:1.47, AUD:1.65, SEK:11.4, NOK:11.7, DKK:7.46, PLN:4.3, CZK:25.2, HUF:385, TRY:34.5};
+        lastUpdate = 'geschätzt';
+        document.getElementById('resUpdated').textContent = 'Kurse: ' + lastUpdate + ' (Fallback)';
+      }
+    }
+    function convert() {
+      const amount = parseFloat(document.getElementById('amount').value) || 0;
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      if (Object.keys(rates).length === 0) return;
+      const inEUR = from === 'EUR' ? amount : amount / rates[from];
+      const result = to === 'EUR' ? inEUR : inEUR * rates[to];
+      const rate = to === 'EUR' ? 1/rates[from] : (from === 'EUR' ? rates[to] : rates[to] / rates[from]);
+      document.getElementById('resConverted').textContent = result.toLocaleString('de-AT', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + to;
+      document.getElementById('resRate').textContent = '1 ' + from + ' = ' + rate.toFixed(4) + ' ' + to;
+      document.getElementById('fromCurrency').textContent = from;
+      document.getElementById('result').classList.remove('hidden');
+    }
+    document.getElementById('calculate').addEventListener('click', convert);
+    document.getElementById('from').addEventListener('change', () => { document.getElementById('fromCurrency').textContent = document.getElementById('from').value; });
+    document.getElementById('to').addEventListener('change', convert);
+    document.getElementById('amount').addEventListener('input', convert);
+    loadRates().then(() => { convert(); });
+  </script>
+</body>
+</html>
