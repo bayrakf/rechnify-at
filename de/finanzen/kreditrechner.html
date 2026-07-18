@@ -187,6 +187,10 @@
 
         <div id="tilgungsplan" style="margin-top:24px;"></div>
 
+        <div class="seo-crosslink" style="margin-top: 20px; padding: 15px; background: var(--color-paper-2); border-radius: 10px; border: 1px dashed var(--color-primary); text-align: center;">
+          <p style="margin: 0;">🚗 Auto finanzieren? <a href="/de/finanzen/leasingrechner.html" style="font-weight: bold; color: var(--color-primary);">Barkauf · Kredit · Leasing vergleichen ➔</a></p>
+        </div>
+
       </div>
     </div>
     <!-- END CALCULATOR -->
@@ -249,6 +253,15 @@
         document.getElementById('resGesamt').textContent = formatEuro(gesamtBetrag);
         CalcTools.renderAmortTable(document.getElementById('tilgungsplan'), schedule, loc);
       };
+
+      // Prefill from Leasingrechner deep-link: ?betrag=&zins=&monate=
+      const q = new URLSearchParams(location.search);
+      if (q.has('betrag')) bIn.value = q.get('betrag');
+      if (q.has('zins')) zIn.value = q.get('zins');
+      if (q.has('monate')) {
+        lIn.value = q.get('monate');
+        lEIn.value = 'monate';
+      }
 
       [bIn, zIn, lIn, lEIn].forEach(el => el.addEventListener('input', calculate));
       calculate();
