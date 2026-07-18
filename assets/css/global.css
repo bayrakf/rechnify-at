@@ -1,9 +1,8 @@
 /* Hallmark · genre: modern-minimal · macrostructure: Workbench · design-system: design.md · designed-as-app
  * states: default · hover · focus · active · disabled · loading · error · success
  * contrast: pass
+ * ponytail: no @import tokens — HTML links /tokens.css in parallel (breaks CSS chain)
  */
-
-@import url('/tokens.css');
 
 /* ── Legacy aliases (inline styles in HTML pages) ─────────────── */
 :root {

@@ -223,6 +223,8 @@ document.addEventListener('DOMContentLoaded', () => {
   registerServiceWorker();
   injectHowToSchema();
   injectPrintBrand();
+  if ('requestIdleCallback' in window) requestIdleCallback(loadAdSense, { timeout: 4000 });
+  else setTimeout(loadAdSense, 2500);
 
   const darkModeToggle = document.getElementById('darkModeToggle');
   if (darkModeToggle) darkModeToggle.addEventListener('click', toggleDarkMode);
@@ -583,11 +585,25 @@ document.addEventListener('DOMContentLoaded', () => {
 function initAnalytics() {
   const code = RECHNIFY_CONFIG.goatcounterCode;
   if (!code) return;
-  window.goatcounter = { path: location.pathname + location.search + location.hash };
+  const boot = () => {
+    window.goatcounter = { path: location.pathname + location.search + location.hash };
+    const s = document.createElement('script');
+    s.async = true;
+    s.dataset.goatcounter = `https://${code}.goatcounter.com/count`;
+    s.src = 'https://gc.zgo.at/count.js';
+    document.head.appendChild(s);
+  };
+  if ('requestIdleCallback' in window) requestIdleCallback(boot, { timeout: 3500 });
+  else setTimeout(boot, 2000);
+}
+
+function loadAdSense() {
+  if (document.querySelector('script[src*="adsbygoogle.js"]')) return;
   const s = document.createElement('script');
   s.async = true;
-  s.dataset.goatcounter = `https://${code}.goatcounter.com/count`;
-  s.src = 'https://gc.zgo.at/count.js';
+  s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' +
+    encodeURIComponent(RECHNIFY_CONFIG.adsenseClient || 'ca-pub-5052220565736445');
+  s.crossOrigin = 'anonymous';
   document.head.appendChild(s);
 }
 

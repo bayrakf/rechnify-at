@@ -1,11 +1,12 @@
-/* Minimal PWA shell cache — ponytail: expand precache list if offline calc needed */
-const CACHE = 'rechnify-v1';
+/* Aggressive static cache for repeat visits — GH Pages TTL is short server-side */
+const CACHE = 'rechnify-v3';
 const PRECACHE = [
   '/',
-  '/tokens.css?v=1.2',
-  '/assets/css/global.css?v=2.7',
-  '/assets/js/global.js',
-  '/assets/js/site-config.js',
+  '/tokens.css?v=1.3',
+  '/assets/css/global.css?v=3.0',
+  '/assets/js/global.js?v=3.0',
+  '/assets/images/logo-72.webp',
+  '/assets/images/logo-72.jpg',
   '/site.webmanifest'
 ];
 
@@ -26,13 +27,27 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;
+
+  const staticAsset = /\.(?:css|js|webp|png|jpg|jpeg|svg|woff2)(?:\?|$)/i.test(url.pathname + url.search)
+    || url.pathname.startsWith('/tokens.css');
+
+  if (staticAsset) {
+    event.respondWith(
+      caches.open(CACHE).then(async (cache) => {
+        const hit = await cache.match(req);
+        const fetchPromise = fetch(req).then((res) => {
+          if (res.ok) cache.put(req, res.clone());
+          return res;
+        }).catch(() => hit);
+        return hit || fetchPromise;
+      })
+    );
+    return;
+  }
+
   event.respondWith(
-    caches.match(req).then((hit) => hit || fetch(req).then((res) => {
-      const copy = res.clone();
-      if (res.ok && new URL(req.url).origin === self.location.origin) {
-        caches.open(CACHE).then((c) => c.put(req, copy));
-      }
-      return res;
-    }).catch(() => caches.match('/')))
+    fetch(req).catch(() => caches.match(req).then((h) => h || caches.match('/')))
   );
 });

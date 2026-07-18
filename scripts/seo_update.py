@@ -194,7 +194,7 @@ def patch_html(path: Path, rel: str) -> bool:
     # Cache-bust shared CSS
     text = re.sub(
         r'/assets/css/global\.css(?:\?v=[^"\']+)?',
-        "/assets/css/global.css?v=2.8",
+        "/assets/css/global.css?v=3.0",
         text,
     )
     text = re.sub(r"/tokens\.css(?:\?v=[^\"'\\s>]+)?", "/tokens.css?v=1.2", text)
@@ -214,8 +214,7 @@ def patch_html(path: Path, rel: str) -> bool:
         if ROBOTS_META not in text:
             seo_lines.append(f"  {ROBOTS_META}")
     seo_lines.append(hreflang_block(rel))
-    if ADSENSE_SCRIPT not in text:
-        seo_lines.append(f"  {ADSENSE_SCRIPT}")
+    # AdSense loaded idle via global.js (PageSpeed)
 
     # Replace first canonical occurrence with full block
     text = text.replace(canonical_tag, "\n".join(seo_lines), 1)
