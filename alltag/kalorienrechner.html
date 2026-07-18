@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="de-AT">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalorienrechner & TDEE Rechner 2026 | rechnify.at</title>
+    <meta name="description"
+        content="Berechne deinen täglichen Kalorienbedarf (TDEE) kostenlos: BMR, Aktivitätslevel, Makros. Für Abnehmen, Muskelaufbau und Ernährung. Lokal im Browser." />
+    <link rel="canonical" href="https://rechnify.at/alltag/kalorienrechner.html" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/alltag/kalorienrechner.html" />
+    <link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/kalorienrechner.html" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Kalorienrechner & TDEE Rechner 2026 | rechnify.at" />
+    <meta property="og:description"
+        content="Berechne deinen täglichen Kalorienbedarf (TDEE) kostenlos: BMR, Aktivitätslevel, Makros." />
+    <meta property="og:url" content="https://rechnify.at/alltag/kalorienrechner.html" />
+    <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:locale" content="de_AT" />
+    <meta property="og:site_name" content="rechnify.at" />
+
+    <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#1858C7" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet"
+        media="print" onload="this.media='all'" />
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap"
+            rel="stylesheet" />
+    </noscript>
+    <link rel="stylesheet" href="/tokens.css?v=1.2" />
+    <link rel="stylesheet" href="/assets/css/global.css?v=3.1" media="print" onload="this.media='all'" />
+    <noscript>
+        <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+    </noscript>
+
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Kalorienrechner & TDEE Rechner",
+    "operatingSystem": "All",
+    "applicationCategory": "HealthApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "EUR" }
+  }
+  </script>
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Wie berechne ich meinen Kalorienbedarf?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Der Kalorienbedarf wird aus dem Grundumsatz (BMR) und dem Aktivitätslevel berechnet. Die Mifflin-St Jeor-Formel ist die aktuellste und genaueste Methode: BMR = 10 × Gewicht (kg) + 6,25 × Größe (cm) − 5 × Alter + 5 (Männer) bzw. −161 (Frauen). Multipliziert mit dem Aktivitätsfaktor erhält man den TDEE (Total Daily Energy Expenditure)." }
+    }, {
+      "@type": "Question",
+      "name": "Was ist der Unterschied zwischen BMR und TDEE?",
+      "acceptedAnswer": { "@type": "Answer", "text": "BMR (Basal Metabolic Rate) ist der Grundumsatz — die Energie, die dein Körper in völliger Ruhe benötigt. TDEE (Total Daily Energy Expenditure) ist der Gesamtbedarf inklusive Bewegung und Alltag. TDEE = BMR × Aktivitätsfaktor." }
+    }, {
+      "@type": "Question",
+      "name": "Wie viele Kalorien zum Abnehmen?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Zum Abnehmen brauchst du ein Kaloriendefizit von 300-500 kcal pro Tag unter deinem TDEE. Das entspricht ca. 0,3-0,5 kg Gewichtsverlust pro Woche. Ein größeres Defizit als 500 kcal wird nicht empfohlen, da es zu Muskelabbau und Nährstoffmangel führen kann." }
+    }]
+  }
+  </script>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+                <picture>
+                    <source srcset="/assets/images/logo-72.webp" type="image/webp" /><img
+                        src="/assets/images/logo-72.jpg" alt="rechnify Logo" width="36" height="36" decoding="async" />
+                </picture>
+                <span class="site-logo-text">rechnify<span>.at</span></span>
+            </a>
+            <nav class="site-nav" id="siteNav">
+                <a href="/">🏠 Start</a>
+                <a href="/#finanzen">💶 Finanzen</a>
+                <a href="/#arbeitszeit">⏰ Arbeitszeit</a>
+                <a href="/#familie">👶 Familie</a>
+                <a href="/#mathematik">📐 Mathematik</a>
+                <a href="/#alltag">⚖️ Alltag</a>
+            </nav>
+            <div class="header-actions">
+                <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus" type="button">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="breadcrumb" aria-label="Brotkrumen">
+        <a href="/">Start</a><span class="breadcrumb-sep">/</span>
+        <a href="/#alltag">Alltag</a><span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">Kalorienrechner</span>
+    </nav>
+
+    <main class="site-main">
+        <div class="calculator-container">
+            <div class="calculator-card">
+                <div class="calc-header">
+                    <div class="calc-icon">🔥</div>
+                    <h1 style="margin-bottom:8px;">Kalorienrechner & TDEE</h1>
+                    <p>Berechne deinen täglichen Kalorienbedarf (TDEE) inkl. BMR und Makro-Verteilung.</p>
+                </div>
+
+                <div class="calc-body">
+                    <div class="input-group">
+                        <label for="gender">Geschlecht</label>
+                        <select id="gender">
+                            <option value="male">Männlich</option>
+                            <option value="female">Weiblich</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="age">Alter</label>
+                        <div class="input-suffix">
+                            <input type="number" id="age" value="30" min="10" max="100">
+                            <span class="suffix">Jahre</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="weight">Gewicht</label>
+                        <div class="input-suffix">
+                            <input type="number" id="weight" value="75" min="30" max="300" step="0.1">
+                            <span class="suffix">kg</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="height">Größe</label>
+                        <div class="input-suffix">
+                            <input type="number" id="height" value="178" min="100" max="250">
+                            <span class="suffix">cm</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="activity">Aktivitätslevel</label>
+                        <select id="activity">
+                            <option value="1.2">Sehr leicht (kaum Bewegung, Bürojob)</option>
+                            <option value="1.375">Leicht (1-3x/Woche leichter Sport)</option>
+                            <option value="1.55" selected>Moderat (3-5x/Woche Sport)</option>
+                            <option value="1.725">Viel (6-7x/Woche intensiver Sport)</option>
+                            <option value="1.9">Sehr viel (Sportler, harte körperliche Arbeit)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="goal">Ziel</label>
+                        <select id="goal">
+                            <option value="cut">Abnehmen (−500 kcal)</option>
+                            <option value="maintain" selected>Gewicht halten</option>
+                            <option value="bulk">Muskelaufbau (+500 kcal)</option>
+                        </select>
+                    </div>
+
+                    <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Berechnen</button>
+
+                    <div id="result" class="result-box hidden">
+                        <h3>Dein Kalorienbedarf</h3>
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <div class="text-sm text-muted">Grundumsatz (BMR)</div>
+                                <div class="big-number text-success" id="resBmr">-- kcal</div>
+                                <div class="sub-number">Ruheenergiebedarf</div>
+                            </div>
+                            <div class="result-card" style="background: var(--soft-row);">
+                                <div class="text-sm text-muted">Tagesbedarf (TDEE)</div>
+                                <div class="big-number text-success" id="resTdee">-- kcal</div>
+                                <div class="sub-number">Inkl. Aktivität</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+                            <h3>Ziel-Kalorien</h3>
+                            <div style="display:flex; justify-content:space-between; margin-top: 8px;">
+                                <span class="text-muted">Empfohlene Kalorien:</span>
+                                <strong id="resGoal" class="text-success" style="font-size: 1.2em;">-- kcal</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                                <span class="text-muted">Ziel:</span>
+                                <strong id="resGoalText">--</strong>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+                            <h3>Makro-Verteilung</h3>
+                            <div style="display:flex; justify-content:space-between; margin-top: 8px;">
+                                <span class="text-muted">Protein (30%):</span>
+                                <strong id="resProtein">-- g</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                                <span class="text-muted">Kohlenhydrate (40%):</span>
+                                <strong id="resCarbs">-- g</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                                <span class="text-muted">Fett (30%):</span>
+                                <strong id="resFat">-- g</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help">
+                    <strong>Wie wird berechnet?</strong><br />
+                    Mifflin-St Jeor-Formel (aktuellste wissenschaftliche Methode). BMR = 10×Gewicht + 6,25×Größe −
+                    5×Alter + 5 (M) / −161 (W). TDEE = BMR × Aktivitätsfaktor. Keine medizinische Beratung — bei
+                    gesundheitlichen Fragen Arzt konsultieren.
+                </div>
+            </div>
+
+            <section class="content-section" style="margin-top: 32px;">
+                <h2>Wie funktioniert der Kalorienrechner?</h2>
+                <p>Unser Kalorienrechner verwendet die <strong>Mifflin-St Jeor-Formel</strong>, die als die genaueste
+                    Methode zur Berechnung des Grundumsatzes (BMR) gilt. Sie wurde 1990 entwickelt und wird von
+                    Ernährungsgesellschaften weltweit empfohlen.</p>
+
+                <h3>Was ist BMR (Grundumsatz)?</h3>
+                <p>Der Basal Metabolic Rate (BMR) ist die Energie, die dein Körper in völliger Ruhe benötigt — also die
+                    Kalorien, die verbrannt werden, wenn du den ganzen Tag im Bett liegen würdest. Das umfasst Atmung,
+                    Herzschlag, Organfunktionen und Zellerneuerung.</p>
+
+                <h3>Was ist TDEE (Tagesbedarf)?</h3>
+                <p>Der Total Daily Energy Expenditure (TDEE) ist dein tatsächlicher täglicher Kalorienbedarf. Er
+                    berechnet sich aus dem BMR multipliziert mit einem Aktivitätsfaktor:</p>
+                <ul>
+                    <li><strong>1,2</strong> — Sehr leicht (Bürojob, keine Bewegung)</li>
+                    <li><strong>1,375</strong> — Leicht (1-3x/Woche leichter Sport)</li>
+                    <li><strong>1,55</strong> — Moderat (3-5x/Woche Sport)</li>
+                    <li><strong>1,725</strong> — Viel (6-7x/Woche intensiver Sport)</li>
+                    <li><strong>1,9</strong> — Sehr viel (Sportler, harte körperliche Arbeit)</li>
+                </ul>
+
+                <h3>Kalorien zum Abnehmen</h3>
+                <p>Zum Abnehmen brauchst du ein <strong>Kaloriendefizit</strong>. Ein Defizit von 500 kcal pro Tag führt
+                    zu ca. 0,5 kg Gewichtsverlust pro Woche (1 kg Fett ≈ 7000 kcal). Größere Defizite als 500 kcal
+                    werden nicht empfohlen — sie führen zu Muskelabbau, Heißhunger und Nährstoffmangel.</p>
+
+                <h3>Kalorien zum Muskelaufbau</h3>
+                <p>Für Muskelaufbau brauchst du einen <strong>Kalorienüberschuss</strong> von 300-500 kcal. Wichtig:
+                    Gleichzeitig Krafttraining betreiben, sonst setzt du Fett an statt Muskeln. Protein-Zufuhr sollte
+                    bei 1,6-2,2 g pro kg Körpergewicht liegen.</p>
+
+                <h3>Makro-Verteilung</h3>
+                <p>Unser Rechner verwendet eine ausgewogene Verteilung:</p>
+                <ul>
+                    <li><strong>Protein (30%)</strong>: 4 kcal/g — wichtig für Muskeln und Sättigung</li>
+                    <li><strong>Kohlenhydrate (40%)</strong>: 4 kcal/g — Hauptenergiequelle</li>
+                    <li><strong>Fett (30%)</strong>: 9 kcal/g — wichtig für Hormone und Vitaminaufnahme</li>
+                </ul>
+            </section>
+
+            <section class="faq-section" style="margin-top: 32px;">
+                <h2>Häufig gestellte Fragen (FAQs)</h2>
+                <div class="faq-accordion">
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">Wie berechne ich meinen Kalorienbedarf?</button>
+                        <div class="faq-answer">
+                            <p>Der Kalorienbedarf wird aus dem Grundumsatz (BMR) und dem Aktivitätslevel berechnet. Die
+                                Mifflin-St Jeor-Formel ist die aktuellste und genaueste Methode: BMR = 10 × Gewicht (kg)
+                                + 6,25 × Größe (cm) − 5 × Alter + 5 (Männer) bzw. −161 (Frauen). Multipliziert mit dem
+                                Aktivitätsfaktor erhält man den TDEE.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">Was ist der Unterschied zwischen BMR und
+                            TDEE?</button>
+                        <div class="faq-answer">
+                            <p>BMR (Basal Metabolic Rate) ist der Grundumsatz — die Energie in völliger Ruhe. TDEE
+                                (Total Daily Energy Expenditure) ist der Gesamtbedarf inklusive Bewegung. TDEE = BMR ×
+                                Aktivitätsfaktor.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">Wie viele Kalorien zum Abnehmen?</button>
+                        <div class="faq-answer">
+                            <p>Zum Abnehmen brauchst du ein Kaloriendefizit von 300-500 kcal pro Tag unter deinem TDEE.
+                                Das entspricht ca. 0,3-0,5 kg Gewichtsverlust pro Woche. Ein größeres Defizit wird nicht
+                                empfohlen.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="site-logo-text">rechnify<span>.at</span></span>
+                    <p>Kostenlose Online-Rechner für Österreich & Deutschland.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Alltag</h3>
+                    <ul>
+                        <li><a href="/alltag/bmi-rechner.html">BMI-Rechner</a></li>
+                        <li><a href="/alltag/kalorienrechner.html">Kalorienrechner</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Info</h3>
+                    <ul>
+                        <li><a href="/ueber-uns.html">Über uns</a></li>
+                        <li><a href="/kontakt.html">Kontakt</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/global.js?v=3.1"></script>
+    <script>
+        'use strict';
+        document.getElementById('calculate').addEventListener('click', () => {
+            const gender = document.getElementById('gender').value;
+            const age = parseFloat(document.getElementById('age').value) || 30;
+            const weight = parseFloat(document.getElementById('weight').value) || 75;
+            const height = parseFloat(document.getElementById('height').value) || 178;
+            const activity = parseFloat(document.getElementById('activity').value);
+            const goal = document.getElementById('goal').value;
+
+            // Mifflin-St Jeor
+            let bmr;
+            if (gender === 'male') {
+                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+
+            const tdee = bmr * activity;
+            let goalCalories = tdee;
+            let goalText = 'Gewicht halten';
+
+            if (goal === 'cut') {
+                goalCalories = tdee - 500;
+                goalText = 'Abnehmen (−500 kcal/Tag)';
+            } else if (goal === 'bulk') {
+                goalCalories = tdee + 500;
+                goalText = 'Muskelaufbau (+500 kcal/Tag)';
+            }
+
+            const protein = (goalCalories * 0.30) / 4;
+            const carbs = (goalCalories * 0.40) / 4;
+            const fat = (goalCalories * 0.30) / 9;
+
+            document.getElementById('resBmr').textContent = Math.round(bmr).toLocaleString('de-AT') + ' kcal';
+            document.getElementById('resTdee').textContent = Math.round(tdee).toLocaleString('de-AT') + ' kcal';
+            document.getElementById('resGoal').textContent = Math.round(goalCalories).toLocaleString('de-AT') + ' kcal';
+            document.getElementById('resGoalText').textContent = goalText;
+            document.getElementById('resProtein').textContent = Math.round(protein) + ' g';
+            document.getElementById('resCarbs').textContent = Math.round(carbs) + ' g';
+            document.getElementById('resFat').textContent = Math.round(fat) + ' g';
+
+            document.getElementById('result').classList.remove('hidden');
+        });
+    </script>
+</body>
+
+</html>
