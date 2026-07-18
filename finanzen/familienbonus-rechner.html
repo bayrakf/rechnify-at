@@ -102,11 +102,31 @@
             </select>
           </div>
 
+          <div class="input-group">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+              <input type="checkbox" id="splitPartners" style="width:18px; height:18px;">
+              50/50-Aufteilung zwischen Partnern (UI-Schätzung)
+            </label>
+          </div>
+
           <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Berechnen</button>
 
           <div id="result" class="result-box hidden">
-            <div class="text-sm text-muted">Maximale Steuerersparnis für das aktuelle Jahr</div>
+            <div class="text-sm text-muted">Steuerersparnis pro Jahr</div>
             <div class="big-number text-success" id="resYearly">-- €</div>
+            <div class="sub-number" id="resMonthly">-- € pro Monat (Ø)</div>
+            
+            <div style="margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid var(--border); text-align: center;">
+                <div class="text-sm text-muted">Monatlich</div>
+                <div style="font-size: 1.4rem; font-weight: 700; color: var(--primary);" id="resMonthSplit">-- €</div>
+              </div>
+              <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid var(--border); text-align: center;">
+                <div class="text-sm text-muted">Jährlich</div>
+                <div style="font-size: 1.4rem; font-weight: 700; color: var(--success);" id="resYearSplit">-- €</div>
+              </div>
+            </div>
+            <div id="partnerSplit" style="display:none; margin-top:12px; padding:12px; background:var(--soft-row); border-radius:8px; font-size:0.9rem;"></div>
             
             <div style="margin-top: 16px; font-size: 0.9rem; text-align: left; background: white; padding: 12px; border-radius: 8px; border: 1px solid var(--border);">
               <strong>Aufschlüsselung:</strong>
@@ -176,8 +196,21 @@
       }
       
       const totalYearly = yearlyU18 + yearlyO18 + yearlyNewborn;
+      const totalMonthly = totalYearly / 12;
+      const split = document.getElementById('splitPartners').checked;
 
       document.getElementById('resYearly').textContent = totalYearly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resMonthly').textContent = totalMonthly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' € pro Monat (Ø)';
+      document.getElementById('resMonthSplit').textContent = totalMonthly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resYearSplit').textContent = totalYearly.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+
+      const partnerEl = document.getElementById('partnerSplit');
+      if (split && totalYearly > 0) {
+        partnerEl.style.display = 'block';
+        partnerEl.innerHTML = `<strong>50/50-Aufteilung:</strong> Je Partner ca. <strong>${(totalMonthly / 2).toLocaleString('de-AT', {minimumFractionDigits: 2})} €/Monat</strong> bzw. <strong>${(totalYearly / 2).toLocaleString('de-AT', {minimumFractionDigits: 2})} €/Jahr</strong> (nur UI, keine Rechtsberatung).`;
+      } else {
+        partnerEl.style.display = 'none';
+      }
       
       // Breakdown logic
       const bdUnder18 = document.getElementById('breakdownUnder18');

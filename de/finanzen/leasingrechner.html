@@ -65,6 +65,12 @@
     .result-item.highlight { font-weight: bold; font-size: 1.3em; color: var(--color-primary); border-bottom: none; }
     .result-item.success { font-weight: bold; font-size: 1.1em; color: var(--color-success); }
     .result-item.muted { color: var(--color-ink-3); font-size: 0.9em; }
+    .compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+    .compare-col { border: 1px solid var(--color-rule); border-radius: 8px; padding: 16px; }
+    .compare-col h4 { margin: 0 0 12px; font-size: 1rem; color: var(--color-primary); }
+    .compare-row { display: flex; justify-content: space-between; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--color-rule); font-size: 0.9rem; }
+    .compare-row:last-child { border-bottom: none; }
+    @media(max-width: 700px) { .compare-grid { grid-template-columns: 1fr; } }
   </style>
 
   <script type="application/ld+json">
@@ -158,34 +164,37 @@
         </div>
 
         <div class="result-box" id="resultBox">
-          <h3 style="margin-top:0; margin-bottom:16px; color:var(--color-primary);">Ergebnis</h3>
-          
-          <div class="result-item highlight">
-            <span>Monatliche Leasingrate</span>
-            <span id="resRate">-- €</span>
+          <h3 style="margin-top:0; margin-bottom:8px; color:var(--color-primary);">Vergleich: Barkauf · Kredit · Leasing</h3>
+
+          <div class="compare-grid">
+            <div class="compare-col">
+              <h4>Barkauf</h4>
+              <div class="compare-row"><span>Monatliche Belastung</span><span id="barMonat">—</span></div>
+              <div class="compare-row"><span>Gesamtkosten</span><strong id="barTotal">—</strong></div>
+              <div class="compare-row"><span>Am Ende</span><span id="barEnd">Eigentum ✓</span></div>
+            </div>
+            <div class="compare-col">
+              <h4>Kreditkauf</h4>
+              <div class="compare-row"><span>Monatliche Belastung</span><strong id="kredMonat">—</strong></div>
+              <div class="compare-row"><span>Gesamtkosten</span><strong id="kredTotal">—</strong></div>
+              <div class="compare-row"><span>Am Ende</span><span id="kredEnd">Eigentum ✓</span></div>
+            </div>
+            <div class="compare-col">
+              <h4>Leasing</h4>
+              <div class="compare-row"><span>Monatliche Belastung</span><strong id="leaseMonat">—</strong></div>
+              <div class="compare-row"><span>Nutzung (ohne Kauf)</span><span id="leaseNutzung">—</span></div>
+              <div class="compare-row"><span>+ Restwert (Eigentum)</span><span id="leaseEigentum">—</span></div>
+              <div class="compare-row"><span>Am Ende</span><span id="leaseEnd">Kein Eigentum</span></div>
+            </div>
           </div>
-          
-          <div class="result-item">
-            <span>Summe aller Leasingraten</span>
-            <span id="resSumRates">-- €</span>
-          </div>
-          <div class="result-item success" style="margin-top:8px;">
-            <span>Gesamtkosten (inkl. Kauf)</span>
-            <span id="resTotal">-- €</span>
-          </div>
-          <div class="result-item muted">
-            <span>Davon Zinsen / Gebühren</span>
-            <span id="resCosts">-- €</span>
-          </div>
+
           <div class="text-muted text-xs mt-16 text-center">
-            Hinweis: Alle Angaben sind Schätzwerte und ohne Gewähr. Leasingraten werden i.d.R. vorschüssig berechnet.
+            Schätzwerte ohne Gewähr; tatsächliche Vertragskonditionen können abweichen. Leasingraten i.d.R. vorschüssig. Keine Versicherung, NoVA, MwSt oder Kilometergebühren.
           </div>
         </div>
 
-      
-
         <div class="seo-crosslink" style="margin-top: 20px; padding: 15px; background: var(--color-paper-2); border-radius: 10px; border: 1px dashed var(--color-primary); text-align: center;">
-            <p style="margin: 0;">💡 <strong>Tipp:</strong> Leasing oder Barkauf mit Autokredit? <a href="/de/finanzen/kreditrechner.html" style="font-weight: bold; color: var(--color-primary);">Berechne die Kreditrate ➔</a></p>
+            <p style="margin: 0;">💡 <strong>Tipp:</strong> Vergleiche Barkauf, Kreditkauf und Leasing direkt oben — oder <a href="/de/finanzen/kreditrechner.html" style="font-weight: bold; color: var(--color-primary);">Tilgungsplan im Kreditrechner ➔</a></p>
         </div>
 
 </div>
@@ -221,58 +230,45 @@
   </footer>
 
   <script src="/assets/js/global.js?v=3.1"></script>
+  <script src="/assets/js/calc-tools.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const inputs = ['kaufpreis', 'anzahlung', 'laufzeit', 'restwert', 'zins'].map(id => document.getElementById(id));
-      
-      const formatEuro = (num) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(num);
-      
+      const formatEuro = (num) => CalcTools.euro(num, 'de-DE');
+
+      const leasingRate = (kaufpreis, anzahlung, monate, restwert, zinsPA) => {
+        if (monate <= 0) return 0;
+        if (zinsPA === 0) return Math.max(0, (kaufpreis - anzahlung - restwert) / monate);
+        const q = Math.pow(1 + zinsPA / 100, 1 / 12);
+        const L = kaufpreis - anzahlung;
+        const barwert = L - restwert / Math.pow(q, monate);
+        const f = (Math.pow(q, monate) - 1) / (Math.pow(q, monate - 1) * (q - 1));
+        return Math.max(0, barwert / f);
+      };
+
       const calculate = () => {
         const kaufpreis = parseFloat(inputs[0].value) || 0;
         const anzahlung = parseFloat(inputs[1].value) || 0;
         const monate = parseInt(inputs[2].value) || 0;
         const restwert = parseFloat(inputs[3].value) || 0;
         const zinsPA = parseFloat(inputs[4].value) || 0;
-        
-        if(monate <= 0) return;
+        if (monate <= 0) return;
 
-        let rate = 0;
-        
-        if (zinsPA === 0) {
-            rate = (kaufpreis - anzahlung - restwert) / monate;
-        } else {
-            // Effektiver Jahreszins -> monatlicher Zinsfaktor
-            const q_y = 1 + (zinsPA / 100);
-            const q = Math.pow(q_y, 1/12);
-            
-            const L = kaufpreis - anzahlung;
-            
-            // Vorschüssige Annuität
-            // L - R/(q^n) = r * (q^n - 1) / (q^(n) * (q - 1)) * q
-            // r = (L - R/(q^n)) / ( (q^n - 1) / (q^(n-1) * (q - 1)) )
-            
-            const r_pv = restwert / Math.pow(q, monate);
-            const barwert = L - r_pv;
-            
-            const rentenbarwertfaktor = (Math.pow(q, monate) - 1) / (Math.pow(q, monate - 1) * (q - 1));
-            rate = barwert / rentenbarwertfaktor;
-        }
-        
-        if(rate < 0) rate = 0;
+        document.getElementById('barMonat').textContent = 'Sofort zahlbar';
+        document.getElementById('barTotal').textContent = formatEuro(kaufpreis);
 
-        const sumRates = rate * monate;
-        
-        
-        const total = anzahlung + sumRates + restwert;
-        const zusatzkosten = total - kaufpreis;
-    
+        const kreditSumme = Math.max(0, kaufpreis - anzahlung);
+        const kreditRate = CalcTools.annuityRate(kreditSumme, zinsPA, monate);
+        document.getElementById('kredMonat').textContent = formatEuro(kreditRate);
+        document.getElementById('kredTotal').textContent = formatEuro(anzahlung + kreditRate * monate);
 
-        document.getElementById('resRate').textContent = formatEuro(rate);
-        document.getElementById('resSumRates').textContent = formatEuro(sumRates);
-        document.getElementById('resTotal').textContent = formatEuro(total);
-        document.getElementById('resCosts').textContent = formatEuro(zusatzkosten);
-        
-        
+        const leaseRate = leasingRate(kaufpreis, anzahlung, monate, restwert, zinsPA);
+        const sumRates = leaseRate * monate;
+        const nutzung = anzahlung + sumRates;
+        document.getElementById('leaseMonat').textContent = formatEuro(leaseRate);
+        document.getElementById('leaseNutzung').textContent = formatEuro(nutzung);
+        document.getElementById('leaseEigentum').textContent = formatEuro(nutzung + restwert);
+        document.getElementById('leaseEnd').textContent = 'Kein Eigentum (Restwert-Option)';
       };
 
       inputs.forEach(el => el.addEventListener('input', calculate));

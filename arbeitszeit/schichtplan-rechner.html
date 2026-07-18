@@ -169,6 +169,9 @@
           <div class="text-muted text-sm mt-8">
             Das entspricht <span id="resDecimal" style="font-weight:bold; color:var(--text);">0,00</span> Industriestunden.
           </div>
+          <div style="margin-top:16px; padding-top:12px; border-top:1px solid var(--border); font-size:15px;">
+            <strong>Monatlich (× 52 ÷ 12):</strong> <span id="resMonthly" style="color:var(--primary); font-weight:bold;">0,00 Std.</span>
+          </div>
         </div>
 
       </div>
@@ -250,6 +253,35 @@
     });
 
     const pad = (num) => num.toString().padStart(2, '0');
+    const LS_KEY = 'rechnify.schichtplan.v1';
+
+    function saveState() {
+      const data = {};
+      for (let i = 0; i < 7; i++) {
+        data[i] = {
+          start: document.getElementById(`start_${i}`).value,
+          end: document.getElementById(`end_${i}`).value,
+          break: document.getElementById(`break_${i}`).value,
+        };
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch (_) {}
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(LS_KEY);
+        if (!raw) return false;
+        const data = JSON.parse(raw);
+        for (let i = 0; i < 7; i++) {
+          if (data[i]) {
+            document.getElementById(`start_${i}`).value = data[i].start || '';
+            document.getElementById(`end_${i}`).value = data[i].end || '';
+            document.getElementById(`break_${i}`).value = data[i].break || '';
+          }
+        }
+        return true;
+      } catch (_) { return false; }
+    }
 
     function calculate() {
       let totalMinutes = 0;
@@ -292,6 +324,9 @@
 
       let decimal = (totalMinutes / 60).toFixed(2).replace('.', ',');
       document.getElementById('resDecimal').textContent = decimal;
+      const monthlyH = (totalMinutes / 60) * (52 / 12);
+      document.getElementById('resMonthly').textContent = monthlyH.toFixed(2).replace('.', ',') + ' Std.';
+      saveState();
     }
 
     function clearAll() {
@@ -300,6 +335,7 @@
         document.getElementById(`end_${i}`).value = '';
         document.getElementById(`break_${i}`).value = '';
       }
+      try { localStorage.removeItem(LS_KEY); } catch (_) {}
       calculate();
     }
 
@@ -307,10 +343,12 @@
       input.addEventListener('input', calculate);
     });
 
-    // Default 1 row for UX
-    document.getElementById('start_0').value = '08:00';
-    document.getElementById('end_0').value = '16:30';
-    document.getElementById('break_0').value = '30';
+    // Default or restore from localStorage
+    if (!loadState()) {
+      document.getElementById('start_0').value = '08:00';
+      document.getElementById('end_0').value = '16:30';
+      document.getElementById('break_0').value = '30';
+    }
     
     calculate();
   </script>

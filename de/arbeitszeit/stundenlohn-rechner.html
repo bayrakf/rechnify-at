@@ -204,6 +204,47 @@
             </select>
           </div>
 
+          <!-- Zuschläge (optional) -->
+          <div style="margin-top: 8px; padding: 16px; background: var(--soft-row); border: 1px solid var(--border); border-radius: 12px;">
+            <strong style="font-size: var(--text-sm);">Zuschläge (optional)</strong>
+            <p style="font-size: var(--text-xs); color: var(--muted); margin: 6px 0 12px;">Stunden × Stundenlohn × (1 + Zuschlag%). Sätze je Tarifvertrag — Beispiele nur zur Orientierung.</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+              <div class="input-group" style="margin:0;">
+                <label for="hNormal">Normale Stunden</label>
+                <input type="number" id="hNormal" min="0" step="0.5" placeholder="z.B. 160" oninput="calculate()" />
+              </div>
+              <div class="input-group" style="margin:0;">
+                <label for="zNormal">Zuschlag % (Normal)</label>
+                <input type="number" id="zNormal" min="0" step="1" placeholder="0" oninput="calculate()" />
+              </div>
+              <div class="input-group" style="margin:0;">
+                <label for="hNacht">Nachtstunden</label>
+                <input type="number" id="hNacht" min="0" step="0.5" oninput="calculate()" />
+              </div>
+              <div class="input-group" style="margin:0;">
+                <label for="zNacht">Zuschlag % Nacht <span style="font-weight:normal;color:var(--muted);">(Beispiel TV, prüfen)</span></label>
+                <input type="number" id="zNacht" min="0" step="1" placeholder="z.B. 25" oninput="calculate()" />
+              </div>
+              <div class="input-group" style="margin:0;">
+                <label for="hSonntag">Sonntagsstunden</label>
+                <input type="number" id="hSonntag" min="0" step="0.5" oninput="calculate()" />
+              </div>
+              <div class="input-group" style="margin:0;">
+                <label for="zSonntag">Zuschlag % Sonntag <span style="font-weight:normal;color:var(--muted);">(Beispiel TV, prüfen)</span></label>
+                <input type="number" id="zSonntag" min="0" step="1" placeholder="z.B. 50" oninput="calculate()" />
+              </div>
+              <div class="input-group" style="margin:0;">
+                <label for="hFeiertag">Feiertagsstunden</label>
+                <input type="number" id="hFeiertag" min="0" step="0.5" oninput="calculate()" />
+              </div>
+              <div class="input-group" style="margin:0;">
+                <label for="zFeiertag">Zuschlag % Feiertag <span style="font-weight:normal;color:var(--muted);">(Beispiel TV, prüfen)</span></label>
+                <input type="number" id="zFeiertag" min="0" step="1" placeholder="z.B. 125" oninput="calculate()" />
+              </div>
+            </div>
+            <div id="zuschlagResult" style="display:none; margin-top:12px; padding:12px; background:var(--card); border-radius:8px; font-size:var(--text-sm);"></div>
+          </div>
+
           <!-- Ergebnis -->
           <div class="result-box" id="result" style="display:none;">
             <strong style="font-size: var(--text-base); color: var(--text);">⚡ Dein Stundenlohn</strong>
@@ -489,6 +530,31 @@
       }
 
       document.getElementById('infoBox').innerHTML = info;
+
+      const zuschlagEl = document.getElementById('zuschlagResult');
+      const cats = [
+        ['Normal', 'hNormal', 'zNormal'],
+        ['Nacht', 'hNacht', 'zNacht'],
+        ['Sonntag', 'hSonntag', 'zSonntag'],
+        ['Feiertag', 'hFeiertag', 'zFeiertag'],
+      ];
+      let zuschlagTotal = 0;
+      let zuschlagLines = [];
+      cats.forEach(([label, hId, zId]) => {
+        const h = parseFloat(document.getElementById(hId).value) || 0;
+        const z = parseFloat(document.getElementById(zId).value) || 0;
+        if (h > 0) {
+          const pay = h * hourlyBrutto * (1 + z / 100);
+          zuschlagTotal += pay;
+          zuschlagLines.push(`${label}: ${h} h × ${fmt(hourlyBrutto)} × ${(1 + z / 100).toFixed(2).replace('.', ',')} = <strong>${fmt(pay)}</strong>`);
+        }
+      });
+      if (zuschlagLines.length) {
+        zuschlagEl.style.display = 'block';
+        zuschlagEl.innerHTML = `<strong>Brutto mit Zuschlägen:</strong> ${fmt(zuschlagTotal)}<br/>${zuschlagLines.join('<br/>')}`;
+      } else {
+        zuschlagEl.style.display = 'none';
+      }
 
       // Premium Insight: Freelancer Check
       const freelancerInsight = document.getElementById('freelancerInsight');

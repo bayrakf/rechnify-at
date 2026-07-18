@@ -78,6 +78,14 @@
         border-radius: 6px;
         border-left: 4px solid #16a34a;
     }
+    .bridge-overview { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-rule); }
+    .bridge-overview h3 { margin: 0 0 12px; color: var(--color-primary); font-size: 1rem; }
+    .bridge-date-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .bridge-date-chip { font-size: 0.85rem; padding: 4px 10px; border-radius: 6px; background: #fee2e2; border: 1px solid #fca5a5; }
+    .bridge-date-chip.holiday { background: #dbeafe; border-color: #93c5fd; }
+    .month-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 12px; }
+    .month-cell { font-size: 0.75rem; border: 1px solid var(--color-rule); border-radius: 8px; padding: 8px; }
+    .month-cell strong { display: block; margin-bottom: 4px; font-size: 0.8rem; }
   </style>
 </head>
 <body>
@@ -141,6 +149,10 @@
         <div id="bridgeResults">
             <!-- Results injected here -->
         </div>
+        <div id="bridgeOverview" class="bridge-overview" style="display:none;"></div>
+        <div id="bridgeExport" style="display:none; margin-top:16px;">
+          <button type="button" class="btn" id="icsExportBtn">ICS exportieren</button>
+        </div>
 
       </div>
     </div>
@@ -166,8 +178,10 @@
   </footer>
 
   <script src="/assets/js/global.js?v=3.1"></script>
+  <script src="/assets/js/calc-tools.js"></script>
   <script>
     const COUNTRY = 'AT'; // 'AT' or 'DE'
+    let lastIcsEvents = [];
     
     function getEaster(year) {
         const f = Math.floor, G = year % 19, C = f(year / 100);
@@ -232,11 +246,21 @@
         // A true algorithm would search window by window. We do simple pattern matching on holidays.
         
         const formatD = d => d.toLocaleDateString('de-DE', {day:'2-digit', month:'2-digit'});
-        
+        const toISO = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        const addVacation = (arr, ics, date, label) => {
+            const key = toISO(date);
+            if (!arr.some(x => x.key === key)) {
+                arr.push({ key, date, label });
+                ics.push({ title: `Urlaub: ${label}`, date: key, description: 'Fenstertag laut Planer' });
+            }
+        };
+
         const calculate = () => {
             const year = parseInt(yIn.value);
             const bl = blIn ? blIn.value : null;
             const holidays = getHolidays(year, bl);
+            const vacationDates = [];
+            const icsEvents = [];
             
             // Generate list of suggestions
             let html = '';
@@ -271,6 +295,7 @@
                     const takeOffDate = addDays(h.date, dayOfWeek === 2 ? -1 : 1);
                     const freeStart = addDays(h.date, dayOfWeek === 2 ? -3 : 0);
                     const freeEnd = addDays(h.date, dayOfWeek === 2 ? 0 : 3);
+                    addVacation(vacationDates, icsEvents, takeOffDate, h.name);
                     
                     html += `
                     <div class="bridge-card">
@@ -292,8 +317,8 @@
 
                 if (dayOfWeek === 3) {
                     // Wednesday holiday -> 2 days off = 5 days free
-                    const freeStart = addDays(h.date, -3); // previous weekend
-                    const freeEnd = addDays(h.date, 4); // next weekend
+                    addVacation(vacationDates, icsEvents, addDays(h.date, -2), h.name + ' (Mo)');
+                    addVacation(vacationDates, icsEvents, addDays(h.date, -1), h.name + ' (Di)');
                     
                     html += `
                     <div class="bridge-card">
@@ -315,6 +340,7 @@
                 
                 // Extra check for Ostern (Good Friday / Easter Monday)
                 if (h.name === "Ostermontag") {
+                    for (let i = 1; i <= 4; i++) addVacation(vacationDates, icsEvents, addDays(h.date, i), 'Oster-Fenstertage');
                     html += `
                     <div class="bridge-card">
                         <h3>Oster-Spezial</h3>
@@ -356,7 +382,33 @@
             if (html === '') html = '<p>Leider keine offensichtlichen 1-Tages-Brücken in diesem Jahr gefunden.</p>';
             
             res.innerHTML = html;
+            lastIcsEvents = icsEvents;
+
+            const overview = document.getElementById('bridgeOverview');
+            const exportBox = document.getElementById('bridgeExport');
+            if (vacationDates.length) {
+                vacationDates.sort((a, b) => a.date - b.date);
+                const months = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+                const byMonth = {};
+                vacationDates.forEach(v => {
+                    const m = v.date.getMonth();
+                    if (!byMonth[m]) byMonth[m] = [];
+                    byMonth[m].push(v);
+                });
+                overview.innerHTML = `<h3>Urlaubstage ${year} (Fenstertage)</h3>
+                    <div class="bridge-date-list">${vacationDates.map(v => `<span class="bridge-date-chip">${formatD(v.date)} – ${v.label}</span>`).join('')}</div>
+                    <div class="month-grid">${months.map((name, mi) => byMonth[mi] ? `<div class="month-cell"><strong>${name}</strong>${byMonth[mi].map(v => formatD(v.date)).join(', ')}</div>` : '').join('')}</div>`;
+                overview.style.display = '';
+                exportBox.style.display = '';
+            } else {
+                overview.style.display = 'none';
+                exportBox.style.display = 'none';
+            }
         };
+
+        document.getElementById('icsExportBtn').addEventListener('click', () => {
+            if (lastIcsEvents.length) CalcTools.downloadIcs(`fenstertage-${yIn.value}.ics`, lastIcsEvents);
+        });
 
         yIn.addEventListener('change', calculate);
         if (blIn) blIn.addEventListener('change', calculate);

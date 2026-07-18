@@ -206,9 +206,33 @@
             </select>
           </div>
 
+          <div style="margin: 20px 0; padding: 16px; background: var(--soft-row); border: 1px solid var(--border); border-radius: 12px;">
+            <label style="display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer;">
+              <input type="checkbox" id="simulatePartTime" style="width: 18px; height: 18px; margin: 0; cursor: pointer;">
+              ⚖️ Teilzeit-Simulator
+            </label>
+            <div id="partTimeInputs" style="margin-top: 16px; display: none; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="input-group" style="margin: 0;">
+                <label for="hoursCurrent">Aktuelle Stunden</label>
+                <div class="input-suffix">
+                  <input type="number" id="hoursCurrent" value="40" min="1" max="60">
+                  <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
+                </div>
+              </div>
+              <div class="input-group" style="margin: 0;">
+                <label for="hoursTarget">Ziel-Stunden</label>
+                <div class="input-suffix">
+                  <input type="number" id="hoursTarget" value="32" min="1" max="60">
+                  <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Berechnen</button>
 
           <div id="result" class="result-box hidden">
+            <div id="partTimeResultBox"></div>
             <h3>Dein Netto-Gehalt</h3>
             
             <div class="result-grid">
@@ -248,20 +272,35 @@
               </div>
             </div>
 
+            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+              <h3>Detaillierte Jahresabrechnung (12×)</h3>
+              <div style="display:flex; justify-content:space-between; margin-top: 8px;">
+                <span class="text-muted">Brutto (gesamt):</span>
+                <strong id="resGrossYear">-- €</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                <span class="text-muted">- Lohnsteuer:</span>
+                <strong id="resTaxYear" style="color: var(--danger);">-- €</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                <span class="text-muted">- Kirchensteuer:</span>
+                <strong id="resChurchTaxYear" style="color: var(--danger);">-- €</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                <span class="text-muted">- Sozialabgaben:</span>
+                <strong id="resSvYear" style="color: var(--danger);">-- €</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top: 12px; padding-top: 8px; border-top: 1px dashed var(--border);">
+                <span><strong>Netto (gesamt pro Jahr):</strong></span>
+                <strong id="resNetYear" class="text-success" style="font-size: 1.2em;">-- €</strong>
+              </div>
+            </div>
+
             <!-- Premium Insight: Ranking -->
             <div id="salaryRankingInsight" class="premium-insight" style="display: none; margin-top: 24px; padding: 16px; background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 1px solid #fde047; border-radius: 12px;">
               <h4 style="margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>📊</span> Premium-Wissen: Gehalts-Ranking DE</h4>
               <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #854d0e;">
                 <span id="salaryRankingText"></span>
-              </p>
-            </div>
-
-            <!-- Premium Insight: Teilzeit-Simulator -->
-            <div id="partTimeSimulator" class="premium-insight" style="display: none; margin-top: 16px; padding: 16px; background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border: 1px solid #5eead4; border-radius: 12px;">
-              <h4 style="margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>⚖️</span> Premium-Wissen: Teilzeit-Simulator</h4>
-              <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #0f766e;">
-                Lohnt sich Teilzeit? Das deutsche Steuersystem (Steuerprogression) "bestraft" Vollzeit und "belohnt" Teilzeit. Hier die Berechnung, wenn das obige dein Vollzeit-Gehalt (40h) ist:<br/><br/>
-                <span id="partTimeText"></span>
               </p>
             </div>
 
@@ -446,17 +485,47 @@
       const netMonthly = grossMonthly - svMonthly - taxMonthly - churchTaxMonthly;
       const deductions = svMonthly + taxMonthly + churchTaxMonthly;
 
-      return { netMonthly, deductions, taxMonthly, churchTaxMonthly, svMonthly };
+      return { netMonthly, deductions, taxMonthly, churchTaxMonthly, svMonthly, grossMonthly };
     }
 
+    document.getElementById('simulatePartTime').addEventListener('change', (e) => {
+      document.getElementById('partTimeInputs').style.display = e.target.checked ? 'grid' : 'none';
+    });
+
     document.getElementById('calculate').addEventListener('click', () => {
-      const grossMonthly = parseFloat(document.getElementById('grossMonthly').value) || 0;
-      if (!grossMonthly) {
+      const baseGross = parseFloat(document.getElementById('grossMonthly').value) || 0;
+      if (!baseGross) {
         document.getElementById('result').classList.add('hidden');
         return;
       }
 
+      const isPartTime = document.getElementById('simulatePartTime').checked;
+      const hoursOld = parseFloat(document.getElementById('hoursCurrent').value) || 40;
+      const hoursNew = parseFloat(document.getElementById('hoursTarget').value) || 32;
+      let calcGross = baseGross;
+      let partTimeHtml = '';
+
+      if (isPartTime && hoursOld > 0 && hoursNew > 0) {
+        calcGross = (baseGross / hoursOld) * hoursNew;
+        const resOld = calcTaxesDE(baseGross);
+        const resNew = calcTaxesDE(calcGross);
+        const bruttoLossPct = ((baseGross - calcGross) / baseGross) * 100;
+        const nettoLossPct = ((resOld.netMonthly - resNew.netMonthly) / resOld.netMonthly) * 100;
+        partTimeHtml = `<div style="margin-bottom: 24px; padding: 16px; background: #e0f2fe; border: 1px solid #bae6fd; border-radius: 12px; color: #0369a1;">
+          <h4 style="margin-top: 0; color: #0284c7;">⚖️ Teilzeit-Ergebnis (${hoursNew}h statt ${hoursOld}h)</h4>
+          <p style="font-size: 14px; margin-bottom: 12px;">Brutto −${bruttoLossPct.toFixed(1)}%, Netto nur −${nettoLossPct.toFixed(1)}% (Steuerprogression).</p>
+          <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px; margin-bottom: 4px;">
+            <span>Neues Brutto:</span> <strong>${calcGross.toLocaleString('de-DE', {maximumFractionDigits: 2})} €</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px;">
+            <span>Neues Netto:</span> <strong style="color:var(--success);">${resNew.netMonthly.toLocaleString('de-DE', {maximumFractionDigits: 2})} €</strong>
+          </div>
+        </div>`;
+      }
+
+      const grossMonthly = calcGross;
       const res = calcTaxesDE(grossMonthly);
+      document.getElementById('partTimeResultBox').innerHTML = partTimeHtml;
 
       document.getElementById('resNetMonthly').textContent = res.netMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       document.getElementById('resDeductionsMonthly').textContent = res.deductions.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
@@ -466,6 +535,12 @@
       document.getElementById('resChurchTaxMonthly').textContent = '- ' + res.churchTaxMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       document.getElementById('resSvMonthly').textContent = '- ' + res.svMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       document.getElementById('resNetMonthlyDetail').textContent = res.netMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+
+      document.getElementById('resGrossYear').textContent = (grossMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resTaxYear').textContent = '- ' + (res.taxMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resChurchTaxYear').textContent = '- ' + (res.churchTaxMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resSvYear').textContent = '- ' + (res.svMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resNetYear').textContent = (res.netMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
 
       // --- Premium Insight: Ranking ---
       const rankingInsight = document.getElementById('salaryRankingInsight');
@@ -488,32 +563,6 @@
         rankingInsight.style.display = 'block';
       } else {
         rankingInsight.style.display = 'none';
-      }
-
-      // --- Premium Insight: Teilzeit-Simulator ---
-      const partTimeSimulator = document.getElementById('partTimeSimulator');
-      const partTimeText = document.getElementById('partTimeText');
-      if (grossMonthly > 1500) {
-        // Assume 40h is 100%
-        const gross30h = grossMonthly * 0.75;
-        const res30h = calcTaxesDE(gross30h);
-        
-        const gross20h = grossMonthly * 0.50;
-        const res20h = calcTaxesDE(gross20h);
-
-        const perc30h = ((res30h.netMonthly / res.netMonthly) * 100).toFixed(1);
-        const perc20h = ((res20h.netMonthly / res.netMonthly) * 100).toFixed(1);
-
-        partTimeText.innerHTML = `
-          <strong>30 Stunden (75% Arbeit):</strong> Du verdienst <strong>${res30h.netMonthly.toLocaleString('de-DE', {minimumFractionDigits:0, maximumFractionDigits:0})} € netto</strong>.<br/>
-          <em>Aha-Effekt:</em> Du arbeitest 25% weniger, verlierst aber nur <strong>${(100 - perc30h).toFixed(1)}%</strong> von deinem Netto! Du behältst ${perc30h}% deines Geldes.<br/><br/>
-          
-          <strong>20 Stunden (50% Arbeit):</strong> Du verdienst <strong>${res20h.netMonthly.toLocaleString('de-DE', {minimumFractionDigits:0, maximumFractionDigits:0})} € netto</strong>.<br/>
-          <em>Aha-Effekt:</em> Du arbeitest nur die Hälfte, behältst aber stolze <strong>${perc20h}%</strong> deines Nettos!
-        `;
-        partTimeSimulator.style.display = 'block';
-      } else {
-        partTimeSimulator.style.display = 'none';
       }
 
       // --- Premium Insight: Inflations-Schock ---

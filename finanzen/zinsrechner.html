@@ -37,6 +37,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     .calc-body { padding: 24px; }
@@ -181,6 +182,8 @@
           <div class="text-muted text-xs mt-16 text-center">
             Hinweis: Berechnet vor Abzug von Kapitalertragsteuer (KESt) oder Abgeltungssteuer.
           </div>
+          <div style="height:220px;margin-top:16px;"><canvas id="zinsChart"></canvas></div>
+          <div id="zinsYearTable" style="margin-top:12px;font-size:0.85rem;"></div>
         </div>
 
       </div>
@@ -243,31 +246,80 @@
       const rateInput = document.getElementById('rate');
       const yearsInput = document.getElementById('years');
       const compoundSelect = document.getElementById('compound');
+      let zinsChart = null;
       
       const formatEuro = (num) => new Intl.NumberFormat('de-AT', { style: 'currency', currency: 'EUR' }).format(num);
       
       const calculate = () => {
         const p = parseFloat(capitalInput.value) || 0;
         const r = parseFloat(rateInput.value) || 0;
-        const t = parseFloat(yearsInput.value) || 0;
+        const t = Math.max(0, parseInt(yearsInput.value) || 0);
         const compound = compoundSelect.value === 'yes';
         
         let endCapital = 0;
         let totalInterest = 0;
+        const labels = [];
+        const series = [];
 
-        if (compound) {
-          // Compound Interest formula: A = P(1 + r/100)^t
-          endCapital = p * Math.pow(1 + (r / 100), t);
-          totalInterest = endCapital - p;
-        } else {
-          // Simple Interest formula: I = P * r/100 * t
-          totalInterest = p * (r / 100) * t;
-          endCapital = p + totalInterest;
+        for (let y = 0; y <= t; y++) {
+          labels.push(y === 0 ? 'Start' : 'Jahr ' + y);
+          let val;
+          if (compound) {
+            val = p * Math.pow(1 + r / 100, y);
+          } else {
+            val = p + p * (r / 100) * y;
+          }
+          series.push(val);
         }
+
+        endCapital = series[series.length - 1] || p;
+        totalInterest = endCapital - p;
 
         document.getElementById('resCapital').textContent = formatEuro(p);
         document.getElementById('resInterest').textContent = formatEuro(totalInterest);
         document.getElementById('resTotal').textContent = formatEuro(endCapital);
+
+        const ctx = document.getElementById('zinsChart').getContext('2d');
+        if (zinsChart) zinsChart.destroy();
+        const isDark = document.body.classList.contains('dark-theme');
+        const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
+        const textColor = isDark ? '#e2e8f0' : '#334155';
+        zinsChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels,
+            datasets: [{
+              label: 'Kapital',
+              data: series,
+              borderColor: '#1858C7',
+              backgroundColor: 'rgba(24,88,199,0.1)',
+              fill: true,
+              tension: 0.2,
+              pointRadius: t > 20 ? 0 : 3
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { ticks: { color: textColor, maxTicksLimit: 12 }, grid: { color: gridColor } },
+              y: { ticks: { color: textColor, callback: v => formatEuro(v) }, grid: { color: gridColor } }
+            }
+          }
+        });
+
+        const tbl = document.getElementById('zinsYearTable');
+        if (t > 0 && t <= 30) {
+          let html = '<table style="width:100%;border-collapse:collapse;"><tr><th style="text-align:left;padding:4px 8px;border-bottom:1px solid var(--border);">Jahr</th><th style="text-align:right;padding:4px 8px;border-bottom:1px solid var(--border);">Kapital</th><th style="text-align:right;padding:4px 8px;border-bottom:1px solid var(--border);">Zinsen kum.</th></tr>';
+          for (let y = 1; y <= t; y++) {
+            html += `<tr><td style="padding:4px 8px;">${y}</td><td style="text-align:right;padding:4px 8px;">${formatEuro(series[y])}</td><td style="text-align:right;padding:4px 8px;">${formatEuro(series[y] - p)}</td></tr>`;
+          }
+          html += '</table>';
+          tbl.innerHTML = html;
+        } else {
+          tbl.innerHTML = '';
+        }
       };
 
       capitalInput.addEventListener('input', calculate);

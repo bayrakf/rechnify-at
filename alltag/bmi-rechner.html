@@ -174,7 +174,20 @@
           <div class="result-value" id="resValue">22.9</div>
           <div class="result-label" id="resLabel" style="color: #2ecc71;">Normalgewicht</div>
           
-          <div class="scale-bar">
+          <svg viewBox="0 0 200 110" style="width:100%; max-width:280px; margin:16px auto; display:block;" aria-hidden="true">
+            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e2e8f0" stroke-width="14" stroke-linecap="round"/>
+            <path d="M 20 100 A 80 80 0 0 1 56 36" fill="none" stroke="#3498db" stroke-width="14"/>
+            <path d="M 56 36 A 80 80 0 0 1 100 20" fill="none" stroke="#2ecc71" stroke-width="14"/>
+            <path d="M 100 20 A 80 80 0 0 1 144 36" fill="none" stroke="#f1c40f" stroke-width="14"/>
+            <path d="M 144 36 A 80 80 0 0 1 180 100" fill="none" stroke="#e74c3c" stroke-width="14"/>
+            <line id="gaugeNeedle" x1="100" y1="100" x2="100" y2="28" stroke="var(--text)" stroke-width="3" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+            <circle cx="100" cy="100" r="5" fill="var(--text)"/>
+          </svg>
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--muted); max-width:280px; margin:0 auto;">
+            <span>18,5</span><span>25</span><span>30</span>
+          </div>
+          
+          <div class="scale-bar" style="display:none;">
             <div class="scale-marker" id="resMarker"></div>
           </div>
           
@@ -234,6 +247,16 @@
       const resValue = document.getElementById('resValue');
       const resLabel = document.getElementById('resLabel');
       const resMarker = document.getElementById('resMarker');
+      const gaugeNeedle = document.getElementById('gaugeNeedle');
+      
+      const bmiToAngle = (bmi) => {
+        let pos;
+        if (bmi < 18.5) pos = ((bmi - 10) / (18.5 - 10)) * 25;
+        else if (bmi < 25) pos = 25 + ((bmi - 18.5) / (25 - 18.5)) * 25;
+        else if (bmi < 30) pos = 50 + ((bmi - 25) / (30 - 25)) * 25;
+        else pos = 75 + ((bmi - 30) / (40 - 30)) * 25;
+        return Math.min(90, Math.max(-90, (pos / 100) * 180 - 90));
+      };
       
       const calculate = () => {
         const heightCm = parseFloat(heightInput.value);
@@ -280,7 +303,8 @@
           resLabel.textContent = label;
           resLabel.style.color = color;
           resValue.style.color = color;
-          resMarker.style.left = markerPos + '%';
+          if (resMarker) resMarker.style.left = markerPos + '%';
+          if (gaugeNeedle) gaugeNeedle.setAttribute('transform', `rotate(${bmiToAngle(bmi)} 100 100)`);
         } else {
           resValue.textContent = '-';
           resLabel.textContent = '';

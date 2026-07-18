@@ -216,7 +216,9 @@
         </div>
 
         <div class="alert alert-info mt-16" id="explanationBox">
-          <strong>Rechenweg:</strong> <span id="formulaText"></span>
+          <strong>Rechenweg (Dreisatz):</strong>
+          <div id="formulaText" style="margin-top:8px;"></div>
+          <div id="stepsText" style="margin-top:12px; font-size:0.95rem; line-height:1.6;"></div>
         </div>
 
       </div>
@@ -263,6 +265,7 @@
       const valC = document.getElementById('valC');
       const valX = document.getElementById('valX');
       const formulaText = document.getElementById('formulaText');
+      const stepsText = document.getElementById('stepsText');
       const toggleBtns = document.querySelectorAll('.toggle-btn');
       
       let mode = 'proportional';
@@ -281,16 +284,26 @@
           if (mode === 'proportional') {
             const x = (B * C) / A;
             valX.value = formatResult(x);
-            formulaText.innerHTML = `(${formatResult(B)} × ${formatResult(C)}) ÷ ${formatResult(A)} = <strong>${formatResult(x)}</strong>`;
+            formulaText.innerHTML = `${formatResult(A)} / ${formatResult(B)} = ${formatResult(C)} / <strong>x</strong>`;
+            stepsText.innerHTML = `
+              1. Verhältnis: ${formatResult(A)} entspricht ${formatResult(B)}<br/>
+              2. Gesucht: ${formatResult(C)} entspricht x<br/>
+              3. x = (${formatResult(B)} × ${formatResult(C)}) ÷ ${formatResult(A)}<br/>
+              4. x = <strong>${formatResult(x)}</strong>`;
           } else {
-            // antiproportional
             const x = (A * B) / C;
             valX.value = formatResult(x);
-            formulaText.innerHTML = `(${formatResult(A)} × ${formatResult(B)}) ÷ ${formatResult(C)} = <strong>${formatResult(x)}</strong>`;
+            formulaText.innerHTML = `${formatResult(A)} / ${formatResult(B)} = ${formatResult(C)} / <strong>x</strong> (antiproportional)`;
+            stepsText.innerHTML = `
+              1. Je mehr → desto weniger (Produkt konstant)<br/>
+              2. ${formatResult(A)} × ${formatResult(B)} = ${formatResult(C)} × x<br/>
+              3. x = (${formatResult(A)} × ${formatResult(B)}) ÷ ${formatResult(C)}<br/>
+              4. x = <strong>${formatResult(x)}</strong>`;
           }
         } else {
           valX.value = '';
           formulaText.textContent = 'Bitte alle Felder mit gültigen Zahlen füllen.';
+          stepsText.textContent = '';
         }
       };
 

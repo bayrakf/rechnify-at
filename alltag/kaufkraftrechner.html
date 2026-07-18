@@ -158,6 +158,9 @@
             <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 14px;" id="inflationDetails">
               <strong>Kumulierte Inflation:</strong> <span id="resTotalInflation">--%</span>
             </div>
+            <div style="margin-top: 20px; max-height: 280px;">
+              <canvas id="kaufkraftChart"></canvas>
+            </div>
           </div>
         </div>
 
@@ -196,9 +199,12 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="/assets/js/global.js?v=3.1"></script>
   <script>
     'use strict';
+
+    let kaufkraftChart = null;
 
     // Historical inflation rates (p.a.)
     const INFLATION_DATA = {
@@ -281,6 +287,50 @@
       
       document.getElementById('resCompensation').textContent = compensation.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       document.getElementById('resTotalInflation').textContent = (totalInflation >= 0 ? '+' : '') + totalInflation.toFixed(1) + '%';
+
+      // Chart: Kaufkraft über die Jahre (Anker = Startjahr)
+      const labels = [];
+      const powerData = [];
+      const yFrom = Math.min(startYear, endYear);
+      const yTo = Math.max(startYear, endYear);
+      const kaufkraftAt = (y) => {
+        if (y === startYear) return initialAmount;
+        let f = 1;
+        if (y > startYear) {
+          for (let yy = startYear; yy < y; yy++) f *= 1 + rates[yy];
+          return initialAmount / f;
+        }
+        for (let yy = y; yy < startYear; yy++) f *= 1 + rates[yy];
+        return initialAmount * f;
+      };
+      for (let y = yFrom; y <= yTo; y++) {
+        labels.push(String(y));
+        powerData.push(kaufkraftAt(y));
+      }
+      const ctx = document.getElementById('kaufkraftChart');
+      if (kaufkraftChart) kaufkraftChart.destroy();
+      kaufkraftChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: `Kaufkraft (${initialAmount} € von ${startYear})`,
+            data: powerData,
+            borderColor: '#1858C7',
+            backgroundColor: 'rgba(24,88,199,0.1)',
+            fill: true,
+            tension: 0.2,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { ticks: { callback: (v) => v.toLocaleString('de-AT') + ' €' } },
+          },
+        },
+      });
 
       document.getElementById('result').classList.remove('hidden');
     });

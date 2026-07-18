@@ -169,6 +169,11 @@
           <div style="font-size:16px; color:var(--text); margin-bottom:16px;">
             Du wurdest an einem <strong id="resWeekday" style="color:var(--primary);">...</strong> geboren.
           </div>
+
+          <div id="nextBirthdayBox" style="margin-bottom:16px; padding:14px; background:var(--card); border:1px solid var(--border); border-radius:10px; font-size:15px;">
+            <strong>Nächster Geburtstag:</strong> <span id="resNextBirthday">–</span><br/>
+            <span class="text-muted" style="font-size:13px;">Noch <strong id="resDaysUntil" style="color:var(--primary);">–</strong> Tage</span>
+          </div>
           
           <div class="stats-grid">
             <div class="stat-box">
@@ -267,6 +272,13 @@
         
         document.getElementById('resExact').textContent = exactStr.join(', ');
 
+        // Next birthday from target date
+        let nextBday = new Date(d2.getFullYear(), d1.getMonth(), d1.getDate());
+        if (nextBday <= d2) nextBday = new Date(d2.getFullYear() + 1, d1.getMonth(), d1.getDate());
+        const daysUntil = Math.ceil((nextBday - d2) / (1000 * 3600 * 24));
+        document.getElementById('resNextBirthday').textContent = nextBday.toLocaleDateString('de-AT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        document.getElementById('resDaysUntil').textContent = daysUntil.toLocaleString('de-AT');
+
         // Totals
         const timeDiff = Math.abs(d2.getTime() - d1.getTime());
         const totalDays = Math.floor(timeDiff / (1000 * 3600 * 24));
@@ -284,6 +296,7 @@
 
       birthDate.addEventListener('input', calculate);
       targetDate.addEventListener('input', calculate);
+      calculate();
     });
   </script>
 </body>

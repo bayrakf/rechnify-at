@@ -95,6 +95,10 @@
       color: white;
       border-color: var(--primary);
     }
+    .line-row { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 8px; margin-bottom: 8px; align-items: end; }
+    .line-row input, .line-row select { padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--input); color: var(--text); font-size: 14px; width: 100%; }
+    .line-del { background: none; border: none; cursor: pointer; color: var(--muted); padding: 10px; }
+    @media(max-width: 600px) { .line-row { grid-template-columns: 1fr; } }
   </style>
 
   <script type="application/ld+json">
@@ -165,43 +169,25 @@
           </div>
         </div>
 
-        <div class="input-row">
-          <div class="input-group">
-            <label id="amountLabel" for="amount">Nettobetrag (€)</label>
-            <input type="number" id="amount" min="0" step="0.01" placeholder="z. B. 100" value="100" />
-          </div>
-          
-          <div class="input-group">
-            <label>Steuersatz (Österreich)</label>
-            <select id="taxRate">
-              <option value="20" selected>20 % (Normalsteuersatz)</option>
-              <option value="13">13 % (Ermäßigt, z.B. Tierfutter, Kino)</option>
-              <option value="10">10 % (Ermäßigt, z.B. Lebensmittel, Miete)</option>
-              <option value="custom">Anderer Steuersatz...</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="input-group hidden" id="customRateWrapper">
-          <label for="customRate">Eigener Steuersatz (%)</label>
-          <input type="number" id="customRate" min="0" step="0.1" placeholder="z. B. 19" />
-          <div class="text-muted text-xs mt-4">Für Rechnungen ins Ausland (z.B. Deutschland 19%).</div>
-        </div>
+        <div id="linesContainer"></div>
+        <button type="button" class="btn" id="addLineBtn" style="margin-bottom:16px;">+ Position</button>
 
         <div class="result-box" id="resultBox">
-          <h3 style="margin-top:0; margin-bottom:16px; color:var(--primary);">Ergebnis</h3>
-          
+          <h3 style="margin-top:0; margin-bottom:16px; color:var(--primary);">Summe</h3>
           <div class="result-item">
-            <span id="resNettoLabel">Nettobetrag (ohne MwSt)</span>
-            <span id="resNetto" class="highlight">100,00 €</span>
+            <span>Nettobetrag gesamt</span>
+            <span id="resNetto" class="highlight">0,00 €</span>
           </div>
           <div class="result-item">
-            <span>Zuzüglich <span id="resTaxPercent">20</span>% MwSt</span>
-            <span id="resTax">20,00 €</span>
+            <span>MwSt gesamt</span>
+            <span id="resTax">0,00 €</span>
           </div>
           <div class="result-item success" style="margin-top:8px;">
-            <span id="resBruttoLabel">Bruttobetrag (inkl. MwSt)</span>
-            <span id="resBrutto">120,00 €</span>
+            <span>Bruttobetrag gesamt</span>
+            <span id="resBrutto">0,00 €</span>
+          </div>
+          <div style="margin-top:12px;text-align:right;">
+            <button type="button" class="btn" id="csvExportBtn" style="font-size:0.85rem;">CSV exportieren</button>
           </div>
         </div>
 
@@ -297,83 +283,66 @@
   </footer>
 
   <script src="/assets/js/global.js?v=3.1"></script>
+  <script src="/assets/js/calc-tools.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const amountInput = document.getElementById('amount');
-      const amountLabel = document.getElementById('amountLabel');
-      const taxRateSelect = document.getElementById('taxRate');
-      const customRateWrapper = document.getElementById('customRateWrapper');
-      const customRateInput = document.getElementById('customRate');
-      const toggleBtns = document.querySelectorAll('.toggle-btn');
-      
+      const linesContainer = document.getElementById('linesContainer');
+      const toggleBtns = document.querySelectorAll('#mode-toggles .toggle-btn');
       let mode = 'net2gross';
+      let lastRows = [];
 
-      const formatEuro = (num) => new Intl.NumberFormat('de-AT', { style: 'currency', currency: 'EUR' }).format(num);
-      
-      const calculate = () => {
-        let amount = parseFloat(amountInput.value.replace(',', '.')) || 0;
-        let rate = taxRateSelect.value;
-        
-        if (rate === 'custom') {
-          customRateWrapper.classList.remove('hidden');
-          rate = parseFloat(customRateInput.value.replace(',', '.')) || 0;
-        } else {
-          customRateWrapper.classList.add('hidden');
-          rate = parseFloat(rate);
-        }
+      const rateOptions = `
+        <option value="20">20 %</option>
+        <option value="13">13 %</option>
+        <option value="10">10 %</option>`;
 
-        let netto = 0;
-        let brutto = 0;
-        let tax = 0;
+      const formatEuro = (num) => CalcTools.euro(num, 'de-AT');
 
-        if (mode === 'net2gross') {
-          netto = amount;
-          tax = netto * (rate / 100);
-          brutto = netto + tax;
-        } else {
-          brutto = amount;
-          netto = brutto / (1 + (rate / 100));
-          tax = brutto - netto;
-        }
-
-        document.getElementById('resTaxPercent').textContent = rate.toString().replace('.', ',');
-        document.getElementById('resNetto').textContent = formatEuro(netto);
-        document.getElementById('resTax').textContent = formatEuro(tax);
-        document.getElementById('resBrutto').textContent = formatEuro(brutto);
+      const addLine = (desc = '', amount = '', rate = '20') => {
+        const row = document.createElement('div');
+        row.className = 'line-row';
+        row.innerHTML = `
+          <input type="text" class="line-desc" placeholder="Bezeichnung" value="${desc}" />
+          <input type="number" class="line-amount" min="0" step="0.01" placeholder="Betrag" value="${amount}" />
+          <select class="line-rate">${rateOptions}</select>
+          <button type="button" class="line-del" title="Entfernen">✕</button>`;
+        row.querySelector('.line-rate').value = rate;
+        row.querySelector('.line-del').onclick = () => { if (linesContainer.children.length > 1) { row.remove(); calculate(); } };
+        row.querySelectorAll('input, select').forEach(el => el.addEventListener('input', calculate));
+        linesContainer.appendChild(row);
+        calculate();
       };
 
-      // Event Listeners
-      amountInput.addEventListener('input', calculate);
-      taxRateSelect.addEventListener('change', calculate);
-      customRateInput.addEventListener('input', calculate);
-
-      toggleBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          toggleBtns.forEach(b => b.classList.remove('active'));
-          e.currentTarget.classList.add('active');
-          mode = e.currentTarget.dataset.mode;
-          
-          if (mode === 'net2gross') {
-            amountLabel.textContent = 'Nettobetrag (€)';
-            document.getElementById('resNettoLabel').style.fontWeight = 'bold';
-            document.getElementById('resNettoLabel').style.color = 'var(--text)';
-            document.getElementById('resBruttoLabel').style.fontWeight = 'normal';
-          } else {
-            amountLabel.textContent = 'Bruttobetrag (€)';
-            document.getElementById('resBruttoLabel').style.fontWeight = 'bold';
-            document.getElementById('resBruttoLabel').style.color = 'var(--text)';
-            document.getElementById('resNettoLabel').style.fontWeight = 'normal';
-          }
-          
-          calculate();
+      const calculate = () => {
+        let sumNet = 0, sumTax = 0, sumGross = 0;
+        lastRows = [];
+        linesContainer.querySelectorAll('.line-row').forEach(row => {
+          const desc = row.querySelector('.line-desc').value;
+          const amount = parseFloat(row.querySelector('.line-amount').value.replace(',', '.')) || 0;
+          const rate = parseFloat(row.querySelector('.line-rate').value) || 0;
+          let net = 0, gross = 0, tax = 0;
+          if (mode === 'net2gross') { net = amount; tax = net * (rate / 100); gross = net + tax; }
+          else { gross = amount; net = gross / (1 + rate / 100); tax = gross - net; }
+          sumNet += net; sumTax += tax; sumGross += gross;
+          lastRows.push([desc, net.toFixed(2), rate + ' %', tax.toFixed(2), gross.toFixed(2)]);
         });
-      });
+        document.getElementById('resNetto').textContent = formatEuro(sumNet);
+        document.getElementById('resTax').textContent = formatEuro(sumTax);
+        document.getElementById('resBrutto').textContent = formatEuro(sumGross);
+      };
 
-      // Initial setup
-      document.getElementById('resNettoLabel').style.fontWeight = 'bold';
-      document.getElementById('resNettoLabel').style.color = 'var(--text)';
-      document.getElementById('resBruttoLabel').style.fontWeight = 'normal';
-      calculate();
+      document.getElementById('addLineBtn').onclick = () => addLine();
+      document.getElementById('csvExportBtn').onclick = () =>
+        CalcTools.downloadCsv('mwst-positionen.csv', ['Bezeichnung', 'Netto', 'Satz', 'MwSt', 'Brutto'], lastRows);
+
+      toggleBtns.forEach(btn => btn.addEventListener('click', (e) => {
+        toggleBtns.forEach(b => b.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+        mode = e.currentTarget.dataset.mode;
+        calculate();
+      }));
+
+      addLine('', '100', '20');
     });
   </script>
 </body>

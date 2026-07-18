@@ -48,6 +48,8 @@
     .result-card.highlight { border-color: var(--primary); background: var(--primary-light); }
     .info-box { background: var(--info-bg); border: 1px solid #bfdbfe; border-radius: 12px; padding: 14px 16px; font-size: var(--text-sm); color: var(--info); margin-top: 20px; }
     @media (max-width: 600px) { .result-grid { grid-template-columns: 1fr; } }
+    .result-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 700px) { .result-grid-3 { grid-template-columns: 1fr; } }
   </style>
 
   <script type="application/ld+json">
@@ -130,17 +132,32 @@
 
           <!-- Ergebnis -->
           <div class="result-box" id="result" style="display:none;">
-            <strong style="font-size: var(--text-base); color: var(--text);">📊 Berechnungsergebnis (monatlich)</strong>
-            <div class="result-grid">
+            <strong style="font-size: var(--text-base); color: var(--text);">📊 Berechnungsergebnis</strong>
+            <div class="result-grid result-grid-3">
               <div class="result-card highlight">
-                <div class="label">Pendlerpauschale (LSt-Minderung)</div>
-                <div class="value" id="resPauschaleValue">–</div>
-                <div class="sub">reduziert das Steuerbrutto</div>
+                <div class="label">Pendlerpauschale (Jahr)</div>
+                <div class="value" id="resPauschaleYear">–</div>
+                <div class="sub">LSt-Minderung pro Jahr</div>
+              </div>
+              <div class="result-card highlight">
+                <div class="label">Pendlereuro (Jahr)</div>
+                <div class="value" id="resEuroYear">–</div>
+                <div class="sub">Direkt-Abzug pro Jahr</div>
               </div>
               <div class="result-card">
-                <div class="label">Pendlereuro (Direkt-Abzug)</div>
+                <div class="label">Monatlicher Anteil</div>
+                <div class="value" id="resMonthCombined">–</div>
+                <div class="sub">Pauschale + Pendlereuro ÷ 12</div>
+              </div>
+            </div>
+            <div class="result-grid" style="margin-top:12px;">
+              <div class="result-card">
+                <div class="label">Pendlerpauschale (Monat)</div>
+                <div class="value" id="resPauschaleValue">–</div>
+              </div>
+              <div class="result-card">
+                <div class="label">Pendlereuro (Monat)</div>
                 <div class="value" id="resEuroValue">–</div>
-                <div class="sub">zieht Steuer direkt ab</div>
               </div>
             </div>
             <div class="info-box" id="infoBox"></div>
@@ -183,6 +200,8 @@
           <a href="/finanzen/gehaltsrechner.html" class="sidebar-link">Gehaltsrechner AT</a>
           <a href="/finanzen/sachbezugsrechner.html" class="sidebar-link">Sachbezugsrechner</a>
           <a href="/finanzen/pendlerrechner.html" class="sidebar-link active">Pendlerrechner</a>
+          <a href="/de/finanzen/pendlerrechner.html" class="sidebar-link">Pendlerrechner DE</a>
+          <a href="/finanzen/pendler-oesterreich-vs-deutschland.html" class="sidebar-link">AT vs. DE Vergleich</a>
           <a href="/finanzen/mwst-rechner.html" class="sidebar-link">MwSt-Rechner</a>
           <a href="/finanzen/kryptosteuerrechner.html" class="sidebar-link">Krypto-Steuer</a>
         </div>
@@ -195,6 +214,8 @@
       <div class="related-tools" style="margin-top: 32px; padding: 24px; background: white; border-radius: 12px; border: 1px solid var(--border);">
         <h3 style="margin-top: 0;">🔗 Passende Rechner</h3>
         <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+          <li><a href="/finanzen/pendler-oesterreich-vs-deutschland.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Pendlerpauschale AT vs. DE</a></li>
+          <li><a href="/de/finanzen/pendlerrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Pendlerrechner (Deutschland)</a></li>
           <li><a href="/finanzen/gehaltsrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Brutto-Netto Gehaltsrechner</a></li>
           <li><a href="/arbeitszeit/ueberstundenrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Überstundenrechner (inkl. Steuerfreibetrag)</a></li>
           <li><a href="/finanzen/pendlerrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Pendlerrechner (Österreich)</a></li>
@@ -270,32 +291,20 @@
 
       const pauschaleMonth = (pauschaleYear / 12) * multiplier;
       const euroMonth = (euroYear / 12) * multiplier;
+      const pauschaleYearAdj = pauschaleYear * multiplier;
+      const euroYearAdj = euroYear * multiplier;
 
       resBox.style.display = '';
+      document.getElementById('resPauschaleYear').textContent = pauschaleYearAdj.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      document.getElementById('resEuroYear').textContent = euroYearAdj.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      document.getElementById('resMonthCombined').textContent = (pauschaleMonth + euroMonth).toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
       resPauschale.textContent = pauschaleMonth.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
       resEuro.textContent = euroMonth.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 
-      let text = `Du erhältst eine monatliche Lohnsteuer-Minderung von <strong>${pauschaleMonth.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong> und zusätzlich einen Direkt-Abzug von der Lohnsteuer (Pendlereuro) in Höhe von <strong>${euroMonth.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong>.`;
+      let text = `Jahreswerte: Pendlerpauschale <strong>${pauschaleYearAdj.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong> und Pendlereuro <strong>${euroYearAdj.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong> (${dist} km × 2 €/km). Monatlich entspricht das <strong>${pauschaleMonth.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong> Pauschale plus <strong>${euroMonth.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong> Pendlereuro.`;
       if (multiplier < 1.0) {
-        text += ` (Aliquotiert auf ${days === 'two-thirds' ? '2/3' : '1/3'} wegen Teilanwesenheit/Homeoffice).`;
+        text += ` (Aliquotiert auf ${days === 'two-thirds' ? '2/3' : '1/3'} wegen Teilanwesenheit).`;
       }
-      
-      // Premium Feature: Home-Office Wahrheit
-      const assumedSpeedKmh = 60; // 60 km/h average
-      const oneWayHours = dist / assumedSpeedKmh;
-      const roundTripHours = oneWayHours * 2;
-      const yearlyHOdays = 46; // Approx. 1 day/week over a year (52 - 5 weeks vacation - 1 week sick/holidays)
-      const hoursSavedYear = roundTripHours * yearlyHOdays;
-      const assumedFuelCostPerKm = 0.15; // €0.15/km pure fuel cost
-      const moneySavedYear = dist * 2 * assumedFuelCostPerKm * yearlyHOdays;
-
-      if (dist > 0) {
-        text += `<div style="margin-top: 16px; padding: 12px; background: #f3e5f5; border: 1px solid #e1bee7; border-radius: 8px; color: #4a148c; font-size: 14px;">
-          <strong>🏠 Home-Office Wahrheit (Premium Info)</strong><br/>
-          Würdest du nur <strong>1 Tag mehr pro Woche</strong> im Home-Office arbeiten, würdest du dir im Jahr ca. <strong>${hoursSavedYear.toFixed(0)} Stunden Fahrtzeit (Lebenszeit)</strong> und rund <strong>${moneySavedYear.toLocaleString('de-AT', { maximumFractionDigits: 0 })} € an reinen Spritkosten</strong> sparen!
-        </div>`;
-      }
-
       info.innerHTML = text;
     }
   </script>

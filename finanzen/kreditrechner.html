@@ -177,12 +177,16 @@
             <span id="resGesamt">-- €</span>
           </div>
           
+          <p class="text-muted text-xs mt-16" style="margin-bottom:0;">Annuitätendarlehen, konstante Rate, nachschüssige Verzinsung. Kein Effektivzins/Nebenkosten.</p>
+
           <div class="broker-box">
               <h4 style="margin-top:0; margin-bottom:8px;">Kredite vergleichen und sparen</h4>
               <p style="margin:0; font-size:14px; color: var(--color-ink-2);">Finde die besten Konditionen für deinen Ratenkredit.</p>
               <a href="https://durchblicker.at/kredit" target="_blank" rel="noopener nofollow" class="broker-btn">Zum Kreditvergleich</a>
           </div>
         </div>
+
+        <div id="tilgungsplan" style="margin-top:24px;"></div>
 
       </div>
     </div>
@@ -216,14 +220,15 @@
   </footer>
 
   <script src="/assets/js/global.js?v=3.1"></script>
+  <script src="/assets/js/calc-tools.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const bIn = document.getElementById('kreditbetrag');
       const zIn = document.getElementById('zinssatz');
       const lIn = document.getElementById('laufzeit');
       const lEIn = document.getElementById('laufzeitEinheit');
-      
-      const formatEuro = (num) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(num);
+      const loc = 'de-AT';
+      const formatEuro = (num) => CalcTools.euro(num, loc);
       
       const calculate = () => {
         const k = parseFloat(bIn.value) || 0;
@@ -234,26 +239,16 @@
         
         let monate = l;
         if(lEIn.value === 'jahre') monate = l * 12;
-        
-        let rate = 0;
-        let gesamtZinsen = 0;
-        let gesamtBetrag = 0;
 
-        if (p === 0) {
-            rate = k / monate;
-            gesamtZinsen = 0;
-            gesamtBetrag = k;
-        } else {
-            // PMT formula: R = K * (q^n * (q - 1)) / (q^n - 1)
-            const q = 1 + (p / 100 / 12);
-            rate = k * (Math.pow(q, monate) * (q - 1)) / (Math.pow(q, monate) - 1);
-            gesamtBetrag = rate * monate;
-            gesamtZinsen = gesamtBetrag - k;
-        }
+        const schedule = CalcTools.amortSchedule(k, p, monate);
+        const rate = schedule.rate;
+        const gesamtBetrag = schedule.rows.reduce((s, r) => s + r.payment, 0);
+        const gesamtZinsen = gesamtBetrag - k;
 
         document.getElementById('resRate').textContent = formatEuro(rate);
         document.getElementById('resZinsen').textContent = formatEuro(gesamtZinsen);
         document.getElementById('resGesamt').textContent = formatEuro(gesamtBetrag);
+        CalcTools.renderAmortTable(document.getElementById('tilgungsplan'), schedule, loc);
       };
 
       [bIn, zIn, lIn, lEIn].forEach(el => el.addEventListener('input', calculate));

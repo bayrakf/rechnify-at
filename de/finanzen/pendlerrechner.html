@@ -142,14 +142,6 @@
               </div>
             </div>
             <div class="info-box" id="infoBox"></div>
-            
-            <!-- Premium Insight: Home-Office Wahrheit -->
-            <div id="hoPremiumInsight" class="premium-insight" style="display: none; margin-top: 24px; padding: 16px; background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 1px solid #fde047; border-radius: 12px;">
-              <h4 style="margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>💡</span> Premium-Wissen: Die Home-Office Wahrheit</h4>
-              <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #854d0e;">
-                <span id="hoAdviceText"></span>
-              </p>
-            </div>
           </div>
 
         </div>
@@ -189,6 +181,8 @@
           <a href="/de/finanzen/gehaltsrechner.html" class="sidebar-link">Gehaltsrechner DE</a>
           <a href="/de/finanzen/sachbezugsrechner.html" class="sidebar-link">Sachbezug DE</a>
           <a href="/de/finanzen/pendlerrechner.html" class="sidebar-link active">Pendlerrechner DE</a>
+          <a href="/finanzen/pendlerrechner.html" class="sidebar-link">Pendlerrechner AT</a>
+          <a href="/finanzen/pendler-oesterreich-vs-deutschland.html" class="sidebar-link">AT vs. DE Vergleich</a>
           <a href="/de/finanzen/mwst-rechner.html" class="sidebar-link">MwSt DE</a>
           <a href="/de/finanzen/kryptosteuerrechner.html" class="sidebar-link">Krypto-Steuer DE</a>
         </div>
@@ -200,6 +194,8 @@
       <div class="related-tools" style="margin-top: 32px; padding: 24px; background: white; border-radius: 12px; border: 1px solid var(--border);">
         <h3 style="margin-top: 0;">🔗 Passende Rechner</h3>
         <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+          <li><a href="/finanzen/pendler-oesterreich-vs-deutschland.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Pendlerpauschale AT vs. DE</a></li>
+          <li><a href="/finanzen/pendlerrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Pendlerrechner (Österreich)</a></li>
           <li><a href="/de/finanzen/gehaltsrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Brutto-Netto Gehaltsrechner</a></li>
           <li><a href="/de/arbeitszeit/ueberstundenrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Überstundenrechner (inkl. Steuerfreibetrag)</a></li>
           <li><a href="/de/finanzen/pendlerrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Pendlerrechner (Österreich)</a></li>
@@ -258,27 +254,7 @@
       resYear.textContent = totalYear.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
       resMonth.textContent = totalMonth.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 
-      info.innerHTML = `Deine Entfernungspauschale beträgt insgesamt <strong>${totalYear.toLocaleString('de-DE', { maximumFractionDigits: 2 })} €</strong> für das Kalenderjahr. Diesen Betrag kannst du als Werbungskosten geltend machen, um dein steuerpflichtiges Einkommen zu senken.`;
-
-      // Premium Insight: Home-Office Wahrheit
-      const hoInsight = document.getElementById('hoPremiumInsight');
-      const hoAdviceText = document.getElementById('hoAdviceText');
-      if (vehicle === 'car' && dist > 5) {
-        // Average cost per km for a car in DE (fuel, wear, insurance) ~0.35 EUR
-        const realCostPerKm = 0.35;
-        const totalKmYear = dist * 2 * days; // hin und zurück
-        const totalRealCost = totalKmYear * realCostPerKm;
-        
-        // Time lost: assuming average 60km/h -> 1 min per km
-        const timeLostMins = dist * 2 * days;
-        const timeLostHours = Math.round(timeLostMins / 60);
-        const timeLostDays = Math.round(timeLostHours / 24);
-
-        hoAdviceText.innerHTML = `Lohnt sich das Pendeln wirklich? Die Pauschale senkt zwar deine Steuern, aber dein Auto kostet echtes Geld! Bei ${dist} km einfachem Weg (und ${days} Tagen) fährst du <strong>${totalKmYear.toLocaleString('de-DE')} km</strong> im Jahr. Das kostet dich geschätzt <strong>${totalRealCost.toLocaleString('de-DE', {maximumFractionDigits: 0})} €</strong> (Sprit & Verschleiß).<br/><br/>Noch krasser: Du sitzt rund <strong>${timeLostHours} Stunden</strong> (${timeLostDays} ganze Tage!) deines Jahres im Auto. Verhandle lieber über 1-2 Tage mehr Home-Office!`;
-        hoInsight.style.display = 'block';
-      } else {
-        hoInsight.style.display = 'none';
-      }
+      info.innerHTML = `Entfernungspauschale <strong>${dailyPauschale.toLocaleString('de-DE', { maximumFractionDigits: 2 })} €/Tag</strong> × <strong>${days} Arbeitstage</strong> = <strong>${totalYear.toLocaleString('de-DE', { maximumFractionDigits: 2 })} €</strong> im Jahr${vehicle === 'public' && dailyPauschale * days > 4500 ? ' (Höchstbetrag 4.500 €)' : ''}. Monatlicher Schnitt: <strong>${totalMonth.toLocaleString('de-DE', { maximumFractionDigits: 2 })} €</strong>.`;
     }
   </script>
 

@@ -154,6 +154,17 @@
           <div class="text-muted text-xs mt-4">Wird vom bereits rabattierten Preis abgezogen.</div>
         </div>
 
+        <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--border);">
+          <h3 style="margin-top:0;">Warenkorb (mehrere Artikel)</h3>
+          <div id="cartLines"></div>
+          <button type="button" class="btn" id="addCartLine" style="margin-top:8px; font-size:0.9rem;">+ Artikel</button>
+          <div id="cartResult" style="display:none; margin-top:16px; padding:16px; background:var(--soft-row); border-radius:10px;">
+            <div class="result-item"><span>Summe vor Rabatt</span><span id="cartSumBefore">–</span></div>
+            <div class="result-item highlight" style="color:var(--danger);"><span>Ersparnis gesamt</span><span id="cartSumSaved">–</span></div>
+            <div class="result-item success"><span>Warenkorb Endpreis</span><span id="cartSumAfter">–</span></div>
+          </div>
+        </div>
+
         <div class="result-box" id="resultBox">
           <h3 style="margin-top:0; margin-bottom:16px; color:var(--primary);">Ergebnis</h3>
           
@@ -229,14 +240,15 @@
     </div>
   </footer>
 
+  <script src="/assets/js/calc-tools.js"></script>
   <script src="/assets/js/global.js?v=3.1"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const priceInput = document.getElementById('price');
       const discountInput = document.getElementById('discount');
       const addDiscountInput = document.getElementById('additionalDiscount');
-      
-      const formatEuro = (num) => new Intl.NumberFormat('de-AT', { style: 'currency', currency: 'EUR' }).format(num);
+      const cartLines = document.getElementById('cartLines');
+      const formatEuro = (n) => CalcTools.euro(n, 'de-AT');
       
       const calculate = () => {
         const price = parseFloat(priceInput.value) || 0;
@@ -261,7 +273,44 @@
         } else {
           document.getElementById('skontoInfo').innerHTML = '';
         }
+        calcCart();
       };
+
+      function calcCart() {
+        const rows = cartLines.querySelectorAll('.cart-row');
+        let before = 0, after = 0;
+        rows.forEach((row) => {
+          const p = parseFloat(row.querySelector('.cart-price').value) || 0;
+          const d = parseFloat(row.querySelector('.cart-disc').value) || 0;
+          before += p;
+          after += p * (1 - d / 100);
+        });
+        const cartRes = document.getElementById('cartResult');
+        if (rows.length && before > 0) {
+          cartRes.style.display = 'block';
+          document.getElementById('cartSumBefore').textContent = formatEuro(before);
+          document.getElementById('cartSumSaved').textContent = formatEuro(before - after);
+          document.getElementById('cartSumAfter').textContent = formatEuro(after);
+        } else {
+          cartRes.style.display = 'none';
+        }
+      }
+
+      function addLine() {
+        const row = document.createElement('div');
+        row.className = 'cart-row input-row';
+        row.style.marginBottom = '8px';
+        row.innerHTML = `
+          <div class="input-group" style="margin:0;"><input type="number" class="cart-price" min="0" step="0.01" placeholder="Preis €" /></div>
+          <div class="input-group" style="margin:0;"><input type="number" class="cart-disc" min="0" max="100" step="0.1" placeholder="Rabatt %" /></div>`;
+        row.querySelectorAll('input').forEach((inp) => inp.addEventListener('input', calcCart));
+        cartLines.appendChild(row);
+        calcCart();
+      }
+
+      document.getElementById('addCartLine').addEventListener('click', addLine);
+      addLine();
+      addLine();
 
       priceInput.addEventListener('input', calculate);
       discountInput.addEventListener('input', calculate);

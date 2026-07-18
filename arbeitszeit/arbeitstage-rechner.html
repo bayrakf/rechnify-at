@@ -144,6 +144,10 @@
             <span id="resTotal">--</span>
           </div>
           <div class="result-item muted">
+            <span>Wochentage (Mo–Fr)</span>
+            <span id="resWeekdays">--</span>
+          </div>
+          <div class="result-item muted">
             <span>Davon Wochenenden</span>
             <span id="resWeekend">--</span>
           </div>
@@ -275,6 +279,7 @@
 
             let total = 0;
             let weekends = 0;
+            let weekdays = 0;
             let holidaysCount = 0;
             let working = 0;
             
@@ -298,9 +303,11 @@
                 if (isWeekend) {
                     weekends++;
                 } else if (isHoliday) {
+                    weekdays++;
                     holidaysCount++;
                     foundHolidays.push(`${isHoliday.name} (${currentDate.toLocaleDateString('de-DE')})`);
                 } else {
+                    weekdays++;
                     working++;
                 }
                 
@@ -308,6 +315,7 @@
             }
             
             document.getElementById('resTotal').textContent = total;
+            document.getElementById('resWeekdays').textContent = weekdays;
             document.getElementById('resWeekend').textContent = weekends;
             document.getElementById('resHolidays').textContent = holidaysCount;
             document.getElementById('resWorking').textContent = working;
