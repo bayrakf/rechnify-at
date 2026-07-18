@@ -10,7 +10,7 @@ DE_SOURCE = BASE_DIR / 'de' / 'finanzen' / 'gehaltsrechner.html'
 DE_TARGET_DIR = BASE_DIR / 'de' / 'finanzen' / 'brutto-netto'
 DE_TARGET_DIR.mkdir(parents=True, exist_ok=True)
 
-AMOUNTS = list(range(1500, 6100, 100)) + [6500, 7000, 8000, 9000, 10000]
+AMOUNTS = list(range(1500, 5010, 10)) + list(range(5200, 6100, 100)) + [6500, 7000, 8000, 9000, 10000]
 
 def generate_unique_content(amount, formatted_amount, country_name, country_code):
     """Generate unique SEO content for each pSEO page."""
@@ -153,7 +153,35 @@ PROFESSIONS = {
     "architekt": {"name": "Architekt", "amount": 4000},
     "ingenieur": {"name": "Ingenieur", "amount": 4500},
     "lkw-fahrer": {"name": "LKW-Fahrer", "amount": 2400},
-    "friseur": {"name": "Friseur", "amount": 1800}
+    "friseur": {"name": "Friseur", "amount": 1800},
+    "pfleger": {"name": "Pflegekraft", "amount": 2800},
+    "koch": {"name": "Koch", "amount": 2400},
+    "anwalt": {"name": "Anwalt", "amount": 5500},
+    "steuerberater": {"name": "Steuerberater", "amount": 6000},
+    "apotheker": {"name": "Apotheker", "amount": 5200},
+    "psychologe": {"name": "Psychologe", "amount": 4500},
+    "maschinenbau": {"name": "Maschinenbauer", "amount": 4300},
+    "bauingenieur": {"name": "Bauingenieur", "amount": 4000},
+    "pilot": {"name": "Pilot", "amount": 8500},
+    "zahnarzt": {"name": "Zahnarzt", "amount": 7500},
+    "tierarzt": {"name": "Tierarzt", "amount": 5000},
+    "professor": {"name": "Professor", "amount": 6500},
+    "data-scientist": {"name": "Data Scientist", "amount": 5000},
+    "product-manager": {"name": "Product Manager", "amount": 5500},
+    "controller": {"name": "Controller", "amount": 3800},
+    "filialleiter": {"name": "Filialleiter", "amount": 3200},
+    "abteilungsleiter": {"name": "Abteilungsleiter", "amount": 5000},
+    "geschaeftsfuehrer": {"name": "Geschäftsführer", "amount": 8000},
+    "it-admin": {"name": "IT-Administrator", "amount": 3900},
+    "devops": {"name": "DevOps-Engineer", "amount": 4600},
+    "ux-designer": {"name": "UX-Designer", "amount": 4200},
+    "sales": {"name": "Vertriebsmitarbeiter", "amount": 3300},
+    "hr-manager": {"name": "HR-Manager", "amount": 4000},
+    "sekretaerin": {"name": "Sekretärin", "amount": 2200},
+    "handwerker": {"name": "Handwerker", "amount": 2500},
+    "fahrer": {"name": "Berufskraftfahrer", "amount": 2400},
+    "sozialarbeiter": {"name": "Sozialarbeiter", "amount": 3000},
+    "physiotherapeut": {"name": "Physiotherapeut", "amount": 2700}
 }
 
 def generate_profession_content(name, amount, country_name, country_code):

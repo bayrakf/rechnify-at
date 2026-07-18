@@ -1249,4 +1249,28 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/embed.html"/>
     <lastmod>2026-07-18</lastmod>
   </url>
+  <url>
+    <loc>https://rechnify.at/blog/</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/blog/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/blog/"/>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://rechnify.at/blog/gehaltsverhandlung-tipps.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/blog/gehaltsverhandlung-tipps.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/blog/gehaltsverhandlung-tipps.html"/>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://rechnify.at/blog/13-14-gehalt-erklaert.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/blog/13-14-gehalt-erklaert.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/blog/13-14-gehalt-erklaert.html"/>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://rechnify.at/blog/pendlerpauschale-guide.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/blog/pendlerpauschale-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/blog/pendlerpauschale-guide.html"/>
+    <lastmod>2026-07-18</lastmod>
+  </url>
 </urlset>

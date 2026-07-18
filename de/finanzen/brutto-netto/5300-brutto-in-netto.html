@@ -9,7 +9,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="5.300 € Brutto in Netto Deutschland" />
   <meta property="og:description" content="Wie viel Netto bleibt von 5.300 € Brutto in Deutschland? Berechne sofort Steuern, SV und dein Gehalt für 2026." />
-  <meta property="og:url" content="https://rechnify.at/de/finanzen/brutto-netto/5300-brutto-in-netto.html" />
+  <meta property="og:url" content="https://rechnify.at/de/finanzen/gehaltsrechner.html" />
   <meta property="og:locale" content="de_DE" />
   <meta property="og:locale:alternate" content="de_AT" />
   <meta property="og:site_name" content="rechnify.at" />
@@ -20,9 +20,7 @@
   <meta name="twitter:image" content="https://rechnify.at/assets/images/og-share.png" />
   <link rel="canonical" href="https://rechnify.at/de/finanzen/brutto-netto/5300-brutto-in-netto.html" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/de/finanzen/brutto-netto/5300-brutto-in-netto.html" />
-  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/de/finanzen/brutto-netto/5300-brutto-in-netto.html" />
-
+      
   <!-- Web icons -->
   <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
   <link rel="icon" type="image/png" sizes="512x512" href="/assets/images/favicon-512x512.png" />
@@ -174,7 +172,7 @@
         
         <div class="calc-header">
           <div class="calc-icon">💶</div>
-          <h1>5.300 € Brutto in Netto</h1>
+          <h1 style="margin-bottom:8px;">Brutto Netto Rechner Deutschland</h1>
           <p>Berechne dein Netto-Gehalt inklusive Sozialabgaben und Lohnsteuer für Deutschland.</p>
         </div>
 
@@ -205,9 +203,33 @@
             </select>
           </div>
 
+          <div style="margin: 20px 0; padding: 16px; background: var(--soft-row); border: 1px solid var(--border); border-radius: 12px;">
+            <label style="display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer;">
+              <input type="checkbox" id="simulatePartTime" style="width: 18px; height: 18px; margin: 0; cursor: pointer;">
+              ⚖️ Teilzeit-Simulator
+            </label>
+            <div id="partTimeInputs" style="margin-top: 16px; display: none; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="input-group" style="margin: 0;">
+                <label for="hoursCurrent">Aktuelle Stunden</label>
+                <div class="input-suffix">
+                  <input type="number" id="hoursCurrent" value="40" min="1" max="60">
+                  <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
+                </div>
+              </div>
+              <div class="input-group" style="margin: 0;">
+                <label for="hoursTarget">Ziel-Stunden</label>
+                <div class="input-suffix">
+                  <input type="number" id="hoursTarget" value="32" min="1" max="60">
+                  <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Berechnen</button>
 
           <div id="result" class="result-box hidden">
+            <div id="partTimeResultBox"></div>
             <h3>Dein Netto-Gehalt</h3>
             
             <div class="result-grid">
@@ -247,6 +269,51 @@
               </div>
             </div>
 
+            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+              <h3>Detaillierte Jahresabrechnung (12×)</h3>
+              <div style="display:flex; justify-content:space-between; margin-top: 8px;">
+                <span class="text-muted">Brutto (gesamt):</span>
+                <strong id="resGrossYear">-- €</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                <span class="text-muted">- Lohnsteuer:</span>
+                <strong id="resTaxYear" style="color: var(--danger);">-- €</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                <span class="text-muted">- Kirchensteuer:</span>
+                <strong id="resChurchTaxYear" style="color: var(--danger);">-- €</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                <span class="text-muted">- Sozialabgaben:</span>
+                <strong id="resSvYear" style="color: var(--danger);">-- €</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top: 12px; padding-top: 8px; border-top: 1px dashed var(--border);">
+                <span><strong>Netto (gesamt pro Jahr):</strong></span>
+                <strong id="resNetYear" class="text-success" style="font-size: 1.2em;">-- €</strong>
+              </div>
+            </div>
+
+            <!-- Premium Insight: Ranking -->
+            <div id="salaryRankingInsight" class="premium-insight" style="display: none; margin-top: 24px; padding: 16px; background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 1px solid #fde047; border-radius: 12px;">
+              <h4 style="margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>📊</span> Premium-Wissen: Gehalts-Ranking DE</h4>
+              <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #854d0e;">
+                <span id="salaryRankingText"></span>
+              </p>
+            </div>
+
+            <!-- Premium Insight: Kaufkraft Schock -->
+            <div id="inflationInsight" class="premium-insight" style="display: none; margin-top: 16px; padding: 16px; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border: 1px solid #fca5a5; border-radius: 12px;">
+              <h4 style="margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>📉</span> Premium-Wissen: Inflations-Schock</h4>
+              <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #991b1b;">
+                <span id="inflationText"></span>
+              </p>
+            </div>
+
+            
+            <div class="seo-crosslink" style="margin-top: 24px; padding: 15px; background: var(--color-paper-2); border-radius: 10px; border: 1px dashed var(--color-primary); text-align: center;">
+                <p style="margin: 0; font-size: 0.95rem;">💡 <strong>Tipp:</strong> Überlegst du deine Stunden zu reduzieren? <br><a href="/de/arbeitszeit/teilzeitrechner.html" style="font-weight: bold; color: var(--color-primary); display: inline-block; margin-top: 5px;">Nutze unseren Teilzeitrechner ➔</a></p>
+            </div>
+
             <!-- Premium Girokonto Affiliate Box -->
             <div class="affiliate-banner">
               <div class="icon">💳</div>
@@ -266,6 +333,51 @@
         </div>
 
       </div>
+
+      
+      <!-- Unique SEO Content -->
+      <section class="content-section" style="margin-top: 32px;">
+        <h2>Was bedeutet 5.300 € Brutto in Deutschland?</h2>
+        <p>Ein Bruttogehalt von 5.300 € pro Monat fällt in Deutschland in die Kategorie <strong>hohes Einkommen</strong>. Das bedeutet: Du liegst deutlich über dem österreichischen Median von ca. 3.650 € (Median Vollzeit, Stand 2024/2025). Bei diesem Einkommen ist die Steuerprogression bereits spürbar.</p>
+        
+        <h3>So setzt sich dein Netto zusammen</h3>
+        <p>Von deinen 5.300 € Brutto werden folgende Abzüge berechnet:</p>
+        <ul>
+          <li><strong>Sozialversicherung (SV):</strong> ca. 0 € (0.00% des Bruttos)</li>
+          <li><strong>Lohnsteuer:</strong> Progressiver Steuertarif, abhängig von der Steuerstufe</li>
+          <li><strong>Verkehrsabsetzbetrag:</strong> Wird steuermindernd berücksichtigt (nur AT)</li>
+        </ul>
+        <p>Das <strong>Netto-Gehalt</strong> ist der Betrag, der tatsächlich auf dein Konto überwiesen wird. Verwende den Rechner oben, um die exakte Summe zu sehen.</p>
+        
+        <h3>5.300 € Brutto – Jahresübersicht</h3>
+        <p>Bei 5.300 € monatlichem Brutto ergeben sich folgende Jahreswerte:</p>
+        <ul>
+          <li><strong>Brutto pro Jahr (14 Gehälter):</strong> ca. 74,200 € (inkl. 13./14. Gehalt)</li>
+          <li><strong>Brutto pro Jahr (12 Gehälter):</strong> ca. 63,600 € (ohne Sonderzahlungen)</li>
+          <li><strong>Netto pro Jahr:</strong> Siehe Rechner-Ergebnis oben</li>
+        </ul>
+        
+        <h3>Steuerliche Besonderheiten bei 5.300 €</h3>
+        <p>In Deutschland greift der progressive Einkommensteuertarif. Bei diesem Einkommen befindest du dich in einer mittleren Steuerstufe. Kirchensteuer und Solidaritätszuschlag können zusätzlich anfallen.</p>
+        
+        <h3>Vergleich mit anderen Gehältern</h3>
+        <p>Wie schneidet 5.300 € im Vergleich ab? Hier eine Übersicht:</p>
+        <ul>
+          <li><a href="/de/finanzen/brutto-netto/5200-brutto-in-netto.html">5200 € Brutto → Netto</a></li>
+          <li><a href="/de/finanzen/brutto-netto/5400-brutto-in-netto.html">5400 € Brutto → Netto</a></li>
+          <li><a href="/de/finanzen/brutto-netto/3000-brutto-in-netto.html">3.000 € Brutto → Netto (Median-Nähe)</a></li>
+          <li><a href="/de/finanzen/brutto-netto/5000-brutto-in-netto.html">5.000 € Brutto → Netto (gehobenes Einkommen)</a></li>
+        </ul>
+        
+        <h3>Tipps für 5.300 € Brutto</h3>
+        <p>Bei einem Bruttogehalt von 5.300 € solltest du folgende Aspekte beachten:</p>
+        <ul>
+          <li><strong>Gehaltsverhandlung:</strong> Prüfe, ob du Werbungskosten oder Sonderausgaben geltend machen kannst.</li>
+          <li><strong>Lohnnebenkosten:</strong> Dein Arbeitgeber zahlt zusätzlich ca. 1590 € an Lohnnebenkosten (SV-Dienstgeberanteil, Kommunalsteuer etc.)</li>
+          <li><strong>Kaufkraft:</strong> Bei 2,5% Inflation pro Jahr verliert dein Netto in 5 Jahren ca. 636 € an Kaufkraft</li>
+          <li><strong>Altersvorsorge:</strong> Bei diesem Einkommen lohnt sich die freiwillige Höherversicherung oder ein privater Pensionsfonds.</li>
+        </ul>
+      </section>
 
       <!-- FAQ Section -->
       <section class="faq-section" style="margin-top: 32px;">
@@ -334,17 +446,7 @@
         </ul>
       </div>
 </div>
-  
-<nav class="seo-triangle" aria-label="Weiterführende Links">
-  <h2>Weiterrechnen</h2>
-  <ul>
-    <li><a href="/de/finanzen/gehaltsrechner.html">Gehaltsrechner Deutschland</a></li>
-    <li><a href="/de/finanzen/brutto-netto/">Brutto-Netto Übersicht DE</a></li>
-    <li><a href="/finanzen/brutto-netto-oesterreich-vs-deutschland.html">AT vs DE Vergleich</a></li>
-  </ul>
-</nav>
-
-</main>
+  </main>
 
   <footer class="site-footer">
     <div class="footer-inner">
@@ -375,8 +477,7 @@
   <script>
     'use strict';
 
-    document.getElementById('calculate').addEventListener('click', () => {
-      const grossMonthly = parseFloat(document.getElementById('grossMonthly').value) || 0;
+    function calcTaxesDE(grossMonthly) {
       const taxClass = document.getElementById('taxClass').value;
       const churchTaxInput = document.getElementById('churchTax').value === 'ja';
       
@@ -426,14 +527,98 @@
       const netMonthly = grossMonthly - svMonthly - taxMonthly - churchTaxMonthly;
       const deductions = svMonthly + taxMonthly + churchTaxMonthly;
 
-      document.getElementById('resNetMonthly').textContent = netMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resDeductionsMonthly').textContent = deductions.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      return { netMonthly, deductions, taxMonthly, churchTaxMonthly, svMonthly, grossMonthly };
+    }
+
+    document.getElementById('simulatePartTime').addEventListener('change', (e) => {
+      document.getElementById('partTimeInputs').style.display = e.target.checked ? 'grid' : 'none';
+    });
+
+    document.getElementById('calculate').addEventListener('click', () => {
+      const baseGross = parseFloat(document.getElementById('grossMonthly').value) || 0;
+      if (!baseGross) {
+        document.getElementById('result').classList.add('hidden');
+        return;
+      }
+
+      const isPartTime = document.getElementById('simulatePartTime').checked;
+      const hoursOld = parseFloat(document.getElementById('hoursCurrent').value) || 40;
+      const hoursNew = parseFloat(document.getElementById('hoursTarget').value) || 32;
+      let calcGross = baseGross;
+      let partTimeHtml = '';
+
+      if (isPartTime && hoursOld > 0 && hoursNew > 0) {
+        calcGross = (baseGross / hoursOld) * hoursNew;
+        const resOld = calcTaxesDE(baseGross);
+        const resNew = calcTaxesDE(calcGross);
+        const bruttoLossPct = ((baseGross - calcGross) / baseGross) * 100;
+        const nettoLossPct = ((resOld.netMonthly - resNew.netMonthly) / resOld.netMonthly) * 100;
+        partTimeHtml = `<div style="margin-bottom: 24px; padding: 16px; background: #e0f2fe; border: 1px solid #bae6fd; border-radius: 12px; color: #0369a1;">
+          <h4 style="margin-top: 0; color: #0284c7;">⚖️ Teilzeit-Ergebnis (${hoursNew}h statt ${hoursOld}h)</h4>
+          <p style="font-size: 14px; margin-bottom: 12px;">Brutto −${bruttoLossPct.toFixed(1)}%, Netto nur −${nettoLossPct.toFixed(1)}% (Steuerprogression).</p>
+          <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px; margin-bottom: 4px;">
+            <span>Neues Brutto:</span> <strong>${calcGross.toLocaleString('de-DE', {maximumFractionDigits: 2})} €</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px;">
+            <span>Neues Netto:</span> <strong style="color:var(--success);">${resNew.netMonthly.toLocaleString('de-DE', {maximumFractionDigits: 2})} €</strong>
+          </div>
+        </div>`;
+      }
+
+      const grossMonthly = calcGross;
+      const res = calcTaxesDE(grossMonthly);
+      document.getElementById('partTimeResultBox').innerHTML = partTimeHtml;
+
+      document.getElementById('resNetMonthly').textContent = res.netMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resDeductionsMonthly').textContent = res.deductions.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       
       document.getElementById('resGrossMonthlyDetail').textContent = grossMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resTaxMonthly').textContent = '- ' + taxMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resChurchTaxMonthly').textContent = '- ' + churchTaxMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resSvMonthly').textContent = '- ' + svMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resNetMonthlyDetail').textContent = netMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resTaxMonthly').textContent = '- ' + res.taxMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resChurchTaxMonthly').textContent = '- ' + res.churchTaxMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resSvMonthly').textContent = '- ' + res.svMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resNetMonthlyDetail').textContent = res.netMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+
+      document.getElementById('resGrossYear').textContent = (grossMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resTaxYear').textContent = '- ' + (res.taxMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resChurchTaxYear').textContent = '- ' + (res.churchTaxMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resSvYear').textContent = '- ' + (res.svMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resNetYear').textContent = (res.netMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+
+      // --- Premium Insight: Ranking ---
+      const rankingInsight = document.getElementById('salaryRankingInsight');
+      const rankingText = document.getElementById('salaryRankingText');
+      // DE Median is around 4100
+      if (grossMonthly > 0) {
+        let text = "";
+        const medianDE = 4100;
+        if (grossMonthly < medianDE) {
+          const diff = medianDE - grossMonthly;
+          text = `Dein Gehalt liegt aktuell unter dem deutschen Durchschnitt (Median-Brutto für Vollzeit: ca. <strong>4.100 €</strong>). Dir fehlen noch <strong>${diff.toLocaleString('de-DE')} €</strong> bis zur "Mitte" der Gesellschaft. Ein guter Grund für die nächste Gehaltsverhandlung!`;
+        } else if (grossMonthly >= medianDE && grossMonthly < 6000) {
+          text = `Stark! Du verdienst mehr als der Median (Mitte) der Deutschen (Vollzeit: ca. <strong>4.100 €</strong>). Du gehörst zur soliden Mittel- bis Oberschicht.`;
+        } else if (grossMonthly >= 6000 && grossMonthly < 8000) {
+          text = `Respekt! Mit diesem Gehalt gehörst du zu den absoluten Top-Verdienern (Top 10-15%) in Deutschland. Dein Einkommen ist weit überdurchschnittlich.`;
+        } else {
+          text = `Wow. Du verdienst mehr als ca. 95% der Angestellten in Deutschland. Du zählst zur absoluten Einkommens-Elite.`;
+        }
+        rankingText.innerHTML = text;
+        rankingInsight.style.display = 'block';
+      } else {
+        rankingInsight.style.display = 'none';
+      }
+
+      // --- Premium Insight: Inflations-Schock ---
+      const inflationInsight = document.getElementById('inflationInsight');
+      const inflationText = document.getElementById('inflationText');
+      if (res.netMonthly > 0) {
+        // 2.5% inflation per year for 5 years
+        const purchasingPower = res.netMonthly * Math.pow(1 - 0.025, 5);
+        const lost = res.netMonthly - purchasingPower;
+        inflationText.innerHTML = `Wenn du in den nächsten 5 Jahren keine Gehaltserhöhung bekommst, ist dein aktuelles Netto durch die Inflation (EZB-Ziel 2,5%) in 5 Jahren nur noch ca. <strong>${purchasingPower.toLocaleString('de-DE', {maximumFractionDigits:0})} €</strong> wert. Du verlierst schleichend <strong>${lost.toLocaleString('de-DE', {maximumFractionDigits:0})} €</strong> an Kaufkraft pro Monat!`;
+        inflationInsight.style.display = 'block';
+      } else {
+        inflationInsight.style.display = 'none';
+      }
 
       document.getElementById('result').classList.remove('hidden');
     });
