@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 HOST = "rechnify.at"
-KEY = "3918c0cce64149b781fa93692aaea8ce"
+KEY = "48203d7933394ec8a062b7e4943c572b"
 KEY_LOCATION = f"https://{HOST}/{KEY}.txt"
 ENDPOINT = "https://api.indexnow.org/indexnow"
 SITEMAP = ROOT / "sitemap.xml"

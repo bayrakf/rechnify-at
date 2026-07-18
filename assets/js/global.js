@@ -530,8 +530,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const nativeBtn = document.createElement('button');
     nativeBtn.type = 'button';
     nativeBtn.className = 'btn share-btn';
-    nativeBtn.textContent = 'Teilen';
-    nativeBtn.style.cssText = 'flex:1;min-width:120px;';
+    nativeBtn.textContent = 'Ergebnis teilen';
+    nativeBtn.style.cssText = 'flex:1.4;min-width:140px;';
     nativeBtn.addEventListener('click', async () => {
       if (navigator.share) {
         try { await navigator.share({ title: document.title, text: shareText, url: shareUrl }); return; } catch (e) {}
@@ -539,7 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         await navigator.clipboard.writeText(shareUrl);
         nativeBtn.textContent = 'Link kopiert';
-        setTimeout(() => { nativeBtn.textContent = 'Teilen'; }, 1600);
+        setTimeout(() => { nativeBtn.textContent = 'Ergebnis teilen'; }, 1600);
       } catch (e) {
         window.prompt('Link kopieren:', shareUrl);
       }
@@ -550,14 +550,19 @@ document.addEventListener('DOMContentLoaded', () => {
     bookmarkBtn.className = 'btn';
     bookmarkBtn.textContent = 'Seite merken';
     bookmarkBtn.style.cssText = 'flex:1;min-width:120px;';
+    const BOOKMARK_KEY = 'rechnify.bookmarkShown';
+    if (localStorage.getItem(BOOKMARK_KEY) === '1') {
+      bookmarkBtn.hidden = true;
+    }
     bookmarkBtn.addEventListener('click', () => {
-      const tip = 'Lesezeichen: Cmd/Ctrl+D — oder diesen Link speichern.';
+      const tip = 'Lesezeichen: Cmd/Ctrl+D';
       try {
         localStorage.setItem('rechnify.bookmarkHint', shareUrl);
+        localStorage.setItem(BOOKMARK_KEY, '1');
       } catch (e) {}
-      bookmarkBtn.textContent = 'Cmd/Ctrl+D';
+      bookmarkBtn.textContent = tip;
       bookmarkBtn.title = tip;
-      setTimeout(() => { bookmarkBtn.textContent = 'Seite merken'; }, 2200);
+      setTimeout(() => { bookmarkBtn.hidden = true; }, 1800);
     });
 
     const printBtn = document.createElement('button');
@@ -575,7 +580,9 @@ document.addEventListener('DOMContentLoaded', () => {
     wa.textContent = 'WhatsApp';
     wa.style.cssText = 'flex:1;min-width:120px;text-align:center;';
 
-    actionDiv.append(nativeBtn, bookmarkBtn, printBtn, wa);
+    actionDiv.append(nativeBtn, wa);
+    if (!bookmarkBtn.hidden) actionDiv.append(bookmarkBtn);
+    actionDiv.append(printBtn);
     box.appendChild(actionDiv);
     injectCalcExplain(box);
     injectAdSlot(box);

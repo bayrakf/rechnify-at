@@ -53,6 +53,10 @@ LOW_PRIORITY = {
 ROBOTS_META = (
     '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />'
 )
+NOINDEX_META = '<meta name="robots" content="noindex, follow" />'
+# ponytail: char count soft-404; raise threshold if Search Console shows thin indexed pages
+THIN_BODY_CHARS = 280
+ALWAYS_NOINDEX = frozenset({"impressum.html", "datenschutz.html"})
 ADSENSE_SCRIPT = (
     '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052220565736445" '
     'crossorigin="anonymous"></script>'
@@ -70,6 +74,21 @@ def page_loc(rel: str) -> str:
     if rel == "index.html":
         return f"{BASE}/"
     return f"{BASE}/{rel}"
+
+
+def visible_body_chars(html: str) -> int:
+    body = re.search(r"<body[^>]*>(.*)</body>", html, re.I | re.S)
+    chunk = body.group(1) if body else html
+    chunk = re.sub(r"<script\b[^>]*>.*?</script>", " ", chunk, flags=re.I | re.S)
+    chunk = re.sub(r"<style\b[^>]*>.*?</style>", " ", chunk, flags=re.I | re.S)
+    chunk = re.sub(r"<[^>]+>", " ", chunk)
+    return len(re.sub(r"\s+", " ", chunk).strip())
+
+
+def is_noindex_page(rel: str, html: str) -> bool:
+    if rel in ALWAYS_NOINDEX:
+        return True
+    return visible_body_chars(html) < THIN_BODY_CHARS
 
 
 def page_priority(rel: str) -> str:
@@ -167,7 +186,7 @@ def generate_sitemap(pages: list[str]) -> str:
 def patch_html(path: Path, rel: str) -> bool:
     text = path.read_text(encoding="utf-8")
     orig = text
-    is_noindex = rel in ("impressum.html", "datenschutz.html")
+    is_noindex = is_noindex_page(rel, text)
 
     # Collapse blank-line spam left by prior SEO patches
     text = re.sub(r"\n{3,}", "\n\n", text)
@@ -194,13 +213,15 @@ def patch_html(path: Path, rel: str) -> bool:
     # Cache-bust shared CSS
     text = re.sub(
         r'/assets/css/global\.css(?:\?v=[^"\']+)?',
-        "/assets/css/global.css?v=3.0",
+        "/assets/css/global.css?v=3.1",
         text,
     )
     text = re.sub(r"/tokens\.css(?:\?v=[^\"'\\s>]+)?", "/tokens.css?v=1.2", text)
 
     # Remove old hreflang variants (case inconsistent)
     text = re.sub(r'\s*<link rel="alternate" hreflang="[^"]+" href="[^"]+" />\n?', "\n", text)
+    # Normalize robots meta before rebuild
+    text = re.sub(r'\s*<meta name="robots" content="[^"]+" />\n?', "\n", text)
 
     canon_match = re.search(r'<link rel="canonical" href="([^"]+)" />', text)
     if not canon_match:
@@ -210,21 +231,12 @@ def patch_html(path: Path, rel: str) -> bool:
 
     # Rebuild SEO block after canonical
     seo_lines = [canonical_tag]
-    if not is_noindex:
-        if ROBOTS_META not in text:
-            seo_lines.append(f"  {ROBOTS_META}")
+    seo_lines.append(f"  {NOINDEX_META if is_noindex else ROBOTS_META}")
     seo_lines.append(hreflang_block(rel))
     # AdSense loaded idle via global.js (PageSpeed)
 
     # Replace first canonical occurrence with full block
     text = text.replace(canonical_tag, "\n".join(seo_lines), 1)
-
-    # Remove duplicate robots meta if any left
-    if not is_noindex:
-        count = text.count(ROBOTS_META)
-        if count > 1:
-            parts = text.split(ROBOTS_META)
-            text = parts[0] + ROBOTS_META + ROBOTS_META.join(parts[1:]).replace(ROBOTS_META, "", count - 1)
 
     if "og:image" not in text and 'property="og:type"' not in text:
         # After og:url or og:description or meta description
@@ -269,16 +281,33 @@ def patch_html(path: Path, rel: str) -> bool:
 
 
 def main() -> None:
-    pages = sorted(p.relative_to(ROOT).as_posix() for p in ROOT.glob("**/*.html"))
-    (ROOT / "sitemap.xml").write_text(generate_sitemap(pages) + "\n", encoding="utf-8")
-    print(f"sitemap.xml — {len(pages)} URLs, lastmod {TODAY}")
+    all_pages = sorted(
+        p.relative_to(ROOT).as_posix()
+        for p in ROOT.glob("**/*.html")
+        if "scratch/" not in p.as_posix()
+    )
+    thin = []
+    indexed = []
+    for rel in all_pages:
+        html = (ROOT / rel).read_text(encoding="utf-8")
+        if is_noindex_page(rel, html):
+            if rel not in ALWAYS_NOINDEX:
+                thin.append(rel)
+        else:
+            indexed.append(rel)
+
+    (ROOT / "sitemap.xml").write_text(generate_sitemap(indexed) + "\n", encoding="utf-8")
+    print(f"sitemap.xml — {len(indexed)} URLs, lastmod {TODAY}")
+    if thin:
+        print(f"noindex thin pages ({THIN_BODY_CHARS} chars): {len(thin)}")
 
     changed = 0
-    for rel in pages:
+    for rel in all_pages:
         if patch_html(ROOT / rel, rel):
             changed += 1
     print(f"Patched SEO meta on {changed} HTML files")
 
 
 if __name__ == "__main__":
+    assert visible_body_chars("<body><p>abc def</p><script>x</script></body>") == 7
     main()

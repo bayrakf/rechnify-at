@@ -38,4 +38,4 @@ Allow: /
 Sitemap: https://rechnify.at/sitemap.xml
 
 # IndexNow key (Bing/Yandex instant indexing)
-# Key file: /3918c0cce64149b781fa93692aaea8ce.txt
+# Key file: /48203d7933394ec8a062b7e4943c572b.txt

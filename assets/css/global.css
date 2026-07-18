@@ -420,6 +420,26 @@ body.dark .site-logo img {
   .hub-list { columns: 1; }
 }
 
+.seo-triangle {
+  margin-top: var(--space-xl);
+  padding: var(--space-md);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-2);
+}
+
+.seo-triangle h2 {
+  font-size: var(--text-md);
+  margin: 0 0 var(--space-xs);
+}
+
+.seo-triangle ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.seo-triangle li { margin-bottom: 0.35rem; }
+
 .page-hero {
   text-align: center;
   padding: var(--space-2xl) var(--space-md) var(--space-lg);
