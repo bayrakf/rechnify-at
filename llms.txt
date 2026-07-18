@@ -1,30 +1,40 @@
 # rechnify.at
 
-> Kostenlose Präzisionsrechner für Österreich und Deutschland. Alle Berechnungen laufen lokal im Browser.
+> Kostenlose Präzisionsrechner für Österreich und Deutschland. Alle Berechnungen lokal im Browser.
 
 Site: https://rechnify.at/
 Locales: de-AT (root), de-DE (/de/)
+Updated: 2026-07-18
 
 ## Top tools
 
-- [Brutto-Netto Österreich](https://rechnify.at/finanzen/gehaltsrechner.html): Nettogehalt inkl. 13./14. Gehalt
-- [Brutto-Netto Deutschland](https://rechnify.at/de/finanzen/gehaltsrechner.html): Nettogehalt nach DE-Steuerrecht
-- [AT vs DE Vergleich](https://rechnify.at/finanzen/brutto-netto-oesterreich-vs-deutschland.html): Unterschiede Gehalt & Abzüge
-- [MwSt-Rechner AT](https://rechnify.at/finanzen/mwst-rechner.html)
-- [MwSt-Rechner DE](https://rechnify.at/de/finanzen/mwst-rechner.html)
-- [Überstundenrechner](https://rechnify.at/arbeitszeit/ueberstundenrechner.html)
-- [Stundenlohnrechner](https://rechnify.at/arbeitszeit/stundenlohn-rechner.html)
+- [Brutto-Netto Österreich](https://rechnify.at/finanzen/gehaltsrechner.html)
+- [Brutto-Netto Deutschland](https://rechnify.at/de/finanzen/gehaltsrechner.html)
+- [AT vs DE Vergleich](https://rechnify.at/finanzen/brutto-netto-oesterreich-vs-deutschland.html)
+- [Kalorienrechner / TDEE](https://rechnify.at/alltag/kalorienrechner.html)
+- [Währungsumrechner](https://rechnify.at/alltag/waehrungsumrechner.html)
+- [Schulnotenrechner](https://rechnify.at/alltag/schulnotenrechner.html)
+- [MwSt AT](https://rechnify.at/finanzen/mwst-rechner.html) / [MwSt DE](https://rechnify.at/de/finanzen/mwst-rechner.html)
+- [Überstunden](https://rechnify.at/arbeitszeit/ueberstundenrechner.html)
 - [Kommen-Gehen](https://rechnify.at/arbeitszeit/kommen-gehen-rechner.html)
-- [Pendlerrechner](https://rechnify.at/finanzen/pendlerrechner.html)
-- [Krypto-Steuerrechner](https://rechnify.at/finanzen/kryptosteuerrechner.html)
+- [Leasing Barkauf/Kredit](https://rechnify.at/finanzen/leasingrechner.html)
+- [Kredit Tilgungsplan](https://rechnify.at/finanzen/kreditrechner.html)
+- [Pendler AT](https://rechnify.at/finanzen/pendlerrechner.html)
 
-## Categories
+## Hubs
 
-- Finanzen: /finanzen/ and /de/finanzen/
-- Arbeitszeit: /arbeitszeit/ and /de/arbeitszeit/
-- Familie: /familie/ and /de/familie/
-- Mathematik: /mathematik/
-- Alltag: /alltag/
+- Finanzen AT: https://rechnify.at/finanzen/
+- Finanzen DE: https://rechnify.at/de/finanzen/
+- Arbeitszeit AT: https://rechnify.at/arbeitszeit/
+- Arbeitszeit DE: https://rechnify.at/de/arbeitszeit/
+- Blog: https://rechnify.at/blog/
+- Embed: https://rechnify.at/embed.html
+
+## pSEO
+
+- Brutto-Netto Beträge AT/DE: /finanzen/brutto-netto/ und /de/finanzen/brutto-netto/
+- Berufe: /finanzen/gehalt/ und /de/finanzen/gehalt/
+- Städte: z.B. /finanzen/gehalt/gehalt-wien.html, /de/finanzen/gehalt/gehalt-berlin.html
 
 ## Optional
 

@@ -9,23 +9,14 @@
   "theme_color": "#1858C7",
   "lang": "de-AT",
   "icons": [
-    {
-      "src": "/assets/images/favicon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/assets/images/favicon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/assets/images/apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png",
-      "purpose": "any"
-    }
+    { "src": "/assets/images/favicon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/images/favicon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/images/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Gehaltsrechner AT", "url": "/finanzen/gehaltsrechner.html", "description": "Brutto-Netto Österreich" },
+    { "name": "Gehaltsrechner DE", "url": "/de/finanzen/gehaltsrechner.html", "description": "Brutto-Netto Deutschland" },
+    { "name": "Kalorienrechner", "url": "/alltag/kalorienrechner.html", "description": "TDEE berechnen" },
+    { "name": "Blog", "url": "/blog/", "description": "Guides & Tipps" }
   ]
 }

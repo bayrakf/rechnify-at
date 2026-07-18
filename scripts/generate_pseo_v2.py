@@ -287,5 +287,6 @@ if __name__ == '__main__':
     
     DE_TARGET_DIR_PROFS = BASE_DIR / 'de' / 'finanzen' / 'gehalt'
     generate_profession_pages('de', DE_SOURCE, DE_TARGET_DIR_PROFS, "Deutschland")
-    
+
+    print("AT 10er-Schritte + cities + sitemap: python3 scripts/ship_gaps.py")
     print("All pSEO generations complete.")

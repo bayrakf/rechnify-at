@@ -9,3 +9,9 @@ https://www.rechnify.at/* https://rechnify.at/:splat 301!
 # Alte URLs auf neue SEO-URLs umleiten
 /kommen_gehen_rechner.html /arbeitszeit/kommen-gehen-rechner.html 301
 /index.html / 301
+/finanzen /finanzen/ 301
+/arbeitszeit /arbeitszeit/ 301
+/blog /blog/ 301
+/de /de/ 301
+/de/finanzen /de/finanzen/ 301
+/de/arbeitszeit /de/arbeitszeit/ 301

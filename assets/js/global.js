@@ -213,7 +213,20 @@ function applyCountryFilter(country) {
 }
 
 // --- Init all ---
+
+  function injectLastUpdated() {
+    if (document.querySelector('.updated,[data-updated]')) return;
+    const main = document.querySelector('main.site-main, main');
+    if (!main || !document.querySelector('.calc-body, #resultBox, #grossMonthly, .calculator')) return;
+    const el = document.createElement('p');
+    el.className = 'updated help';
+    el.style.cssText = 'margin-top:24px;font-size:0.85rem;color:var(--color-ink-3)';
+    el.textContent = 'Zuletzt aktualisiert: 2026-07-18';
+    main.appendChild(el);
+  }
+
 document.addEventListener('DOMContentLoaded', () => {
+  injectLastUpdated();
   initDarkMode();
   initMobileNav();
   initFaqAccordion();
