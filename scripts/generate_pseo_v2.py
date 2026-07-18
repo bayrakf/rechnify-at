@@ -12,6 +12,84 @@ DE_TARGET_DIR.mkdir(parents=True, exist_ok=True)
 
 AMOUNTS = list(range(1500, 6100, 100)) + [6500, 7000, 8000, 9000, 10000]
 
+def generate_unique_content(amount, formatted_amount, country_name, country_code):
+    """Generate unique SEO content for each pSEO page."""
+    # Categorize amount
+    if amount < 2000:
+        category = "Einstiegsgehalt"
+        context = "im unteren Einkommensbereich"
+        comparison = "unter dem österreichischen Median"
+    elif amount < 3000:
+        category = "unteres Mittelfeld"
+        context = "im unteren bis mittleren Einkommensbereich"
+        comparison = "nahe dem österreichischen Median"
+    elif amount < 4000:
+        category = "mittleres Einkommen"
+        context = "im mittleren Einkommensbereich"
+        comparison = "um den österreichischen Median"
+    elif amount < 5000:
+        category = "gehobenes Mittelfeld"
+        context = "im gehobenen mittleren Einkommensbereich"
+        comparison = "über dem österreichischen Median"
+    elif amount < 6000:
+        category = "hohes Einkommen"
+        context = "im oberen Einkommensbereich"
+        comparison = "deutlich über dem österreichischen Median"
+    else:
+        category = "Spitzenverdiener"
+        context = "im obersten Einkommensbereich"
+        comparison = "weit über dem österreichischen Median"
+
+    sv_rate = 18.07 if country_code == "at" else 0
+    sv_amount = amount * 0.1807 if country_code == "at" else 0
+
+    content = f'''
+      <!-- Unique SEO Content -->
+      <section class="content-section" style="margin-top: 32px;">
+        <h2>Was bedeutet {formatted_amount} € Brutto in {country_name}?</h2>
+        <p>Ein Bruttogehalt von {formatted_amount} € pro Monat fällt in {country_name} in die Kategorie <strong>{category}</strong>. Das bedeutet: Du liegst {comparison} von ca. 3.650 € (Median Vollzeit, Stand 2024/2025).{' Bei diesem Einkommen ist die Steuerprogression bereits spürbar.' if amount > 3000 else ' Bei diesem Einkommen ist die Steuerbelastung noch moderat.'}</p>
+        
+        <h3>So setzt sich dein Netto zusammen</h3>
+        <p>Von deinen {formatted_amount} € Brutto werden folgende Abzüge berechnet:</p>
+        <ul>
+          <li><strong>Sozialversicherung (SV):</strong> ca. {sv_amount:.0f} € ({sv_rate:.2f}% des Bruttos){' – gedeckelt bis zur Höchstbeitragsgrundlage von 6.930 €' if country_code == 'at' else ''}</li>
+          <li><strong>Lohnsteuer:</strong> Progressiver Steuertarif, abhängig von der Steuerstufe</li>
+          <li><strong>Verkehrsabsetzbetrag:</strong> Wird steuermindernd berücksichtigt (nur AT)</li>
+        </ul>
+        <p>Das <strong>Netto-Gehalt</strong> ist der Betrag, der tatsächlich auf dein Konto überwiesen wird. Verwende den Rechner oben, um die exakte Summe zu sehen.</p>
+        
+        <h3>{formatted_amount} € Brutto – Jahresübersicht</h3>
+        <p>Bei {formatted_amount} € monatlichem Brutto ergeben sich folgende Jahreswerte:</p>
+        <ul>
+          <li><strong>Brutto pro Jahr (14 Gehälter):</strong> ca. {(amount * 14):,} € (inkl. 13./14. Gehalt)</li>
+          <li><strong>Brutto pro Jahr (12 Gehälter):</strong> ca. {(amount * 12):,} € (ohne Sonderzahlungen)</li>
+          <li><strong>Netto pro Jahr:</strong> Siehe Rechner-Ergebnis oben</li>
+        </ul>
+        
+        <h3>Steuerliche Besonderheiten bei {formatted_amount} €</h3>
+        <p>{'Bei diesem Einkommen liegt dein Jahressechstel bei ca. ' + f'{amount * 12 / 6:.0f} €' + '. Das bedeutet: Deine 13. und 14. Gehaltszahlungen werden bis zu dieser Grenze mit nur 6% besteuert – ein erheblicher Steuervorteil gegenüber dem laufenden Gehalt.' if country_code == 'at' else 'In Deutschland greift der progressive Einkommensteuertarif. Bei diesem Einkommen befindest du dich in einer mittleren Steuerstufe. Kirchensteuer und Solidaritätszuschlag können zusätzlich anfallen.'}</p>
+        
+        <h3>Vergleich mit anderen Gehältern</h3>
+        <p>Wie schneidet {formatted_amount} € im Vergleich ab? Hier eine Übersicht:</p>
+        <ul>
+          <li><a href="/{'de/' if country_code == 'de' else ''}finanzen/brutto-netto/{max(1500, amount - 100)}-brutto-in-netto.html">{max(1500, amount - 100)} € Brutto → Netto</a></li>
+          <li><a href="/{'de/' if country_code == 'de' else ''}finanzen/brutto-netto/{min(10000, amount + 100)}-brutto-in-netto.html">{min(10000, amount + 100)} € Brutto → Netto</a></li>
+          <li><a href="/{'de/' if country_code == 'de' else ''}finanzen/brutto-netto/3000-brutto-in-netto.html">3.000 € Brutto → Netto (Median-Nähe)</a></li>
+          <li><a href="/{'de/' if country_code == 'de' else ''}finanzen/brutto-netto/5000-brutto-in-netto.html">5.000 € Brutto → Netto (gehobenes Einkommen)</a></li>
+        </ul>
+        
+        <h3>Tipps für {formatted_amount} € Brutto</h3>
+        <p>Bei einem Bruttogehalt von {formatted_amount} € solltest du folgende Aspekte beachten:</p>
+        <ul>
+          <li><strong>Gehaltsverhandlung:</strong>{' Prüfe, ob du Pendlerpauschale oder Familienbonus Plus geltend machen kannst.' if country_code == 'at' else ' Prüfe, ob du Werbungskosten oder Sonderausgaben geltend machen kannst.'}</li>
+          <li><strong>Lohnnebenkosten:</strong> Dein Arbeitgeber zahlt zusätzlich ca. {(amount * 0.30):.0f} € an Lohnnebenkosten (SV-Dienstgeberanteil, Kommunalsteuer etc.)</li>
+          <li><strong>Kaufkraft:</strong> Bei 2,5% Inflation pro Jahr verliert dein Netto in 5 Jahren ca. {(amount * 0.12):.0f} € an Kaufkraft</li>
+          <li><strong>Altersvorsorge:</strong>{' Bei diesem Einkommen lohnt sich die freiwillige Höherversicherung oder ein privater Pensionsfonds.' if amount > 3000 else ' Prüfe die staatliche Pensionskasse und überlege eine freiwillige Zusatzversicherung.'}</li>
+        </ul>
+      </section>
+'''
+    return content
+
 def generate_de_amounts():
     with open(DE_SOURCE, 'r', encoding='utf-8') as f:
         template = f.read()
@@ -46,6 +124,10 @@ def generate_de_amounts():
         # Inject the value into the input field
         html = html.replace('<input type="number" id="grossMonthly" placeholder="z.B. 3500" min="0" step="100">', f'<input type="number" id="grossMonthly" value="{amount}" min="0" step="100">')
         
+        # Add unique content before FAQ section
+        unique_content = generate_unique_content(amount, formatted_amount, "Deutschland", "de")
+        html = html.replace('<!-- FAQ Section -->', unique_content + '\n      <!-- FAQ Section -->')
+        
         # Add auto-click script
         html = html.replace('</body>', "<script>document.addEventListener('DOMContentLoaded', () => { setTimeout(() => { const btn = document.getElementById('calculate'); if(btn) btn.click(); }, 100); });</script></body>")
         
@@ -73,6 +155,49 @@ PROFESSIONS = {
     "lkw-fahrer": {"name": "LKW-Fahrer", "amount": 2400},
     "friseur": {"name": "Friseur", "amount": 1800}
 }
+
+def generate_profession_content(name, amount, country_name, country_code):
+    """Generate unique content for profession pages."""
+    formatted_amount = f"{amount:,}".replace(',', '.')
+    
+    content = f'''
+      <!-- Unique SEO Content -->
+      <section class="content-section" style="margin-top: 32px;">
+        <h2>Wie viel verdient ein {name} in {country_name}?</h2>
+        <p>Ein {name} in {country_name} verdient durchschnittlich ca. <strong>{formatted_amount} € Brutto pro Monat</strong>. Das entspricht einem Jahresbrutto von ca. {(amount * 14):,} € (inkl. 13./14. Gehalt) bzw. {(amount * 12):,} € (ohne Sonderzahlungen).{' Das liegt ' + ('über' if amount > 3650 else 'unter') + ' dem österreichischen Median von ca. 3.650 €.' if country_code == 'at' else ' Das liegt ' + ('über' if amount > 3500 else 'unter') + ' dem deutschen Median von ca. 3.500 €.'}</p>
+        
+        <h3>Gehaltsentwicklung als {name}</h3>
+        <p>Das Gehalt als {name} hängt von mehreren Faktoren ab:</p>
+        <ul>
+          <li><strong>Berufserfahrung:</strong> Einsteiger verdienen ca. 20-30% weniger, erfahrene Fachkräfte 10-20% mehr</li>
+          <li><strong>Region:</strong> In städtischen Gebieten wird tendenziell mehr gezahlt</li>
+          <li><strong>Branche:</strong> Private Unternehmen zahlen oft mehr als öffentliche</li>
+          <li><strong>Spezialisierung:</strong> Zusatzqualifikationen können das Gehalt steigern</li>
+        </ul>
+        
+        <h3>Netto-Gehalt als {name}</h3>
+        <p>Bei {formatted_amount} € Brutto bleiben nach Abzug von Sozialversicherung und Lohnsteuer{' ca. ' + f'{amount * 0.68:.0f} €' + ' Netto pro Monat übrig (Richtwert).' if country_code == 'at' else ' ca. ' + f'{amount * 0.65:.0f} €' + ' Netto pro Monat übrig (Richtwert).'}</p>
+        
+        <h3>Vergleich mit anderen Berufen</h3>
+        <p>Wie schneidet ein {name} im Vergleich ab?</p>
+        <ul>
+          <li><a href="/{'de/' if country_code == 'de' else ''}finanzen/gehalt/arzt-gehalt-netto.html">Arzt Gehalt (Top-Verdiener)</a></li>
+          <li><a href="/{'de/' if country_code == 'de' else ''}finanzen/gehalt/softwareentwickler-gehalt-netto.html">Softwareentwickler Gehalt</a></li>
+          <li><a href="/{'de/' if country_code == 'de' else ''}finanzen/gehalt/lehrer-gehalt-netto.html">Lehrer Gehalt</a></li>
+          <li><a href="/{'de/' if country_code == 'de' else ''}finanzen/gehalt/kellner-gehalt-netto.html">Kellner Gehalt (Einstiegsbereich)</a></li>
+        </ul>
+        
+        <h3>Tipps für {name}</h3>
+        <p>Als {name} solltest du folgende Möglichkeiten prüfen:</p>
+        <ul>
+          <li><strong>Gehaltsverhandlung:</strong> Recherchiere Branchen-Standards und bereite dich gut vor</li>
+          <li><strong>Weiterbildung:</strong> Zertifikate und Spezialisierungen können das Gehalt steigern</li>
+          <li><strong>{'Pendlerpauschale' if country_code == 'at' else 'Entfernungspauschale'}:</strong> Prüfe, ob du absetzen kannst</li>
+          <li><strong>{'Familienbonus Plus' if country_code == 'at' else 'Kindergeld'}:</strong> Falls du Kinder hast</li>
+        </ul>
+      </section>
+'''
+    return content
 
 def generate_profession_pages(country_code, source_file, target_dir, country_name):
     target_dir.mkdir(parents=True, exist_ok=True)
@@ -110,6 +235,11 @@ def generate_profession_pages(country_code, source_file, target_dir, country_nam
             html = re.sub(r'<p>Berechne dein exaktes Netto-Gehalt.*?für Deutschland.</p>', f'<p>{desc}</p>', html)
             
         html = html.replace('<input type="number" id="grossMonthly" placeholder="z.B. 3500" min="0" step="100">', f'<input type="number" id="grossMonthly" value="{amount}" min="0" step="100">')
+        
+        # Add unique content before FAQ section
+        unique_content = generate_profession_content(name, amount, country_name, country_code)
+        html = html.replace('<!-- FAQ Section -->', unique_content + '\n      <!-- FAQ Section -->')
+        
         html = html.replace('</body>', "<script>document.addEventListener('DOMContentLoaded', () => { setTimeout(() => { const btn = document.getElementById('calculate'); if(btn) btn.click(); }, 100); });</script></body>")
         
         filepath = target_dir / f"{slug}-gehalt-netto.html"

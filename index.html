@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="de-AT">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- SEO -->
   <title>rechnify.at – Präzisionsrechner für Österreich &amp; Deutschland</title>
-  <meta name="description" content="Kostenlose Online-Rechner für Österreich und Deutschland: Brutto-Netto, Überstunden, Krypto-Steuern, Elterngeld, MwSt und mehr. Direkt im Browser, keine Datenweitergabe." />
+  <meta name="description"
+    content="Kostenlose Online-Rechner für Österreich und Deutschland: Brutto-Netto, Überstunden, Krypto-Steuern, Elterngeld, MwSt und mehr. Direkt im Browser, keine Datenweitergabe." />
   <link rel="canonical" href="https://rechnify.at/" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/" />
-  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/" />
+  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/" />
   <link rel="alternate" hreflang="x-default" href="https://rechnify.at/" />
 
   <meta name="google-adsense-account" content="ca-pub-5052220565736445" />
@@ -18,7 +20,8 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="rechnify.at – Präzisionsrechner für AT &amp; DE" />
-  <meta property="og:description" content="20+ kostenlose Rechner: Brutto-Netto, Überstunden, Krypto-Steuern, Elterngeld und mehr." />
+  <meta property="og:description"
+    content="20+ kostenlose Rechner: Brutto-Netto, Überstunden, Krypto-Steuern, Elterngeld und mehr." />
   <meta property="og:url" content="https://rechnify.at/" />
   <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
   <meta property="og:image:width" content="1200" />
@@ -42,10 +45,15 @@
   <!-- Critical: tokens only. Display font async. Body = system until font loads. -->
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="/assets/css/global.css?v=3.1" /></noscript>
+  <noscript>
+    <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  </noscript>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" /></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet"
+    media="print" onload="this.media='all'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  </noscript>
 
   <style>
     /* Hallmark · macrostructure: Bento Grid · genre: modern-minimal · design-system: design.md · designed-as-app
@@ -53,8 +61,16 @@
      * Pre-emit critique: P5 H5 E5 S5 R5 V4 */
 
     /* ── Reset (index scope) ──────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; }
-    html { overflow-x: clip; scroll-behavior: smooth; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow-x: clip;
+      scroll-behavior: smooth;
+    }
 
     body {
       font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -152,26 +168,49 @@
       white-space: nowrap;
     }
 
-    .c-btn:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+    .c-btn:focus-visible {
+      outline: 2px solid var(--c-accent);
+      outline-offset: 2px;
+    }
 
-    .c-btn.active[data-c="at"] { background: var(--color-at-bg); color: var(--color-at); }
-    .c-btn.active[data-c="de"] { background: var(--color-de-bg); color: var(--color-de); }
+    .c-btn.active[data-c="at"] {
+      background: var(--color-at-bg);
+      color: var(--color-at);
+    }
 
-    .pill-actions { display:flex; align-items:center; gap:var(--sp2); }
+    .c-btn.active[data-c="de"] {
+      background: var(--color-de-bg);
+      color: var(--color-de);
+    }
+
+    .pill-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--sp2);
+    }
 
     .dark-btn {
       all: unset;
       cursor: pointer;
-      width: 34px; height: 34px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: .95rem;
       background: var(--c-paper2);
       border: 1px solid var(--c-rule);
       transition: background var(--dur) var(--ease-out);
     }
-    .dark-btn:hover { background: var(--c-paper3); }
-    .dark-btn:focus-visible { outline: 2px solid var(--c-accent); }
+
+    .dark-btn:hover {
+      background: var(--c-paper3);
+    }
+
+    .dark-btn:focus-visible {
+      outline: 2px solid var(--c-accent);
+    }
 
     /* ── HERO ─────────────────────────────────────────────────────── */
     .hero {
@@ -234,8 +273,15 @@
     }
 
     @keyframes hero-in {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .btn-p {
@@ -256,9 +302,20 @@
       box-shadow: 0 4px 16px color-mix(in oklch, var(--c-accent) 35%, transparent);
     }
 
-    .btn-p:hover { background: var(--c-accent-h); transform: translateY(-2px); box-shadow: 0 8px 28px color-mix(in oklch, var(--c-accent) 40%, transparent); }
-    .btn-p:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 3px; }
-    .btn-p:active { transform: translateY(0); }
+    .btn-p:hover {
+      background: var(--c-accent-h);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px color-mix(in oklch, var(--c-accent) 40%, transparent);
+    }
+
+    .btn-p:focus-visible {
+      outline: 2px solid var(--c-accent);
+      outline-offset: 3px;
+    }
+
+    .btn-p:active {
+      transform: translateY(0);
+    }
 
     .btn-s {
       display: inline-flex;
@@ -277,8 +334,15 @@
       transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
     }
 
-    .btn-s:hover { background: var(--c-paper3); color: var(--c-ink); }
-    .btn-s:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 3px; }
+    .btn-s:hover {
+      background: var(--c-paper3);
+      color: var(--c-ink);
+    }
+
+    .btn-s:focus-visible {
+      outline: 2px solid var(--c-accent);
+      outline-offset: 3px;
+    }
 
     .scroll-hint {
       position: absolute;
@@ -296,8 +360,15 @@
     }
 
     @keyframes bob {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(7px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(7px);
+      }
     }
 
     /* ── VALUE STRIP ──────────────────────────────────────────────── */
@@ -321,10 +392,13 @@
       font-weight: 500;
     }
 
-    .v-item + .v-item { border-left: 1px solid var(--c-rule); }
+    .v-item+.v-item {
+      border-left: 1px solid var(--c-rule);
+    }
 
     .v-dot {
-      width: 5px; height: 5px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
       background: var(--c-accent);
       flex-shrink: 0;
@@ -357,34 +431,71 @@
         width: calc(100% - 20px);
         top: 8px;
       }
-      
+
       .frontpage-layout .sidebar-nav {
         top: 52px;
         z-index: 100;
       }
 
-      .pill-nav-inner { padding: 7px 11px; }
+      .pill-nav-inner {
+        padding: 7px 11px;
+      }
 
-      .pill-logo span { display: none; }
+      .pill-logo span {
+        display: none;
+      }
 
-      .c-btn { padding: 5px 10px; font-size: .72rem; }
+      .c-btn {
+        padding: 5px 10px;
+        font-size: .72rem;
+      }
 
-      .hero { padding: 100px 20px 80px; min-height: 68svh; }
+      .hero {
+        padding: 100px 20px 80px;
+        min-height: 68svh;
+      }
 
-      .hero-brand { font-size: clamp(3rem, 16vw, 4.6rem); }
+      .hero-brand {
+        font-size: clamp(3rem, 16vw, 4.6rem);
+      }
 
-      .v-strip { flex-direction: column; }
-      .v-item + .v-item { border-left: none; border-top: 1px solid var(--c-rule); }
+      .v-strip {
+        flex-direction: column;
+      }
+
+      .v-item+.v-item {
+        border-left: none;
+        border-top: 1px solid var(--c-rule);
+      }
     }
 
     @media (max-width: 414px) {
-      .hero-h1 { font-size: 1.05rem; }
-      .hero-sub { font-size: .95rem; }
+      .hero-h1 {
+        font-size: 1.05rem;
+      }
+
+      .hero-sub {
+        font-size: .95rem;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; }
-      .hero-brand, .hero-h1, .hero-sub, .hero-btns { animation: none; opacity: 1; transform: none; }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0ms !important;
+        animation-duration: 0ms !important;
+      }
+
+      .hero-brand,
+      .hero-h1,
+      .hero-sub,
+      .hero-btns {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
     }
   </style>
 
@@ -433,6 +544,7 @@
   }
   </script>
 </head>
+
 <body>
 
   <!-- ── FLOATING PILL NAV ────────────────────────────────────────── -->
@@ -517,7 +629,7 @@
             <div class="tool-card-title">Brutto-Netto Gehaltsrechner DE</div>
             <div class="tool-card-desc">Nettogehalt nach deutschem Steuerrecht.</div>
           </a>
-          
+
           <a href="/finanzen/netto-rechner-oesterreich-2026.html" class="tool-card">
             <span class="tool-card-badge badge-new">✦ Neu</span>
             <div class="tool-card-icon">🧮</div>
@@ -862,7 +974,7 @@
       '/finanzen/leasingrechner': '/de/finanzen/leasingrechner',
       '/finanzen/kreditrechner': '/de/finanzen/kreditrechner'
     };
-    const INV_MAPPING = Object.fromEntries(Object.entries(TOOL_MAPPING).map(([k,v]) => [v,k]));
+    const INV_MAPPING = Object.fromEntries(Object.entries(TOOL_MAPPING).map(([k, v]) => [v, k]));
 
     function filterTools() {
       const q = (document.getElementById('toolSearch')?.value || '').trim().toLowerCase();
@@ -927,7 +1039,7 @@
             let target = (c === 'de' && TOOL_MAPPING[baseAt]) ? TOOL_MAPPING[baseAt] : baseAt;
             link.href = target;
           }
-        } catch(e) {}
+        } catch (e) { }
       });
 
       organizeGrids();
@@ -1039,8 +1151,9 @@
     if ('requestIdleCallback' in window) requestIdleCallback(loadAds, { timeout: 4000 });
     else setTimeout(loadAds, 2500);
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+      window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => { }));
     }
   </script>
 </body>
+
 </html>

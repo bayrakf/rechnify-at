@@ -108,18 +108,18 @@ const TOOL_MAPPING = {
 function initCountryToggle() {
   const group = document.getElementById('countryToggleGroup');
   if (!group) return;
-  
+
   const pills = group.querySelectorAll('.country-pill');
-  
+
   // Read current or default to AT
   let currentCountry = localStorage.getItem(COUNTRY_KEY) || 'at';
-  
+
   // Inverse mapping for DE -> AT
   const inverseMapping = {};
   for (const [at, de] of Object.entries(TOOL_MAPPING)) {
     inverseMapping[de] = at;
   }
-  
+
   // Normalize path to handle Netlify's Pretty URLs (which strip .html)
   function normalizePath(p) {
     if (p === '/') return p;
@@ -127,10 +127,10 @@ function initCountryToggle() {
     if (!norm.endsWith('.html')) norm += '.html';
     return norm;
   }
-  
+
   const rawPath = window.location.pathname;
   const path = normalizePath(rawPath);
-  
+
   // Set preference based on the actual URL the user is currently visiting
   if (inverseMapping[path]) {
     currentCountry = 'de';
@@ -139,7 +139,7 @@ function initCountryToggle() {
     currentCountry = 'at';
     localStorage.setItem(COUNTRY_KEY, 'at');
   }
-  
+
   // Dynamic Link Rewriting: Rewrite navigation/tool links to match the current country preference
   document.querySelectorAll('a').forEach(link => {
     try {
@@ -153,7 +153,7 @@ function initCountryToggle() {
           link.href = inverseMapping[linkPath].replace(/\.html$/, '');
         }
       }
-    } catch (e) {}
+    } catch (e) { }
   });
 
   updateCountryUI(pills, currentCountry);
@@ -163,10 +163,10 @@ function initCountryToggle() {
     pill.addEventListener('click', () => {
       const newCountry = pill.getAttribute('data-country');
       if (newCountry === currentCountry) return; // No change
-      
+
       localStorage.setItem(COUNTRY_KEY, newCountry);
       currentCountry = newCountry;
-      
+
       // Redirect logic on manual toggle click
       if (newCountry === 'de') {
         if (TOOL_MAPPING[path]) {
@@ -179,7 +179,7 @@ function initCountryToggle() {
           return;
         }
       }
-      
+
       updateCountryUI(pills, newCountry);
       window.location.reload();
     });
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function injectBreadcrumbs() {
   const path = window.location.pathname;
   if (path === '/' || path === '/index.html') return;
-  
+
   const parts = path.split('/').filter(p => p && p !== 'de' && p !== 'index.html');
   const itemListElement = [{
     "@type": "ListItem",
@@ -243,32 +243,32 @@ function injectBreadcrumbs() {
     "name": "Startseite",
     "item": "https://rechnify.at/"
   }];
-  
+
   let currentPath = "https://rechnify.at";
   let pos = 2;
   const isDe = path.startsWith('/de/');
   if (isDe) currentPath += '/de';
-  
+
   if (parts.length > 0) {
-     const category = parts[0];
-     currentPath += `/${category}`;
-     itemListElement.push({
-       "@type": "ListItem",
-       "position": pos++,
-       "name": category.charAt(0).toUpperCase() + category.slice(1),
-       "item": currentPath
-     });
+    const category = parts[0];
+    currentPath += `/${category}`;
+    itemListElement.push({
+      "@type": "ListItem",
+      "position": pos++,
+      "name": category.charAt(0).toUpperCase() + category.slice(1),
+      "item": currentPath
+    });
   }
-  
+
   if (parts.length > 1) {
-     const tool = parts[1].replace('.html', '').replace(/-/g, ' ');
-     currentPath += `/${parts[1]}`;
-     itemListElement.push({
-       "@type": "ListItem",
-       "position": pos++,
-       "name": tool.charAt(0).toUpperCase() + tool.slice(1),
-       "item": currentPath
-     });
+    const tool = parts[1].replace('.html', '').replace(/-/g, ' ');
+    currentPath += `/${parts[1]}`;
+    itemListElement.push({
+      "@type": "ListItem",
+      "position": pos++,
+      "name": tool.charAt(0).toUpperCase() + tool.slice(1),
+      "item": currentPath
+    });
   }
 
   const schema = {
@@ -293,7 +293,7 @@ function injectRelatedTools() {
 
   const isDe = window.location.pathname.startsWith('/de/');
   const lang = isDe ? '/de' : '';
-  
+
   const relatedDiv = document.createElement('div');
   relatedDiv.className = 'related-tools';
   relatedDiv.style.marginTop = '32px';
@@ -301,7 +301,7 @@ function injectRelatedTools() {
   relatedDiv.style.background = 'var(--color-paper)';
   relatedDiv.style.borderRadius = '12px';
   relatedDiv.style.border = '1px solid var(--color-rule)';
-  
+
   const title = document.createElement('h3');
   title.style.marginTop = '0';
   title.style.marginBottom = '16px';
@@ -364,7 +364,7 @@ function initGehaltsVergleich() {
   compDiv.style.background = 'var(--color-paper-3)';
   compDiv.style.border = '2px dashed var(--color-rule)';
   compDiv.style.borderRadius = '12px';
-  
+
   const title = document.createElement('h4');
   title.style.margin = '0 0 8px 0';
   title.style.display = 'flex';
@@ -396,7 +396,7 @@ function initGehaltsVergleich() {
   // Save Button Container
   const saveBtnContainer = document.createElement('div');
   saveBtnContainer.style.marginTop = '16px';
-  
+
   const saveBtn = document.createElement('button');
   saveBtn.className = 'btn';
   saveBtn.style.width = '100%';
@@ -404,7 +404,7 @@ function initGehaltsVergleich() {
   saveBtn.style.color = 'var(--color-ink)';
   saveBtn.style.border = '1px solid var(--color-rule)';
   saveBtn.innerHTML = '📌 Dieses Netto für Vergleich merken';
-  
+
   saveBtn.addEventListener('click', () => {
     const netEl = document.getElementById('resNetMonthly');
     if (!netEl) return;
@@ -433,16 +433,16 @@ function initGehaltsVergleich() {
     if (!netEl) return;
     const currStr = netEl.textContent.replace(/[^\d,-]/g, '').replace(',', '.');
     const currNet = parseFloat(currStr);
-    
+
     if (!isNaN(currNet) && currNet > 0 && currNet !== savedNet) {
       const diff = currNet - savedNet;
       const isPositive = diff > 0;
       const color = isPositive ? 'var(--color-success)' : 'var(--color-danger)';
       const sign = isPositive ? '+' : '';
-      
-      compText.innerHTML = `Gespeichertes Netto: <strong>${savedNet.toLocaleString('de-DE', {minimumFractionDigits:2})} €</strong><br/>
-      Aktuelles Netto: <strong>${currNet.toLocaleString('de-DE', {minimumFractionDigits:2})} €</strong><br/>
-      Differenz: <strong style="color: ${color}; font-size: 1.1em;">${sign}${diff.toLocaleString('de-DE', {minimumFractionDigits:2})} € im Monat</strong> (${sign}${(diff * 12).toLocaleString('de-DE', {minimumFractionDigits:0})} € im Jahr)`;
+
+      compText.innerHTML = `Gespeichertes Netto: <strong>${savedNet.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €</strong><br/>
+      Aktuelles Netto: <strong>${currNet.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €</strong><br/>
+      Differenz: <strong style="color: ${color}; font-size: 1.1em;">${sign}${diff.toLocaleString('de-DE', { minimumFractionDigits: 2 })} € im Monat</strong> (${sign}${(diff * 12).toLocaleString('de-DE', { minimumFractionDigits: 0 })} € im Jahr)`;
       compDiv.style.display = 'block';
     } else {
       compDiv.style.display = 'none';
@@ -458,43 +458,6 @@ function initGehaltsVergleich() {
   }
 }
 
-// --- Inject Newsletter Opt-In ---
-function injectNewsletterOptIn() {
-  const main = document.querySelector('.site-main');
-  if (!main) return;
-  // Only inject if we are on a calculator page or index
-  if (document.getElementById('newsletter-box')) return;
-
-  const isDe = window.location.pathname.startsWith('/de/');
-  const countryCode = isDe ? 'DE' : 'AT';
-
-  const nlBox = document.createElement('div');
-  nlBox.id = 'newsletter-box';
-  nlBox.style.marginTop = '40px';
-  nlBox.style.marginBottom = '20px';
-  nlBox.style.padding = '24px';
-  nlBox.style.background = 'linear-gradient(135deg, var(--color-paper), var(--color-paper-2))';
-  nlBox.style.borderRadius = '12px';
-  nlBox.style.border = '1px solid var(--color-primary)';
-  nlBox.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)';
-  nlBox.style.textAlign = 'center';
-
-  nlBox.innerHTML = `
-    <h3 style="margin-top:0; margin-bottom:8px; color:var(--color-primary);">✉️ Bleib up-to-date!</h3>
-    <p style="margin:0 0 16px 0; font-size:14px; color:var(--color-ink-2);">
-      Hol dir die besten Spartipps, Finanz-Hacks und Updates zu neuen Rechnern (${countryCode}) direkt in dein Postfach.
-    </p>
-    <form action="#" method="POST" style="display:flex; gap:8px; max-width:400px; margin:0 auto;" onsubmit="alert('Danke für die Anmeldung! (Dummy-Formular)'); return false;">
-      <input type="email" placeholder="Deine E-Mail Adresse" required style="flex:1; padding:10px 12px; border:1px solid var(--color-rule); border-radius:8px; font-size:14px;" />
-      <button type="submit" class="btn" style="padding:10px 16px; border-radius:8px;">Abonnieren</button>
-    </form>
-    <p style="margin:8px 0 0 0; font-size:11px; color:var(--color-ink-3);">Kein Spam. Abmeldung jederzeit möglich.</p>
-  `;
-
-  // Insert before the footer or inside main at the bottom
-  main.appendChild(nlBox);
-}
-
 
 // Auto-calculate on input change
 document.addEventListener('DOMContentLoaded', () => {
@@ -504,9 +467,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const calcBtn = document.getElementById('calculate');
   if (calcBtn) {
-    // Hide the calculate button visually since it auto-calculates
-    calcBtn.style.display = 'none';
-
     document.querySelectorAll('.calc-body input, .calc-body select').forEach(el => {
       el.addEventListener('input', () => {
         calcBtn.click();
@@ -534,7 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
     nativeBtn.style.cssText = 'flex:1.4;min-width:140px;';
     nativeBtn.addEventListener('click', async () => {
       if (navigator.share) {
-        try { await navigator.share({ title: document.title, text: shareText, url: shareUrl }); return; } catch (e) {}
+        try { await navigator.share({ title: document.title, text: shareText, url: shareUrl }); return; } catch (e) { }
       }
       try {
         await navigator.clipboard.writeText(shareUrl);
@@ -559,7 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         localStorage.setItem('rechnify.bookmarkHint', shareUrl);
         localStorage.setItem(BOOKMARK_KEY, '1');
-      } catch (e) {}
+      } catch (e) { }
       bookmarkBtn.textContent = tip;
       bookmarkBtn.title = tip;
       setTimeout(() => { bookmarkBtn.hidden = true; }, 1800);
@@ -654,7 +614,7 @@ function injectPrintBrand() {
 function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) return;
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
+    navigator.serviceWorker.register('/sw.js').catch(() => { });
   });
 }
 
@@ -688,5 +648,5 @@ function injectAdSlot(afterEl) {
   wrap.style.cssText = 'margin:20px 0;min-height:90px;text-align:center;';
   wrap.innerHTML = `<ins class="adsbygoogle" style="display:block" data-ad-client="${client}" data-ad-slot="${slot}" data-ad-format="auto" data-full-width-responsive="true"></ins>`;
   afterEl.insertAdjacentElement('afterend', wrap);
-  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) { }
 }
