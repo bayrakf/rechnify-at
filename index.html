@@ -852,6 +852,30 @@
     };
     const INV_MAPPING = Object.fromEntries(Object.entries(TOOL_MAPPING).map(([k,v]) => [v,k]));
 
+    function filterTools() {
+      const q = (document.getElementById('toolSearch')?.value || '').trim().toLowerCase();
+      document.querySelectorAll('.tool-card').forEach((card) => {
+        if (card.dataset.countryHidden === '1') {
+          card.style.display = 'none';
+          return;
+        }
+        const text = (card.textContent || '').toLowerCase();
+        const match = !q || text.includes(q);
+        if (!match) {
+          card.style.display = 'none';
+          card.dataset.searchHidden = '1';
+        } else {
+          card.style.display = '';
+          delete card.dataset.searchHidden;
+        }
+      });
+      document.querySelectorAll('.category-section').forEach((sec) => {
+        const any = [...sec.querySelectorAll('.tool-card')].some((c) => c.style.display !== 'none');
+        sec.style.display = !q || any ? '' : 'none';
+      });
+      if (typeof organizeGrids === 'function') organizeGrids();
+    }
+
     function setCountry(c, persist) {
       if (persist) {
         localStorage.setItem('country', c);
@@ -879,7 +903,7 @@
           if (card.dataset.searchHidden !== '1') card.style.display = '';
         }
       });
-      if (typeof filterTools === 'function') filterTools();
+      filterTools();
 
       // 2. Rewrite links dynamically
       document.querySelectorAll('a.tool-card').forEach(link => {
@@ -942,31 +966,7 @@
     btnAt.addEventListener('click', () => setCountry('at', true));
     btnDe.addEventListener('click', () => setCountry('de', true));
 
-    /* ── Tool search filter ───────────────────────────────────────── */
     const toolSearch = document.getElementById('toolSearch');
-    function filterTools() {
-      const q = (toolSearch?.value || '').trim().toLowerCase();
-      document.querySelectorAll('.tool-card').forEach((card) => {
-        if (card.dataset.countryHidden === '1') {
-          card.style.display = 'none';
-          return;
-        }
-        const text = (card.textContent || '').toLowerCase();
-        const match = !q || text.includes(q);
-        if (!match) {
-          card.style.display = 'none';
-          card.dataset.searchHidden = '1';
-        } else {
-          card.style.display = '';
-          delete card.dataset.searchHidden;
-        }
-      });
-      document.querySelectorAll('.category-section').forEach((sec) => {
-        const any = [...sec.querySelectorAll('.tool-card')].some((c) => c.style.display !== 'none');
-        sec.style.display = !q || any ? '' : 'none';
-      });
-      if (typeof organizeGrids === 'function') organizeGrids();
-    }
     toolSearch?.addEventListener('input', filterTools);
     document.addEventListener('keydown', (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
