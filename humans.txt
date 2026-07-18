@@ -1,0 +1,11 @@
+/* TEAM */
+Developer: Firat Bayrak
+Contact: kontakt@rechnify.at
+Location: Vienna, Austria
+
+/* SITE */
+Last update: 2026
+Language: German (AT/DE)
+Standards: HTML5, CSS3, JavaScript
+Components: Vanilla JS, Service Worker, Web App Manifest
+Software: VS Code, Git
