@@ -1225,4 +1225,10 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/kalorienrechner.html"/>
     <lastmod>2026-07-18</lastmod>
   </url>
+  <url>
+    <loc>https://rechnify.at/alltag/schulnotenrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/alltag/schulnotenrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/schulnotenrechner.html"/>
+    <lastmod>2026-07-18</lastmod>
+  </url>
 </urlset>

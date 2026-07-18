@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="de-AT">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Schulnoten Rechner – Zeugnisnoten berechnen | rechnify.at</title>
+    <meta name="description"
+        content="Berechne deinen Notendurchschnitt und Zeugnisnote kostenlos. Alle Noten eingeben, Durchschnitt sehen. Für Schüler, Studenten und Eltern." />
+    <link rel="canonical" href="https://rechnify.at/alltag/schulnotenrechner.html" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/alltag/schulnotenrechner.html" />
+    <link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/schulnotenrechner.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Schulnoten Rechner – Zeugnisnoten berechnen | rechnify.at" />
+    <meta property="og:description" content="Berechne deinen Notendurchschnitt und Zeugnisnote kostenlos." />
+    <meta property="og:url" content="https://rechnify.at/alltag/schulnotenrechner.html" />
+    <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:locale" content="de_AT" />
+    <meta property="og:site_name" content="rechnify.at" />
+    <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#1858C7" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet"
+        media="print" onload="this.media='all'" />
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap"
+            rel="stylesheet" />
+    </noscript>
+    <link rel="stylesheet" href="/tokens.css?v=1.2" />
+    <link rel="stylesheet" href="/assets/css/global.css?v=3.1" media="print" onload="this.media='all'" />
+    <noscript>
+        <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+    </noscript>
+    <script type="application/ld+json">
+  { "@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Schulnoten Rechner", "operatingSystem": "All", "applicationCategory": "EducationApplication", "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "EUR" } }
+  </script>
+    <script type="application/ld+json">
+  { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{ "@type": "Question", "name": "Wie wird der Notendurchschnitt berechnet?", "acceptedAnswer": { "@type": "Answer", "text": "Der Notendurchschnitt ist der Durchschnitt aller Noten. Addiere alle Noten und teile durch die Anzahl. Beispiel: Noten 2, 3, 1, 4 → (2+3+1+4) ÷ 4 = 2,5." } }, { "@type": "Question", "name": "Welche Notenskala gilt in Österreich?", "acceptedAnswer": { "@type": "Answer", "text": "Österreich: 1 (Sehr gut), 2 (Gut), 3 (Befriedigend), 4 (Genügend), 5 (Nicht genügend). Deutschland: gleiche Skala, aber 6 ist die schlechteste Note in manchen Bundesländern." } }] }
+  </script>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+                <picture>
+                    <source srcset="/assets/images/logo-72.webp" type="image/webp" /><img
+                        src="/assets/images/logo-72.jpg" alt="rechnify Logo" width="36" height="36" decoding="async" />
+                </picture>
+                <span class="site-logo-text">rechnify<span>.at</span></span>
+            </a>
+            <nav class="site-nav" id="siteNav">
+                <a href="/">🏠 Start</a>
+                <a href="/#finanzen">💶 Finanzen</a>
+                <a href="/#arbeitszeit">⏰ Arbeitszeit</a>
+                <a href="/#familie">👶 Familie</a>
+                <a href="/#mathematik">📐 Mathematik</a>
+                <a href="/#alltag">⚖️ Alltag</a>
+            </nav>
+            <div class="header-actions">
+                <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus" type="button">🌙</button>
+            </div>
+        </div>
+    </header>
+    <nav class="breadcrumb" aria-label="Brotkrumen">
+        <a href="/">Start</a><span class="breadcrumb-sep">/</span>
+        <a href="/#alltag">Alltag</a><span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">Schulnoten</span>
+    </nav>
+    <main class="site-main">
+        <div class="calculator-container">
+            <div class="calculator-card">
+                <div class="calc-header">
+                    <div class="calc-icon">📝</div>
+                    <h1 style="margin-bottom:8px;">Schulnoten Rechner</h1>
+                    <p>Berechne deinen Notendurchschnitt und deine Zeugnisnote.</p>
+                </div>
+                <div class="calc-body">
+                    <div class="input-group">
+                        <label for="gradeSystem">Notensystem</label>
+                        <select id="gradeSystem">
+                            <option value="1-5" selected>1-5 (Österreich: 1=Sehr gut, 5=Nicht genügend)</option>
+                            <option value="1-6">1-6 (Deutschland: 1=Sehr gut, 6=Ungenügend)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="grades">Noten (mit Komma getrennt)</label>
+                        <div class="input-suffix">
+                            <input type="text" id="grades" placeholder="z.B. 2, 3, 1, 4, 2" value="2, 3, 1, 4, 2">
+                            <span class="suffix">Noten</span>
+                        </div>
+                    </div>
+                    <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Berechnen</button>
+                    <div id="result" class="result-box hidden">
+                        <h3>Dein Ergebnis</h3>
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <div class="text-sm text-muted">Notendurchschnitt</div>
+                                <div class="big-number text-success" id="resAvg">--</div>
+                                <div class="sub-number">Ø aller Noten</div>
+                            </div>
+                            <div class="result-card" style="background: var(--soft-row);">
+                                <div class="text-sm text-muted">Zeugnisnote</div>
+                                <div class="big-number text-success" id="resGrade">--</div>
+                                <div class="sub-number">Gerundet</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+                            <h3>Details</h3>
+                            <div style="display:flex; justify-content:space-between; margin-top: 8px;">
+                                <span class="text-muted">Anzahl Noten:</span>
+                                <strong id="resCount">--</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                                <span class="text-muted">Beste Note:</span>
+                                <strong id="resBest">--</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                                <span class="text-muted">Schlechteste Note:</span>
+                                <strong id="resWorst">--</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-top: 4px;">
+                                <span class="text-muted">Bewertung:</span>
+                                <strong id="resText">--</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="help">
+                    <strong>Wie wird berechnet?</strong><br />
+                    Durchschnitt = Summe aller Noten ÷ Anzahl. Zeugnisnote = gerundeter Durchschnitt. Österreich: 1-5,
+                    Deutschland: 1-6.
+                </div>
+            </div>
+            <section class="content-section" style="margin-top: 32px;">
+                <h2>Wie funktioniert der Schulnotenrechner?</h2>
+                <p>Unser Schulnotenrechner berechnet den <strong>Notendurchschnitt</strong> aus allen eingegebenen
+                    Noten. Gib einfach deine Noten mit Komma getrennt ein (z.B. "2, 3, 1, 4, 2") und der Rechner zeigt
+                    dir sofort deinen Durchschnitt und die gerundete Zeugnisnote.</p>
+                <h3>Notensysteme</h3>
+                <p>Der Rechner unterstützt beide gängigen Notensysteme:</p>
+                <ul>
+                    <li><strong>Österreich (1-5):</strong> 1 = Sehr gut, 2 = Gut, 3 = Befriedigend, 4 = Genügend, 5 =
+                        Nicht genügend</li>
+                    <li><strong>Deutschland (1-6):</strong> 1 = Sehr gut, 2 = Gut, 3 = Befriedigend, 4 = Ausreichend, 5
+                        = Mangelhaft, 6 = Ungenügend</li>
+                </ul>
+                <h3>Tipps für Schüler</h3>
+                <ul>
+                    <li><strong>Zielnote berechnen:</strong> Gib deine aktuellen Noten ein und sieh, welche Note du in
+                        der nächsten Prüfung brauchst</li>
+                    <li><strong>Versetzungsgefahr:</strong> In Österreich bedeutet ein Durchschnitt von 4,5 oder
+                        schlechter oft eine Nachprüfung</li>
+                    <li><strong>Noten gewichten:</strong> Manche Noten zählen doppelt (z.B. Hauptfächer) — gib diese
+                        einfach zweimal ein</li>
+                </ul>
+            </section>
+            <section class="faq-section" style="margin-top: 32px;">
+                <h2>Häufig gestellte Fragen (FAQs)</h2>
+                <div class="faq-accordion">
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">Wie wird der Notendurchschnitt berechnet?</button>
+                        <div class="faq-answer">
+                            <p>Der Notendurchschnitt ist der Durchschnitt aller Noten. Addiere alle Noten und teile
+                                durch die Anzahl. Beispiel: Noten 2, 3, 1, 4 → (2+3+1+4) ÷ 4 = 2,5.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">Welche Notenskala gilt in Österreich?</button>
+                        <div class="faq-answer">
+                            <p>Österreich: 1 (Sehr gut), 2 (Gut), 3 (Befriedigend), 4 (Genügend), 5 (Nicht genügend).
+                                Deutschland: gleiche Skala, aber 6 ist die schlechteste Note in manchen Bundesländern.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="site-logo-text">rechnify<span>.at</span></span>
+                    <p>Kostenlose Online-Rechner für Österreich & Deutschland.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Alltag</h3>
+                    <ul>
+                        <li><a href="/alltag/bmi-rechner.html">BMI-Rechner</a></li>
+                        <li><a href="/alltag/kalorienrechner.html">Kalorienrechner</a></li>
+                        <li><a href="/alltag/schulnotenrechner.html">Schulnoten</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Info</h3>
+                    <ul>
+                        <li><a href="/ueber-uns.html">Über uns</a></li>
+                        <li><a href="/kontakt.html">Kontakt</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="/assets/js/global.js?v=3.1"></script>
+    <script>
+        'use strict';
+        document.getElementById('calculate').addEventListener('click', () => {
+            const system = document.getElementById('gradeSystem').value;
+            const maxGrade = system === '1-5' ? 5 : 6;
+            const input = document.getElementById('grades').value;
+            const grades = input.split(',').map(g => parseFloat(g.trim())).filter(g => !isNaN(g) && g >= 1 && g <= maxGrade);
+            if (grades.length === 0) return;
+            const sum = grades.reduce((a, b) => a + b, 0);
+            const avg = sum / grades.length;
+            const rounded = Math.round(avg);
+            const best = Math.min(...grades);
+            const worst = Math.max(...grades);
+            let text = '';
+            if (avg < 1.5) text = 'Sehr gut! 🏆';
+            else if (avg < 2.5) text = 'Gut! 👍';
+            else if (avg < 3.5) text = 'Befriedigend 🙂';
+            else if (avg < 4.5) text = 'Genügend ⚠️';
+            else text = 'Nicht genügend ❌';
+            document.getElementById('resAvg').textContent = avg.toFixed(2);
+            document.getElementById('resGrade').textContent = rounded;
+            document.getElementById('resCount').textContent = grades.length;
+            document.getElementById('resBest').textContent = best;
+            document.getElementById('resWorst').textContent = worst;
+            document.getElementById('resText').textContent = text;
+            document.getElementById('result').classList.remove('hidden');
+        });
+    </script>
+</body>
+
+</html>
