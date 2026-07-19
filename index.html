@@ -936,7 +936,17 @@
             <li><a href="/blog/">Blog</a></li>
             <li><a href="/datenschutz.html">Datenschutz</a></li>
           </ul>
+        
+        <div class="footer-col">
+          <h3>Newsletter</h3>
+          <form name="newsletter-footer" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="newsletter-footer" />
+            <p style="display:none;"><label>Bot: <input name="bot-field" /></label></p>
+            <input type="email" name="email" placeholder="E-Mail Adresse" required style="width:100%;padding:8px 10px;border:1px solid var(--color-rule);border-radius:6px;font-size:13px;margin-bottom:8px;" />
+            <button type="submit" class="btn" style="width:100%;padding:8px;font-size:13px;">Abonnieren</button>
+          </form>
         </div>
+
       </div>
       <div class="footer-bottom">
         <span class="footer-copy">© 2026 rechnify.at</span>
