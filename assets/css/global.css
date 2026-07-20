@@ -1443,3 +1443,23 @@ label {
   body { background: white; color: black; }
   .card, .calculator-card, .result-box { box-shadow: none; border: 1px solid #ccc; }
 }
+
+/* pSEO common styles — extracted from inline styles for smaller HTML */
+.pseo-box { margin-top: 24px; padding: 16px; background: var(--soft); border: 1px solid var(--border); border-radius: 12px; }
+.pseo-box-green { margin-top: 24px; padding: 16px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; }
+.pseo-box-red { margin-top: 24px; padding: 16px; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 12px; }
+.pseo-box-yellow { margin-top: 24px; padding: 16px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 12px; }
+.pseo-box-blue { margin-top: 24px; padding: 16px; background: #e0f2fe; border: 1px solid #bae6fd; border-radius: 12px; }
+.pseo-row { display: flex; justify-content: space-between; margin-top: 8px; }
+.pseo-row-sm { display: flex; justify-content: space-between; margin-top: 4px; }
+.pseo-border { padding-top: 16px; border-top: 1px solid var(--border); }
+.pseo-border-dashed { padding-top: 8px; border-top: 1px dashed var(--border); }
+.pseo-text-green { color: var(--success); }
+.pseo-text-red { color: var(--danger); }
+.pseo-text-muted { color: var(--muted); }
+.pseo-text-lg { font-size: 1.2em; }
+.pseo-text-sm { font-size: 14px; }
+.pseo-mt-24 { margin-top: 24px; }
+.pseo-mt-16 { margin-top: 16px; }
+.pseo-mt-8 { margin-top: 8px; }
+.pseo-mt-4 { margin-top: 4px; }
