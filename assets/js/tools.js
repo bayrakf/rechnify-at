@@ -180,7 +180,8 @@ function initShareButtons() {
     const nativeBtn = document.createElement('button');
     nativeBtn.type = 'button';
     nativeBtn.className = 'btn share-btn';
-    nativeBtn.textContent = 'Ergebnis teilen';
+    nativeBtn.innerHTML = '<img src="/assets/images/icons/share.svg" alt="Teilen" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Teilen';
+    nativeBtn.setAttribute('aria-label', 'Ergebnis teilen');
     nativeBtn.style.cssText = 'flex:1.4;min-width:140px;';
     nativeBtn.addEventListener('click', async () => {
       if (navigator.share) {
@@ -188,8 +189,8 @@ function initShareButtons() {
       }
       try {
         await navigator.clipboard.writeText(shareUrl);
-        nativeBtn.textContent = 'Link kopiert';
-        setTimeout(() => { nativeBtn.textContent = 'Ergebnis teilen'; }, 1600);
+        nativeBtn.innerHTML = '<img src="/assets/images/icons/link.svg" alt="Kopiert" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Kopiert';
+        setTimeout(() => { nativeBtn.innerHTML = '<img src="/assets/images/icons/share.svg" alt="Teilen" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Teilen'; }, 1600);
       } catch (e) {
         window.prompt('Link kopieren:', shareUrl);
       }
@@ -197,7 +198,8 @@ function initShareButtons() {
     const bookmarkBtn = document.createElement('button');
     bookmarkBtn.type = 'button';
     bookmarkBtn.className = 'btn';
-    bookmarkBtn.textContent = 'Seite merken';
+    bookmarkBtn.innerHTML = '<img src="/assets/images/icons/bookmark.svg" alt="Merken" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Merken';
+    bookmarkBtn.setAttribute('aria-label', 'Seite merken');
     bookmarkBtn.style.cssText = 'flex:1;min-width:120px;';
     const BOOKMARK_KEY = 'rechnify.bookmarkShown';
     if (localStorage.getItem(BOOKMARK_KEY) === '1') {
@@ -216,7 +218,8 @@ function initShareButtons() {
     const printBtn = document.createElement('button');
     printBtn.type = 'button';
     printBtn.className = 'btn print-btn';
-    printBtn.textContent = 'Drucken / PDF';
+    printBtn.innerHTML = '<img src="/assets/images/icons/print.svg" alt="Drucken" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Drucken';
+    printBtn.setAttribute('aria-label', 'Drucken / PDF');
     printBtn.style.cssText = 'flex:1;min-width:120px;';
     printBtn.addEventListener('click', () => window.print());
     const wa = document.createElement('a');
@@ -224,9 +227,18 @@ function initShareButtons() {
     wa.href = 'https://wa.me/?text=' + encodeURIComponent(shareText + ' ' + shareUrl);
     wa.target = '_blank';
     wa.rel = 'noopener';
-    wa.textContent = 'WhatsApp';
+    wa.innerHTML = '<img src="/assets/images/icons/whatsapp.svg" alt="WhatsApp" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> WhatsApp';
+    wa.setAttribute('aria-label', 'Per WhatsApp teilen');
     wa.style.cssText = 'flex:1;min-width:120px;text-align:center;';
-    actionDiv.append(nativeBtn, wa);
+    const ig = document.createElement('a');
+    ig.className = 'btn';
+    ig.href = 'https://www.instagram.com/?url=' + encodeURIComponent(shareUrl);
+    ig.target = '_blank';
+    ig.rel = 'noopener';
+    ig.innerHTML = '<img src="/assets/images/icons/instagram.svg" alt="Instagram" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Instagram';
+    ig.setAttribute('aria-label', 'Per Instagram teilen');
+    ig.style.cssText = 'flex:1;min-width:120px;text-align:center;';
+    actionDiv.append(nativeBtn, wa, ig);
     if (!bookmarkBtn.hidden) actionDiv.append(bookmarkBtn);
     actionDiv.append(printBtn);
     box.appendChild(actionDiv);
