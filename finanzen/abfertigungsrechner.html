@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de-AT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abfertigungsrechner Österreich 2026 | rechnify.at</title>
+  <meta name="description" content="Abfertigung alt (Staffel) und neu (1,53 % BMSVG) schätzen. Orientierungswerte, keine Rechtsberatung." />
+  <link rel="canonical" href="https://rechnify.at/finanzen/abfertigungsrechner.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/abfertigungsrechner.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/abfertigungsrechner.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Abfertigungsrechner Österreich 2026" />
+  <meta property="og:description" content="Abfertigung alt (Staffel) und neu (1,53 % BMSVG) schätzen. Orientierungswerte, keine Rechtsberatung." />
+  <meta property="og:url" content="https://rechnify.at/finanzen/abfertigungsrechner.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="stylesheet" href="/tokens.css?v=1.2" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <style>
+    .calc-body{padding:24px}
+    .input-group{margin-bottom:16px}
+    .input-group label{display:block;margin-bottom:6px;font-weight:600}
+    .input-group input,.input-group select{width:100%;padding:12px;border:1px solid var(--color-rule);border-radius:10px;background:var(--color-paper);color:var(--color-ink);font-size:16px}
+    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:600px){.input-row{grid-template-columns:1fr}}
+    .result-box{margin-top:20px;padding:20px;border:1px solid var(--color-rule);border-radius:12px;background:var(--color-paper-2)}
+    .result-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-rule)}
+    .result-item:last-child{border-bottom:0}
+    .result-item.highlight{font-weight:700;font-size:1.15em;color:var(--color-primary)}
+    .help{font-size:.9rem;color:var(--color-ink-3);margin-top:12px}
+    .ext-links a{margin-right:12px}
+  </style>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner">
+    <a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a>
+  </div></header>
+  <main class="site-main">
+    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Abfertigungsrechner Österreich</h1>
+    <p class="subtitle">Abfertigung alt (Staffel) und neu (1,53 % BMSVG) schätzen. Orientierungswerte, keine Rechtsberatung.</p></div>
+    <div class="card"><div class="calc-body">
+
+        <div class="input-row">
+          <div class="input-group"><label for="sys">System</label>
+            <select id="sys"><option value="neu">Abfertigung NEU (Beginn ab 1.1.2003)</option><option value="alt">Abfertigung ALT (Beginn vor 2003)</option></select>
+          </div>
+          <div class="input-group"><label for="brutto">Monatsbrutto (€)</label>
+            <input type="number" id="brutto" min="0" step="50" value="3000" /></div>
+        </div>
+        <div class="input-row">
+          <div class="input-group"><label for="jahre">Dienstjahre</label>
+            <input type="number" id="jahre" min="0" max="45" step="1" value="8" /></div>
+          <div class="input-group"><label for="sz">Sonderzahlungen/Jahr (Monatsgehälter)</label>
+            <input type="number" id="sz" min="0" max="14" step="1" value="2" title="AT oft 13.+14. = 2" /></div>
+        </div>
+        <div class="result-box" id="resultBox">
+          <div class="result-item highlight"><span>Schätzung</span><span id="res">—</span></div>
+          <div class="result-item"><span>Details</span><span id="det">—</span></div>
+          <p class="help">NEU: AG zahlt laufend <strong>1,53&nbsp;%</strong> des Entgelts (inkl. Sonderzahlungen) in eine BV-Kasse (BMSVG). Hier: grobe Summe Beiträge ohne Verzinsung/Verwaltungskosten. ALT: gesetzliche Staffel in Monatsentgelten (ab 3/5/10/15/20/25 Jahren → 2/3/4/6/9/12). Anspruch ALT hängt von Beendigungsart ab. Quellen: <a href="https://www.usp.gv.at/themen/mitarbeiter-und-gesundheit/beendigung-des-arbeitsverhaeltnisses/abfertigung.html" rel="noopener" target="_blank">USP.gv.at</a>, <a href="https://ris.bka.gv.at/" rel="noopener" target="_blank">RIS</a>.</p>
+        </div>
+        <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+          const euro=n=>CalcTools.euro(n,'de-AT');
+          const altMonths=y=>{if(y>=25)return 12;if(y>=20)return 9;if(y>=15)return 6;if(y>=10)return 4;if(y>=5)return 3;if(y>=3)return 2;return 0;};
+          const calc=()=>{
+            const b=+brutto.value||0, y=+jahre.value||0, sz=+szEl.value||0, sys=sysEl.value;
+            if(sys==='alt'){
+              const m=altMonths(y);
+              res.textContent=euro(b*m);
+              det.textContent=m?`${m} Monatsentgelte × ${euro(b)}`:'unter 3 Dienstjahren: kein ALT-Anspruch (Staffel)';
+            }else{
+              const months=Math.max(0,y*12-1); // ab 2. Monat
+              const yearly=b*(12+sz);
+              const sum=yearly/12*months*0.0153;
+              res.textContent=euro(sum);
+              det.textContent=`1,53% × ~${months} Beitragsmonate (ohne Zinsen)`;
+            }
+          };
+          const brutto=document.getElementById('brutto'), jahre=document.getElementById('jahre'), szEl=document.getElementById('sz'), sysEl=document.getElementById('sys');
+          const res=document.getElementById('res'), det=document.getElementById('det');
+          [brutto,jahre,szEl,sysEl].forEach(e=>e.addEventListener('input',calc));
+          sysEl.addEventListener('change',calc); calc();
+        });
+        </script>
+
+    </div></div>
+  </main>
+  <script src="/assets/js/analytics.js?v=3.1"></script>
+  <script src="/assets/js/ui.js?v=3.1"></script>
+  <script src="/assets/js/tools.js?v=3.1"></script>
+  <script src="/assets/js/core.js?v=3.1"></script>
+  <script src="/assets/js/calc-tools.js"></script>
+</body>
+</html>

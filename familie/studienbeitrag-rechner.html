@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de-AT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studienbeitrag & ÖH-Beitrag Rechner Österreich | rechnify.at</title>
+  <meta name="description" content="ÖH-Beitrag und Studienbeitrag (Drittstaat / Überschreitung) selbst mit offiziellen Sätzen eintragen — keine erfundenen Unitarife." />
+  <link rel="canonical" href="https://rechnify.at/familie/studienbeitrag-rechner.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/familie/studienbeitrag-rechner.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/familie/studienbeitrag-rechner.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Studienbeitrag & ÖH-Beitrag Rechner Österreich" />
+  <meta property="og:description" content="ÖH-Beitrag und Studienbeitrag (Drittstaat / Überschreitung) selbst mit offiziellen Sätzen eintragen — keine erfundenen Unitarife." />
+  <meta property="og:url" content="https://rechnify.at/familie/studienbeitrag-rechner.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="stylesheet" href="/tokens.css?v=1.2" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <style>
+    .calc-body{padding:24px}
+    .input-group{margin-bottom:16px}
+    .input-group label{display:block;margin-bottom:6px;font-weight:600}
+    .input-group input,.input-group select{width:100%;padding:12px;border:1px solid var(--color-rule);border-radius:10px;background:var(--color-paper);color:var(--color-ink);font-size:16px}
+    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:600px){.input-row{grid-template-columns:1fr}}
+    .result-box{margin-top:20px;padding:20px;border:1px solid var(--color-rule);border-radius:12px;background:var(--color-paper-2)}
+    .result-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-rule)}
+    .result-item:last-child{border-bottom:0}
+    .result-item.highlight{font-weight:700;font-size:1.15em;color:var(--color-primary)}
+    .help{font-size:.9rem;color:var(--color-ink-3);margin-top:12px}
+    .ext-links a{margin-right:12px}
+  </style>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner">
+    <a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a>
+  </div></header>
+  <main class="site-main">
+    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Studienbeitrag Österreich</h1>
+    <p class="subtitle">ÖH-Beitrag und Studienbeitrag (Drittstaat / Überschreitung) selbst mit offiziellen Sätzen eintragen — keine erfundenen Unitarife.</p></div>
+    <div class="card"><div class="calc-body">
+
+        <div class="input-row">
+          <div class="input-group"><label for="oeh">ÖH-Beitrag € / Semester</label><input type="number" id="oeh" value="24.70" min="0" step="0.01" /></div>
+          <div class="input-group"><label for="sb">Studienbeitrag € / Semester</label><input type="number" id="sb" value="0" min="0" step="0.01" /></div>
+        </div>
+        <div class="input-row">
+          <div class="input-group"><label for="sem">Semester</label><input type="number" id="sem" value="6" min="1" max="20" /></div>
+          <div class="input-group"><label for="typ">Hinweis Tarif</label>
+            <select id="typ"><option>AT/EU oft 0 € Studienbeitrag + ÖH</option><option>Drittstaat: oft 726,72 € / Sem. (selbst prüfen)</option><option>Überschreitung Toleranz: oft 363,36 € / Sem.</option></select></div>
+        </div>
+        <div class="result-box" id="resultBox">
+          <div class="result-item highlight"><span>Gesamt Zeitraum</span><span id="tot">—</span></div>
+          <div class="result-item"><span>pro Semester</span><span id="ps">—</span></div>
+          <p class="help">Sätze ändern sich — trage den Betrag deiner Uni/FH ein. Infos: <a href="https://www.oesterreich.gv.at/" rel="noopener" target="_blank">oesterreich.gv.at</a>, ÖH deiner Hochschule.</p>
+        </div>
+        <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+          const euro=n=>CalcTools.euro(n,'de-AT');
+          const calc=()=>{const p=(+oeh.value||0)+(+sb.value||0);ps.textContent=euro(p);tot.textContent=euro(p*(+sem.value||0));};
+          ['oeh','sb','sem'].forEach(id=>document.getElementById(id).addEventListener('input',calc));
+          const oeh=document.getElementById('oeh'),sb=document.getElementById('sb'),sem=document.getElementById('sem'),tot=document.getElementById('tot'),ps=document.getElementById('ps');calc();
+        });
+        </script>
+
+    </div></div>
+  </main>
+  <script src="/assets/js/analytics.js?v=3.1"></script>
+  <script src="/assets/js/ui.js?v=3.1"></script>
+  <script src="/assets/js/tools.js?v=3.1"></script>
+  <script src="/assets/js/core.js?v=3.1"></script>
+  <script src="/assets/js/calc-tools.js"></script>
+</body>
+</html>

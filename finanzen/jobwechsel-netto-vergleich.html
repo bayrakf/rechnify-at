@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="de-AT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jobwechsel Netto-Vergleich Österreich | rechnify.at</title>
+  <meta name="description" content="Altes vs neues Brutto grob vergleichen (AT-Richtwert). Für exakte Netto: Gehaltsrechner." />
+  <link rel="canonical" href="https://rechnify.at/finanzen/jobwechsel-netto-vergleich.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/jobwechsel-netto-vergleich.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/jobwechsel-netto-vergleich.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Jobwechsel Netto-Vergleich Österreich" />
+  <meta property="og:description" content="Altes vs neues Brutto grob vergleichen (AT-Richtwert). Für exakte Netto: Gehaltsrechner." />
+  <meta property="og:url" content="https://rechnify.at/finanzen/jobwechsel-netto-vergleich.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="stylesheet" href="/tokens.css?v=1.2" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <style>
+    .calc-body{padding:24px}
+    .input-group{margin-bottom:16px}
+    .input-group label{display:block;margin-bottom:6px;font-weight:600}
+    .input-group input,.input-group select{width:100%;padding:12px;border:1px solid var(--color-rule);border-radius:10px;background:var(--color-paper);color:var(--color-ink);font-size:16px}
+    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:600px){.input-row{grid-template-columns:1fr}}
+    .result-box{margin-top:20px;padding:20px;border:1px solid var(--color-rule);border-radius:12px;background:var(--color-paper-2)}
+    .result-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-rule)}
+    .result-item:last-child{border-bottom:0}
+    .result-item.highlight{font-weight:700;font-size:1.15em;color:var(--color-primary)}
+    .help{font-size:.9rem;color:var(--color-ink-3);margin-top:12px}
+    .ext-links a{margin-right:12px}
+  </style>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner">
+    <a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a>
+  </div></header>
+  <main class="site-main">
+    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Jobwechsel: Netto alt vs neu</h1>
+    <p class="subtitle">Altes vs neues Brutto grob vergleichen (AT-Richtwert). Für exakte Netto: Gehaltsrechner.</p></div>
+    <div class="card"><div class="calc-body">
+
+        <div class="input-row">
+          <div class="input-group"><label for="alt">Aktuelles Brutto (€/Monat)</label><input type="number" id="alt" value="3200" min="0" step="50" /></div>
+          <div class="input-group"><label for="neu">Neues Brutto (€/Monat)</label><input type="number" id="neu" value="3800" min="0" step="50" /></div>
+        </div>
+        <div class="result-box" id="resultBox">
+          <div class="result-item"><span>Δ Brutto</span><span id="dB">—</span></div>
+          <div class="result-item highlight"><span>Δ Netto (Schätzung AT)</span><span id="dN">—</span></div>
+          <div class="result-item"><span>Δ Jahr (×14)</span><span id="dY">—</span></div>
+          <p class="help">Schätzung: Netto ≈ Brutto − SV 18,07% (gedeckelt) − grobe Lohnsteuer. Kein Ersatz für den <a href="/finanzen/gehaltsrechner.html">Gehaltsrechner</a>. Auch <a href="/arbeitszeit/kuendigungsfrist-rechner.html">Kündigungsfrist</a> und <a href="/finanzen/abfertigungsrechner.html">Abfertigung</a> prüfen.</p>
+        </div>
+        <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+          const approx=b=>{const sv=Math.min(b,6930)*0.1807;const base=(b-sv)*12;let t=0;if(base>13539)t=Math.min(base,21992)-13539;t*=0.2;if(base>21992)t+=(Math.min(base,36458)-21992)*0.3;if(base>36458)t+=(Math.min(base,70365)-36458)*0.4;if(base>70365)t+=(Math.min(base,104859)-70365)*0.48;if(base>104859)t+=(base-104859)*0.5;return b-sv-t/12;};
+          const euro=n=>CalcTools.euro(n,'de-AT');
+          const calc=()=>{const a=+alt.value||0,n=+neu.value||0;const na=approx(a),nn=approx(n);dB.textContent=euro(n-a);dN.textContent=euro(nn-na);dY.textContent=euro((nn-na)*14);};
+          const alt=document.getElementById('alt'),neu=document.getElementById('neu'),dB=document.getElementById('dB'),dN=document.getElementById('dN'),dY=document.getElementById('dY');
+          [alt,neu].forEach(e=>e.addEventListener('input',calc));calc();
+        });
+        </script>
+
+    </div></div>
+  </main>
+  <script src="/assets/js/analytics.js?v=3.1"></script>
+  <script src="/assets/js/ui.js?v=3.1"></script>
+  <script src="/assets/js/tools.js?v=3.1"></script>
+  <script src="/assets/js/core.js?v=3.1"></script>
+  <script src="/assets/js/calc-tools.js"></script>
+</body>
+</html>

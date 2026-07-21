@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kündigungsfrist Rechner Deutschland 2026 | rechnify.at</title>
+  <meta name="description" content="Gesetzliche Fristen nach BGB §622. Vertrag/Tarif können länger sein." />
+  <link rel="canonical" href="https://rechnify.at/de/arbeitszeit/kuendigungsfrist-rechner.html" />
+  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/kuendigungsfrist-rechner.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Kündigungsfrist Rechner Deutschland 2026" />
+  <meta property="og:description" content="Gesetzliche Fristen nach BGB §622. Vertrag/Tarif können länger sein." />
+  <meta property="og:url" content="https://rechnify.at/de/arbeitszeit/kuendigungsfrist-rechner.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="rechnify.at" />
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="stylesheet" href="/tokens.css?v=1.2" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <style>
+    .calc-body{padding:24px}
+    .input-group{margin-bottom:16px}
+    .input-group label{display:block;margin-bottom:6px;font-weight:600}
+    .input-group input,.input-group select{width:100%;padding:12px;border:1px solid var(--color-rule);border-radius:10px;background:var(--color-paper);color:var(--color-ink);font-size:16px}
+    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:600px){.input-row{grid-template-columns:1fr}}
+    .result-box{margin-top:20px;padding:20px;border:1px solid var(--color-rule);border-radius:12px;background:var(--color-paper-2)}
+    .result-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-rule)}
+    .result-item:last-child{border-bottom:0}
+    .result-item.highlight{font-weight:700;font-size:1.15em;color:var(--color-primary)}
+    .help{font-size:.9rem;color:var(--color-ink-3);margin-top:12px}
+    .ext-links a{margin-right:12px}
+  </style>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner">
+    <a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a>
+  </div></header>
+  <main class="site-main">
+    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Kündigungsfrist Rechner Deutschland</h1>
+    <p class="subtitle">Gesetzliche Fristen nach BGB §622. Vertrag/Tarif können länger sein.</p></div>
+    <div class="card"><div class="calc-body">
+
+        <div class="input-row">
+          <div class="input-group"><label for="who">Wer kündigt?</label>
+            <select id="who"><option value="ag">Arbeitgeber</option><option value="an">Arbeitnehmer</option></select></div>
+          <div class="input-group"><label for="jahre">Betriebszugehörigkeit (Jahre)</label>
+            <input type="number" id="jahre" min="0" max="45" value="6" /></div>
+        </div>
+        <div class="result-box" id="resultBox">
+          <div class="result-item highlight"><span>Gesetzliche Frist</span><span id="res">—</span></div>
+          <div class="result-item"><span>Zum</span><span id="term">—</span></div>
+          <p class="help">BGB §622: AG-Fristen nach Betriebszugehörigkeit (ab 2/5/8/10/12/15/20 Jahren: 1–7 Monate zum Monatsende; darunter 4 Wochen zum 15. oder Monatsende). AN: 4 Wochen zum 15. oder Monatsende. Probezeit/besondere Vereinbarungen möglich. <a href="https://www.gesetze-im-internet.de/bgb/__622.html" rel="noopener" target="_blank">gesetze-im-internet.de §622</a>.</p>
+        </div>
+        <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+          const ag=(y)=>{if(y>=20)return[7,'Monatsende'];if(y>=15)return[6,'Monatsende'];if(y>=12)return[5,'Monatsende'];if(y>=10)return[4,'Monatsende'];if(y>=8)return[3,'Monatsende'];if(y>=5)return[2,'Monatsende'];if(y>=2)return[1,'Monatsende'];return[0,'15. oder Monatsende'];};
+          const calc=()=>{
+            const y=+jahre.value||0;
+            if(who.value==='an'){res.textContent='4 Wochen';term.textContent='15. oder Letzter des Kalendermonats';return;}
+            const [m,t]=ag(y);res.textContent=m?`${m} Monat(e)`:'4 Wochen';term.textContent=t;
+          };
+          const who=document.getElementById('who'),jahre=document.getElementById('jahre'),res=document.getElementById('res'),term=document.getElementById('term');
+          [who,jahre].forEach(e=>e.addEventListener('input',calc));who.addEventListener('change',calc);calc();
+        });
+        </script>
+
+    </div></div>
+  </main>
+  <script src="/assets/js/analytics.js?v=3.1"></script>
+  <script src="/assets/js/ui.js?v=3.1"></script>
+  <script src="/assets/js/tools.js?v=3.1"></script>
+  <script src="/assets/js/core.js?v=3.1"></script>
+  <script src="/assets/js/calc-tools.js"></script>
+</body>
+</html>

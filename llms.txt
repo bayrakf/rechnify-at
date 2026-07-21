@@ -8,6 +8,16 @@ Updated: 2026-07-18
 
 ## Top tools
 
+- [Abfertigungsrechner AT](https://rechnify.at/finanzen/abfertigungsrechner.html)
+- [Kündigungsfrist AT](https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html)
+- [Kündigungsfrist DE](https://rechnify.at/de/arbeitszeit/kuendigungsfrist-rechner.html)
+- [Jobwechsel Netto](https://rechnify.at/finanzen/jobwechsel-netto-vergleich.html)
+- [Stromkosten](https://rechnify.at/alltag/stromkosten-rechner.html)
+- [Miete vs Kauf](https://rechnify.at/finanzen/mietkauf-vs-miete.html)
+- [Studienbeitrag AT](https://rechnify.at/familie/studienbeitrag-rechner.html)
+- [Changelog](https://rechnify.at/changelog.html)
+
+
 - [Brutto-Netto Österreich](https://rechnify.at/finanzen/gehaltsrechner.html)
 - [Brutto-Netto Deutschland](https://rechnify.at/de/finanzen/gehaltsrechner.html)
 - [AT vs DE Vergleich](https://rechnify.at/finanzen/brutto-netto-oesterreich-vs-deutschland.html)

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de-AT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stromkosten Rechner | rechnify.at</title>
+  <meta name="description" content="Jahresstromkosten aus Verbrauch (kWh) und Arbeitspreis (€/kWh) plus Grundgebühr. Keine erfundenen Tarife." />
+  <link rel="canonical" href="https://rechnify.at/alltag/stromkosten-rechner.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/alltag/stromkosten-rechner.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/stromkosten-rechner.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Stromkosten Rechner" />
+  <meta property="og:description" content="Jahresstromkosten aus Verbrauch (kWh) und Arbeitspreis (€/kWh) plus Grundgebühr. Keine erfundenen Tarife." />
+  <meta property="og:url" content="https://rechnify.at/alltag/stromkosten-rechner.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="stylesheet" href="/tokens.css?v=1.2" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <style>
+    .calc-body{padding:24px}
+    .input-group{margin-bottom:16px}
+    .input-group label{display:block;margin-bottom:6px;font-weight:600}
+    .input-group input,.input-group select{width:100%;padding:12px;border:1px solid var(--color-rule);border-radius:10px;background:var(--color-paper);color:var(--color-ink);font-size:16px}
+    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:600px){.input-row{grid-template-columns:1fr}}
+    .result-box{margin-top:20px;padding:20px;border:1px solid var(--color-rule);border-radius:12px;background:var(--color-paper-2)}
+    .result-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-rule)}
+    .result-item:last-child{border-bottom:0}
+    .result-item.highlight{font-weight:700;font-size:1.15em;color:var(--color-primary)}
+    .help{font-size:.9rem;color:var(--color-ink-3);margin-top:12px}
+    .ext-links a{margin-right:12px}
+  </style>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner">
+    <a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a>
+  </div></header>
+  <main class="site-main">
+    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Stromkosten Rechner</h1>
+    <p class="subtitle">Jahresstromkosten aus Verbrauch (kWh) und Arbeitspreis (€/kWh) plus Grundgebühr. Keine erfundenen Tarife.</p></div>
+    <div class="card"><div class="calc-body">
+
+        <div class="input-row">
+          <div class="input-group"><label for="kwh">Verbrauch kWh/Jahr</label><input type="number" id="kwh" value="3500" min="0" step="10" /></div>
+          <div class="input-group"><label for="preis">Arbeitspreis €/kWh</label><input type="number" id="preis" value="0.28" min="0" step="0.01" /></div>
+        </div>
+        <div class="input-row">
+          <div class="input-group"><label for="grund">Grundgebühr €/Jahr</label><input type="number" id="grund" value="120" min="0" step="1" /></div>
+          <div class="input-group"><label for="pers">Personen (optional, nur Info)</label><input type="number" id="pers" value="2" min="1" step="1" /></div>
+        </div>
+        <div class="result-box" id="resultBox">
+          <div class="result-item highlight"><span>Kosten / Jahr</span><span id="jahr">—</span></div>
+          <div class="result-item"><span>Kosten / Monat</span><span id="mon">—</span></div>
+          <div class="result-item"><span>pro Person / Monat</span><span id="pp">—</span></div>
+          <p class="help">Du trägst Preis & Verbrauch selbst ein (Rechnung/Tarifblatt). Keine Standard-Tarife erfunden.</p>
+        </div>
+        <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+          const euro=n=>CalcTools.euro(n,'de-AT');
+          const calc=()=>{const j=(+kwh.value||0)*(+preis.value||0)+(+grund.value||0);jahr.textContent=euro(j);mon.textContent=euro(j/12);pp.textContent=euro(j/12/Math.max(1,+pers.value||1));};
+          ['kwh','preis','grund','pers'].forEach(id=>document.getElementById(id).addEventListener('input',calc));
+          const kwh=document.getElementById('kwh'),preis=document.getElementById('preis'),grund=document.getElementById('grund'),pers=document.getElementById('pers');
+          const jahr=document.getElementById('jahr'),mon=document.getElementById('mon'),pp=document.getElementById('pp');calc();
+        });
+        </script>
+
+    </div></div>
+  </main>
+  <script src="/assets/js/analytics.js?v=3.1"></script>
+  <script src="/assets/js/ui.js?v=3.1"></script>
+  <script src="/assets/js/tools.js?v=3.1"></script>
+  <script src="/assets/js/core.js?v=3.1"></script>
+  <script src="/assets/js/calc-tools.js"></script>
+</body>
+</html>

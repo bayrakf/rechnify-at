@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de-AT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mietkauf vs Miete Rechner | rechnify.at</title>
+  <meta name="description" content="Vergleiche laufende Miete mit Kauf/Kredit über dieselbe Laufzeit. Mathe only — keine Förderungen erfunden." />
+  <link rel="canonical" href="https://rechnify.at/finanzen/mietkauf-vs-miete.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/mietkauf-vs-miete.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/mietkauf-vs-miete.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mietkauf vs Miete Rechner" />
+  <meta property="og:description" content="Vergleiche laufende Miete mit Kauf/Kredit über dieselbe Laufzeit. Mathe only — keine Förderungen erfunden." />
+  <meta property="og:url" content="https://rechnify.at/finanzen/mietkauf-vs-miete.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="stylesheet" href="/tokens.css?v=1.2" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <style>
+    .calc-body{padding:24px}
+    .input-group{margin-bottom:16px}
+    .input-group label{display:block;margin-bottom:6px;font-weight:600}
+    .input-group input,.input-group select{width:100%;padding:12px;border:1px solid var(--color-rule);border-radius:10px;background:var(--color-paper);color:var(--color-ink);font-size:16px}
+    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:600px){.input-row{grid-template-columns:1fr}}
+    .result-box{margin-top:20px;padding:20px;border:1px solid var(--color-rule);border-radius:12px;background:var(--color-paper-2)}
+    .result-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-rule)}
+    .result-item:last-child{border-bottom:0}
+    .result-item.highlight{font-weight:700;font-size:1.15em;color:var(--color-primary)}
+    .help{font-size:.9rem;color:var(--color-ink-3);margin-top:12px}
+    .ext-links a{margin-right:12px}
+  </style>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner">
+    <a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a>
+  </div></header>
+  <main class="site-main">
+    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Miete vs Kauf (Kredit)</h1>
+    <p class="subtitle">Vergleiche laufende Miete mit Kauf/Kredit über dieselbe Laufzeit. Mathe only — keine Förderungen erfunden.</p></div>
+    <div class="card"><div class="calc-body">
+
+        <div class="input-row">
+          <div class="input-group"><label for="miete">Monatsmiete (€)</label><input type="number" id="miete" value="900" min="0" step="10" /></div>
+          <div class="input-group"><label for="preis">Kaufpreis (€)</label><input type="number" id="preis" value="280000" min="0" step="1000" /></div>
+        </div>
+        <div class="input-row">
+          <div class="input-group"><label for="ek">Eigenkapital (€)</label><input type="number" id="ek" value="40000" min="0" step="1000" /></div>
+          <div class="input-group"><label for="zins">Kreditzins p.a. (%)</label><input type="number" id="zins" value="3.5" min="0" step="0.1" /></div>
+        </div>
+        <div class="input-row">
+          <div class="input-group"><label for="jahre">Vergleichszeitraum (Jahre)</label><input type="number" id="jahre" value="20" min="1" max="40" /></div>
+          <div class="input-group"><label for="nk">Nebenkosten Kauf einmalig (€)</label><input type="number" id="nk" value="25000" min="0" step="500" title="GrESt, Notar etc. — selbst eintragen" /></div>
+        </div>
+        <div class="result-box" id="resultBox">
+          <div class="result-item"><span>Miete gesamt (Zeitraum)</span><span id="mSum">—</span></div>
+          <div class="result-item"><span>Kreditrate / Monat</span><span id="rate">—</span></div>
+          <div class="result-item"><span>Kauf Cash-out (EK+NK+Raten)</span><span id="kSum">—</span></div>
+          <div class="result-item highlight"><span>Differenz (Miete − Kauf Cash)</span><span id="diff">—</span></div>
+          <p class="help">Kauf lässt Eigentum übrig (Restschuld am Ende nicht abgezogen — Annuität tilgt bei voller Laufzeit). Keine Instandhaltung/Steuer/Förderung modelliert. Tilgungsplan: <a href="/finanzen/kreditrechner.html">Kreditrechner</a>.</p>
+        </div>
+        <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+          const euro=n=>CalcTools.euro(n,'de-AT');
+          const calc=()=>{
+            const mon=(+jahre.value||0)*12; const mSumV=(+miete.value||0)*mon;
+            const loan=Math.max(0,(+preis.value||0)-(+ek.value||0));
+            const r=CalcTools.annuityRate(loan,+zins.value||0,mon);
+            const kSumV=(+ek.value||0)+(+nk.value||0)+r*mon;
+            mSum.textContent=euro(mSumV); rate.textContent=euro(r); kSum.textContent=euro(kSumV); diff.textContent=euro(mSumV-kSumV);
+          };
+          ['miete','preis','ek','zins','jahre','nk'].forEach(id=>document.getElementById(id).addEventListener('input',calc));
+          const miete=document.getElementById('miete'),preis=document.getElementById('preis'),ek=document.getElementById('ek'),zins=document.getElementById('zins'),jahre=document.getElementById('jahre'),nk=document.getElementById('nk');
+          const mSum=document.getElementById('mSum'),rate=document.getElementById('rate'),kSum=document.getElementById('kSum'),diff=document.getElementById('diff');calc();
+        });
+        </script>
+
+    </div></div>
+  </main>
+  <script src="/assets/js/analytics.js?v=3.1"></script>
+  <script src="/assets/js/ui.js?v=3.1"></script>
+  <script src="/assets/js/tools.js?v=3.1"></script>
+  <script src="/assets/js/core.js?v=3.1"></script>
+  <script src="/assets/js/calc-tools.js"></script>
+</body>
+</html>

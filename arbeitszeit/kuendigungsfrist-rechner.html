@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de-AT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kündigungsfrist Rechner Österreich 2026 | rechnify.at</title>
+  <meta name="description" content="Gesetzliche Mindestfristen nach AngG §20 / ABGB-Angleichung. KV/Vertrag können abweichen." />
+  <link rel="canonical" href="https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html" />
+  <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/kuendigungsfrist-rechner.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Kündigungsfrist Rechner Österreich 2026" />
+  <meta property="og:description" content="Gesetzliche Mindestfristen nach AngG §20 / ABGB-Angleichung. KV/Vertrag können abweichen." />
+  <meta property="og:url" content="https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="stylesheet" href="/tokens.css?v=1.2" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <style>
+    .calc-body{padding:24px}
+    .input-group{margin-bottom:16px}
+    .input-group label{display:block;margin-bottom:6px;font-weight:600}
+    .input-group input,.input-group select{width:100%;padding:12px;border:1px solid var(--color-rule);border-radius:10px;background:var(--color-paper);color:var(--color-ink);font-size:16px}
+    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:600px){.input-row{grid-template-columns:1fr}}
+    .result-box{margin-top:20px;padding:20px;border:1px solid var(--color-rule);border-radius:12px;background:var(--color-paper-2)}
+    .result-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-rule)}
+    .result-item:last-child{border-bottom:0}
+    .result-item.highlight{font-weight:700;font-size:1.15em;color:var(--color-primary)}
+    .help{font-size:.9rem;color:var(--color-ink-3);margin-top:12px}
+    .ext-links a{margin-right:12px}
+  </style>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner">
+    <a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a>
+  </div></header>
+  <main class="site-main">
+    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Kündigungsfrist Rechner Österreich</h1>
+    <p class="subtitle">Gesetzliche Mindestfristen nach AngG §20 / ABGB-Angleichung. KV/Vertrag können abweichen.</p></div>
+    <div class="card"><div class="calc-body">
+
+        <div class="input-row">
+          <div class="input-group"><label for="who">Wer kündigt?</label>
+            <select id="who"><option value="ag">Arbeitgeber</option><option value="an">Arbeitnehmer</option></select></div>
+          <div class="input-group"><label for="jahre">Vollendete Dienstjahre</label>
+            <input type="number" id="jahre" min="0" max="45" value="4" /></div>
+        </div>
+        <div class="result-box" id="resultBox">
+          <div class="result-item highlight"><span>Gesetzliche Frist</span><span id="res">—</span></div>
+          <div class="result-item"><span>Hinweis Termin</span><span id="term">—</span></div>
+          <p class="help">AG (AngG §20 Abs. 2): 6 Wochen (1.–2. DJ), 2 Monate (ab 3.), 3 Monate (ab 6.), 4 Monate (ab 16.), 5 Monate (ab 26.); typisch zum <strong>Kalendervierteljahr</strong>, sofern nichts anderes vereinbart (§20 Abs. 3: 15. oder Monatsende möglich). AN: 1 Monat zum Monatsende (§20 Abs. 4), vertraglich verlängerbar. Arbeiter:innen seit Angleichung ähnliche Mindestfristen — KV kann abweichen. <a href="https://www.wko.at/arbeitsrecht/kuendigungsfristen" rel="noopener" target="_blank">WKO</a>, <a href="https://www.ris.bka.gv.at/" rel="noopener" target="_blank">RIS AngG §20</a>.</p>
+        </div>
+        <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+          const ag=(y)=>y>=25?'5 Monate':y>=15?'4 Monate':y>=5?'3 Monate':y>=2?'2 Monate':'6 Wochen';
+          const calc=()=>{
+            const y=+jahre.value||0;
+            if(who.value==='ag'){res.textContent=ag(y);term.textContent='i.d.R. zum Quartalsende (vertraglich oft Monatsende/15.)';}
+            else{res.textContent='1 Monat';term.textContent='zum letzten Tag des Kalendermonats';}
+          };
+          const who=document.getElementById('who'),jahre=document.getElementById('jahre'),res=document.getElementById('res'),term=document.getElementById('term');
+          [who,jahre].forEach(e=>e.addEventListener('input',calc));who.addEventListener('change',calc);calc();
+        });
+        </script>
+
+    <p class="help"><a href="/de/arbeitszeit/kuendigungsfrist-rechner.html">Kündigungsfrist Deutschland ➔</a></p>
+    </div></div>
+  </main>
+  <script src="/assets/js/analytics.js?v=3.1"></script>
+  <script src="/assets/js/ui.js?v=3.1"></script>
+  <script src="/assets/js/tools.js?v=3.1"></script>
+  <script src="/assets/js/core.js?v=3.1"></script>
+  <script src="/assets/js/calc-tools.js"></script>
+</body>
+</html>
