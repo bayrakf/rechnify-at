@@ -570,10 +570,15 @@ body.dark .site-logo img {
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-md);
   padding: var(--space-md);
+  box-shadow: var(--shadow-sm);
+  transition: background var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
 }
 
 .result-box h3 {
+  font-family: var(--font-display);
   font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--color-ink);
   margin-bottom: var(--space-sm);
 }
 
@@ -588,22 +593,56 @@ body.dark .site-logo img {
   background: var(--color-paper-2);
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-md);
-  padding: var(--space-sm);
+  padding: var(--space-md) var(--space-sm);
   text-align: center;
+  transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), background var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
 }
 
-.big-number {
+.result-card:hover {
+  border-color: color-mix(in oklch, var(--color-accent) 30%, transparent);
+}
+
+.big-number, .result-value {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
   font-weight: 700;
   color: var(--color-accent);
   margin: var(--space-2xs) 0;
+  line-height: 1.1;
   letter-spacing: -0.02em;
+}
+
+.result-label {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-ink);
 }
 
 .sub-number {
   font-size: var(--text-xs);
   color: var(--color-ink-3);
+}
+
+/* ── Scale bar / Gauge ────────────────────────────────────────── */
+.scale-bar {
+  margin-top: var(--space-md);
+  height: 12px;
+  width: 100%;
+  background: linear-gradient(to right, oklch(65% 0.18 240) 0%, oklch(65% 0.18 240) 25%, oklch(65% 0.18 145) 25%, oklch(65% 0.18 145) 50%, oklch(75% 0.18 85) 50%, oklch(75% 0.18 85) 75%, oklch(60% 0.20 25) 75%, oklch(60% 0.20 25) 100%);
+  border-radius: var(--radius-pill);
+  position: relative;
+}
+
+.scale-marker {
+  position: absolute;
+  top: -5px;
+  width: 4px;
+  height: 22px;
+  background: var(--color-ink);
+  border-radius: 2px;
+  transition: left var(--dur-short) var(--ease-out);
+  box-shadow: var(--shadow-sm);
 }
 
 .help {
@@ -1444,22 +1483,43 @@ label {
   .card, .calculator-card, .result-box { box-shadow: none; border: 1px solid #ccc; }
 }
 
-/* pSEO common styles — extracted from inline styles for smaller HTML */
-.pseo-box { margin-top: 24px; padding: 16px; background: var(--soft); border: 1px solid var(--border); border-radius: 12px; }
-.pseo-box-green { margin-top: 24px; padding: 16px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; }
-.pseo-box-red { margin-top: 24px; padding: 16px; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 12px; }
-.pseo-box-yellow { margin-top: 24px; padding: 16px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 12px; }
-.pseo-box-blue { margin-top: 24px; padding: 16px; background: #e0f2fe; border: 1px solid #bae6fd; border-radius: 12px; }
+/* pSEO common styles & dark mode safety overrides */
+.pseo-box { margin-top: 24px; padding: 16px; background: var(--color-paper-2); border: 1px solid var(--color-rule); border-radius: var(--radius-md); color: var(--color-ink); }
+.pseo-box-green { margin-top: 24px; padding: 16px; background: var(--color-callout-green-bg); border: 1px solid var(--color-callout-green-border); border-radius: var(--radius-md); color: var(--color-ink); }
+.pseo-box-red { margin-top: 24px; padding: 16px; background: var(--color-callout-red-bg); border: 1px solid var(--color-callout-red-border); border-radius: var(--radius-md); color: var(--color-ink); }
+.pseo-box-yellow { margin-top: 24px; padding: 16px; background: var(--color-callout-yellow-bg); border: 1px solid var(--color-callout-yellow-border); border-radius: var(--radius-md); color: var(--color-ink); }
+.pseo-box-blue { margin-top: 24px; padding: 16px; background: var(--color-callout-blue-bg); border: 1px solid var(--color-callout-blue-border); border-radius: var(--radius-md); color: var(--color-ink); }
 .pseo-row { display: flex; justify-content: space-between; margin-top: 8px; }
 .pseo-row-sm { display: flex; justify-content: space-between; margin-top: 4px; }
-.pseo-border { padding-top: 16px; border-top: 1px solid var(--border); }
-.pseo-border-dashed { padding-top: 8px; border-top: 1px dashed var(--border); }
-.pseo-text-green { color: var(--success); }
-.pseo-text-red { color: var(--danger); }
-.pseo-text-muted { color: var(--muted); }
-.pseo-text-lg { font-size: 1.2em; }
+.pseo-border { padding-top: 16px; border-top: 1px solid var(--color-rule); }
+.pseo-border-dashed { padding-top: 8px; border-top: 1px dashed var(--color-rule); }
+.pseo-text-green { color: var(--color-success); font-weight: 600; }
+.pseo-text-red { color: var(--color-danger); font-weight: 600; }
+.pseo-text-muted { color: var(--color-muted); }
+.pseo-text-lg { font-size: 1.2em; font-weight: 700; }
 .pseo-text-sm { font-size: 14px; }
 .pseo-mt-24 { margin-top: 24px; }
 .pseo-mt-16 { margin-top: 16px; }
 .pseo-mt-8 { margin-top: 8px; }
 .pseo-mt-4 { margin-top: 4px; }
+
+/* ── Dark Mode Overrides for page-level inline styles ────────────── */
+body.dark .result-card,
+body.dark .calculator-card,
+body.dark .card,
+body.dark .result-box,
+body.dark .calc-card {
+  background: var(--color-paper-2) !important;
+  border-color: var(--color-rule) !important;
+  color: var(--color-ink) !important;
+}
+
+body.dark .affiliate-banner {
+  background: var(--color-accent-s) !important;
+  border-color: color-mix(in oklch, var(--color-accent) 30%, transparent) !important;
+  color: var(--color-ink) !important;
+}
+
+body.dark .scale-marker {
+  background: var(--color-ink) !important;
+}

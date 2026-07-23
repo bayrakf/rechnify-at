@@ -1,10 +1,13 @@
 /* Aggressive static cache for repeat visits — GH Pages TTL is short server-side */
-const CACHE = 'rechnify-v3';
+const CACHE = 'rechnify-v4';
 const PRECACHE = [
   '/',
-  '/tokens.css?v=1.3',
-  '/assets/css/global.css?v=3.0',
-  '/assets/js/global.js?v=3.0',
+  '/tokens.css',
+  '/assets/css/global.css',
+  '/assets/js/core.js',
+  '/assets/js/tools.js',
+  '/assets/js/ui.js',
+  '/assets/js/calc-tools.js',
   '/assets/images/logo-72.webp',
   '/assets/images/logo-72.jpg',
   '/site.webmanifest'

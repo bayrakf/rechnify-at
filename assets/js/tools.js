@@ -514,6 +514,8 @@ function injectLastUpdated() {
   const el = document.createElement('p');
   el.className = 'updated help';
   el.style.cssText = 'margin-top:24px;font-size:0.85rem;color:var(--color-ink-3)';
-  el.textContent = 'Zuletzt aktualisiert: ' + TODAY;
+  // ponytail: ISO date stamp; localize if product wants "Stand: DD.MM.YYYY"
+  const today = new Date().toISOString().slice(0, 10);
+  el.textContent = 'Zuletzt aktualisiert: ' + today;
   main.appendChild(el);
 }

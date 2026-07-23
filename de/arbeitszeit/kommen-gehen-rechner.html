@@ -871,7 +871,7 @@
     $('addNowStart').addEventListener('click', () => { addRow(nowTimeValue(), ''); calculateAndRender(); });
     $('setNowEnd').addEventListener('click', setNowEndOnOpenRow);
     $('sortRows').addEventListener('click', sortRowsByStart);
-    $('calculate').addEventListener('click', calculateAndRender);
+    const calcBtn = $('calculate'); if (calcBtn) calcBtn.addEventListener('click', calculateAndRender);
     $('reset').addEventListener('click', () => resetAll(true));
     $('clearHistory').addEventListener('click', () => { if(confirm('Alles löschen?')) { localStorage.removeItem(STORAGE_KEY); resetAll(false); renderHistory(); } });
     $('copyResult').addEventListener('click', () => copyResultText(calculateAndRender()));

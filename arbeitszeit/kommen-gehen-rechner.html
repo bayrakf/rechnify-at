@@ -1012,7 +1012,7 @@
     $('addNowStart').addEventListener('click', () => { addRow(nowTimeValue(), ''); calculateAndRender(); });
     $('setNowEnd').addEventListener('click', setNowEndOnOpenRow);
     $('sortRows').addEventListener('click', sortRowsByStart);
-    $('calculate').addEventListener('click', calculateAndRender);
+    const calcBtn = $('calculate'); if (calcBtn) calcBtn.addEventListener('click', calculateAndRender);
     $('reset').addEventListener('click', () => resetAll(true));
     $('clearHistory').addEventListener('click', () => {
       if(confirm('Möchtest du wirklich alle gespeicherten Daten (inklusive Wochenübersicht) löschen? Dies kann nicht rückgängig gemacht werden.')) {

@@ -41,25 +41,25 @@
 
   <style>
     .calc-body { padding: 24px; }
-    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .result-box { margin-top: 24px; background: var(--color-paper); border: 1px solid var(--color-rule); border-radius: 14px; padding: 20px; }
     .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-    .result-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+    .result-card { background: var(--color-paper-2); border: 1px solid var(--color-rule); border-radius: 12px; padding: 16px; text-align: center; }
 
     .affiliate-banner {
       margin-top: 24px;
       padding: 16px;
-      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-      border: 1px solid #bae6fd;
+      background: var(--color-accent-s);
+      border: 1px solid color-mix(in oklch, var(--color-accent) 25%, transparent);
       border-radius: 12px;
       display: flex;
       gap: 16px;
       align-items: center;
     }
     .affiliate-banner .icon { font-size: 28px; }
-    .affiliate-banner .content { flex: 1; font-size: 14px; }
+    .affiliate-banner .content { flex: 1; font-size: 14px; color: var(--color-ink-2); }
     .affiliate-banner .btn-aff {
-      background: var(--primary);
-      color: white;
+      background: var(--color-accent);
+      color: var(--color-accent-ink);
       border: none;
       padding: 8px 16px;
       border-radius: 8px;
@@ -68,7 +68,7 @@
       font-size: 13px;
       white-space: nowrap;
     }
-    .affiliate-banner .btn-aff:hover { background: var(--primary-hover); }
+    .affiliate-banner .btn-aff:hover { background: var(--color-accent-h); }
 
     @media (max-width: 600px) {
       .result-grid { grid-template-columns: 1fr; }

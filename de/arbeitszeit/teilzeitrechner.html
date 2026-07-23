@@ -204,8 +204,8 @@
   <script src="/assets/js/core.js?v=3.1"></script>
   <script>
     function calcTaxesDE(grossMonthly) {
-      const taxClass = document.getElementById('taxClass').value;
-      const churchTaxInput = document.getElementById('churchTax').value === 'ja';
+      const taxClass = document.getElementById('taxClass')?.value || '1';
+      const churchTaxInput = (document.getElementById('churchTax')?.value || 'nein') === 'ja';
       
       const grossYearly = grossMonthly * 12;
       
@@ -275,8 +275,8 @@
         const neuesBrutto = (brutto / stdAlt) * stdNeu;
         
         
-        const resAlt = calcTaxes(brutto, false, 1, false, 0); // basic call
-        const resNeu = calcTaxes(neuesBrutto, false, 1, false, 0);
+        const resAlt = calcTaxesDE(brutto);
+        const resNeu = calcTaxesDE(neuesBrutto);
         const nettoAlt = resAlt.netMonthly;
         const nettoNeu = resNeu.netMonthly;
     

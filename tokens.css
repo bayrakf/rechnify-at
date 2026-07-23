@@ -34,6 +34,18 @@
   --color-info:       oklch(52%   0.16 255);
   --color-info-bg:    oklch(96%   0.04 255);
 
+  color-scheme: light;
+  accent-color: var(--color-accent);
+
+  --color-callout-blue-bg:     oklch(96% 0.04 255);
+  --color-callout-blue-border: oklch(86% 0.08 255);
+  --color-callout-green-bg:    oklch(96% 0.04 145);
+  --color-callout-green-border:oklch(86% 0.08 145);
+  --color-callout-red-bg:      oklch(96% 0.04 25);
+  --color-callout-red-border:  oklch(86% 0.08 25);
+  --color-callout-yellow-bg:   oklch(96% 0.04 85);
+  --color-callout-yellow-border:oklch(86% 0.08 85);
+
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body:    system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
@@ -107,6 +119,7 @@
 }
 
 body.dark {
+  color-scheme: dark;
   --color-paper:      oklch(14%  0.040 255);
   --color-paper-2:    oklch(19%  0.038 255);
   --color-paper-3:    oklch(24%  0.034 255);
@@ -123,6 +136,14 @@ body.dark {
   --color-danger-bg:  oklch(22% 0.05 25);
   --color-warning-bg: oklch(22% 0.05 65);
   --color-info-bg:    oklch(22% 0.05 255);
+  --color-callout-blue-bg:     oklch(22% 0.05 255);
+  --color-callout-blue-border: oklch(30% 0.08 255);
+  --color-callout-green-bg:    oklch(22% 0.05 145);
+  --color-callout-green-border:oklch(30% 0.08 145);
+  --color-callout-red-bg:      oklch(22% 0.05 25);
+  --color-callout-red-border:  oklch(30% 0.08 25);
+  --color-callout-yellow-bg:   oklch(22% 0.05 65);
+  --color-callout-yellow-border:oklch(30% 0.08 65);
   --shadow-sm: 0 1px 4px  oklch(0% 0 0 / 0.40);
   --shadow-md: 0 5px 22px oklch(0% 0 0 / 0.50);
   --shadow-lg: 0 16px 48px oklch(0% 0 0 / 0.65);
