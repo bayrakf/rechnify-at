@@ -1,0 +1,430 @@
+/* ═══════════════════════════════════════════════════════════════
+   rechnify.at UX Enhancements
+   Modern progressive disclosure patterns for calculator UIs
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 1. COLLAPSIBLE DETAILS (Progressive Disclosure) ─────────── */
+
+.disclosure {
+  margin: 16px 0;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  transition: all var(--dur-short) var(--ease-out);
+}
+
+.disclosure:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 2px 8px color-mix(in oklch, var(--color-accent) 10%, transparent);
+}
+
+.disclosure summary {
+  padding: 14px 18px;
+  background: var(--color-paper-2);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  transition: background var(--dur-short) var(--ease-out);
+}
+
+.disclosure summary:hover {
+  background: var(--color-paper-3);
+}
+
+.disclosure summary::marker {
+  display: none;
+}
+
+.disclosure summary::after {
+  content: '▼';
+  font-size: 0.75em;
+  color: var(--color-ink-3);
+  transition: transform var(--dur-short) var(--ease-out);
+}
+
+.disclosure[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.disclosure-content {
+  padding: 16px 18px;
+  background: var(--color-paper);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.disclosure-content > *:first-child {
+  margin-top: 0;
+}
+
+.disclosure-content > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Disclosure Variants */
+.disclosure.info {
+  border-color: var(--color-info);
+  background: var(--color-info-bg);
+}
+
+.disclosure.info summary {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+
+.disclosure.success {
+  border-color: var(--color-success);
+  background: var(--color-success-bg);
+}
+
+.disclosure.success summary {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.disclosure.warning {
+  border-color: var(--color-warning);
+  background: var(--color-warning-bg);
+}
+
+.disclosure.warning summary {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+/* ── 2. TOOLTIP SYSTEM ────────────────────────────────────────── */
+
+.tooltip-trigger {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dashed var(--color-accent);
+  cursor: help;
+  color: var(--color-accent);
+}
+
+.tooltip-trigger sup {
+  font-size: 0.7em;
+  margin-left: 2px;
+  opacity: 0.7;
+}
+
+.tooltip-trigger:hover {
+  border-bottom-style: solid;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  white-space: nowrap;
+  max-width: 280px;
+  white-space: normal;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-short) var(--ease-out);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--color-ink);
+}
+
+.tooltip-trigger:hover .tooltip,
+.tooltip-trigger:focus .tooltip {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.dark .tooltip {
+  background: var(--color-paper-2);
+  color: var(--color-ink);
+  border: 1px solid var(--color-rule);
+}
+
+body.dark .tooltip::after {
+  border-top-color: var(--color-paper-2);
+}
+
+/* Mobile: show tooltip on tap */
+@media (max-width: 768px) {
+  .tooltip {
+    bottom: auto;
+    top: calc(100% + 8px);
+    left: 0;
+    transform: none;
+    max-width: 240px;
+  }
+  
+  .tooltip::after {
+    top: -12px;
+    bottom: auto;
+    left: 20px;
+    transform: none;
+    border-top-color: transparent;
+    border-bottom-color: var(--color-ink);
+  }
+  
+  body.dark .tooltip::after {
+    border-bottom-color: var(--color-paper-2);
+  }
+}
+
+/* ── 3. MINI MODAL SYSTEM ─────────────────────────────────────── */
+
+.modal-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+
+.modal-trigger:hover {
+  opacity: 0.8;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 9998;
+  display: none;
+  animation: fadeIn 0.2s var(--ease-out);
+}
+
+.modal-overlay.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-paper);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: calc(100% - 32px);
+  max-height: calc(100vh - 64px);
+  overflow: hidden;
+  z-index: 9999;
+  display: none;
+  animation: slideUp 0.3s var(--ease-out);
+}
+
+.modal.active {
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-paper-2);
+}
+
+.modal-title {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-ink);
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-paper-3);
+  color: var(--color-ink-2);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--dur-short) var(--ease-out);
+}
+
+.modal-close:hover {
+  background: var(--color-danger);
+  color: white;
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-body h3 {
+  margin-top: 0;
+  font-size: var(--text-md);
+}
+
+.modal-body p {
+  line-height: 1.7;
+  color: var(--color-ink-2);
+}
+
+.modal-body ul, .modal-body ol {
+  padding-left: 1.5rem;
+  line-height: 1.8;
+}
+
+.modal-body code {
+  background: var(--color-paper-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* ── 4. EXPAND/COLLAPSE TOGGLE BUTTON ────────────────────────── */
+
+.expand-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all var(--dur-short) var(--ease-out);
+}
+
+.expand-toggle:hover {
+  background: var(--color-accent-s);
+  border-color: var(--color-accent);
+}
+
+.expand-toggle .icon {
+  transition: transform var(--dur-short) var(--ease-out);
+}
+
+.expand-toggle.expanded .icon {
+  transform: rotate(180deg);
+}
+
+/* ── 5. STICKY CTA (Mobile) ───────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .btn-calculate-sticky {
+    position: sticky;
+    bottom: 16px;
+    z-index: 100;
+    width: calc(100% + 48px);
+    margin: 24px -24px -24px;
+    padding: 16px;
+    background: var(--color-paper);
+    border-top: 1px solid var(--color-rule);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-calculate-sticky .btn {
+    width: 100%;
+    font-size: var(--text-md);
+    padding: 16px;
+  }
+}
+
+/* ── 6. RESULT ANIMATIONS ─────────────────────────────────────── */
+
+.result-box {
+  animation: slideInUp 0.4s var(--ease-out);
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-card {
+  animation: scaleIn 0.3s var(--ease-out);
+  animation-fill-mode: both;
+}
+
+.result-card:nth-child(1) { animation-delay: 0.05s; }
+.result-card:nth-child(2) { animation-delay: 0.1s; }
+.result-card:nth-child(3) { animation-delay: 0.15s; }
+.result-card:nth-child(4) { animation-delay: 0.2s; }
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .result-box,
+  .result-card,
+  .modal {
+    animation: none;
+  }
+}

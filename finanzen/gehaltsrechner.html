@@ -47,6 +47,8 @@
   <noscript>
     <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
   </noscript>
+  <link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.0" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.0" /></noscript>
 
   <style>
     .calc-body {
@@ -267,12 +269,15 @@
             </div>
           </div>
 
-          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Berechnen</button>
+          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">💶 Berechnen</button>
 
           <div id="result" class="result-box hidden">
             <div id="partTimeResultBox"></div>
 
-            <h3>Dein Netto-Gehalt</h3>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+              <h3 style="margin:0;">Dein Netto-Gehalt</h3>
+              <button class="modal-trigger" data-modal="sozialversicherung" data-modal-title="🏥 Sozialversicherung erklärt" data-modal-content="" style="font-size:0.8rem;">ⓘ Wie wird berechnet?</button>
+            </div>
 
             <div class="result-grid">
               <div class="result-card">
@@ -287,8 +292,14 @@
               </div>
             </div>
 
-            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
-              <h3>Detaillierte Jahresabrechnung</h3>
+            <!-- Ausklappbare Jahresabrechnung -->
+            <button class="expand-toggle" data-toggle-target="jahresabrechnung" data-text-expand="📊 Jahresabrechnung anzeigen" data-text-collapse="📊 Jahresabrechnung ausblenden">
+              <span class="icon">▼</span>
+              <span class="toggle-text">📊 Jahresabrechnung anzeigen</span>
+            </button>
+
+            <div id="jahresabrechnung" class="hidden" style="margin-top:16px; padding:16px; background:var(--color-paper-2); border:1px solid var(--color-rule); border-radius:12px;">
+              <h3 style="margin-top:0;">Detaillierte Jahresabrechnung</h3>
               <div style="display:flex; justify-content:space-between; margin-top: 8px;">
                 <span class="text-muted">Brutto (gesamt):</span>
                 <strong id="resGrossYear">-- €</strong>
@@ -308,27 +319,29 @@
               </div>
             </div>
 
-            <!-- Premium Feature: Dienstgeberkosten -->
-            <div
-              style="margin-top: 24px; padding: 16px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 12px;">
-              <h4 style="margin-top: 0; color: #b08d00; display: flex; align-items: center; gap: 8px;"><span>🏢</span>
-                Was du deinen Arbeitgeber wirklich kostest</h4>
-              <p style="font-size: 13px; color: #8f7200; margin-bottom: 12px; line-height: 1.4;">Zusätzlich zu deinem
-                Bruttogehalt zahlt dein Arbeitgeber noch hohe <strong>Lohnnebenkosten</strong> (SV-Dienstgeberanteil,
-                Kommunalsteuer, DB, DZ, Vorsorgekasse). Wichtig für Gehaltsverhandlungen!</p>
+            <!-- Dienstgeberkosten als ausklappbare Section -->
+            <button class="expand-toggle" data-toggle-target="dienstgeberkosten" data-text-expand="🏢 Arbeitgeberkosten anzeigen" data-text-collapse="🏢 Arbeitgeberkosten ausblenden" style="margin-top:16px; background:color-mix(in oklch, #fff8e1 80%, var(--color-paper)); border-color:#ffe082; color:#b08d00;">
+              <span class="icon" style="color:#b08d00;">▼</span>
+              <span class="toggle-text">🏢 Arbeitgeberkosten anzeigen</span>
+            </button>
+            <div id="dienstgeberkosten" class="hidden" style="margin-top:0; padding: 16px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 0 0 12px 12px;">
+              <p style="font-size: 13px; color: #8f7200; margin-bottom: 12px; line-height: 1.4;">Zusätzlich zu deinem Bruttogehalt zahlt dein Arbeitgeber noch hohe <strong>Lohnnebenkosten</strong> (SV-Dienstgeberanteil, Kommunalsteuer, DB, DZ, Vorsorgekasse). Wichtig für Gehaltsverhandlungen!</p>
               <div style="display:flex; justify-content:space-between; font-size: 14px;">
                 <span style="color: #b08d00;">Lohnnebenkosten (pro Jahr):</span>
                 <strong id="resLnkYear" style="color: #b08d00;">-- €</strong>
               </div>
-              <div
-                style="display:flex; justify-content:space-between; font-size: 15px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ffe082;">
+              <div style="display:flex; justify-content:space-between; font-size: 15px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ffe082;">
                 <strong style="color: #b08d00;">Gesamtkosten für den Arbeitgeber:</strong>
                 <strong id="resTotalCostYear" style="color: #b08d00; font-size: 1.1em;">-- €</strong>
               </div>
             </div>
 
-            <!-- Premium Insights -->
-            <div id="premiumInsights" style="margin-top: 24px; display: none; flex-direction: column; gap: 16px;">
+            <!-- Premium Insights ausklappbar -->
+            <button class="expand-toggle" data-toggle-target="premiumInsights" data-text-expand="📊 Gehalt-Insights anzeigen" data-text-collapse="📊 Gehalt-Insights ausblenden" style="margin-top:16px;">
+              <span class="icon">▼</span>
+              <span class="toggle-text">📊 Gehalt-Insights anzeigen</span>
+            </button>
+            <div id="premiumInsights" class="hidden" style="margin-top:0; flex-direction: column; gap: 16px; padding:16px; border:1px solid var(--color-rule); border-radius:0 0 12px 12px;">
               <!-- Ranking -->
               <div style="padding: 16px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;">
                 <h4 style="margin-top: 0; color: #166534; display: flex; align-items: center; gap: 8px;"><span>📊</span>
@@ -654,11 +667,13 @@
       const loss = res.netMonthly - netAfter5Years;
       document.getElementById('inflationText').innerHTML = `Achtung: Dein heutiges Netto von <strong>${res.netMonthly.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong> ist in 5 Jahren faktisch nur noch <strong>${netAfter5Years.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong> wert (Kaufkraftverlust: -${loss.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €).`;
 
+      document.getElementById('premiumInsights').classList.remove('hidden');
       document.getElementById('premiumInsights').style.display = 'flex';
 
       document.getElementById('result').classList.remove('hidden');
     });
   </script>
+  <script src="/assets/js/ux-enhancements.js?v=1.0" defer></script>
 </body>
 
 </html>
