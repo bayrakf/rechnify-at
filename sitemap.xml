@@ -6599,6 +6599,30 @@
     <loc>https://rechnify.at/ueber-uns.html</loc>
     <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/ueber-uns.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/ueber-uns.html"/>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-07-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rechnify.at/finanzen/pensionsrechner.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/pensionsrechner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/pensionsrechner.html"/>
+    <lastmod>2026-07-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rechnify.at/blog/mindestlohn-oesterreich-2026.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/blog/mindestlohn-oesterreich-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/blog/mindestlohn-oesterreich-2026.html"/>
+    <lastmod>2026-07-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rechnify.at/blog/brutto-netto-tabelle-oesterreich-2026.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/blog/brutto-netto-tabelle-oesterreich-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/blog/brutto-netto-tabelle-oesterreich-2026.html"/>
+    <lastmod>2026-07-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rechnify.at/blog/ueberstunden-oesterreich.html</loc>
+    <xhtml:link rel="alternate" hreflang="de-AT" href="https://rechnify.at/blog/ueberstunden-oesterreich.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rechnify.at/blog/ueberstunden-oesterreich.html"/>
+    <lastmod>2026-07-31</lastmod>
   </url>
 </urlset>

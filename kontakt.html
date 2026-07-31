@@ -81,8 +81,10 @@
         <span>Vielen Dank für deine Nachricht! Wir melden uns so schnell wie möglich bei dir.</span>
       </div>
 
-      <form id="contact-form" name="contact" method="POST" data-netlify="true" action="/kontakt.html">
-        <input type="hidden" name="form-name" value="contact" />
+      <form id="contact-form" name="contact" method="POST" action="https://formspree.io/f/xpwzvljo">
+        <input type="hidden" name="_subject" value="Kontaktanfrage – rechnify.at" />
+        <input type="hidden" name="_next" value="https://rechnify.at/kontakt.html?success=1" />
+        <input type="text" name="_gotcha" style="display:none;" />
         <div style="margin-bottom: 20px;">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required placeholder="Dein Name" />
@@ -139,27 +141,30 @@
   <script>
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
+      // Show success if redirected back after successful submission
+      if (location.search.includes('success=1')) {
+        document.getElementById('form-success').classList.remove('hidden');
+        contactForm.classList.add('hidden');
+      }
       contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
         const formData = new FormData(contactForm);
-        // Netlify Forms requires the form name in the POST payload
-        formData.append('form-name', 'contact');
-        
-        fetch('/kontakt.html', {
+        fetch(contactForm.action, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData).toString()
+          headers: { 'Accept': 'application/json' },
+          body: formData
         })
-        .then(() => {
-          document.getElementById('form-success').classList.remove('hidden');
-          contactForm.classList.add('hidden');
-          // Smooth scroll to card top to see success message
-          contactForm.closest('.card').scrollIntoView({ behavior: 'smooth' });
+        .then(res => {
+          if (res.ok) {
+            document.getElementById('form-success').classList.remove('hidden');
+            contactForm.classList.add('hidden');
+            contactForm.closest('.card').scrollIntoView({ behavior: 'smooth' });
+          } else {
+            throw new Error('Server error');
+          }
         })
-        .catch((error) => {
-          console.error('Error submitting form:', error);
-          alert('Beim Senden der Nachricht ist ein Fehler aufgetreten. Bitte versuche es erneut oder schreibe uns direkt eine E-Mail an kontakt@rechnify.at.');
+        .catch(() => {
+          alert('Beim Senden ist ein Fehler aufgetreten. Bitte schreib direkt an kontakt@rechnify.at');
         });
       });
     }

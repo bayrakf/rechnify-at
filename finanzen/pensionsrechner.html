@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="de-AT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pensionsrechner Österreich 2026 – Pension berechnen | rechnify.at</title>
+  <meta name="description" content="Kostenloser Pensionsrechner für Österreich: Berechne deine voraussichtliche ASVG-Pension auf Basis von Erwerbsjahren, Durchschnittseinkommen und Pensionierungsalter." />
+  <link rel="canonical" href="https://rechnify.at/finanzen/pensionsrechner.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/pensionsrechner.html" />
+  <link rel="alternate" hreflang="x-default" href="https://rechnify.at/finanzen/pensionsrechner.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Pensionsrechner Österreich 2026 | rechnify.at" />
+  <meta property="og:description" content="Berechne deine voraussichtliche ASVG-Pension für Österreich." />
+  <meta property="og:url" content="https://rechnify.at/finanzen/pensionsrechner.html" />
+  <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content="rechnify.at" />
+
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1858C7" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" /></noscript>
+  <link rel="stylesheet" href="/tokens.css?v=1.2" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=3.1" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="/assets/css/global.css?v=3.1" /></noscript>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Pensionsrechner Österreich",
+    "operatingSystem": "All",
+    "applicationCategory": "FinanceApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "EUR" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://rechnify.at/" },
+      { "@type": "ListItem", "position": 2, "name": "Finanzen", "item": "https://rechnify.at/#finanzen" },
+      { "@type": "ListItem", "position": 3, "name": "Pensionsrechner", "item": "https://rechnify.at/finanzen/pensionsrechner.html" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Wie hoch ist die durchschnittliche Pension in Österreich?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die durchschnittliche ASVG-Alterspension in Österreich beträgt ca. 1.550 € brutto pro Monat (Stand 2026). Männer erhalten im Schnitt ca. 1.900 €, Frauen ca. 1.200 € aufgrund unterschiedlicher Erwerbsbiografien."
+      }
+    },{
+      "@type": "Question",
+      "name": "Wie wird die Pension in Österreich berechnet?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Im neuen Pensionskonto (ab 2005) entspricht jedes Versicherungsjahr 1,78% des durchschnittlichen monatlichen Einkommens (Bemessungsgrundlage). Bei 40 Versicherungsjahren und einem Durchschnittseinkommen von 3.000 € ergibt das: 40 × 1,78% × 3.000 € = ca. 2.136 € Bruttopension."
+      }
+    },{
+      "@type": "Question",
+      "name": "Ab wann kann ich in Österreich in Pension gehen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Das gesetzliche Pensionsalter beträgt für Männer 65 Jahre, für Frauen wird es bis 2033 schrittweise auf 65 Jahre angehoben. Mit 62 Jahren ist eine Korridorpension möglich, wenn man mind. 40 Versicherungsjahre hat. Für jedes Jahr des Frühpensionsantritts gibt es einen Abschlag von 4,2%."
+      }
+    }]
+  }
+  </script>
+
+  <style>
+    .calc-body { padding: 24px; }
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display:block; font-family:var(--font-display); font-size:var(--text-sm); font-weight:600; color:var(--color-ink); margin-bottom:6px; }
+    .input-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    @media(max-width:600px) { .input-row { grid-template-columns:1fr; } }
+    .result-box { margin-top:24px; background:var(--color-paper); border:1px solid var(--color-rule); border-radius:14px; padding:20px; }
+    .result-big { font-size:2.5rem; font-weight:800; color:var(--color-success); font-family:var(--font-display); letter-spacing:-0.03em; line-height:1; }
+    .result-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--color-rule); font-size:0.95rem; }
+    .result-row:last-child { border-bottom:none; }
+    .result-label { color:var(--color-ink-2); }
+    .result-value { font-weight:700; color:var(--color-ink); }
+    .info-box { background:var(--color-info-bg); border:1px solid var(--color-callout-blue-border); border-radius:10px; padding:16px; margin:20px 0; font-size:0.9rem; }
+    .warning-box { background:var(--color-warning-bg); border:1px solid var(--color-callout-yellow-border); border-radius:10px; padding:16px; margin:20px 0; font-size:0.9rem; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at">
+        <picture><source srcset="/assets/images/logo-72.webp" type="image/webp" /><img src="/assets/images/logo-72.jpg" alt="rechnify Logo" width="36" height="36" decoding="async" /></picture>
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/#finanzen">💶 Finanzen</a>
+        <a href="/#arbeitszeit">⏰ Arbeitszeit</a>
+        <a href="/blog/">📰 Blog</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü" aria-expanded="false" type="button"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Brotkrumen">
+    <a href="/">Start</a><span class="breadcrumb-sep">/</span>
+    <a href="/#finanzen">Finanzen</a><span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current">Pensionsrechner</span>
+  </nav>
+
+  <main class="site-main">
+    <div class="calculator-container">
+      <div class="calculator-card">
+        <div class="calc-header">
+          <div class="calc-icon">🏦</div>
+          <h1>Pensionsrechner Österreich 2026</h1>
+          <p>Schätze deine zukünftige ASVG-Alterspension auf Basis deiner Erwerbsbiografie.</p>
+        </div>
+
+        <div class="calc-body">
+          <div class="info-box">
+            ℹ️ Dieser Rechner ist eine <strong>Schätzung</strong> auf Basis des Pensionskontos (neues Recht). Die genaue Pension hängt von deinem offiziellen Pensionskonto bei der ÖGK/SVS ab.
+          </div>
+
+          <div class="input-row">
+            <div class="input-group">
+              <label for="birthYear">Geburtsjahr</label>
+              <input type="number" id="birthYear" placeholder="z.B. 1985" min="1940" max="2005" />
+            </div>
+            <div class="input-group">
+              <label for="retireAge">Geplantes Pensionsalter</label>
+              <select id="retireAge">
+                <option value="60">60 Jahre (Frühpension, wenn möglich)</option>
+                <option value="62">62 Jahre (Korridorpension)</option>
+                <option value="63">63 Jahre</option>
+                <option value="65" selected>65 Jahre (Regelpension)</option>
+                <option value="67">67 Jahre (Spätpension)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="avgBrutto">Durchschnittliches Bruttogehalt (Lebenseinkommen, monatlich)</label>
+            <div class="input-suffix">
+              <input type="number" id="avgBrutto" placeholder="z.B. 3500" min="0" step="100" />
+              <span class="suffix">€</span>
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="input-group">
+              <label for="insuredYears">Bereits geleistete Versicherungsjahre</label>
+              <input type="number" id="insuredYears" placeholder="z.B. 15" min="0" max="50" />
+            </div>
+            <div class="input-group">
+              <label for="startWorkAge">Alter beim Berufseinstieg</label>
+              <input type="number" id="startWorkAge" placeholder="z.B. 22" min="15" max="40" value="22" />
+            </div>
+          </div>
+
+          <button class="btn" id="calcPension" style="width:100%; margin-top:8px;">🔢 Pension berechnen</button>
+
+          <div id="pensionResult" class="result-box hidden">
+            <h3>Deine voraussichtliche Pension</h3>
+            <div style="text-align:center; padding:16px 0;">
+              <div style="font-size:0.9rem; color:var(--color-ink-2); margin-bottom:4px;">Bruttopension monatlich (14x)</div>
+              <div class="result-big" id="resPensionBrutto">-- €</div>
+              <div style="font-size:0.85rem; color:var(--color-ink-3); margin-top:6px;" id="resPensionNetto"></div>
+            </div>
+
+            <div style="margin-top:16px;">
+              <div class="result-row">
+                <span class="result-label">Versicherungsjahre gesamt</span>
+                <span class="result-value" id="resTotalYears">--</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Ersatzrate (Brutto)</span>
+                <span class="result-value" id="resReplacement">--</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Abschlag/Zuschlag</span>
+                <span class="result-value" id="resBonus">--</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Pensionslücke (geschätzt)</span>
+                <span class="result-value" style="color:var(--color-danger);" id="resGap">--</span>
+              </div>
+            </div>
+
+            <div id="warningBox" class="warning-box hidden">
+              ⚠️ <strong>Achtung:</strong> Bei weniger als <strong>15 Versicherungsjahren</strong> besteht kein Anspruch auf ASVG-Pension. Mit weniger als <strong>40 Jahren</strong> sind Abschläge zu erwarten.
+            </div>
+
+            <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--color-rule);">
+              <h4 style="margin-bottom:8px;">Was bedeutet die Pensionslücke?</h4>
+              <p style="font-size:0.9rem; color:var(--color-ink-2); margin:0;">Die Pensionslücke ist die Differenz zwischen deinem letzten Nettoeinkommen und der Nettopension. Dieser Betrag sollte idealerweise durch private Altersvorsorge (z.B. ETF-Sparplan, Lebensversicherung) gedeckt werden.</p>
+              <div style="margin-top:12px;">
+                <a href="/finanzen/etf-sparplan-rechner.html" class="btn" style="font-size:0.85rem;">📈 ETF-Sparplan berechnen</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="seo-triangle" style="margin-top:32px;">
+            <h2>So funktioniert die Pension in Österreich</h2>
+            <p>Seit der Pensionsreform 2005 gilt das <strong>neue Pensionskonto-System</strong> für alle nach dem 1.1.1955 Geborenen. Pro Versicherungsjahr werden 1,78% der Bemessungsgrundlage gutgeschrieben.</p>
+            <ul class="hub-list">
+              <li><strong>Regelpensionsalter:</strong> 65 Jahre (M), schrittweise 65 Jahre (F, bis 2033)</li>
+              <li><strong>Korridorpension:</strong> ab 62 Jahren mit 40 Versicherungsjahren (Abschlag: 4,2%/Jahr)</li>
+              <li><strong>Schwerarbeitspension:</strong> ab 60 Jahren nach 10 Jahren Schwerarbeit</li>
+              <li><strong>Mindestpension:</strong> Ausgleichszulage, wenn Pension unter dem Richtsatz liegt</li>
+            </ul>
+            <p><a href="/blog/mindestlohn-oesterreich-2026.html">Zur Übersicht: Mindestlohn & Branchengehälter →</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="site-logo-text">rechnify<span>.at</span></span>
+          <p>Kostenlose Online-Rechner für Österreich &amp; Deutschland.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Finanzen</h3>
+          <ul>
+            <li><a href="/finanzen/gehaltsrechner.html">Gehaltsrechner</a></li>
+            <li><a href="/finanzen/pensionsrechner.html">Pensionsrechner</a></li>
+            <li><a href="/finanzen/etf-sparplan-rechner.html">ETF-Sparplan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Info</h3>
+          <ul>
+            <li><a href="/impressum.html">Impressum</a></li>
+            <li><a href="/datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/analytics.js?v=3.1"></script>
+  <script src="/assets/js/ui.js?v=3.1"></script>
+  <script src="/assets/js/core.js?v=3.1"></script>
+  <script>
+  'use strict';
+  document.getElementById('calcPension').addEventListener('click', calcPension);
+
+  function calcPension() {
+    const birthYear  = parseInt(document.getElementById('birthYear').value) || 0;
+    const retireAge  = parseInt(document.getElementById('retireAge').value) || 65;
+    const avgBrutto  = parseFloat(document.getElementById('avgBrutto').value) || 0;
+    const insYears   = parseFloat(document.getElementById('insuredYears').value) || 0;
+    const startAge   = parseFloat(document.getElementById('startWorkAge').value) || 22;
+
+    if (!birthYear || !avgBrutto) {
+      alert('Bitte Geburtsjahr und durchschnittliches Bruttogehalt eingeben.');
+      return;
+    }
+
+    const currentYear = new Date().getFullYear();
+    const currentAge  = currentYear - birthYear;
+    const yearsLeft   = Math.max(0, retireAge - currentAge);
+
+    // Total insurance years at retirement
+    const futureYears  = Math.max(0, Math.min(yearsLeft, retireAge - startAge - insYears));
+    const totalYears   = Math.min(45, insYears + futureYears);
+
+    // Pension calculation: 1.78% per year on assessment basis
+    // Assessment basis = min(avgBrutto, Höchstbeitragsgrundlage 6930)
+    const maxBasis       = 6930;
+    const basisMonthly   = Math.min(avgBrutto, maxBasis);
+    // Annual assessment contribution base
+    let pensionBrutto    = totalYears * 0.0178 * basisMonthly;
+
+    // Adjustment for early/late retirement (vs. 65)
+    const diffFromNormal = retireAge - 65;
+    const adj            = diffFromNormal * 0.042; // 4.2% per year
+    pensionBrutto        = pensionBrutto * (1 + adj);
+
+    // Minimum pension (Ausgleichszulage 2026)
+    const minPension = 1110;
+    const isWarning  = totalYears < 15;
+    if (!isWarning && pensionBrutto < minPension) pensionBrutto = minPension;
+
+    // Rough netto estimate: pension tax and health insurance (5.1% + progressive tax)
+    const svPension    = pensionBrutto * 0.0510;  // Krankenversicherung
+    const taxableBase  = pensionBrutto - svPension - (1282 / 12); // Pensionistenabsetzbetrag
+    let lohnsteuer     = 0;
+    const tb           = Math.max(0, taxableBase);
+    if (tb > 1525.67)  lohnsteuer = Math.min(tb - 1525.67, 626.67) * 0.20;
+    if (tb > 1735.67)  lohnsteuer += Math.min(tb - 1735.67, 1138.50) * 0.10; // simplified
+    const pensionNetto = Math.max(0, pensionBrutto - svPension - lohnsteuer);
+
+    // Replacement rate
+    const nettoSalary   = avgBrutto * 0.72; // rough estimate
+    const replRate      = ((pensionBrutto / avgBrutto) * 100).toFixed(1);
+
+    // Gap
+    const gap = Math.max(0, nettoSalary - pensionNetto);
+
+    // Display
+    const fmt = v => v.toLocaleString('de-AT', { style:'currency', currency:'EUR', maximumFractionDigits:0 });
+
+    document.getElementById('resPensionBrutto').textContent = fmt(pensionBrutto);
+    document.getElementById('resPensionNetto').textContent  = 'ca. ' + fmt(pensionNetto) + ' netto';
+    document.getElementById('resTotalYears').textContent    = totalYears.toFixed(1) + ' Jahre';
+    document.getElementById('resReplacement').textContent   = replRate + '%';
+    document.getElementById('resBonus').textContent         = adj >= 0
+      ? '+' + (adj * 100).toFixed(1) + '% (Spätpension)'
+      : (adj * 100).toFixed(1) + '% (Frühpension)';
+    document.getElementById('resGap').textContent           = fmt(gap) + ' / Monat';
+
+    const wb = document.getElementById('warningBox');
+    if (isWarning) wb.classList.remove('hidden'); else wb.classList.add('hidden');
+
+    document.getElementById('pensionResult').classList.remove('hidden');
+  }
+  </script>
+</body>
+</html>
