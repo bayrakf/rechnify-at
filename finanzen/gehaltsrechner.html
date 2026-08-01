@@ -295,6 +295,36 @@
             </div>
 
             <!-- Ausklappbare Jahresabrechnung -->
+
+            <!-- Visual Breakdown Bar -->
+            <div class="breakdown-visual" style="margin-top:24px;">
+              <div class="breakdown-label">Wie setzt sich dein Gehalt zusammen?</div>
+              <div class="breakdown-bar">
+                <div class="breakdown-segment netto" id="breakdownNetto" style="flex-basis: 60%;">
+                  <span class="breakdown-segment-label">Netto 60%</span>
+                </div>
+                <div class="breakdown-segment sv" id="breakdownSV" style="flex-basis: 18%;">
+                  <span class="breakdown-segment-label">SV 18%</span>
+                </div>
+                <div class="breakdown-segment tax" id="breakdownTax" style="flex-basis: 22%;">
+                  <span class="breakdown-segment-label">Steuer 22%</span>
+                </div>
+              </div>
+              <div class="breakdown-legend">
+                <div class="breakdown-legend-item">
+                  <div class="breakdown-legend-dot netto"></div>
+                  <span>Netto: <span class="breakdown-legend-value" id="legendNetto">0 €</span></span>
+                </div>
+                <div class="breakdown-legend-item">
+                  <div class="breakdown-legend-dot sv"></div>
+                  <span>Sozialversicherung: <span class="breakdown-legend-value" id="legendSV">0 €</span></span>
+                </div>
+                <div class="breakdown-legend-item">
+                  <div class="breakdown-legend-dot tax"></div>
+                  <span>Lohnsteuer: <span class="breakdown-legend-value" id="legendTax">0 €</span></span>
+                </div>
+              </div>
+            </div>
             <button class="expand-toggle" data-toggle-target="jahresabrechnung" data-text-expand="📊 Jahresabrechnung anzeigen" data-text-collapse="📊 Jahresabrechnung ausblenden">
               <span class="icon">▼</span>
               <span class="toggle-text">📊 Jahresabrechnung anzeigen</span>
@@ -672,6 +702,19 @@
       document.getElementById('premiumInsights').classList.remove('hidden');
       document.getElementById('premiumInsights').style.display = 'flex';
 
+      // Update breakdown bar
+      const breakdownNetto = res.netMonthly;
+      const breakdownSV = res.svMonthly;
+      const breakdownTax = res.taxMonthly;
+      const breakdownTotal = breakdownNetto + breakdownSV + breakdownTax;
+      
+      if (breakdownTotal > 0 && typeof CalcLive !== 'undefined') {
+        CalcLive.updateBreakdownBar(breakdownNetto, breakdownSV, breakdownTax);
+        document.getElementById('legendNetto').textContent = breakdownNetto.toLocaleString('de-AT', {maximumFractionDigits: 0}) + ' €';
+        document.getElementById('legendSV').textContent = breakdownSV.toLocaleString('de-AT', {maximumFractionDigits: 0}) + ' €';
+        document.getElementById('legendTax').textContent = breakdownTax.toLocaleString('de-AT', {maximumFractionDigits: 0}) + ' €';
+      }
+      
       document.getElementById('result').classList.remove('hidden');
 
     // ── LIVE CALCULATION (Auto-update on input) ────────────────
