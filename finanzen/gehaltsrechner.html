@@ -228,20 +228,18 @@
         </div>
 
         <div class="calc-body">
-          <div class="input-group">
-            <label for="grossMonthly">Bruttogehalt (pro Monat)</label>
-            <div class="input-suffix">
-              <input type="number" id="grossMonthly" placeholder="z.B. 3500" min="0" step="100">
-              <span class="suffix">€</span>
-            </div>
+          <div class="input-field">
+            <input type="number" id="grossMonthly" placeholder=" " min="0" step="100" value="">
+            <label for="grossMonthly">Bruttogehalt (pro Monat in €)</label>
+            <span class="input-icon">💶</span>
           </div>
 
-          <div class="input-group">
-            <label for="hasSonderzahlungen">13. & 14. Gehalt (Urlaubs-/Weihnachtsgeld)</label>
-            <select id="hasSonderzahlungen">
+          <div class="input-field">
+            <select id="hasSonderzahlungen" style="padding:14px;">
               <option value="ja">Ja, ich erhalte Sonderzahlungen (Standard)</option>
               <option value="nein">Nein, ich erhalte nur 12 Gehälter</option>
             </select>
+            <label for="hasSonderzahlungen" style="top:0; font-size:12px; font-weight:600; color:var(--color-accent);">13. & 14. Gehalt</label>
           </div>
 
           <div
@@ -254,19 +252,13 @@
             </label>
             <div id="partTimeInputs"
               style="margin-top: 16px; display: none; grid-template-columns: 1fr 1fr; gap: 16px;">
-              <div class="input-group" style="margin: 0;">
-                <label for="hoursCurrent">Aktuelle Stunden</label>
-                <div class="input-suffix">
-                  <input type="number" id="hoursCurrent" value="40" min="1" max="60">
-                  <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
-                </div>
+              <div class="input-field" style="margin: 0;">
+                <input type="number" id="hoursCurrent" placeholder=" " value="40" min="1" max="60">
+                <label for="hoursCurrent">Aktuelle Stunden (h/Woche)</label>
               </div>
-              <div class="input-group" style="margin: 0;">
-                <label for="hoursTarget">Ziel-Stunden</label>
-                <div class="input-suffix">
-                  <input type="number" id="hoursTarget" value="32" min="1" max="60">
-                  <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
-                </div>
+              <div class="input-field" style="margin: 0;">
+                <input type="number" id="hoursTarget" placeholder=" " value="32" min="1" max="60">
+                <label for="hoursTarget">Ziel-Stunden (h/Woche)</label>
               </div>
             </div>
           </div>
