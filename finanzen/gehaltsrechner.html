@@ -49,6 +49,8 @@
   </noscript>
   <link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.0" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.0" /></noscript>
+  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" /></noscript>
 
   <style>
     .calc-body {
@@ -671,8 +673,30 @@
       document.getElementById('premiumInsights').style.display = 'flex';
 
       document.getElementById('result').classList.remove('hidden');
+
+    // ── LIVE CALCULATION (Auto-update on input) ────────────────
+    const inputs = ['grossMonthly', 'hasSonderzahlungen', 'hoursCurrent', 'hoursTarget'];
+    let calcTimeout;
+    
+    inputs.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      
+      el.addEventListener('input', () => {
+        clearTimeout(calcTimeout);
+        calcTimeout = setTimeout(() => {
+          document.getElementById('calculate').click();
+        }, 500);
+      });
+    });
+    
+    // Trigger initial calculation if fields are filled
+    if (document.getElementById('grossMonthly').value) {
+      document.getElementById('calculate').click();
+    }
     });
   </script>
+  <script src="/assets/js/calculator-live.js?v=1.0"></script>
   <script src="/assets/js/ux-enhancements.js?v=1.0" defer></script>
 </body>
 
