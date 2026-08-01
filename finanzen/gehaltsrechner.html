@@ -523,100 +523,130 @@
   <script>
     'use strict';
 
-    function calcTaxes(grossMonthly, hasSonder) {
-      const SV_RATE = 0.1807;
-      const SV_RATE_SONDER = 0.1707;
-      const BBG_MONTHLY = 6930;
-      const VAB_MONTHLY = 496 / 12;
+    /* ═══════════════════════════════════════════════════════════════
+       Brutto-Netto Österreich 2026
+       Amtliche Quellen:
+        - SV-Werte + AV-Staffelung: sozialversicherung.gv.at (Stand 01.01.2026)
+        - Tarifstufen / VAB: BMF, Paragraf 33 EStG
+        - Sonderzahlungen (Freibetrag 620, Freigrenze 2.615): WKO, Paragraf 67 EStG
+       ═══════════════════════════════════════════════════════════════ */
+    const AT2026 = {
+      bbgMonthly:   6930,      // Hoechstbeitragsgrundlage monatlich
+      vabYearly:    496,       // Verkehrsabsetzbetrag
+      szFreibetrag: 620,       // Paragraf 67 Abs 1 Freibetrag
+      szFreigrenze: 2615,      // Paragraf 67 Abs 1 Freigrenze (Bagatellgrenze) 2026
+      // Versichertenanteile ohne Arbeitslosenversicherung:
+      svLaufendBase: 0.1512,   // KV 3,87 + PV 10,25 + AK 0,50 + WF 0,50
+      svSonderBase:  0.1412,   // KV 3,87 + PV 10,25 (AK + WF entfallen bei SZ)
+      // Progressiver Tarif: [Obergrenze, Satz]
+      brackets: [
+        [13539,    0.00],
+        [21992,    0.20],
+        [36458,    0.30],
+        [70365,    0.40],
+        [104859,   0.48],
+        [1000000,  0.50],
+        [Infinity, 0.55]
+      ],
+      // Feste Saetze fuer sonstige Bezuege innerhalb des Jahressechstels
+      szBrackets: [
+        [24380, 0.06],
+        [25000, 0.27],
+        [33333, 0.3575]
+      ]
+    };
 
-      let svMonthly = grossMonthly * SV_RATE;
-      if (grossMonthly > BBG_MONTHLY) svMonthly = BBG_MONTHLY * SV_RATE;
+    /* Versichertenanteil am AV-Beitrag ist bei geringem Einkommen gestaffelt.
+       Ohne diese Staffelung wird Niedrigverdienern zu viel SV abgezogen. */
+    function avRate(monthlyBase) {
+      if (monthlyBase <= 2225) return 0.0000;
+      if (monthlyBase <= 2427) return 0.0100;
+      if (monthlyBase <= 2630) return 0.0200;
+      return 0.0295;
+    }
 
-      const taxBaseMonthly = grossMonthly - svMonthly;
-      const taxBaseYearly = taxBaseMonthly * 12;
-
-      let taxYearly = 0;
-      if (taxBaseYearly > 104859) {
-        taxYearly += (taxBaseYearly - 104859) * 0.50;
-        taxYearly += (104859 - 70365) * 0.48;
-        taxYearly += (70365 - 36458) * 0.40;
-        taxYearly += (36458 - 21992) * 0.30;
-        taxYearly += (21992 - 13539) * 0.20;
-      } else if (taxBaseYearly > 70365) {
-        taxYearly += (taxBaseYearly - 70365) * 0.48;
-        taxYearly += (70365 - 36458) * 0.40;
-        taxYearly += (36458 - 21992) * 0.30;
-        taxYearly += (21992 - 13539) * 0.20;
-      } else if (taxBaseYearly > 36458) {
-        taxYearly += (taxBaseYearly - 36458) * 0.40;
-        taxYearly += (36458 - 21992) * 0.30;
-        taxYearly += (21992 - 13539) * 0.20;
-      } else if (taxBaseYearly > 21992) {
-        taxYearly += (taxBaseYearly - 21992) * 0.30;
-        taxYearly += (21992 - 13539) * 0.20;
-      } else if (taxBaseYearly > 13539) {
-        taxYearly += (taxBaseYearly - 13539) * 0.20;
+    /* Progressive Steuer auf ein Jahreseinkommen */
+    function tariffTax(taxableYearly) {
+      if (taxableYearly <= 0) return 0;
+      let tax = 0, lower = 0;
+      for (const [upper, rate] of AT2026.brackets) {
+        if (taxableYearly <= lower) break;
+        const slice = Math.min(taxableYearly, upper) - lower;
+        if (slice > 0) tax += slice * rate;
+        lower = upper;
       }
+      return tax;
+    }
 
-      let taxMonthly = (taxYearly / 12) - VAB_MONTHLY;
+    function calcTaxes(grossMonthly, hasSonder) {
+      const C = AT2026;
+      grossMonthly = Math.max(0, grossMonthly || 0);
+
+      const av = avRate(grossMonthly);
+      const svRateLaufend = C.svLaufendBase + av;
+      const svRateSonder  = C.svSonderBase  + av;
+
+      // ── Laufende Bezuege ────────────────────────────────────────
+      const svBase = Math.min(grossMonthly, C.bbgMonthly);
+      const svMonthly = svBase * svRateLaufend;
+
+      const taxBaseYearly = (grossMonthly - svMonthly) * 12;
+      let taxMonthly = (tariffTax(taxBaseYearly) - C.vabYearly) / 12;
       if (taxMonthly < 0) taxMonthly = 0;
 
       const netMonthly = grossMonthly - svMonthly - taxMonthly;
 
+      // ── Sonderzahlungen (13./14.) ───────────────────────────────
       let grossSonder = 0, svSonder = 0, taxSonder = 0, netSonder = 0;
 
       if (hasSonder) {
         grossSonder = grossMonthly;
-        svSonder = grossSonder * SV_RATE_SONDER;
-        if (grossSonder > BBG_MONTHLY) svSonder = BBG_MONTHLY * SV_RATE_SONDER;
+        svSonder = Math.min(grossSonder, C.bbgMonthly) * svRateSonder;
 
-        let sonderTaxBase = (grossSonder - svSonder) * 2;
-        let sonderTaxYearly = 0;
-        let remaining = sonderTaxBase;
+        // Jahressechstel = zwei durchschnittliche Monatsbezuege
+        const jahressechstel = grossMonthly * 2;
 
-        if (remaining > 620) {
-          let t1 = Math.min(remaining - 620, 24380);
-          sonderTaxYearly += t1 * 0.06;
-          remaining -= (620 + t1);
-
-          if (remaining > 0) {
-            let t2 = Math.min(remaining, 25000);
-            sonderTaxYearly += t2 * 0.27;
-            remaining -= t2;
-
-            if (remaining > 0) {
-              let t3 = Math.min(remaining, 33333);
-              sonderTaxYearly += t3 * 0.3575;
-            }
+        // Bagatellregelung: liegt das Jahressechstel unter der Freigrenze,
+        // unterbleibt die Besteuerung der sonstigen Bezuege zur Gaenze.
+        if (jahressechstel > C.szFreigrenze) {
+          let base = (grossSonder - svSonder) * 2 - C.szFreibetrag;
+          let taxYear = 0;
+          for (const [width, rate] of C.szBrackets) {
+            if (base <= 0) break;
+            const slice = Math.min(base, width);
+            taxYear += slice * rate;
+            base -= slice;
           }
+          if (base > 0) taxYear += base * 0.50; // Rest nach Tarif (Naeherung)
+          taxSonder = Math.max(0, taxYear / 2);
         }
-        taxSonder = sonderTaxYearly / 2;
-        if (taxSonder < 0) taxSonder = 0;
+
         netSonder = grossSonder - svSonder - taxSonder;
       }
 
+      // ── Jahreswerte ─────────────────────────────────────────────
       const totalGrossYear = (grossMonthly * 12) + (grossSonder * 2);
-      const totalSvYear = (svMonthly * 12) + (svSonder * 2);
-      const totalTaxYear = (taxMonthly * 12) + (taxSonder * 2);
-      const totalNetYear = totalGrossYear - totalSvYear - totalTaxYear;
+      const totalSvYear    = (svMonthly * 12)    + (svSonder * 2);
+      const totalTaxYear   = (taxMonthly * 12)   + (taxSonder * 2);
+      const totalNetYear   = totalGrossYear - totalSvYear - totalTaxYear;
 
-      let svDgMonthly = grossMonthly * 0.2103;
-      if (grossMonthly > BBG_MONTHLY) svDgMonthly = BBG_MONTHLY * 0.2103;
-      let otherLnkMonthly = grossMonthly * 0.0859;
-      let totalLnkMonthly = svDgMonthly + otherLnkMonthly;
+      // ── Dienstgeberkosten (Naeherung) ───────────────────────────
+      const svDgMonthly    = Math.min(grossMonthly, C.bbgMonthly) * 0.2103;
+      const otherLnkMonthly = grossMonthly * 0.0859;
+      const totalLnkMonthly = svDgMonthly + otherLnkMonthly;
 
       let totalLnkSonder = 0;
       if (hasSonder) {
-        let svDgSonder = grossMonthly * 0.2053;
-        if (grossMonthly > BBG_MONTHLY) svDgSonder = BBG_MONTHLY * 0.2053;
-        let otherLnkSonder = grossMonthly * 0.0859;
-        totalLnkSonder = (svDgSonder + otherLnkSonder) * 2;
+        const svDgSonder = Math.min(grossMonthly, C.bbgMonthly) * 0.2053;
+        totalLnkSonder = (svDgSonder + grossMonthly * 0.0859) * 2;
       }
 
       const lnkYearly = (totalLnkMonthly * 12) + totalLnkSonder;
       const totalCostYearly = totalGrossYear + lnkYearly;
 
-      return { netMonthly, netSonder, totalGrossYear, totalSvYear, totalTaxYear, totalNetYear, lnkYearly, totalCostYearly };
+      return { netMonthly, netSonder, svMonthly, taxMonthly, svRateLaufend,
+               totalGrossYear, totalSvYear, totalTaxYear, totalNetYear,
+               lnkYearly, totalCostYearly };
     }
 
     document.getElementById('simulatePartTime').addEventListener('change', (e) => {
@@ -716,28 +746,36 @@
       }
       
       document.getElementById('result').classList.remove('hidden');
+    });
 
-    // ── LIVE CALCULATION (Auto-update on input) ────────────────
-    const inputs = ['grossMonthly', 'hasSonderzahlungen', 'hoursCurrent', 'hoursTarget'];
-    let calcTimeout;
-    
-    inputs.forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      
-      el.addEventListener('input', () => {
+    /* ── Live calculation: recalc while typing (debounced) ────────
+     * 'input' covers text/number fields, 'change' covers select + checkbox. */
+    (function initLiveCalc() {
+      const calcBtn = document.getElementById('calculate');
+      if (!calcBtn) return;
+
+      let calcTimeout;
+      const trigger = (delay) => {
         clearTimeout(calcTimeout);
-        calcTimeout = setTimeout(() => {
-          document.getElementById('calculate').click();
-        }, 500);
+        calcTimeout = setTimeout(() => calcBtn.click(), delay);
+      };
+
+      const typedFields = ['grossMonthly', 'hoursCurrent', 'hoursTarget'];
+      typedFields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', () => trigger(400));
       });
-    });
-    
-    // Trigger initial calculation if fields are filled
-    if (document.getElementById('grossMonthly').value) {
-      document.getElementById('calculate').click();
-    }
-    });
+
+      const instantFields = ['hasSonderzahlungen', 'simulatePartTime'];
+      instantFields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('change', () => trigger(0));
+      });
+
+      // If the browser restored a value (back/forward), show a result immediately.
+      const gross = document.getElementById('grossMonthly');
+      if (gross && gross.value) calcBtn.click();
+    })();
   </script>
   <script src="/assets/js/calculator-live.js?v=1.0"></script>
   <script src="/assets/js/ux-enhancements.js?v=1.0" defer></script>
