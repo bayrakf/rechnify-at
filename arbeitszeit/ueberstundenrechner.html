@@ -99,6 +99,48 @@
     .log-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 12px; }
     .log-table th, .log-table td { padding: 8px; border-bottom: 1px solid var(--border); text-align: left; }
     .log-table th:last-child, .log-table td:last-child { text-align: right; }
+
+    /* ── Share Buttons ───────────────────────────────────────────── */
+    .share-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .btn-share {
+      flex: 1;
+      min-width: 140px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-share:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    .btn-share:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    .share-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #166534;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      z-index: 9999;
+    }
   </style>
 
   <script type="application/ld+json">
@@ -284,6 +326,13 @@
             </div>
           </div>
         </div>
+
+
+        <!-- Share Action -->
+        <div class="share-actions">
+          <button class="btn-share" id="shareBtn" type="button">🔗 Ergebnis teilen</button>
+        </div>
+        <div id="shareToast" class="share-toast" style="display:none;">Link kopiert!</div>
 
         <div class="result-box" style="margin-top:24px;">
           <h3 style="margin-top:0; margin-bottom:8px; color:var(--primary);">Monatsprotokoll</h3>
