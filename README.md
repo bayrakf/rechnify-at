@@ -1,77 +1,99 @@
-# 🧾 rechnify-at
+# 🧮 rechnify.at
 
-Ein modernes Web-Anwendung für die Verwaltung und Automatisierung von Rechnungen im österreichischen Raum.
+Kostenlose Online-Rechner für Österreich & Deutschland. Über 50 Präzisionsrechner für Finanzen, Steuern, Arbeitszeit, Familie und Alltag. Alle Berechnungen laufen lokal im Browser – 100 % Datenschutz.
 
-## 📋 Beschreibung
+## 🌐 Live
 
-**rechnify-at** ist eine benutzerfreundliche Lösung zur Vereinfachung von Rechnungsprozessen. Die Anwendung bietet eine intuitive Oberfläche zum Erstellen, Verwalten und Verwalten von Rechnungen mit voller Unterstützung für österreichische Anforderungen und Standards.
+**URL:** <https://rechnify.at>
 
 ## ✨ Features
 
-- 📄 **Rechnungserstellung** - Schnell und einfach professionelle Rechnungen erstellen
-- 📊 **Rechnungsverwaltung** - Übersicht aller Rechnungen an einem Ort
-- 🔍 **Suche & Filter** - Einfaches Finden von Rechnungen
-- 💾 **Export-Funktion** - Rechnungen in verschiedene Formate exportieren
-- 🎨 **Responsive Design** - Funktioniert auf allen Geräten
-- ⚙️ **Automatisierung** - Backend-Automatisierung für Rechnungsprozesse
+- 📊 **Über 50 Rechner** – Brutto-Netto, Überstunden, MwSt, Krypto-Steuern, Pensionsrechner, ETF-Sparplan, Kreditrechner und mehr
+- 🇦🇹🇩🇪 **Zwei Länder** – Vollständige Unterstützung für Österreich und Deutschland mit korrekten Steuersätzen 2026
+- 🔒 **100 % Datenschutz** – Alle Berechnungen erfolgen lokal im Browser, keine Datenweitergabe
+- ⚡ **Live-Berechnung** – Ergebnisse aktualisieren sich beim Tippen (kein Button-Klick nötig)
+- 📱 **PWA** – Installierbar als App, funktioniert offline
+- 🎨 **Modernes Design** – Space Grotesk + Inter, Cobalt-Akzent, Dark Mode
+- 📝 **Blog & Ratgeber** – Steuer-Tipps, Gehaltsverhandlung, Mindestlohn-Updates
 
 ## 🛠️ Technologie-Stack
 
-- **Frontend:** HTML, CSS, JavaScript
-- **Backend:** Python
-- **Deployment:** GitHub Pages kompatibel
+- **Frontend:** HTML5, CSS3 (Custom Properties / OKLCH), Vanilla JavaScript
+- **Hosting:** Firebase Hosting
+- **Fonts:** Google Fonts (Space Grotesk, Inter)
+- **Monetarisierung:** Google AdSense
+- **Deployment:** `firebase deploy`
+
+## 📁 Projektstruktur
+
+```
+rechnify.at/
+├── index.html              # Homepage (Bento Grid)
+├── finanzen/               # Finanz-Rechner (AT)
+│   ├── gehaltsrechner.html # Brutto-Netto AT (Flagship)
+│   ├── brutto-netto/       # pSEO-Hub (Brutto→Netto Beträge)
+│   └── ...
+├── de/                     # Deutschland-Version
+│   └── finanzen/
+│       └── ...
+├── arbeitszeit/            # Arbeitszeit-Rechner
+├── familie/                # Familien-Rechner
+├── alltag/                 # Alltag & Gesundheit
+├── mathematik/             # Mathematik
+├── blog/                   # Ratgeber-Artikel
+├── assets/
+│   ├── css/                # Global, Premium, UX-Enhancements
+│   ├── js/                 # Core, UI, Tools, Analytics
+│   └── images/             # Logos, OG-Images, Favicons
+├── tokens.css              # Design-Tokens (OKLCH)
+├── firebase.json           # Firebase Hosting Config
+├── sitemap.xml             # Sitemap (218 URLs)
+└── robots.txt              # Crawl-Regeln
+```
 
 ## 🚀 Erste Schritte
 
 ### Voraussetzungen
 
-- Ein moderner Webbrowser
-- Python 3.x (für Backend-Funktionen)
+- Node.js (für optionale Build-Scripts)
+- Firebase CLI (`npm install -g firebase-tools`)
 
-### Installation
+### Lokal starten
 
-1. Repository klonen:
 ```bash
+# Repository klonen
 git clone https://github.com/bayrakf/rechnify-at.git
 cd rechnify-at
-```
 
-2. Lokalen Webserver starten (optional):
-```bash
-# Mit Python
-python -m http.server 8000
-```
+# Lokalen Server starten
+python3 -m http.server 8000
+# oder
+npx serve .
 
-3. Im Browser öffnen:
-```
+# Im Browser öffnen
 http://localhost:8000
 ```
 
-## 📁 Projektstruktur
+### Deployen
 
-```
-rechnify-at/
-├── README.md
-├── index.html          # Hauptseite
-├── styles/             # CSS-Dateien
-├── scripts/            # JavaScript-Dateien
-└── backend/            # Python-Backend (optional)
+```bash
+firebase login
+firebase deploy
 ```
 
-## 💡 Verwendung
+## 📊 Rechner-Kategorien
 
-1. Starten Sie die Anwendung
-2. Navigieren Sie zur Rechnungserstellung
-3. Geben Sie Ihre Daten ein
-4. Generieren und speichern Sie Ihre Rechnung
-
-## 🤝 Beitragen
-
-Beiträge sind willkommen! Bitte erstellen Sie einen Pull Request mit Ihren Änderungen.
+| Kategorie | Anzahl | Beispiele |
+| ----------- | -------- | ----------- |
+| 💶 Finanzen & Steuern | 20+ | Gehaltsrechner, MwSt, Krypto-Steuer, Pensionsrechner, Kreditrechner |
+| ⏰ Arbeitszeit | 10+ | Überstunden, Stundenlohn, Urlaubstage, Schichtplan, Brückentage |
+| 👶 Familie | 4 | Kinderbetreuungsgeld, Elterngeld, Schwangerschaft, Studienbeitrag |
+| 📐 Mathematik | 3 | Prozentrechner, Dreisatz, Taschenrechner |
+| ⚖️ Alltag & Gesundheit | 8+ | BMI, Kalorien, Stromkosten, Währungsumrechner, Schulnoten |
 
 ## 📝 Lizenz
 
-Dieses Projekt ist unter der MIT-Lizenz lizenziert.
+MIT-Lizenz
 
 ## 👤 Autor
 
@@ -79,8 +101,9 @@ Dieses Projekt ist unter der MIT-Lizenz lizenziert.
 
 ## 📧 Kontakt
 
-Für Fragen oder Anregungen öffnen Sie bitte ein Issue auf GitHub.
+- Website: <https://rechnify.at/kontakt.html>
+- GitHub Issues: <https://github.com/bayrakf/rechnify-at/issues>
 
 ---
 
-**Hinweis:** Dies ist eine Anwendung für Österreich. Bitte stellen Sie sicher, dass Sie alle lokalen Rechnungsanforderungen erfüllen.
+**Hinweis:** Alle Rechner sind für Österreich und Deutschland optimiert. Steuerwerte Stand 2026.

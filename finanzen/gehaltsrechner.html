@@ -48,9 +48,13 @@
     <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
   </noscript>
   <link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.0" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.0" /></noscript>
+  <noscript>
+    <link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.0" />
+  </noscript>
   <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" /></noscript>
+  <noscript>
+    <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" />
+  </noscript>
 
   <style>
     .calc-body {
@@ -78,6 +82,70 @@
       border-radius: 12px;
       padding: 16px;
       text-align: center;
+    }
+
+    /* ── Share & PDF Buttons ──────────────────────────────────────── */
+    .share-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .btn-share,
+    .btn-pdf {
+      flex: 1;
+      min-width: 140px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-family: var(--f-display, system-ui);
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      border: 1px solid var(--color-rule, #ddd);
+      background: var(--color-paper-2, #f5f5f5);
+      color: var(--color-ink, #222);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-share:hover,
+    .btn-pdf:hover {
+      background: var(--color-paper-3, #eee);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-share:focus-visible,
+    .btn-pdf:focus-visible {
+      outline: 2px solid var(--color-accent, #1858C7);
+      outline-offset: 2px;
+    }
+
+    .share-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #166534;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      z-index: 9999;
+      animation: toast-in 0.3s ease;
+    }
+
+    @keyframes toast-in {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
     }
 
     @media (max-width: 600px) {
@@ -239,7 +307,8 @@
               <option value="ja">Ja, ich erhalte Sonderzahlungen (Standard)</option>
               <option value="nein">Nein, ich erhalte nur 12 Gehälter</option>
             </select>
-            <label for="hasSonderzahlungen" style="top:0; font-size:12px; font-weight:600; color:var(--color-accent);">13. & 14. Gehalt</label>
+            <label for="hasSonderzahlungen"
+              style="top:0; font-size:12px; font-weight:600; color:var(--color-accent);">13. & 14. Gehalt</label>
           </div>
 
           <div
@@ -270,7 +339,9 @@
 
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
               <h3 style="margin:0;">Dein Netto-Gehalt</h3>
-              <button class="modal-trigger" data-modal="sozialversicherung" data-modal-title="🏥 Sozialversicherung erklärt" data-modal-content="" style="font-size:0.8rem;">ⓘ Wie wird berechnet?</button>
+              <button class="modal-trigger" data-modal="sozialversicherung"
+                data-modal-title="🏥 Sozialversicherung erklärt" data-modal-content="" style="font-size:0.8rem;">ⓘ Wie
+                wird berechnet?</button>
             </div>
 
             <div class="result-grid">
@@ -285,6 +356,13 @@
                 <div class="sub-number">Urlaubs- und Weihnachtsgeld</div>
               </div>
             </div>
+
+            <!-- Share & PDF Actions -->
+            <div class="share-actions">
+              <button class="btn-share" id="shareBtn" type="button">🔗 Ergebnis teilen</button>
+              <button class="btn-pdf" id="pdfBtn" type="button">📄 Als PDF speichern</button>
+            </div>
+            <div id="shareToast" class="share-toast" style="display:none;">Link kopiert!</div>
 
             <!-- Ausklappbare Jahresabrechnung -->
 
@@ -317,12 +395,14 @@
                 </div>
               </div>
             </div>
-            <button class="expand-toggle" data-toggle-target="jahresabrechnung" data-text-expand="📊 Jahresabrechnung anzeigen" data-text-collapse="📊 Jahresabrechnung ausblenden">
+            <button class="expand-toggle" data-toggle-target="jahresabrechnung"
+              data-text-expand="📊 Jahresabrechnung anzeigen" data-text-collapse="📊 Jahresabrechnung ausblenden">
               <span class="icon">▼</span>
               <span class="toggle-text">📊 Jahresabrechnung anzeigen</span>
             </button>
 
-            <div id="jahresabrechnung" class="hidden" style="margin-top:16px; padding:16px; background:var(--color-paper-2); border:1px solid var(--color-rule); border-radius:12px;">
+            <div id="jahresabrechnung" class="hidden"
+              style="margin-top:16px; padding:16px; background:var(--color-paper-2); border:1px solid var(--color-rule); border-radius:12px;">
               <h3 style="margin-top:0;">Detaillierte Jahresabrechnung</h3>
               <div style="display:flex; justify-content:space-between; margin-top: 8px;">
                 <span class="text-muted">Brutto (gesamt):</span>
@@ -344,28 +424,37 @@
             </div>
 
             <!-- Dienstgeberkosten als ausklappbare Section -->
-            <button class="expand-toggle" data-toggle-target="dienstgeberkosten" data-text-expand="🏢 Arbeitgeberkosten anzeigen" data-text-collapse="🏢 Arbeitgeberkosten ausblenden" style="margin-top:16px; background:color-mix(in oklch, #fff8e1 80%, var(--color-paper)); border-color:#ffe082; color:#b08d00;">
+            <button class="expand-toggle" data-toggle-target="dienstgeberkosten"
+              data-text-expand="🏢 Arbeitgeberkosten anzeigen" data-text-collapse="🏢 Arbeitgeberkosten ausblenden"
+              style="margin-top:16px; background:color-mix(in oklch, #fff8e1 80%, var(--color-paper)); border-color:#ffe082; color:#b08d00;">
               <span class="icon" style="color:#b08d00;">▼</span>
               <span class="toggle-text">🏢 Arbeitgeberkosten anzeigen</span>
             </button>
-            <div id="dienstgeberkosten" class="hidden" style="margin-top:0; padding: 16px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 0 0 12px 12px;">
-              <p style="font-size: 13px; color: #8f7200; margin-bottom: 12px; line-height: 1.4;">Zusätzlich zu deinem Bruttogehalt zahlt dein Arbeitgeber noch hohe <strong>Lohnnebenkosten</strong> (SV-Dienstgeberanteil, Kommunalsteuer, DB, DZ, Vorsorgekasse). Wichtig für Gehaltsverhandlungen!</p>
+            <div id="dienstgeberkosten" class="hidden"
+              style="margin-top:0; padding: 16px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 0 0 12px 12px;">
+              <p style="font-size: 13px; color: #8f7200; margin-bottom: 12px; line-height: 1.4;">Zusätzlich zu deinem
+                Bruttogehalt zahlt dein Arbeitgeber noch hohe <strong>Lohnnebenkosten</strong> (SV-Dienstgeberanteil,
+                Kommunalsteuer, DB, DZ, Vorsorgekasse). Wichtig für Gehaltsverhandlungen!</p>
               <div style="display:flex; justify-content:space-between; font-size: 14px;">
                 <span style="color: #b08d00;">Lohnnebenkosten (pro Jahr):</span>
                 <strong id="resLnkYear" style="color: #b08d00;">-- €</strong>
               </div>
-              <div style="display:flex; justify-content:space-between; font-size: 15px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ffe082;">
+              <div
+                style="display:flex; justify-content:space-between; font-size: 15px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ffe082;">
                 <strong style="color: #b08d00;">Gesamtkosten für den Arbeitgeber:</strong>
                 <strong id="resTotalCostYear" style="color: #b08d00; font-size: 1.1em;">-- €</strong>
               </div>
             </div>
 
             <!-- Premium Insights ausklappbar -->
-            <button class="expand-toggle" data-toggle-target="premiumInsights" data-text-expand="📊 Gehalt-Insights anzeigen" data-text-collapse="📊 Gehalt-Insights ausblenden" style="margin-top:16px;">
+            <button class="expand-toggle" data-toggle-target="premiumInsights"
+              data-text-expand="📊 Gehalt-Insights anzeigen" data-text-collapse="📊 Gehalt-Insights ausblenden"
+              style="margin-top:16px;">
               <span class="icon">▼</span>
               <span class="toggle-text">📊 Gehalt-Insights anzeigen</span>
             </button>
-            <div id="premiumInsights" class="hidden" style="margin-top:0; flex-direction: column; gap: 16px; padding:16px; border:1px solid var(--color-rule); border-radius:0 0 12px 12px;">
+            <div id="premiumInsights" class="hidden"
+              style="margin-top:0; flex-direction: column; gap: 16px; padding:16px; border:1px solid var(--color-rule); border-radius:0 0 12px 12px;">
               <!-- Ranking -->
               <div style="padding: 16px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;">
                 <h4 style="margin-top: 0; color: #166534; display: flex; align-items: center; gap: 8px;"><span>📊</span>
@@ -523,21 +612,21 @@
         - Sonderzahlungen (Freibetrag 620, Freigrenze 2.615): WKO, Paragraf 67 EStG
        ═══════════════════════════════════════════════════════════════ */
     const AT2026 = {
-      bbgMonthly:   6930,      // Hoechstbeitragsgrundlage monatlich
-      vabYearly:    496,       // Verkehrsabsetzbetrag
+      bbgMonthly: 6930,      // Hoechstbeitragsgrundlage monatlich
+      vabYearly: 496,       // Verkehrsabsetzbetrag
       szFreibetrag: 620,       // Paragraf 67 Abs 1 Freibetrag
       szFreigrenze: 2615,      // Paragraf 67 Abs 1 Freigrenze (Bagatellgrenze) 2026
       // Versichertenanteile ohne Arbeitslosenversicherung:
       svLaufendBase: 0.1512,   // KV 3,87 + PV 10,25 + AK 0,50 + WF 0,50
-      svSonderBase:  0.1412,   // KV 3,87 + PV 10,25 (AK + WF entfallen bei SZ)
+      svSonderBase: 0.1412,   // KV 3,87 + PV 10,25 (AK + WF entfallen bei SZ)
       // Progressiver Tarif: [Obergrenze, Satz]
       brackets: [
-        [13539,    0.00],
-        [21992,    0.20],
-        [36458,    0.30],
-        [70365,    0.40],
-        [104859,   0.48],
-        [1000000,  0.50],
+        [13539, 0.00],
+        [21992, 0.20],
+        [36458, 0.30],
+        [70365, 0.40],
+        [104859, 0.48],
+        [1000000, 0.50],
         [Infinity, 0.55]
       ],
       // Feste Saetze fuer sonstige Bezuege innerhalb des Jahressechstels
@@ -576,7 +665,7 @@
 
       const av = avRate(grossMonthly);
       const svRateLaufend = C.svLaufendBase + av;
-      const svRateSonder  = C.svSonderBase  + av;
+      const svRateSonder = C.svSonderBase + av;
 
       // ── Laufende Bezuege ────────────────────────────────────────
       const svBase = Math.min(grossMonthly, C.bbgMonthly);
@@ -618,12 +707,12 @@
 
       // ── Jahreswerte ─────────────────────────────────────────────
       const totalGrossYear = (grossMonthly * 12) + (grossSonder * 2);
-      const totalSvYear    = (svMonthly * 12)    + (svSonder * 2);
-      const totalTaxYear   = (taxMonthly * 12)   + (taxSonder * 2);
-      const totalNetYear   = totalGrossYear - totalSvYear - totalTaxYear;
+      const totalSvYear = (svMonthly * 12) + (svSonder * 2);
+      const totalTaxYear = (taxMonthly * 12) + (taxSonder * 2);
+      const totalNetYear = totalGrossYear - totalSvYear - totalTaxYear;
 
       // ── Dienstgeberkosten (Naeherung) ───────────────────────────
-      const svDgMonthly    = Math.min(grossMonthly, C.bbgMonthly) * 0.2103;
+      const svDgMonthly = Math.min(grossMonthly, C.bbgMonthly) * 0.2103;
       const otherLnkMonthly = grossMonthly * 0.0859;
       const totalLnkMonthly = svDgMonthly + otherLnkMonthly;
 
@@ -636,9 +725,11 @@
       const lnkYearly = (totalLnkMonthly * 12) + totalLnkSonder;
       const totalCostYearly = totalGrossYear + lnkYearly;
 
-      return { netMonthly, netSonder, svMonthly, taxMonthly, svRateLaufend,
-               totalGrossYear, totalSvYear, totalTaxYear, totalNetYear,
-               lnkYearly, totalCostYearly };
+      return {
+        netMonthly, netSonder, svMonthly, taxMonthly, svRateLaufend,
+        totalGrossYear, totalSvYear, totalTaxYear, totalNetYear,
+        lnkYearly, totalCostYearly
+      };
     }
 
     document.getElementById('simulatePartTime').addEventListener('change', (e) => {
@@ -729,14 +820,14 @@
       const breakdownSV = res.svMonthly;
       const breakdownTax = res.taxMonthly;
       const breakdownTotal = breakdownNetto + breakdownSV + breakdownTax;
-      
+
       if (breakdownTotal > 0 && typeof CalcLive !== 'undefined') {
         CalcLive.updateBreakdownBar(breakdownNetto, breakdownSV, breakdownTax);
-        document.getElementById('legendNetto').textContent = breakdownNetto.toLocaleString('de-AT', {maximumFractionDigits: 0}) + ' €';
-        document.getElementById('legendSV').textContent = breakdownSV.toLocaleString('de-AT', {maximumFractionDigits: 0}) + ' €';
-        document.getElementById('legendTax').textContent = breakdownTax.toLocaleString('de-AT', {maximumFractionDigits: 0}) + ' €';
+        document.getElementById('legendNetto').textContent = breakdownNetto.toLocaleString('de-AT', { maximumFractionDigits: 0 }) + ' €';
+        document.getElementById('legendSV').textContent = breakdownSV.toLocaleString('de-AT', { maximumFractionDigits: 0 }) + ' €';
+        document.getElementById('legendTax').textContent = breakdownTax.toLocaleString('de-AT', { maximumFractionDigits: 0 }) + ' €';
       }
-      
+
       document.getElementById('result').classList.remove('hidden');
     });
 
@@ -767,6 +858,160 @@
       // If the browser restored a value (back/forward), show a result immediately.
       const gross = document.getElementById('grossMonthly');
       if (gross && gross.value) calcBtn.click();
+    })();
+
+    /* ── Shareable URL + PDF Export ─────────────────────────────── */
+    (function initShareAndPdf() {
+      // 1. Read URL params and pre-fill calculator
+      const params = new URLSearchParams(window.location.search);
+      const brutto = params.get('brutto');
+      const sonder = params.get('sonder');
+      const teilzeit = params.get('teilzeit');
+      const hOld = params.get('hOld');
+      const hNew = params.get('hNew');
+
+      if (brutto) {
+        const grossInput = document.getElementById('grossMonthly');
+        if (grossInput) grossInput.value = brutto;
+      }
+      if (sonder) {
+        const sonderSelect = document.getElementById('hasSonderzahlungen');
+        if (sonderSelect) sonderSelect.value = sonder === 'nein' ? 'nein' : 'ja';
+      }
+      if (teilzeit === '1') {
+        const ptCheck = document.getElementById('simulatePartTime');
+        if (ptCheck) {
+          ptCheck.checked = true;
+          ptCheck.dispatchEvent(new Event('change'));
+        }
+        if (hOld) {
+          const el = document.getElementById('hoursCurrent');
+          if (el) el.value = hOld;
+        }
+        if (hNew) {
+          const el = document.getElementById('hoursTarget');
+          if (el) el.value = hNew;
+        }
+      }
+
+      // Auto-calculate if params were provided
+      if (brutto) {
+        const calcBtn = document.getElementById('calculate');
+        if (calcBtn) calcBtn.click();
+      }
+
+      // 2. Share button
+      const shareBtn = document.getElementById('shareBtn');
+      if (shareBtn) {
+        shareBtn.addEventListener('click', async () => {
+          const grossVal = document.getElementById('grossMonthly')?.value || '';
+          const sonderVal = document.getElementById('hasSonderzahlungen')?.value || 'ja';
+          const isPt = document.getElementById('simulatePartTime')?.checked;
+          const hOldVal = document.getElementById('hoursCurrent')?.value || 40;
+          const hNewVal = document.getElementById('hoursTarget')?.value || 32;
+
+          const url = new URL(window.location.origin + window.location.pathname);
+          if (grossVal) url.searchParams.set('brutto', grossVal);
+          url.searchParams.set('sonder', sonderVal);
+          if (isPt) {
+            url.searchParams.set('teilzeit', '1');
+            url.searchParams.set('hOld', hOldVal);
+            url.searchParams.set('hNew', hNewVal);
+          }
+
+          const shareUrl = url.toString();
+          const shareText = 'Mein Netto-Gehalt berechnet mit rechnify.at';
+
+          // Web Share API (mobile)
+          if (navigator.share) {
+            try {
+              await navigator.share({ title: 'rechnify.at Gehaltsrechner', text: shareText, url: shareUrl });
+              return;
+            } catch (e) { /* user cancelled, fall through to clipboard */ }
+          }
+
+          // Fallback: copy to clipboard
+          try {
+            await navigator.clipboard.writeText(shareUrl);
+            showToast('Link kopiert! In WhatsApp/Reddit einfügen.');
+          } catch (e) {
+            window.prompt('Link kopieren:', shareUrl);
+          }
+        });
+      }
+
+      // 3. PDF button (print-optimized)
+      const pdfBtn = document.getElementById('pdfBtn');
+      if (pdfBtn) {
+        pdfBtn.addEventListener('click', () => {
+          const grossVal = document.getElementById('grossMonthly')?.value || '';
+          if (!grossVal) return;
+
+          const grossNum = parseFloat(grossVal);
+          const hasSonder = document.getElementById('hasSonderzahlungen')?.value === 'ja';
+          const isPt = document.getElementById('simulatePartTime')?.checked;
+          const hOld = parseFloat(document.getElementById('hoursCurrent')?.value) || 40;
+          const hNew = parseFloat(document.getElementById('hoursTarget')?.value) || 32;
+          const calcGross = isPt ? (grossNum / hOld) * hNew : grossNum;
+
+          const res = calcTaxes(calcGross, hasSonder);
+          const fmt = (n) => n.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+          const date = new Date().toLocaleDateString('de-AT');
+
+          const html = '<!DOCTYPE html><html lang="de-AT"><head><meta charset="UTF-8"><title>Gehaltsberechnung ' + date + '</title>' +
+            '<style>' +
+            'body{font-family:Inter,system-ui,sans-serif;color:#1a1a2e;max-width:600px;margin:0 auto;padding:40px 20px;}' +
+            'h1{font-size:1.4rem;margin-bottom:4px;}' +
+            '.meta{color:#666;font-size:0.85rem;margin-bottom:24px;}' +
+            '.result{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:16px;}' +
+            '.row{display:flex;justify-content:space-between;padding:6px 0;font-size:0.95rem;}' +
+            '.row.total{border-top:2px solid #1a1a2e;margin-top:8px;padding-top:12px;font-weight:700;font-size:1.1rem;}' +
+            '.netto{color:#166534;}' +
+            '.brand{text-align:center;margin-top:32px;padding-top:16px;border-top:1px solid #e2e8f0;}' +
+            '.brand a{color:#1858C7;text-decoration:none;font-weight:600;}' +
+            '@media print{body{padding:20px;}}' +
+            '</style></head><body>' +
+            '<h1>Gehaltsberechnung Österreich 2026</h1>' +
+            '<p class="meta">Erstellt am ' + date + ' mit rechnify.at · Keine Steuerberatung</p>' +
+            (isPt ? '<p class="meta">Teilzeit: ' + hOld + 'h → ' + hNew + 'h (Vollzeit-Äquivalent: ' + fmt(grossNum) + ')</p>' : '') +
+            '<div class="result">' +
+            '<div class="row"><span>Brutto monatlich:</span><span>' + fmt(calcGross) + '</span></div>' +
+            '<div class="row"><span>Sozialversicherung monatlich:</span><span>- ' + fmt(res.svMonthly) + '</span></div>' +
+            '<div class="row"><span>Lohnsteuer monatlich:</span><span>- ' + fmt(res.taxMonthly) + '</span></div>' +
+            '<div class="row total netto"><span>Netto monatlich:</span><span>' + fmt(res.netMonthly) + '</span></div>' +
+            (res.netSonder > 0 ? '<div class="row"><span>13./14. Gehalt (jeweils netto):</span><span>' + fmt(res.netSonder) + '</span></div>' : '') +
+            '</div>' +
+            '<div class="result">' +
+            '<div class="row"><span>Brutto jährlich:</span><span>' + fmt(res.totalGrossYear) + '</span></div>' +
+            '<div class="row"><span>SV jährlich:</span><span>- ' + fmt(res.totalSvYear) + '</span></div>' +
+            '<div class="row"><span>Lohnsteuer jährlich:</span><span>- ' + fmt(res.totalTaxYear) + '</span></div>' +
+            '<div class="row total netto"><span>Netto jährlich:</span><span>' + fmt(res.totalNetYear) + '</span></div>' +
+            '</div>' +
+            '<div class="result">' +
+            '<div class="row"><span>Arbeitgeberkosten jährlich:</span><span>' + fmt(res.lnkYearly) + '</span></div>' +
+            '<div class="row total"><span>Gesamtkosten Arbeitgeber:</span><span>' + fmt(res.totalCostYearly) + '</span></div>' +
+            '</div>' +
+            '<div class="brand"><p>Berechnet mit <a href="https://rechnify.at/finanzen/gehaltsrechner.html">rechnify.at</a> – Kostenlose Online-Rechner für Österreich & Deutschland</p></div>' +
+            '<script>window.print();</scr' + 'ipt>' +
+            '</body></html>';
+
+          const w = window.open('', '_blank');
+          if (w) {
+            w.document.write(html);
+            w.document.close();
+          } else {
+            alert('Bitte Pop-ups erlauben, um das PDF zu erstellen.');
+          }
+        });
+      }
+
+      function showToast(msg) {
+        const toast = document.getElementById('shareToast');
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2500);
+      }
     })();
   </script>
   <script src="/assets/js/calculator-live.js?v=1.0"></script>
