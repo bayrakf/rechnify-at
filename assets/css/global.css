@@ -414,7 +414,18 @@ body.dark .site-logo img {
   padding-left: 1.2rem;
 }
 
-.hub-list li { margin-bottom: 0.35rem; }
+.hub-list li {
+  margin-bottom: 0.35rem;
+  break-inside: avoid;
+}
+
+/* Kurzbeschreibung hinter einem Hub-Link */
+.hub-list-desc {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  line-height: 1.35;
+}
 
 @media (max-width: 640px) {
   .hub-list { columns: 1; }
@@ -849,6 +860,20 @@ body.dark .site-logo img {
   flex: 1;
   height: 1px;
   background: var(--color-rule);
+}
+
+/* "Alle ansehen" neben einer Kategorie-Ueberschrift */
+.category-hub-link {
+  flex: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.category-hub-link:hover {
+  text-decoration: underline;
 }
 
 .content-section {
