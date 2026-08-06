@@ -311,68 +311,11 @@ def write_de_hubs() -> None:
 
 
 def write_sitemap() -> int:
-    BASE_URL = "https://rechnify.at"
-    skip = {"scratch/", "node_modules/"}
-    noindex_always = {"impressum.html", "datenschutz.html"}
-    pages = []
-    for p in sorted(BASE.rglob("*.html")):
-        rel = p.relative_to(BASE).as_posix()
-        if any(s in rel for s in skip):
-            continue
-        if rel in noindex_always:
-            continue
-        pages.append(rel)
+    """Delegiert an den Sitemap-Generator, der die Index-Policy kennt."""
+    from build_sitemap import main as build
 
-    def loc(rel: str) -> str:
-        if rel == "index.html":
-            return f"{BASE_URL}/"
-        if rel.endswith("/index.html"):
-            return f"{BASE_URL}/{rel[:-10]}"
-        return f"{BASE_URL}/{rel}"
-    entries = []
-    for rel in pages:
-        url = loc(rel)
-        # hreflang twin
-        twin = None
-        if rel.startswith("de/"):
-            at = rel[3:]
-            if (BASE / at).exists():
-                twin = ("de-AT", loc(at), "de-DE", url)
-        else:
-            de = f"de/{rel}"
-            if (BASE / de).exists():
-                twin = ("de-AT", url, "de-DE", loc(de))
-
-        if twin:
-            a_lang, a_href, d_lang, d_href = twin
-            xd = a_href
-            block = (
-                f'    <xhtml:link rel="alternate" hreflang="{a_lang}" href="{a_href}"/>\n'
-                f'    <xhtml:link rel="alternate" hreflang="{d_lang}" href="{d_href}"/>\n'
-                f'    <xhtml:link rel="alternate" hreflang="x-default" href="{xd}"/>'
-            )
-        else:
-            block = (
-                f'    <xhtml:link rel="alternate" hreflang="de-AT" href="{url}"/>\n'
-                f'    <xhtml:link rel="alternate" hreflang="x-default" href="{url}"/>'
-            )
-        entries.append(
-            f"""  <url>
-    <loc>{url}</loc>
-{block}
-    <lastmod>{TODAY}</lastmod>
-  </url>"""
-        )
-
-    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-{chr(10).join(entries)}
-</urlset>
-"""
-    (BASE / "sitemap.xml").write_text(xml, encoding="utf-8")
-    print(f"sitemap: {len(entries)} URLs")
-    return len(entries)
+    build()
+    return 0
 
 
 def generate_ogs() -> int:
