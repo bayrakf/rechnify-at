@@ -296,15 +296,24 @@
         </div>
 
         <div class="calc-body">
+          <div class="input-field" style="margin-bottom:16px;">
+            <select id="salaryMode" style="padding:14px;">
+              <option value="monat" selected>Monatsgehalt (Brutto)</option>
+              <option value="jahr">Jahresgehalt (Brutto)</option>
+            </select>
+            <label for="salaryMode"
+              style="top:0; font-size:12px; font-weight:600; color:var(--color-accent);">Eingabemethode</label>
+          </div>
+
           <div class="input-field">
             <input type="number" id="grossMonthly" placeholder=" " min="0" step="100" value="">
-            <label for="grossMonthly">Bruttogehalt (pro Monat in €)</label>
+            <label for="grossMonthly" id="grossMonthlyLabel">Bruttogehalt (pro Monat in €)</label>
             <span class="input-icon">💶</span>
           </div>
 
           <div class="input-field">
             <select id="hasSonderzahlungen" style="padding:14px;">
-              <option value="ja">Ja, ich erhalte Sonderzahlungen (Standard)</option>
+              <option value="ja">Ja, ich erhalte Sonderzahlungen (Standard: 14 Gehälter)</option>
               <option value="nein">Nein, ich erhalte nur 12 Gehälter</option>
             </select>
             <label for="hasSonderzahlungen"
@@ -344,7 +353,7 @@
                 wird berechnet?</button>
             </div>
 
-            <div class="result-grid">
+            <div class="result-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
               <div class="result-card">
                 <div class="text-sm text-muted">Monatliches Netto (12x)</div>
                 <div class="big-number text-success" id="resNetMonthly">-- €</div>
@@ -353,7 +362,12 @@
               <div class="result-card" id="cardSonder" style="background: var(--soft-row);">
                 <div class="text-sm text-muted">13. / 14. Gehalt (jeweils)</div>
                 <div class="big-number text-success" id="resNetSonder">-- €</div>
-                <div class="sub-number">Urlaubs- und Weihnachtsgeld</div>
+                <div class="sub-number">Urlaubs- &amp; Weihnachtsgeld</div>
+              </div>
+              <div class="result-card" id="cardYear" style="background: var(--soft-row);">
+                <div class="text-sm text-muted">Jahres-Netto (gesamt)</div>
+                <div class="big-number text-success" id="resNetYearCard">-- €</div>
+                <div class="sub-number" id="resNetYearCardSub">14 Auszahlungen gesamt</div>
               </div>
             </div>
 
@@ -736,10 +750,29 @@
       document.getElementById('partTimeInputs').style.display = e.target.checked ? 'grid' : 'none';
     });
 
+    const salaryModeEl = document.getElementById('salaryMode');
+    const grossLabel = document.getElementById('grossMonthlyLabel');
+    if (salaryModeEl && grossLabel) {
+      salaryModeEl.addEventListener('change', () => {
+        if (salaryModeEl.value === 'jahr') {
+          grossLabel.textContent = 'Jahresbruttogehalt (gesamt in €)';
+        } else {
+          grossLabel.textContent = 'Bruttogehalt (pro Monat in €)';
+        }
+      });
+    }
+
     document.getElementById('calculate').addEventListener('click', () => {
-      const baseGross = parseFloat(document.getElementById('grossMonthly').value) || 0;
+      const rawGross = parseFloat(document.getElementById('grossMonthly').value) || 0;
+      const salaryMode = document.getElementById('salaryMode') ? document.getElementById('salaryMode').value : 'monat';
       const hasSonder = document.getElementById('hasSonderzahlungen').value === 'ja';
       const isPartTime = document.getElementById('simulatePartTime').checked;
+
+      // Base gross converted to standard monthly gross for tax calculations
+      let baseGross = rawGross;
+      if (salaryMode === 'jahr') {
+        baseGross = hasSonder ? rawGross / 14 : rawGross / 12;
+      }
 
       let calcGross = baseGross;
       let hoursOld = parseFloat(document.getElementById('hoursCurrent').value) || 40;
@@ -761,10 +794,10 @@
           <h4 style="margin-top: 0; color: #0284c7; display: flex; align-items: center; gap: 8px;"><span>⚖️</span> Teilzeit-Ergebnis (${hoursNew}h statt ${hoursOld}h)</h4>
           <p style="font-size: 14px; margin-bottom: 12px;">Du verzichtest auf <strong>${bruttoLossPct.toFixed(1)}%</strong> deines Bruttogehalts (-${bruttoDiff.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €), verlierst aber durch die Steuerprogression nur <strong>${nettoLossPct.toFixed(1)}%</strong> deines Nettos (-${nettoDiff.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €)!</p>
           <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px; margin-bottom: 4px;">
-            <span>Neues Brutto:</span> <strong>${calcGross.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong>
+            <span>Neues Brutto (Monat):</span> <strong>${calcGross.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong>
           </div>
           <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px;">
-            <span>Neues Netto:</span> <strong style="color:var(--success);">${resNew.netMonthly.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong>
+            <span>Neues Netto (Monat):</span> <strong style="color:var(--success);">${resNew.netMonthly.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong>
           </div>
         </div>`;
       }
@@ -776,9 +809,13 @@
       if (hasSonder) {
         document.getElementById('cardSonder').classList.remove('hidden');
         document.getElementById('resNetSonder').textContent = res.netSonder.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+        document.getElementById('resNetYearCardSub').textContent = '14 Auszahlungen (inkl. 13./14.)';
       } else {
         document.getElementById('cardSonder').classList.add('hidden');
+        document.getElementById('resNetYearCardSub').textContent = '12 Auszahlungen gesamt';
       }
+
+      document.getElementById('resNetYearCard').textContent = res.totalNetYear.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 
       document.getElementById('resGrossYear').textContent = res.totalGrossYear.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
       document.getElementById('resSvYear').textContent = '- ' + res.totalSvYear.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
@@ -803,9 +840,9 @@
         } else {
           rankingStr = `Top-Verdiener! Du gehörst zu den oberen 10% in Österreich.`;
         }
-        document.getElementById('rankingText').innerHTML = `Dein Brutto: <strong>${calcGross.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong>. ${rankingStr}`;
+        document.getElementById('rankingText').innerHTML = `Dein Brutto: <strong>${calcGross.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong>/Monat. ${rankingStr}`;
       } else {
-        document.getElementById('rankingText').innerHTML = `Da du in Teilzeit rechnest, ist ein direkter Vergleich mit dem Vollzeit-Median nicht aussagekräftig. Dein Vollzeit-Äquivalent wäre <strong>${baseGross.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong>.`;
+        document.getElementById('rankingText').innerHTML = `Da du in Teilzeit rechnest, ist ein direkter Vergleich mit dem Vollzeit-Median nicht aussagekräftig. Dein Vollzeit-Äquivalent wäre <strong>${baseGross.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong>/Monat.`;
       }
 
       const netAfter5Years = res.netMonthly * Math.pow(1 - 0.025, 5);
@@ -849,7 +886,7 @@
         if (el) el.addEventListener('input', () => trigger(400));
       });
 
-      const instantFields = ['hasSonderzahlungen', 'simulatePartTime'];
+      const instantFields = ['salaryMode', 'hasSonderzahlungen', 'simulatePartTime'];
       instantFields.forEach((id) => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('change', () => trigger(0));
