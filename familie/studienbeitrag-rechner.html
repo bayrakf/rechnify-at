@@ -4,76 +4,200 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studienbeitrag & ÖH-Beitrag Rechner Österreich | rechnify.at</title>
-  <meta name="description" content="ÖH-Beitrag und Studienbeitrag (Drittstaat / Überschreitung) selbst mit offiziellen Sätzen eintragen — keine erfundenen Unitarife." />
+  <meta name="description" content="Kostenloser Studienbeitragsrechner für Österreich: Berechne deine Studiengebühren und ÖH-Beiträge pro Semester und für die gesamte Studiendauer." />
   <link rel="canonical" href="https://rechnify.at/familie/studienbeitrag-rechner.html" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/familie/studienbeitrag-rechner.html" />
   <link rel="alternate" hreflang="x-default" href="https://rechnify.at/familie/studienbeitrag-rechner.html" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Studienbeitrag & ÖH-Beitrag Rechner Österreich" />
-  <meta property="og:description" content="ÖH-Beitrag und Studienbeitrag (Drittstaat / Überschreitung) selbst mit offiziellen Sätzen eintragen — keine erfundenen Unitarife." />
+  <meta property="og:title" content="Studienbeitrag & ÖH-Beitrag Rechner Österreich | rechnify.at" />
+  <meta property="og:description" content="ÖH-Beitrag und Studienbeitrag für österreichische Universitäten und FHs berechnen." />
   <meta property="og:url" content="https://rechnify.at/familie/studienbeitrag-rechner.html" />
   <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
   <meta property="og:locale" content="de_AT" />
   <meta property="og:site_name" content="rechnify.at" />
   <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#1858C7" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
   <style>
-    .calc-body{padding:24px}
-    .input-group{margin-bottom:16px}
-    .input-group label{display:block;margin-bottom:6px;font-weight:600}
-    .input-group input,.input-group select{width:100%;padding:12px;border:1px solid var(--color-rule);border-radius:10px;background:var(--color-paper);color:var(--color-ink);font-size:16px}
-    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    @media(max-width:600px){.input-row{grid-template-columns:1fr}}
-    .result-box{margin-top:20px;padding:20px;border:1px solid var(--color-rule);border-radius:12px;background:var(--color-paper-2)}
-    .result-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-rule)}
-    .result-item:last-child{border-bottom:0}
-    .result-item.highlight{font-weight:700;font-size:1.15em;color:var(--color-primary)}
-    .help{font-size:.9rem;color:var(--color-ink-3);margin-top:12px}
-    .ext-links a{margin-right:12px}
+    .calc-body { padding: 24px; }
+    .input-group { margin-bottom: 16px; }
+    .input-group label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text); }
+    .input-group input, .input-group select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--input); color: var(--text); font-size: 16px; }
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+    .result-box { margin-top: 20px; padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--soft-row); }
+    .result-item { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .result-item:last-child { border-bottom: 0; }
+    .result-item.highlight { font-weight: 700; font-size: 1.2em; color: var(--primary); }
+    .help { font-size: .9rem; color: var(--muted); margin-top: 12px; }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Studienbeitrag & ÖH-Beitrag Rechner Österreich",
+    "description": "Rechner zur Ermittlung der Studiengebühren und ÖH-Beiträge an österreichischen Hochschulen.",
+    "url": "https://rechnify.at/familie/studienbeitrag-rechner.html",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
 </head>
 <body>
-  <header class="site-header"><div class="header-inner">
-    <a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a>
-  </div></header>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <picture><source srcset="/assets/images/logo-72.webp" type="image/webp" /><img src="/assets/images/logo-72.jpg" alt="rechnify Logo" width="36" height="36" decoding="async" /></picture>
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/finanzen/gehaltsrechner.html">💶 Finanzen</a>
+        <a href="/familie/kinderbetreuungsgeld.html">👶 Familie</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/#familie">Familie & Studium</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Studienbeitragsrechner</span>
+  </nav>
+
   <main class="site-main">
-    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Studienbeitrag Österreich</h1>
-    <p class="subtitle">ÖH-Beitrag und Studienbeitrag (Drittstaat / Überschreitung) selbst mit offiziellen Sätzen eintragen — keine erfundenen Unitarife.</p></div>
-    <div class="card"><div class="calc-body">
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Studienbeitrag & ÖH-Beitrag Rechner</h1>
+      <p class="subtitle">Berechne deine gesamten Studiengebühren und ÖH-Beiträge pro Semester und über die gesamte Studienzeit.</p>
+    </div>
 
+    <div class="card">
+      <div class="calc-body">
         <div class="input-row">
-          <div class="input-group"><label for="oeh">ÖH-Beitrag € / Semester</label><input type="number" id="oeh" value="24.70" min="0" step="0.01" /></div>
-          <div class="input-group"><label for="sb">Studienbeitrag € / Semester</label><input type="number" id="sb" value="0" min="0" step="0.01" /></div>
+          <div class="input-group">
+            <label for="oeh">ÖH-Beitrag (€ / Semester)</label>
+            <input type="number" id="oeh" value="24.70" min="0" step="0.10" />
+          </div>
+          <div class="input-group">
+            <label for="sb">Studienbeitrag (€ / Semester)</label>
+            <input type="number" id="sb" value="0" min="0" step="0.01" />
+          </div>
         </div>
         <div class="input-row">
-          <div class="input-group"><label for="sem">Semester</label><input type="number" id="sem" value="6" min="1" max="20" /></div>
-          <div class="input-group"><label for="typ">Hinweis Tarif</label>
-            <select id="typ"><option>AT/EU oft 0 € Studienbeitrag + ÖH</option><option>Drittstaat: oft 726,72 € / Sem. (selbst prüfen)</option><option>Überschreitung Toleranz: oft 363,36 € / Sem.</option></select></div>
+          <div class="input-group">
+            <label for="sem">Geplante Semester</label>
+            <input type="number" id="sem" value="6" min="1" max="20" />
+          </div>
+          <div class="input-group">
+            <label for="typ">Tarif-Schnellauswahl</label>
+            <select id="typ">
+              <option value="0">AT/EU in Regelstudienzeit + Toleranz (0 €)</option>
+              <option value="363.36">AT/EU bei Überschreitung der Toleranz (363,36 €)</option>
+              <option value="726.72">Drittstaatsangehörige (726,72 €)</option>
+            </select>
+          </div>
         </div>
+
         <div class="result-box" id="resultBox">
-          <div class="result-item highlight"><span>Gesamt Zeitraum</span><span id="tot">—</span></div>
-          <div class="result-item"><span>pro Semester</span><span id="ps">—</span></div>
-          <p class="help">Sätze ändern sich — trage den Betrag deiner Uni/FH ein. Infos: <a href="https://www.oesterreich.gv.at/" rel="noopener" target="_blank">oesterreich.gv.at</a>, ÖH deiner Hochschule.</p>
+          <div class="result-item highlight">
+            <span>Gesamtkosten Studienzeit</span>
+            <span id="tot">—</span>
+          </div>
+          <div class="result-item">
+            <span>Kosten pro Semester</span>
+            <span id="ps">—</span>
+          </div>
+          <p class="help">Offizielle Sätze können je nach Hochschule variieren. Der ÖH-Beitrag ist für alle Studierenden verpflichtend.</p>
         </div>
-        <script>
-        document.addEventListener('DOMContentLoaded',()=>{
-          const euro=n=>CalcTools.euro(n,'de-AT');
-          const calc=()=>{const p=(+oeh.value||0)+(+sb.value||0);ps.textContent=euro(p);tot.textContent=euro(p*(+sem.value||0));};
-          ['oeh','sb','sem'].forEach(id=>document.getElementById(id).addEventListener('input',calc));
-          const oeh=document.getElementById('oeh'),sb=document.getElementById('sb'),sem=document.getElementById('sem'),tot=document.getElementById('tot'),ps=document.getElementById('ps');calc();
-        });
-        </script>
+      </div>
+    </div>
 
-    </div></div>
+    <section class="content-section">
+      <h2>Studienbeitrag & ÖH-Beitrag in Österreich</h2>
+      <p>An österreichischen Universitäten und Fachhochschulen setzen sich die Semesterbeiträge wie folgt zusammen:</p>
+      <ul>
+        <li><strong>ÖH-Beitrag (Österreichische Hochschüler_innenschaft):</strong> Der Beitrag inkl. Studierendenversicherung (Unfall- und Haftpflichtversicherung) beträgt aktuell 24,70 € pro Semester und ist für alle aktiv Studierenden verpflichtend.</li>
+        <li><strong>Studienbeitrag:</strong> Für österreichische und EU/EWR-Studierende entfällt der Studienbeitrag während der Mindeststudiendauer plus zwei Toleranzsemestern (beitragsfreie Zeit). Nach Ablauf der Toleranzzeit beträgt der Studienbeitrag <strong>363,36 € pro Semester</strong>.</li>
+        <li><strong>Drittstaatsangehörige:</strong> Studierende aus Drittstaaten zahlen in der Regel <strong>726,72 € pro Semester</strong>, sofern keine bilateralen Abkommen oder Befreiungsgründe greifen.</li>
+      </ul>
+    </section>
+
+    <!-- Passende Rechner -->
+    <div class="related-tools" style="margin-top: 32px; padding: 24px; background: white; border-radius: 12px; border: 1px solid var(--border);">
+      <h3 style="margin-top: 0;">🔗 Passende Rechner</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+        <li><a href="/arbeitszeit/stundenlohn-rechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Stundenlohn-Rechner (für Nebenjobs & Werkverträge)</a></li>
+        <li><a href="/finanzen/gehaltsrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Brutto-Netto Gehaltsrechner</a></li>
+        <li><a href="/finanzen/familienbonus-rechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Familienbonus Plus Rechner (für volljährige Studierende)</a></li>
+        <li><a href="/finanzen/kreditrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Kreditrechner (z. B. Bildungskredit)</a></li>
+      </ul>
+    </div>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
   <script src="/assets/js/analytics.js?v=3.1"></script>
   <script src="/assets/js/ui.js?v=3.1"></script>
   <script src="/assets/js/tools.js?v=3.1"></script>
   <script src="/assets/js/core.js?v=3.1"></script>
   <script src="/assets/js/calc-tools.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const euro = n => CalcTools.euro(n, 'de-AT');
+      const oeh = document.getElementById('oeh');
+      const sb = document.getElementById('sb');
+      const sem = document.getElementById('sem');
+      const typ = document.getElementById('typ');
+      const tot = document.getElementById('tot');
+      const ps = document.getElementById('ps');
+
+      const calc = () => {
+        const p = (+oeh.value || 0) + (+sb.value || 0);
+        ps.textContent = euro(p);
+        tot.textContent = euro(p * (+sem.value || 0));
+      };
+
+      typ.addEventListener('change', () => {
+        sb.value = typ.value;
+        calc();
+      });
+
+      [oeh, sb, sem].forEach(el => el.addEventListener('input', calc));
+      calc();
+    });
+  </script>
 </body>
 </html>

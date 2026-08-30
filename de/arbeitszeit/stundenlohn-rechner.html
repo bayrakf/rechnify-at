@@ -374,7 +374,7 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <span>© 2025 rechnify.at</span>
+      <span>© 2026 rechnify.at</span>
       <div class="footer-links">
         <a href="/impressum.html">Impressum</a>
         <a href="/datenschutz.html">Datenschutz</a>
@@ -429,28 +429,26 @@
       calculate();
     });
 
-    /* ── German Netto estimator (Steuerklasse I simplified) ─────── */
+    /* ── German Netto estimator (Steuerklasse I simplified, 2026) ─────── */
     function estimateNettoDE(jahresbrutto, stklasse) {
-      // SV-Beiträge (AN-Anteil, 2025)
-      // KV: 7.3% + ZB 1.7% = ~8.9%, RV: 9.3%, AV: 1.3%, PV: 1.875% = ~21.375%
-      // Deckelung: KV/PV 5175/Monat=62100/Jahr, RV/AV 7450/Monat=89400/Jahr
-      const svRate = 0.2118; // approximated incl. PflegeV
-      const sv = Math.min(jahresbrutto, 89400) * svRate;
-      const zvBeitrag = 0; // vereinfacht
+      // SV-Beiträge (AN-Anteil, 2026: KV 7.3%+0.85%, RV 9.3%, AV 1.3%, PV 2.2% = ~20.95%)
+      // Deckelung: KV/PV 5812.50/Monat=69750/Jahr, RV/AV 8450/Monat=101400/Jahr
+      const svRate = 0.2095;
+      const sv = Math.min(jahresbrutto, 101400) * svRate;
 
       const basis = jahresbrutto - sv;
 
-      // Lohnsteuer DE 2025 (vereinfacht, Steuerklasse I/IV)
+      // Lohnsteuer DE 2026 (vereinfacht)
       let lst = 0;
       if (stklasse === '1' || stklasse === '4') {
         const gd = basis;
-        if (gd <= 12096) {
+        if (gd <= 12348) {
           lst = 0;
-        } else if (gd <= 17443) {
-          const y = (gd - 12096) / 10000;
+        } else if (gd <= 17799) {
+          const y = (gd - 12348) / 10000;
           lst = (1320.6 * y + 263.1) * y;
-        } else if (gd <= 66761) {
-          const z = (gd - 17443) / 10000;
+        } else if (gd <= 69878) {
+          const z = (gd - 17799) / 10000;
           lst = (200.0 * z + 2397.0) * z + 1025.38;
         } else if (gd <= 277825) {
           lst = 0.42 * gd - 10602.13;
@@ -458,15 +456,15 @@
           lst = 0.45 * gd - 18936.88;
         }
       } else if (stklasse === '3') {
-        // Klasse III: doppelter Grundfreibetrag (24192 €)
+        // Klasse III: doppelter Grundfreibetrag (24696 €)
         const gd = basis;
-        if (gd <= 24192) {
+        if (gd <= 24696) {
           lst = 0;
-        } else if (gd <= 34886) {
-          const y = (gd - 24192) / 10000;
+        } else if (gd <= 35598) {
+          const y = (gd - 24696) / 10000;
           lst = (1320.6 * y + 263.1) * y;
-        } else if (gd <= 133522) {
-          const z = (gd - 34886) / 10000;
+        } else if (gd <= 139756) {
+          const z = (gd - 35598) / 10000;
           lst = (200.0 * z + 2397.0) * z + 1025.38;
         } else {
           lst = 0.42 * gd - 21204.26;

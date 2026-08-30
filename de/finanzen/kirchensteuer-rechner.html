@@ -109,8 +109,8 @@
         <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
           <li><a href="/de/finanzen/gehaltsrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Brutto-Netto Gehaltsrechner</a></li>
           <li><a href="/de/arbeitszeit/ueberstundenrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Überstundenrechner (inkl. Steuerfreibetrag)</a></li>
-          <li><a href="/de/finanzen/pendlerrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Pendlerrechner (Österreich)</a></li>
-          <li><a href="/de/finanzen/kirchensteuer-rechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Kirchensteuer Rechner</a></li>
+          <li><a href="/de/finanzen/pendlerrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Pendlerpauschale-Rechner</a></li>
+          <li><a href="/de/arbeitszeit/stundenlohn-rechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Stundenlohnrechner</a></li>
         </ul>
       </div>
 </div>
@@ -118,11 +118,12 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <span class="site-logo-text">rechnify<span>.at</span></span>
-          <p>Kostenlose Online-Rechner und Tools für Österreich & Deutschland.</p>
-        </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
       </div>
     </div>
   </footer>
@@ -133,18 +134,22 @@
   <script src="/assets/js/core.js?v=3.1"></script>
   <script>
     'use strict';
-    document.getElementById('calculate').addEventListener('click', () => {
+    const calc = () => {
       const lohnsteuer = parseFloat(document.getElementById('lohnsteuer').value) || 0;
       const rate = parseFloat(document.getElementById('region').value) || 0.09;
       
       const kirchensteuer = lohnsteuer * rate;
       const kirchensteuerYearly = kirchensteuer * 12;
 
-      document.getElementById('resMonthly').textContent = kirchensteuer.toLocaleString('de-DE', {minimumFractionDigits: 2}) + ' €';
-      document.getElementById('resYearly').textContent = kirchensteuerYearly.toLocaleString('de-DE', {minimumFractionDigits: 2}) + ' € im Jahr';
+      document.getElementById('resMonthly').textContent = kirchensteuer.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resYearly').textContent = kirchensteuerYearly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' € im Jahr';
       
       document.getElementById('result').classList.remove('hidden');
-    });
+    };
+
+    document.getElementById('calculate').addEventListener('click', calc);
+    document.getElementById('lohnsteuer').addEventListener('input', calc);
+    document.getElementById('region').addEventListener('change', calc);
   </script>
 </body>
 </html>

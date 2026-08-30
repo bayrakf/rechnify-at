@@ -193,7 +193,7 @@
                     <ul>
                         <li><a href="/alltag/bmi-rechner.html">BMI-Rechner</a></li>
                         <li><a href="/alltag/kalorienrechner.html">Kalorienrechner</a></li>
-                        <li><a href="/alltag/schulnotenrechner.html">Schulnoten</a></li>
+                        <li><a href="/alltag/altersrechner.html">Altersrechner</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -212,7 +212,7 @@
   <script src="/assets/js/core.js?v=3.1"></script>
     <script>
         'use strict';
-        document.getElementById('calculate').addEventListener('click', () => {
+        const calc = () => {
             const system = document.getElementById('gradeSystem').value;
             const maxGrade = system === '1-5' ? 5 : 6;
             const input = document.getElementById('grades').value;
@@ -236,7 +236,12 @@
             document.getElementById('resWorst').textContent = worst;
             document.getElementById('resText').textContent = text;
             document.getElementById('result').classList.remove('hidden');
-        });
+        };
+
+        document.getElementById('calculate').addEventListener('click', calc);
+        document.getElementById('grades').addEventListener('input', calc);
+        document.getElementById('gradeSystem').addEventListener('change', calc);
+        calc();
     </script>
 </body>
 

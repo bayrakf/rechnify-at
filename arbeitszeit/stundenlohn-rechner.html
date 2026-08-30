@@ -376,7 +376,7 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <span>© 2025 rechnify.at</span>
+      <span>© 2026 rechnify.at</span>
       <div class="footer-links">
         <a href="/impressum.html">Impressum</a>
         <a href="/datenschutz.html">Datenschutz</a>
@@ -451,26 +451,26 @@
       const sv = Math.min(jahresbrutto, hbg) * svRate;
       const basis = jahresbrutto - sv;
 
-      // Lohnsteuer 2025 (Jahrestabelle vereinfacht)
+      // Lohnsteuer 2026 (Jahrestabelle)
       let lst = 0;
-      if (basis <= 12816) {
+      if (basis <= 13539) {
         lst = 0;
-      } else if (basis <= 20818) {
-        lst = (basis - 12816) * 0.20;
-      } else if (basis <= 34513) {
-        lst = 1600 + (basis - 20818) * 0.30;
-      } else if (basis <= 66612) {
-        lst = 5709 + (basis - 34513) * 0.40;
-      } else if (basis <= 99266) {
-        lst = 18549 + (basis - 66612) * 0.48;
+      } else if (basis <= 21992) {
+        lst = (basis - 13539) * 0.20;
+      } else if (basis <= 36458) {
+        lst = 1690.60 + (basis - 21992) * 0.30;
+      } else if (basis <= 70365) {
+        lst = 6030.40 + (basis - 36458) * 0.40;
+      } else if (basis <= 104859) {
+        lst = 19593.20 + (basis - 70365) * 0.48;
       } else if (basis <= 1000000) {
-        lst = 34216 + (basis - 99266) * 0.50;
+        lst = 36150.32 + (basis - 104859) * 0.50;
       } else {
-        lst = 484550 + (basis - 1000000) * 0.55;
+        lst = 483720.82 + (basis - 1000000) * 0.55;
       }
 
-      // AVAB/Verkehrsabsetzbetrag etc. (pauschale ~700 €)
-      lst = Math.max(0, lst - 700);
+      // Verkehrsabsetzbetrag (496 €)
+      lst = Math.max(0, lst - 496);
 
       return jahresbrutto - sv - lst;
     }

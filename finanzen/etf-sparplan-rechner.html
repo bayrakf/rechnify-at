@@ -194,7 +194,8 @@
             <span id="resKosten">-- €</span>
           </div>
           
-          <div class="result-item" style="border-top:1px solid var(--color-rule); margin-top:8px; padding-top:12px;"><span>Abzugsfähige KESt (27,5% auf Zinsen)</span><span id="resKest">-- €</span></div>
+          <div class="result-item" style="border-top:1px solid var(--border); margin-top:8px; padding-top:12px;"><span>Anfallende KESt (27,5% auf Erträge)</span><span id="resKest">-- €</span></div>
+          <div class="result-item highlight" style="color:var(--success); margin-top:4px;"><span>Endkapital nach KESt</span><span id="resNetAfterKest">-- €</span></div>
 
           <div class="chart-container">
              <canvas id="etfChart"></canvas>
@@ -307,6 +308,7 @@
         document.getElementById('resKosten').textContent = formatEuro(totalKosten);
         
         document.getElementById('resKest').textContent = '- ' + formatEuro(kest);
+        document.getElementById('resNetAfterKest').textContent = formatEuro(kapital - kest);
         
         updateChart(labels, einzahlungenData, zinsenData);
       };
