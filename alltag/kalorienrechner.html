@@ -304,7 +304,7 @@
                     <h3>Alltag</h3>
                     <ul>
                         <li><a href="/alltag/bmi-rechner.html">BMI-Rechner</a></li>
-                        <li><a href="/alltag/kalorienrechner.html">Kalorienrechner</a></li>
+                        <li><a href="/alltag/altersrechner.html">Altersrechner</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -324,7 +324,7 @@
   <script src="/assets/js/core.js?v=3.1"></script>
     <script>
         'use strict';
-        document.getElementById('calculate').addEventListener('click', () => {
+        const calc = () => {
             const gender = document.getElementById('gender').value;
             const age = parseFloat(document.getElementById('age').value) || 30;
             const weight = parseFloat(document.getElementById('weight').value) || 75;
@@ -365,7 +365,17 @@
             document.getElementById('resFat').textContent = Math.round(fat) + ' g';
 
             document.getElementById('result').classList.remove('hidden');
+        };
+
+        document.getElementById('calculate').addEventListener('click', calc);
+        ['gender', 'age', 'weight', 'height', 'activity', 'goal'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', calc);
+                el.addEventListener('change', calc);
+            }
         });
+        calc();
     </script>
 </body>
 
