@@ -204,7 +204,10 @@
       document.getElementById('result').classList.remove('hidden');
     }
     document.getElementById('calculate').addEventListener('click', convert);
-    document.getElementById('from').addEventListener('change', () => { document.getElementById('fromCurrency').textContent = document.getElementById('from').value; });
+    document.getElementById('from').addEventListener('change', () => { 
+      document.getElementById('fromCurrency').textContent = document.getElementById('from').value; 
+      convert();
+    });
     document.getElementById('to').addEventListener('change', convert);
     document.getElementById('amount').addEventListener('input', convert);
     loadRates().then(() => { convert(); });

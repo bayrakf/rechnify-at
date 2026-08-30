@@ -230,9 +230,12 @@
       const birthDate = document.getElementById('birthDate');
       const targetDate = document.getElementById('targetDate');
       
-      // Default to today
+      // Default dates
       const today = new Date();
       targetDate.value = today.toISOString().split('T')[0];
+      if (!birthDate.value) {
+        birthDate.value = '1995-05-15';
+      }
       
       const weekdays = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 

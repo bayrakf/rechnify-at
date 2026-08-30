@@ -283,12 +283,12 @@
   <script>
     'use strict';
 
-    // Same calculation engine as AT Gehaltsrechner
+    // Same calculation engine as AT Gehaltsrechner (2026)
     function calculateATNet(grossMonthly, hasSonder) {
       const SV_RATE = 0.1807;
       const SV_RATE_SONDER = 0.1707;
-      const BBG_MONTHLY = 6450;
-      const VAB_MONTHLY = 487 / 12; // 40.58
+      const BBG_MONTHLY = 6930;
+      const VAB_MONTHLY = 496 / 12; // 41.33 €
       
       let svMonthly = grossMonthly * SV_RATE;
       if (grossMonthly > BBG_MONTHLY) svMonthly = BBG_MONTHLY * SV_RATE;
@@ -297,26 +297,26 @@
       const taxBaseYearly = taxBaseMonthly * 12;
       
       let taxYearly = 0;
-      if (taxBaseYearly > 103072) {
-        taxYearly += (taxBaseYearly - 103072) * 0.50;
-        taxYearly += (103072 - 69166) * 0.48;
-        taxYearly += (69166 - 35836) * 0.40;
-        taxYearly += (35836 - 21617) * 0.30;
-        taxYearly += (21617 - 13308) * 0.20;
-      } else if (taxBaseYearly > 69166) {
-        taxYearly += (taxBaseYearly - 69166) * 0.48;
-        taxYearly += (69166 - 35836) * 0.40;
-        taxYearly += (35836 - 21617) * 0.30;
-        taxYearly += (21617 - 13308) * 0.20;
-      } else if (taxBaseYearly > 35836) {
-        taxYearly += (taxBaseYearly - 35836) * 0.40;
-        taxYearly += (35836 - 21617) * 0.30;
-        taxYearly += (21617 - 13308) * 0.20;
-      } else if (taxBaseYearly > 21617) {
-        taxYearly += (taxBaseYearly - 21617) * 0.30;
-        taxYearly += (21617 - 13308) * 0.20;
-      } else if (taxBaseYearly > 13308) {
-        taxYearly += (taxBaseYearly - 13308) * 0.20;
+      if (taxBaseYearly > 104859) {
+        taxYearly += (taxBaseYearly - 104859) * 0.50;
+        taxYearly += (104859 - 70365) * 0.48;
+        taxYearly += (70365 - 36458) * 0.40;
+        taxYearly += (36458 - 21992) * 0.30;
+        taxYearly += (21992 - 13539) * 0.20;
+      } else if (taxBaseYearly > 70365) {
+        taxYearly += (taxBaseYearly - 70365) * 0.48;
+        taxYearly += (70365 - 36458) * 0.40;
+        taxYearly += (36458 - 21992) * 0.30;
+        taxYearly += (21992 - 13539) * 0.20;
+      } else if (taxBaseYearly > 36458) {
+        taxYearly += (taxBaseYearly - 36458) * 0.40;
+        taxYearly += (36458 - 21992) * 0.30;
+        taxYearly += (21992 - 13539) * 0.20;
+      } else if (taxBaseYearly > 21992) {
+        taxYearly += (taxBaseYearly - 21992) * 0.30;
+        taxYearly += (21992 - 13539) * 0.20;
+      } else if (taxBaseYearly > 13539) {
+        taxYearly += (taxBaseYearly - 13539) * 0.20;
       }
 
       let taxMonthly = (taxYearly / 12) - VAB_MONTHLY;

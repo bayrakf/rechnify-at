@@ -281,7 +281,8 @@
         }
       }
 
-      let euroYear = dist * 2;
+      // Pendlereuro steht nur zu, wenn auch Anspruch auf das Pendlerpauschale besteht (§ 33 Abs. 5 Z 4 EStG)
+      let euroYear = pauschaleYear > 0 ? dist * 2 : 0;
 
       // Adjust for partial days
       let multiplier = 1.0;

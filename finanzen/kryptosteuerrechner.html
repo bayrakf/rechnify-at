@@ -249,22 +249,28 @@
       const sell = parseFloat(document.getElementById('sellPrice').value) || 0;
       const isNew = document.getElementById('assetAge').value === 'neu';
 
-      const profit = Math.max(0, sell - purchase);
+      const diff = sell - purchase;
+      const isLoss = diff < 0;
+      const profit = Math.max(0, diff);
       
       let tax = 0;
       if (isNew && profit > 0) {
         tax = profit * 0.275;
       }
       
-      const netProfit = profit - tax;
+      const netOutcome = isLoss ? diff : profit - tax;
 
       // Update UI
-      document.getElementById('resProfit').textContent = profit.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resProfit').textContent = diff.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resProfit').className = isLoss ? 'big-number text-danger' : 'big-number text-success';
       document.getElementById('resTax').textContent = tax.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
-      document.getElementById('resNetProfit').textContent = netProfit.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resNetProfit').textContent = netOutcome.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      document.getElementById('resNetProfit').className = isLoss ? 'text-danger' : 'text-success';
 
-      if (!isNew && profit > 0) {
-        document.getElementById('altbestandInfo').innerHTML = `<div style="margin-top: 16px; padding: 12px; background: #dcfce7; border: 1px solid #86efac; border-radius: 8px; color: #166534; font-size: 14px;"><strong>🎉 Altbestand-Retter (Premium Info):</strong> Gekauft vor dem 01.03.2021? Dann sind deine Gewinne komplett <strong>steuerfrei (0% KESt)</strong>, egal wie hoch sie sind!</div>`;
+      if (isLoss && isNew) {
+        document.getElementById('altbestandInfo').innerHTML = `<div style="margin-top: 16px; padding: 12px; background: #fee2e2; border: 1px solid #fca5a5; border-radius: 8px; color: #991b1b; font-size: 14px;"><strong>📉 Verlustausgleich (§ 27 Abs. 8 EStG):</strong> Dieser realisierte Krypto-Verlust kann im Rahmen deiner Einkommensteuererklärung mit anderen Krypto-Gewinnen oder 27,5%-Kapitalerträgen desselben Kalenderjahres steuermindernd gegengerechnet werden.</div>`;
+      } else if (!isNew && profit > 0) {
+        document.getElementById('altbestandInfo').innerHTML = `<div style="margin-top: 16px; padding: 12px; background: #dcfce7; border: 1px solid #86efac; border-radius: 8px; color: #166534; font-size: 14px;"><strong>🎉 Altbestand-Retter:</strong> Vor dem 01.03.2021 gekauft? Deine Gewinne sind komplett <strong>steuerfrei (0% KESt)</strong>!</div>`;
       } else {
         document.getElementById('altbestandInfo').innerHTML = '';
       }

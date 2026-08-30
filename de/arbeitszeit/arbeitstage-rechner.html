@@ -288,10 +288,15 @@
         startIn.value = `${currentYear}-01-01`;
         endIn.value = `${currentYear}-12-31`;
 
+        const parseLocalDate = (val) => {
+            const [y, m, d] = val.split('-').map(Number);
+            return new Date(y, m - 1, d);
+        };
+
         const calculate = () => {
             if (!startIn.value || !endIn.value) return;
-            const start = new Date(startIn.value);
-            const end = new Date(endIn.value);
+            const start = parseLocalDate(startIn.value);
+            const end = parseLocalDate(endIn.value);
             if (start > end) return;
             
             const bl = blIn ? blIn.value : null;
@@ -316,8 +321,15 @@
                 const dayOfWeek = currentDate.getDay(); // 0=Sun, 6=Sat
                 const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
                 
-                // check holiday
-                const isHoliday = allHolidays.find(h => h.date.getTime() === currentDate.getTime());
+                // check holiday by local year, month, day
+                const cY = currentDate.getFullYear();
+                const cM = currentDate.getMonth();
+                const cD = currentDate.getDate();
+                const isHoliday = allHolidays.find(h => 
+                    h.date.getFullYear() === cY &&
+                    h.date.getMonth() === cM &&
+                    h.date.getDate() === cD
+                );
                 
                 if (isWeekend) {
                     weekends++;
@@ -349,6 +361,8 @@
             }
         };
 
+        startIn.addEventListener('input', calculate);
+        endIn.addEventListener('input', calculate);
         startIn.addEventListener('change', calculate);
         endIn.addEventListener('change', calculate);
         if (blIn) blIn.addEventListener('change', calculate);

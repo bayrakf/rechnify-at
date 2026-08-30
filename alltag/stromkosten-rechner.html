@@ -3,78 +3,202 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stromkosten Rechner | rechnify.at</title>
-  <meta name="description" content="Jahresstromkosten aus Verbrauch (kWh) und Arbeitspreis (€/kWh) plus Grundgebühr. Keine erfundenen Tarife." />
+  <title>Stromkosten Rechner online – Stromverbrauch & Kosten berechnen | rechnify.at</title>
+  <meta name="description" content="Kostenloser Stromkostenrechner: Berechne deine monatlichen und jährlichen Stromkosten aus kWh-Verbrauch, Arbeitspreis und Grundgebühr." />
   <link rel="canonical" href="https://rechnify.at/alltag/stromkosten-rechner.html" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/alltag/stromkosten-rechner.html" />
   <link rel="alternate" hreflang="x-default" href="https://rechnify.at/alltag/stromkosten-rechner.html" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Stromkosten Rechner" />
-  <meta property="og:description" content="Jahresstromkosten aus Verbrauch (kWh) und Arbeitspreis (€/kWh) plus Grundgebühr. Keine erfundenen Tarife." />
+  <meta property="og:title" content="Stromkosten Rechner online | rechnify.at" />
+  <meta property="og:description" content="Jahresstromkosten aus Verbrauch (kWh) und Arbeitspreis (€/kWh) plus Grundgebühr berechnen." />
   <meta property="og:url" content="https://rechnify.at/alltag/stromkosten-rechner.html" />
   <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
   <meta property="og:locale" content="de_AT" />
   <meta property="og:site_name" content="rechnify.at" />
   <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#1858C7" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
   <style>
-    .calc-body{padding:24px}
-    .input-group{margin-bottom:16px}
-    .input-group label{display:block;margin-bottom:6px;font-weight:600}
-    .input-group input,.input-group select{width:100%;padding:12px;border:1px solid var(--color-rule);border-radius:10px;background:var(--color-paper);color:var(--color-ink);font-size:16px}
-    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    @media(max-width:600px){.input-row{grid-template-columns:1fr}}
-    .result-box{margin-top:20px;padding:20px;border:1px solid var(--color-rule);border-radius:12px;background:var(--color-paper-2)}
-    .result-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-rule)}
-    .result-item:last-child{border-bottom:0}
-    .result-item.highlight{font-weight:700;font-size:1.15em;color:var(--color-primary)}
-    .help{font-size:.9rem;color:var(--color-ink-3);margin-top:12px}
-    .ext-links a{margin-right:12px}
+    .calc-body { padding: 24px; }
+    .input-group { margin-bottom: 16px; }
+    .input-group label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text); }
+    .input-group input, .input-group select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--input); color: var(--text); font-size: 16px; }
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
+    .result-box { margin-top: 20px; padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--soft-row); }
+    .result-item { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .result-item:last-child { border-bottom: 0; }
+    .result-item.highlight { font-weight: 700; font-size: 1.2em; color: var(--primary); }
+    .help { font-size: .9rem; color: var(--muted); margin-top: 12px; }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Stromkosten Rechner",
+    "description": "Rechner zur Ermittlung der monatlichen und jährlichen Stromkosten.",
+    "url": "https://rechnify.at/alltag/stromkosten-rechner.html",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
 </head>
 <body>
-  <header class="site-header"><div class="header-inner">
-    <a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a>
-  </div></header>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <picture><source srcset="/assets/images/logo-72.webp" type="image/webp" /><img src="/assets/images/logo-72.jpg" alt="rechnify Logo" width="36" height="36" decoding="async" /></picture>
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
+        <a href="/finanzen/gehaltsrechner.html">💶 Finanzen</a>
+        <a href="/ueber-uns.html">Über uns</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/#alltag">Alltag</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Stromkosten-Rechner</span>
+  </nav>
+
   <main class="site-main">
-    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Stromkosten Rechner</h1>
-    <p class="subtitle">Jahresstromkosten aus Verbrauch (kWh) und Arbeitspreis (€/kWh) plus Grundgebühr. Keine erfundenen Tarife.</p></div>
-    <div class="card"><div class="calc-body">
+    <div class="page-hero" style="padding-top:10px;">
+      <h1 style="margin-bottom:8px;">Stromkosten Rechner</h1>
+      <p class="subtitle">Berechne deine jährlichen und monatlichen Stromkosten aus kWh-Verbrauch, Arbeitspreis und Grundgebühr.</p>
+    </div>
 
+    <div class="card">
+      <div class="calc-body">
         <div class="input-row">
-          <div class="input-group"><label for="kwh">Verbrauch kWh/Jahr</label><input type="number" id="kwh" value="3500" min="0" step="10" /></div>
-          <div class="input-group"><label for="preis">Arbeitspreis €/kWh</label><input type="number" id="preis" value="0.28" min="0" step="0.01" /></div>
+          <div class="input-group">
+            <label for="kwh">Verbrauch (kWh / Jahr)</label>
+            <input type="number" id="kwh" value="3500" min="0" step="50" placeholder="z. B. 3500" />
+          </div>
+          <div class="input-group">
+            <label for="preis">Arbeitspreis (€ / kWh)</label>
+            <input type="number" id="preis" value="0.28" min="0" step="0.01" placeholder="z. B. 0.28" />
+          </div>
         </div>
         <div class="input-row">
-          <div class="input-group"><label for="grund">Grundgebühr €/Jahr</label><input type="number" id="grund" value="120" min="0" step="1" /></div>
-          <div class="input-group"><label for="pers">Personen (optional, nur Info)</label><input type="number" id="pers" value="2" min="1" step="1" /></div>
+          <div class="input-group">
+            <label for="grund">Grundgebühr (€ / Jahr)</label>
+            <input type="number" id="grund" value="120" min="0" step="5" placeholder="z. B. 120" />
+          </div>
+          <div class="input-group">
+            <label for="pers">Personen im Haushalt</label>
+            <input type="number" id="pers" value="2" min="1" max="10" step="1" />
+          </div>
         </div>
+
         <div class="result-box" id="resultBox">
-          <div class="result-item highlight"><span>Kosten / Jahr</span><span id="jahr">—</span></div>
-          <div class="result-item"><span>Kosten / Monat</span><span id="mon">—</span></div>
-          <div class="result-item"><span>pro Person / Monat</span><span id="pp">—</span></div>
-          <p class="help">Du trägst Preis & Verbrauch selbst ein (Rechnung/Tarifblatt). Keine Standard-Tarife erfunden.</p>
+          <div class="result-item highlight">
+            <span>Kosten / Jahr</span>
+            <span id="jahr">—</span>
+          </div>
+          <div class="result-item">
+            <span>Kosten / Monat</span>
+            <span id="mon">—</span>
+          </div>
+          <div class="result-item">
+            <span>pro Person / Monat</span>
+            <span id="pp">—</span>
+          </div>
+          <p class="help">Berechnung basiert auf deinen exakten Eingaben (Arbeitspreis × Verbrauch + Grundpreis).</p>
         </div>
-        <script>
-        document.addEventListener('DOMContentLoaded',()=>{
-          const euro=n=>CalcTools.euro(n,'de-AT');
-          const calc=()=>{const j=(+kwh.value||0)*(+preis.value||0)+(+grund.value||0);jahr.textContent=euro(j);mon.textContent=euro(j/12);pp.textContent=euro(j/12/Math.max(1,+pers.value||1));};
-          ['kwh','preis','grund','pers'].forEach(id=>document.getElementById(id).addEventListener('input',calc));
-          const kwh=document.getElementById('kwh'),preis=document.getElementById('preis'),grund=document.getElementById('grund'),pers=document.getElementById('pers');
-          const jahr=document.getElementById('jahr'),mon=document.getElementById('mon'),pp=document.getElementById('pp');calc();
-        });
-        </script>
+      </div>
+    </div>
 
-    </div></div>
+    <section class="content-section">
+      <h2>Wie setzen sich die Stromkosten zusammen?</h2>
+      <p>Deine jährliche Stromrechnung besteht in Österreich und Deutschland aus zwei Hauptkomponenten:</p>
+      <ul>
+        <li><strong>Arbeitspreis (Verbrauchspreis):</strong> Der Preis pro verbrauchter Kilowattstunde (kWh). Dieser macht den größten Teil der Rechnung aus.</li>
+        <li><strong>Grundpreis (Netzgebühr / Zählpunktgebühr):</strong> Eine verbrauchsunabhängige Pauschale pro Monat bzw. Jahr für den Anschluss und die Bereitstellung des Netzes.</li>
+      </ul>
+      <h3>Richtwerte für den durchschnittlichen Stromverbrauch</h3>
+      <ul>
+        <li><strong>1 Person:</strong> ca. 1.500 bis 2.000 kWh / Jahr</li>
+        <li><strong>2 Personen:</strong> ca. 2.500 bis 3.500 kWh / Jahr</li>
+        <li><strong>3 bis 4 Personen:</strong> ca. 4.000 bis 5.000 kWh / Jahr</li>
+      </ul>
+    </section>
+
+    <!-- Passende Rechner -->
+    <div class="related-tools" style="margin-top: 32px; padding: 24px; background: white; border-radius: 12px; border: 1px solid var(--border);">
+      <h3 style="margin-top: 0;">🔗 Passende Rechner</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+        <li><a href="/finanzen/gehaltsrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Brutto-Netto Gehaltsrechner</a></li>
+        <li><a href="/alltag/kaufkraftrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Kaufkraft- & Inflationsrechner</a></li>
+        <li><a href="/finanzen/zinsrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Zinsrechner & Zinseszins</a></li>
+        <li><a href="/alltag/waehrungsumrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Währungsumrechner</a></li>
+      </ul>
+    </div>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 rechnify.at</span>
+        <nav class="footer-legal-links">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutzerklärung</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
   <script src="/assets/js/analytics.js?v=3.1"></script>
   <script src="/assets/js/ui.js?v=3.1"></script>
   <script src="/assets/js/tools.js?v=3.1"></script>
   <script src="/assets/js/core.js?v=3.1"></script>
   <script src="/assets/js/calc-tools.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const euro = n => CalcTools.euro(n, 'de-AT');
+      const kwh = document.getElementById('kwh');
+      const preis = document.getElementById('preis');
+      const grund = document.getElementById('grund');
+      const pers = document.getElementById('pers');
+      const jahr = document.getElementById('jahr');
+      const mon = document.getElementById('mon');
+      const pp = document.getElementById('pp');
+
+      const calc = () => {
+        const j = (+kwh.value || 0) * (+preis.value || 0) + (+grund.value || 0);
+        jahr.textContent = euro(j);
+        mon.textContent = euro(j / 12);
+        pp.textContent = euro(j / 12 / Math.max(1, +pers.value || 1));
+      };
+
+      [kwh, preis, grund, pers].forEach(el => el.addEventListener('input', calc));
+      calc();
+    });
+  </script>
 </body>
 </html>

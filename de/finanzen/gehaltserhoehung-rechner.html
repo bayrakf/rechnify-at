@@ -294,12 +294,12 @@
   <script>
     'use strict';
 
-    // Same calculation engine as DE Gehaltsrechner
+    // Same calculation engine as DE Gehaltsrechner (2026)
     function calculateDENet(grossMonthly, taxClass, churchTaxInput) {
       const grossYearly = grossMonthly * 12;
       
-      let kvBase = grossMonthly > 5512.50 ? 5512.50 : grossMonthly;
-      let rvBase = grossMonthly > 7550 ? 7550 : grossMonthly;
+      let kvBase = grossMonthly > 5812.50 ? 5812.50 : grossMonthly;
+      let rvBase = grossMonthly > 8450 ? 8450 : grossMonthly;
       
       const kv = kvBase * 0.0815; // 7.3% + 0.85% avg
       const pv = kvBase * 0.022;
@@ -308,8 +308,8 @@
       
       const svMonthly = kv + pv + rv + av;
       
-      let freibetrag = 12084;
-      if (taxClass === '3') freibetrag = 24168;
+      let freibetrag = 12348;
+      if (taxClass === '3') freibetrag = 24696;
       if (taxClass === '5') freibetrag = 0;
       
       let taxableIncome = grossYearly - (svMonthly * 12) - freibetrag;
@@ -321,16 +321,16 @@
       } else {
         if (taxableIncome > 277826) {
           taxYearly += (taxableIncome - 277826) * 0.45;
-          taxYearly += (277826 - 66760) * 0.42;
-          taxYearly += (66760 - 17005) * 0.24;
-          taxYearly += (17005 - 0) * 0.14;
-        } else if (taxableIncome > 66760) {
-          taxYearly += (taxableIncome - 66760) * 0.42;
-          taxYearly += (66760 - 17005) * 0.24;
-          taxYearly += (17005 - 0) * 0.14;
-        } else if (taxableIncome > 17005) {
-          taxYearly += (taxableIncome - 17005) * 0.24;
-          taxYearly += (17005 - 0) * 0.14;
+          taxYearly += (277826 - 69878) * 0.42;
+          taxYearly += (69878 - 17799) * 0.24;
+          taxYearly += (17799 - 0) * 0.14;
+        } else if (taxableIncome > 69878) {
+          taxYearly += (taxableIncome - 69878) * 0.42;
+          taxYearly += (69878 - 17799) * 0.24;
+          taxYearly += (17799 - 0) * 0.14;
+        } else if (taxableIncome > 17799) {
+          taxYearly += (taxableIncome - 17799) * 0.24;
+          taxYearly += (17799 - 0) * 0.14;
         } else if (taxableIncome > 0) {
           taxYearly += taxableIncome * 0.14;
         }
