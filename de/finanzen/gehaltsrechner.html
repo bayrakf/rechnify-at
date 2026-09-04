@@ -171,108 +171,117 @@
   </header>
 
   <main class="site-main">
-    <div class="calculator-container">
+    <div class="calculator-container cockpit-layout">
       <div class="calculator-card">
         
-        <div class="calc-header">
-          <div class="calc-icon">💶</div>
-          <h1 style="margin-bottom:8px;">Brutto Netto Rechner Deutschland</h1>
-          <p>Berechne dein Netto-Gehalt inklusive Sozialabgaben und Lohnsteuer für Deutschland.</p>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">💶</span>
+            <div>
+              <h1>Brutto Netto Rechner Deutschland 2026</h1>
+              <p>Exaktes Netto-Gehalt inklusive Lohnsteuer und Sozialabgaben berechnen.</p>
+            </div>
+          </div>
         </div>
 
-        <div class="calc-body">
-          <div class="input-group">
-            <label for="salaryMode">Eingabemethode</label>
-            <select id="salaryMode">
-              <option value="monat" selected>Monatsgehalt (Brutto)</option>
-              <option value="jahr">Jahresgehalt (Brutto)</option>
-            </select>
-          </div>
-
-          <div class="input-group">
-            <label for="grossMonthly" id="grossMonthlyLabel">Bruttogehalt (pro Monat)</label>
-            <div class="input-suffix">
-              <input type="number" id="grossMonthly" inputmode="numeric" placeholder="z.B. 4100" min="0" step="50" value="4100">
-              <span class="suffix">€</span>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-group" style="margin-bottom:0;">
+              <label for="salaryMode">Eingabemethode</label>
+              <select id="salaryMode">
+                <option value="monat" selected>Monatsgehalt (Brutto)</option>
+                <option value="jahr">Jahresgehalt (Brutto)</option>
+              </select>
             </div>
-          </div>
 
-          <div class="quick-chips-wrap">
-            <span class="quick-chip-label">Schnellwahl:</span>
-            <button type="button" class="quick-chip" data-val="2500">2.500 €</button>
-            <button type="button" class="quick-chip" data-val="3200">3.200 €</button>
-            <button type="button" class="quick-chip active" data-val="4100">4.100 € (Median)</button>
-            <button type="button" class="quick-chip" data-val="5200">5.200 €</button>
-            <button type="button" class="quick-chip" data-val="7000">7.000 €</button>
-          </div>
-
-          <div class="input-group">
-            <label for="taxClass">Steuerklasse</label>
-            <select id="taxClass">
-              <option value="1">Klasse 1 (Single / ledig)</option>
-              <option value="3">Klasse 3 (Verheiratet, Besserverdiener)</option>
-              <option value="4">Klasse 4 (Verheiratet, gleich verdienend)</option>
-              <option value="5">Klasse 5 (Verheiratet, Geringverdiener)</option>
-            </select>
-          </div>
-
-          <div class="input-group">
-            <label for="churchTax">Kirchensteuer</label>
-            <select id="churchTax">
-              <option value="nein">Nein</option>
-              <option value="ja">Ja (ca. 8-9% der Lohnsteuer)</option>
-            </select>
-          </div>
-
-          <div style="margin: 20px 0; padding: 16px; background: var(--soft-row); border: 1px solid var(--border); border-radius: 12px;">
-            <label style="display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer;">
-              <input type="checkbox" id="simulatePartTime" style="width: 18px; height: 18px; margin: 0; cursor: pointer;">
-              ⚖️ Teilzeit-Simulator
-            </label>
-            <div id="partTimeInputs" style="margin-top: 16px; display: none; grid-template-columns: 1fr 1fr; gap: 16px;">
-              <div class="input-group" style="margin: 0;">
-                <label for="hoursCurrent">Aktuelle Stunden</label>
-                <div class="input-suffix">
-                  <input type="number" id="hoursCurrent" inputmode="numeric" value="40" min="1" max="60">
-                  <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
-                </div>
-              </div>
-              <div class="input-group" style="margin: 0;">
-                <label for="hoursTarget">Ziel-Stunden</label>
-                <div class="input-suffix">
-                  <input type="number" id="hoursTarget" inputmode="numeric" value="32" min="1" max="60">
-                  <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
-                </div>
+            <div class="input-group" style="margin-bottom:0;">
+              <label for="grossMonthly" id="grossMonthlyLabel">Bruttogehalt (pro Monat)</label>
+              <div class="input-suffix">
+                <input type="number" id="grossMonthly" inputmode="numeric" placeholder="z.B. 4100" min="0" step="50" value="4100">
+                <span class="suffix">€</span>
               </div>
             </div>
+
+            <div class="quick-chips-wrap" style="margin: 0;">
+              <span class="quick-chip-label">Schnellwahl:</span>
+              <button type="button" class="quick-chip" data-val="2500">2.500 €</button>
+              <button type="button" class="quick-chip" data-val="3200">3.200 €</button>
+              <button type="button" class="quick-chip active" data-val="4100">4.100 € (Median)</button>
+              <button type="button" class="quick-chip" data-val="5200">5.200 €</button>
+              <button type="button" class="quick-chip" data-val="7000">7.000 €</button>
+            </div>
+
+            <div class="input-group" style="margin-bottom:0;">
+              <label for="taxClass">Steuerklasse</label>
+              <select id="taxClass">
+                <option value="1">Klasse 1 (Single / ledig)</option>
+                <option value="3">Klasse 3 (Verheiratet, Besserverdiener)</option>
+                <option value="4">Klasse 4 (Verheiratet, gleich verdienend)</option>
+                <option value="5">Klasse 5 (Verheiratet, Geringverdiener)</option>
+              </select>
+            </div>
+
+            <div class="input-group" style="margin-bottom:0;">
+              <label for="churchTax">Kirchensteuer</label>
+              <select id="churchTax">
+                <option value="nein">Nein</option>
+                <option value="ja">Ja (ca. 8-9% der Lohnsteuer)</option>
+              </select>
+            </div>
+
+            <div style="padding: 12px 14px; background: var(--color-paper-2, #f8fafc); border: 1px solid var(--color-rule, #e2e8f0); border-radius: 10px;">
+              <label style="display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--color-accent, #1858C7); font-size: 0.88rem;">
+                <input type="checkbox" id="simulatePartTime" style="width: 16px; height: 16px; margin: 0; cursor: pointer;">
+                ⚖️ Teilzeit-Simulator
+              </label>
+              <div id="partTimeInputs" style="margin-top: 12px; display: none; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div class="input-group" style="margin: 0;">
+                  <label for="hoursCurrent">Aktuell</label>
+                  <div class="input-suffix">
+                    <input type="number" id="hoursCurrent" inputmode="numeric" value="40" min="1" max="60">
+                    <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
+                  </div>
+                </div>
+                <div class="input-group" style="margin: 0;">
+                  <label for="hoursTarget">Ziel</label>
+                  <div class="input-suffix">
+                    <input type="number" id="hoursTarget" inputmode="numeric" value="32" min="1" max="60">
+                    <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn" id="calculate" style="width: 100%; margin-top: 4px; padding: 12px;">Berechnen</button>
           </div>
 
-          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Berechnen</button>
-
-          <div id="result" class="result-box hidden">
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right" id="result">
             <div id="partTimeResultBox"></div>
-            <h3>Dein Netto-Gehalt</h3>
-            
-            <div class="result-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
-              <div class="result-card">
-                <div class="text-sm text-muted">Auszahlung pro Monat</div>
-                <div class="big-number text-success" id="resNetMonthly">-- €</div>
-                <div class="sub-number">Monatliches Netto (12x)</div>
-              </div>
-              <div class="result-card" style="background: var(--soft-row);">
-                <div class="text-sm text-muted">Jahres-Netto (gesamt)</div>
-                <div class="big-number text-success" id="resNetYearCard" style="color: #166534;">-- €</div>
-                <div class="sub-number">Auszahlung pro Jahr</div>
-              </div>
-              <div class="result-card" style="background: var(--soft-row);">
-                <div class="text-sm text-muted">Abzüge pro Monat</div>
-                <div class="big-number text-danger" id="resDeductionsMonthly" style="color: var(--danger);">-- €</div>
-                <div class="sub-number">Steuer & Sozialabgaben</div>
+
+            <!-- Hero Net Card -->
+            <div class="hero-net-card">
+              <span class="hero-net-label">Dein Netto-Gehalt</span>
+              <div class="hero-net-val" id="resNetMonthly">-- €</div>
+              <div class="hero-net-sub">Monatliche Netto-Auszahlung aufs Girokonto (12×)</div>
+
+              <div class="sub-cards-grid">
+                <div class="sub-net-card">
+                  <div class="label">Jahres-Netto (gesamt)</div>
+                  <div class="val" id="resNetYearCard">-- €</div>
+                  <div class="desc">Auszahlung pro Jahr</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="label">Abzüge pro Monat</div>
+                  <div class="val" id="resDeductionsMonthly" style="color: var(--danger, #dc2626);">-- €</div>
+                  <div class="desc">Steuer &amp; Sozialabgaben</div>
+                </div>
               </div>
             </div>
 
             <!-- Gehaltserhöhungs-Schnellrechner -->
-            <div class="raise-box">
+            <div class="raise-box" style="margin: 0;">
               <div class="raise-box-header">
                 <span class="raise-box-title">💼 Gehaltserhöhung: Was bleibt dir netto?</span>
                 <div style="display: flex; gap: 6px;">
@@ -287,7 +296,7 @@
             </div>
 
             <!-- Unified Details & Insights Panel -->
-            <div class="details-panel">
+            <div class="details-panel" style="margin: 0;">
               <nav class="seg-nav" role="tablist">
                 <button type="button" class="seg-btn active" data-tab="tab-monat-de" role="tab">📊 Monatsabrechnung</button>
                 <button type="button" class="seg-btn" data-tab="tab-jahr-de" role="tab">📅 Jahresübersicht</button>
@@ -355,12 +364,12 @@
               </div>
             </div>
 
-            <div style="margin-top: 16px; text-align: center; font-size: 0.85rem; color: var(--color-ink-3, #64748b);">
+            <div style="margin-top: 4px; text-align: center; font-size: 0.82rem; color: var(--color-ink-3, #64748b);">
               Überlegst du Stunden zu reduzieren? <a href="/de/arbeitszeit/teilzeitrechner.html" style="font-weight: 600; color: var(--color-accent, #1858C7);">Teilzeitrechner nutzen ➔</a>
             </div>
 
             <!-- Premium Girokonto Affiliate Box -->
-            <div class="affiliate-banner">
+            <div class="affiliate-banner" style="margin-top: 4px;">
               <div class="icon">💳</div>
               <div class="content">
                 <strong>Mehr Netto vom Brutto behalten?</strong><br/>
@@ -372,7 +381,7 @@
           </div>
         </div>
 
-        <div class="help">
+        <div class="help" style="margin: 0; border-radius: 0 0 var(--radius-lg, 14px) var(--radius-lg, 14px); border-top: 1px solid var(--color-rule);">
           <strong>Grundlagen der Berechnung (Deutschland, Stand 2026):</strong><br/>
           Dieser Schnellrechner nutzt vereinfachte Näherungswerte für Lohnsteuer und Sozialabgaben (Renten-, Kranken-, Pflege- und Arbeitslosenversicherung). Individuelle Freibeträge, Beitragsbemessungsgrenzen und kassenindividuelle Zusatzbeiträge können das tatsächliche Netto geringfügig verändern.
         </div>

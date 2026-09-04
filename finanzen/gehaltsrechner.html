@@ -286,126 +286,105 @@
   </nav>
 
   <main class="site-main">
-    <div class="calculator-container">
+    <div class="calculator-container cockpit-layout">
       <div class="calculator-card">
 
-        <div class="calc-header">
-          <div class="calc-icon">💶</div>
-          <h1 style="margin-bottom:8px;">Brutto Netto Rechner Österreich</h1>
-          <p>Berechne dein exaktes Netto-Gehalt (Angestellte/Arbeiter) inkl. 13. & 14. Gehalt für Österreich.</p>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">💶</span>
+            <div>
+              <h1>Brutto Netto Rechner Österreich 2026</h1>
+              <p>Berechne dein exaktes Netto-Gehalt (Angestellte &amp; Arbeiter) inkl. 13. &amp; 14. Gehalt für Österreich.</p>
+            </div>
+          </div>
         </div>
 
-        <div class="calc-body">
-          <div class="input-field" style="margin-bottom:16px;">
-            <select id="salaryMode" style="padding:14px;">
-              <option value="monat" selected>Monatsgehalt (Brutto)</option>
-              <option value="jahr">Jahresgehalt (Brutto)</option>
-            </select>
-            <label for="salaryMode"
-              style="top:0; font-size:12px; font-weight:600; color:var(--color-accent);">Eingabemethode</label>
-          </div>
-
-          <div class="input-field" style="margin-bottom:12px;">
-            <input type="number" id="grossMonthly" inputmode="numeric" placeholder=" " min="0" step="50" value="3500">
-            <label for="grossMonthly" id="grossMonthlyLabel">Bruttogehalt (pro Monat in €)</label>
-            <span class="input-icon">💶</span>
-          </div>
-
-          <div class="quick-chips-wrap">
-            <span class="quick-chip-label">Schnellwahl:</span>
-            <button type="button" class="quick-chip" data-val="2200">2.200 €</button>
-            <button type="button" class="quick-chip" data-val="2800">2.800 €</button>
-            <button type="button" class="quick-chip active" data-val="3500">3.500 € (Median)</button>
-            <button type="button" class="quick-chip" data-val="4500">4.500 €</button>
-            <button type="button" class="quick-chip" data-val="6000">6.000 €</button>
-          </div>
-
-          <div class="input-field">
-            <select id="hasSonderzahlungen" style="padding:14px;">
-              <option value="ja">Ja, ich erhalte Sonderzahlungen (Standard: 14 Gehälter)</option>
-              <option value="nein">Nein, ich erhalte nur 12 Gehälter</option>
-            </select>
-            <label for="hasSonderzahlungen"
-              style="top:0; font-size:12px; font-weight:600; color:var(--color-accent);">13. & 14. Gehalt</label>
-          </div>
-
-          <div
-            style="margin: 20px 0; padding: 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;">
-            <label
-              style="display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--primary);">
-              <input type="checkbox" id="simulatePartTime"
-                style="width: 18px; height: 18px; margin: 0; cursor: pointer;">
-              ⚖️ Teilzeit-Simulator (Premium Feature)
-            </label>
-            <div id="partTimeInputs"
-              style="margin-top: 16px; display: none; grid-template-columns: 1fr 1fr; gap: 16px;">
-              <div class="input-field" style="margin: 0;">
-                <input type="number" id="hoursCurrent" inputmode="numeric" placeholder=" " value="40" min="1" max="60">
-                <label for="hoursCurrent">Aktuelle Stunden (h/Woche)</label>
-              </div>
-              <div class="input-field" style="margin: 0;">
-                <input type="number" id="hoursTarget" inputmode="numeric" placeholder=" " value="32" min="1" max="60">
-                <label for="hoursTarget">Ziel-Stunden (h/Woche)</label>
-              </div>
-            </div>
-          </div>
-
-          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">💶 Berechnen</button>
-
-          <div id="result" class="result-box hidden">
-            <div id="partTimeResultBox"></div>
-
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
-              <h3 style="margin:0;">Dein Netto-Gehalt</h3>
-              <button class="modal-trigger" data-modal="sozialversicherung"
-                data-modal-title="🏥 Sozialversicherung erklärt" data-modal-content="" style="font-size:0.8rem;">ⓘ Wie
-                wird berechnet?</button>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-field" style="margin-bottom:14px;">
+              <select id="salaryMode" style="padding:14px;">
+                <option value="monat" selected>Monatsgehalt (Brutto)</option>
+                <option value="jahr">Jahresgehalt (Brutto)</option>
+              </select>
+              <label for="salaryMode"
+                style="top:0; font-size:12px; font-weight:600; color:var(--color-accent);">Eingabemethode</label>
             </div>
 
-            <div class="result-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
-              <div class="result-card">
-                <div class="text-sm text-muted">Monatliches Netto (12x)</div>
-                <div class="big-number text-success" id="resNetMonthly">-- €</div>
-                <div class="sub-number">Auszahlung pro Monat</div>
-              </div>
-              <div class="result-card" id="cardSonder" style="background: var(--soft-row);">
-                <div class="text-sm text-muted">13. / 14. Gehalt (jeweils)</div>
-                <div class="big-number text-success" id="resNetSonder">-- €</div>
-                <div class="sub-number">Urlaubs- &amp; Weihnachtsgeld</div>
-              </div>
-              <div class="result-card" id="cardYear" style="background: var(--soft-row);">
-                <div class="text-sm text-muted">Jahres-Netto (gesamt)</div>
-                <div class="big-number text-success" id="resNetYearCard">-- €</div>
-                <div class="sub-number" id="resNetYearCardSub">14 Auszahlungen gesamt</div>
-              </div>
+            <div class="input-field" style="margin-bottom:10px;">
+              <input type="number" id="grossMonthly" inputmode="numeric" placeholder=" " min="0" step="50" value="3500">
+              <label for="grossMonthly" id="grossMonthlyLabel">Bruttogehalt (pro Monat in €)</label>
             </div>
 
-            <!-- WKO-Killer: Gehaltserhöhung Live-Simulator -->
-            <div class="raise-box">
-              <div class="raise-box-header">
-                <span class="raise-box-title">💼 Gehaltserhöhung: Was bleibt dir netto?</span>
-                <div style="display: flex; gap: 6px;">
-                  <button type="button" class="quick-chip raise-chip" data-raise="150">+150 €</button>
-                  <button type="button" class="quick-chip raise-chip" data-raise="300">+300 €</button>
-                  <button type="button" class="quick-chip raise-chip" data-raise="500">+500 €</button>
+            <div class="quick-chips-wrap" style="margin-bottom:14px;">
+              <span class="quick-chip-label">Schnellwahl:</span>
+              <button type="button" class="quick-chip" data-val="2200">2.200 €</button>
+              <button type="button" class="quick-chip" data-val="2800">2.800 €</button>
+              <button type="button" class="quick-chip active" data-val="3500">3.500 € (Median)</button>
+              <button type="button" class="quick-chip" data-val="4500">4.500 €</button>
+              <button type="button" class="quick-chip" data-val="6000">6.000 €</button>
+            </div>
+
+            <div class="input-field" style="margin-bottom:14px;">
+              <select id="hasSonderzahlungen" style="padding:14px;">
+                <option value="ja">Ja, Sonderzahlungen (Standard: 14 Gehälter)</option>
+                <option value="nein">Nein, nur 12 Gehälter</option>
+              </select>
+              <label for="hasSonderzahlungen"
+                style="top:0; font-size:12px; font-weight:600; color:var(--color-accent);">13. & 14. Gehalt</label>
+            </div>
+
+            <div style="padding: 12px 14px; background: var(--color-paper-2, #f8fafc); border: 1px solid var(--color-rule, #e2e8f0); border-radius: 10px;">
+              <label style="display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--color-accent, #1858C7); font-size: 0.88rem;">
+                <input type="checkbox" id="simulatePartTime" style="width: 16px; height: 16px; margin: 0; cursor: pointer;">
+                ⚖️ Teilzeit-Simulator
+              </label>
+              <div id="partTimeInputs" style="margin-top: 12px; display: none; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div class="input-field" style="margin: 0;">
+                  <input type="number" id="hoursCurrent" inputmode="numeric" placeholder=" " value="40" min="1" max="60">
+                  <label for="hoursCurrent">Aktuell (h/Woche)</label>
+                </div>
+                <div class="input-field" style="margin: 0;">
+                  <input type="number" id="hoursTarget" inputmode="numeric" placeholder=" " value="32" min="1" max="60">
+                  <label for="hoursTarget">Ziel (h/Woche)</label>
                 </div>
               </div>
-              <div id="raisePreviewText" class="raise-box-desc">
-                Tippe auf einen Betrag, um sofort zu sehen, wie viel Netto dir nach Steuern &amp; Abgaben bleibt.
+            </div>
+
+            <button class="btn" id="calculate" style="width: 100%; margin-top: 4px; padding: 12px;">💶 Berechnen</button>
+          </div>
+
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right" id="result">
+            <div id="partTimeResultBox"></div>
+
+            <!-- Hero Net Card -->
+            <div class="hero-net-card">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="hero-net-label">Dein Netto-Gehalt</span>
+                <button class="modal-trigger" data-modal="sozialversicherung"
+                  data-modal-title="🏥 Sozialversicherung erklärt" data-modal-content=""
+                  style="font-size:0.75rem; background:none; border:none; color:var(--color-accent, #1858C7); cursor:pointer; text-decoration:underline;">ⓘ Wie berechnet?</button>
+              </div>
+              <div class="hero-net-val" id="resNetMonthly">-- €</div>
+              <div class="hero-net-sub">Monatliche Auszahlung aufs Konto (12×)</div>
+
+              <div class="sub-cards-grid">
+                <div class="sub-net-card" id="cardSonder">
+                  <div class="label">13. / 14. Gehalt (jeweils)</div>
+                  <div class="val" id="resNetSonder">-- €</div>
+                  <div class="desc">Urlaubs- &amp; Weihnachtsgeld</div>
+                </div>
+                <div class="sub-net-card" id="cardYear">
+                  <div class="label">Jahres-Netto (gesamt)</div>
+                  <div class="val" id="resNetYearCard">-- €</div>
+                  <div class="desc" id="resNetYearCardSub">14 Auszahlungen</div>
+                </div>
               </div>
             </div>
 
-            <!-- Share & PDF Actions -->
-            <div class="share-actions">
-              <button class="btn-share" id="shareBtn" type="button">🔗 Ergebnis teilen</button>
-              <button class="btn-pdf" id="pdfBtn" type="button">📄 Als PDF speichern</button>
-            </div>
-            <div id="shareToast" class="share-toast" style="display:none;">Link kopiert!</div>
-
-            <!-- Ausklappbare Jahresabrechnung -->
-
             <!-- Visual Breakdown Bar -->
-            <div class="breakdown-visual" style="margin-top:24px;">
+            <div class="breakdown-visual" style="margin-top:0;">
               <div class="breakdown-label">Wie setzt sich dein Gehalt zusammen?</div>
               <div class="breakdown-bar">
                 <div class="breakdown-segment netto" id="breakdownNetto" style="flex-basis: 60%;">
@@ -433,8 +412,24 @@
                 </div>
               </div>
             </div>
+
+            <!-- Gehaltserhöhung Live-Simulator -->
+            <div class="raise-box" style="margin-top:0;">
+              <div class="raise-box-header">
+                <span class="raise-box-title">💼 Gehaltserhöhung: Was bleibt dir netto?</span>
+                <div style="display: flex; gap: 6px;">
+                  <button type="button" class="quick-chip raise-chip" data-raise="150">+150 €</button>
+                  <button type="button" class="quick-chip raise-chip" data-raise="300">+300 €</button>
+                  <button type="button" class="quick-chip raise-chip" data-raise="500">+500 €</button>
+                </div>
+              </div>
+              <div id="raisePreviewText" class="raise-box-desc">
+                Tippe auf einen Betrag, um sofort zu sehen, wie viel Netto dir nach Steuern &amp; Abgaben bleibt.
+              </div>
+            </div>
+
             <!-- Unified Details & Insights Panel -->
-            <div class="details-panel">
+            <div class="details-panel" style="margin-top:0;">
               <nav class="seg-nav" role="tablist">
                 <button type="button" class="seg-btn active" data-tab="tab-jahresabrechnung" role="tab">📊 Jahresübersicht</button>
                 <button type="button" class="seg-btn" data-tab="tab-dienstgeber" role="tab">🏢 Arbeitgeberkosten</button>
@@ -489,14 +484,21 @@
               </div>
             </div>
 
-            <div style="margin-top: 16px; text-align: center; font-size: 0.85rem; color: var(--color-ink-3, #64748b);">
+            <!-- Share & PDF Actions -->
+            <div class="share-actions" style="margin-top:0;">
+              <button class="btn-share" id="shareBtn" type="button">🔗 Ergebnis teilen</button>
+              <button class="btn-pdf" id="pdfBtn" type="button">📄 Als PDF speichern</button>
+            </div>
+            <div id="shareToast" class="share-toast" style="display:none;">Link kopiert!</div>
+
+            <div style="margin-top: 4px; text-align: center; font-size: 0.82rem; color: var(--color-ink-3, #64748b);">
               Überlegst du Stunden zu reduzieren? <a href="/arbeitszeit/teilzeitrechner.html" style="font-weight: 600; color: var(--color-accent, #1858C7);">Teilzeitrechner nutzen ➔</a>
             </div>
 
           </div>
         </div>
 
-        <div class="help">
+        <div class="help" style="margin: 0; border-radius: 0 0 var(--radius-lg, 14px) var(--radius-lg, 14px); border-top: 1px solid var(--color-rule);">
           <strong>Grundlagen der Berechnung (Österreich, Stand 2026):</strong><br />
           Dieser Rechner nutzt die offiziellen Lohnsteuertarife und SV-Sätze für das Jahr 2026. Der Verkehrsabsetzbetrag
           (VAB) ist automatisch inkludiert. Spezifische Sonderfälle (Pendlerpauschale, Familienbonus Plus, Freibeträge)
