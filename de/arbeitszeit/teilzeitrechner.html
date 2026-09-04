@@ -118,76 +118,82 @@
 
   <main class="site-main">
     
-    <div class="page-hero" style="padding-top:10px;">
-      <h1 style="margin-bottom:8px;">Teilzeitrechner (Deutschland)</h1>
-      <p class="subtitle">Wie viel Gehalt verlierst du bei Teilzeit? Berechne deinen neuen Netto-Lohn.</p>
-    </div>
-
-    <!-- CALCULATOR -->
-    <div class="card">
-      <div class="calc-body">
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
         
-        <div class="input-row">
-          <div class="input-group" style="margin-bottom:12px;">
-            <label for="brutto">Aktuelles Bruttogehalt (€ / Monat)</label>
-            <input type="number" id="brutto" inputmode="numeric" min="0" step="50" placeholder="z. B. 4100" value="4100" />
-          </div>
-          <div class="quick-chips-wrap">
-            <span class="quick-chip-label">Brutto:</span>
-            <button type="button" class="quick-chip" data-brutto="2800">2.800 €</button>
-            <button type="button" class="quick-chip active" data-brutto="4100">4.100 € (Median)</button>
-            <button type="button" class="quick-chip" data-brutto="5200">5.200 €</button>
-            <button type="button" class="quick-chip" data-brutto="6500">6.500 €</button>
-          </div>
-        </div>
-        
-        <div class="input-row">
-          <div class="input-group">
-            <label for="stunden_alt">Bisherige Wochenstunden</label>
-            <input type="number" id="stunden_alt" inputmode="decimal" min="1" max="60" step="0.5" placeholder="z. B. 40" value="40" />
-          </div>
-          
-          <div class="input-group">
-            <label for="stunden_neu">Neue Wochenstunden (Teilzeit)</label>
-            <input type="number" id="stunden_neu" inputmode="decimal" min="1" max="60" step="0.5" placeholder="z. B. 32" value="32" />
-            <div class="quick-chips-wrap" style="margin-top:8px; margin-bottom:0;">
-              <span class="quick-chip-label">Ziel:</span>
-              <button type="button" class="quick-chip active" data-hours="32">32h (4-Tage)</button>
-              <button type="button" class="quick-chip" data-hours="30">30h</button>
-              <button type="button" class="quick-chip" data-hours="25">25h</button>
-              <button type="button" class="quick-chip" data-hours="20">20h (Halbtags)</button>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">⏰</span>
+            <div>
+              <h1>Teilzeitrechner Deutschland 2026</h1>
+              <p>Wie viel Gehalt bleibt dir bei Teilzeit? Berechne dein neues Netto und den echten Stundenverlust.</p>
             </div>
           </div>
         </div>
 
-        
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-group">
+              <label for="brutto">Aktuelles Bruttogehalt (€ / Monat)</label>
+              <input type="number" id="brutto" inputmode="numeric" min="0" step="50" placeholder="z. B. 4100" value="4100" />
+            </div>
+            <div class="quick-chips-wrap">
+              <span class="quick-chip-label">Brutto:</span>
+              <button type="button" class="quick-chip" data-brutto="2800">2.800 €</button>
+              <button type="button" class="quick-chip active" data-brutto="4100">4.100 € (Median)</button>
+              <button type="button" class="quick-chip" data-brutto="5200">5.200 €</button>
+              <button type="button" class="quick-chip" data-brutto="6500">6.500 €</button>
+            </div>
 
-        <div class="result-box" id="resultBox">
-          <h3 style="margin-top:0; margin-bottom:16px; color:var(--color-primary);">Vergleich</h3>
-          
-          <div class="result-item">
-            <span>Bisheriges Netto (Vollzeit)</span>
-            <span id="resNettoAlt">-- €</span>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="input-group">
+                <label for="stunden_alt">Bisherige Stunden</label>
+                <input type="number" id="stunden_alt" inputmode="decimal" min="1" max="60" step="0.5" placeholder="z. B. 40" value="40" />
+              </div>
+              <div class="input-group">
+                <label for="stunden_neu">Neue Stunden (Ziel)</label>
+                <input type="number" id="stunden_neu" inputmode="decimal" min="1" max="60" step="0.5" placeholder="z. B. 32" value="32" />
+              </div>
+            </div>
+
+            <div class="quick-chips-wrap" style="margin-top: -4px;">
+              <span class="quick-chip-label">Ziel:</span>
+              <button type="button" class="quick-chip active" data-hours="32">32h (4-Tage)</button>
+              <button type="button" class="quick-chip" data-hours="30">30h</button>
+              <button type="button" class="quick-chip" data-hours="25">25h</button>
+              <button type="button" class="quick-chip" data-hours="20">20h</button>
+            </div>
           </div>
-          <div class="result-item highlight">
-            <span>Neues Netto (Teilzeit)</span>
-            <span id="resNettoNeu">-- €</span>
-          </div>
-          
-          <div id="comparisonBox" class="comparison-box">
-              <h4 style="margin-top:0; margin-bottom:8px;">Fazit</h4>
-              <p id="resFazit" style="margin:0; font-size:15px;"></p>
+
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div class="hero-net-card">
+              <span class="hero-net-label">Neues Netto (Teilzeit)</span>
+              <div class="hero-net-val" id="resNettoNeu">-- €</div>
+              <div class="hero-net-sub">Auszahlung pro Monat bei reduzierter Arbeitszeit</div>
+
+              <div class="sub-cards-grid">
+                <div class="sub-net-card">
+                  <div class="label">Bisheriges Netto (Vollzeit)</div>
+                  <div class="val" id="resNettoAlt" style="color: var(--color-ink, #0f172a);">-- €</div>
+                  <div class="desc">Referenz vor Reduktion</div>
+                </div>
+                <div class="sub-net-card" id="comparisonBox">
+                  <div class="label">Fazit &amp; Netto-Verlust</div>
+                  <div id="resFazit" style="font-size: 0.85rem; color: var(--color-ink-2, #334155); margin-top: 4px; line-height: 1.4;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="seo-crosslink" style="margin-top: 4px; padding: 14px 16px; text-align: center;">
+              <p style="margin: 0 0 6px; font-size: 0.88rem; color: var(--color-ink-2);">💡 <strong>Tipp:</strong> Exakte Lohnsteuer- &amp; SV-Abzüge für dein neues Gehalt berechnen? <a href="/de/finanzen/gehaltsrechner.html" style="font-weight: 600; color: var(--color-accent);">Zum Gehaltsrechner (DE) ➔</a></p>
+              <p style="margin: 0; font-size: 0.82rem; color: var(--color-ink-3);">Oder Stundenlohn berechnen: <a href="/de/arbeitszeit/stundenlohn-rechner.html" style="color: var(--color-accent);">Zum Stundenlohnrechner ➔</a></p>
+            </div>
           </div>
         </div>
 
-      
-
-        <div class="seo-crosslink" style="margin-top: 20px; padding: 14px 16px; text-align: center;">
-            <p style="margin: 0 0 6px; font-size: 0.88rem; color: var(--color-ink-2);">💡 <strong>Tipp:</strong> Exakte Lohnsteuer- &amp; SV-Abzüge für dein neues Gehalt berechnen? <a href="/de/finanzen/gehaltsrechner.html" style="font-weight: 600; color: var(--color-accent);">Zum Gehaltsrechner (DE) ➔</a></p>
-            <p style="margin: 0; font-size: 0.82rem; color: var(--color-ink-3);">Oder Stundenlohn berechnen: <a href="/de/arbeitszeit/stundenlohn-rechner.html" style="color: var(--color-accent);">Zum Stundenlohnrechner ➔</a></p>
-        </div>
-
-</div>
+      </div>
     </div>
     <!-- END CALCULATOR -->
 

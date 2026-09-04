@@ -153,42 +153,58 @@
 
   <main class="site-main">
     
-    <div class="page-hero" style="padding-top:10px;">
-      <h1 style="margin-bottom:8px;">Mehrwertsteuer-Rechner Deutschland</h1>
-      <p class="subtitle">Berechne Brutto, Netto und die enthaltene Mehrwertsteuer – mit den deutschen Steuersätzen (19%, 7%).</p>
-    </div>
-
-    <!-- CALCULATOR -->
-    <div class="card">
-      <div class="calc-body">
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
         
-        <div class="input-group">
-          <label>Was möchtest du berechnen?</label>
-          <div class="toggle-group" id="mode-toggles">
-            <div class="toggle-btn active" data-mode="net2gross">Netto zu Brutto<br/><span style="font-size:11px;font-weight:normal;">(+ MwSt hinzufügen)</span></div>
-            <div class="toggle-btn" data-mode="gross2net">Brutto zu Netto<br/><span style="font-size:11px;font-weight:normal;">(- MwSt abziehen)</span></div>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">🧾</span>
+            <div>
+              <h1>Mehrwertsteuer-Rechner Deutschland 2026</h1>
+              <p>Berechne Brutto, Netto und Mehrwertsteuer mit offiziellen Sätzen (19 %, 7 %).</p>
+            </div>
           </div>
         </div>
 
-        <div id="linesContainer"></div>
-        <button type="button" class="btn" id="addLineBtn" style="margin-bottom:16px;">+ Position</button>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-group" style="margin-bottom:0;">
+              <label>Berechnungsrichtung</label>
+              <div class="toggle-group" id="mode-toggles">
+                <div class="toggle-btn active" data-mode="net2gross">Netto zu Brutto<br/><span style="font-size:11px;font-weight:normal;">(+ MwSt)</span></div>
+                <div class="toggle-btn" data-mode="gross2net">Brutto zu Netto<br/><span style="font-size:11px;font-weight:normal;">(− MwSt)</span></div>
+              </div>
+            </div>
 
-        <div class="result-box" id="resultBox">
-          <h3 style="margin-top:0; margin-bottom:16px; color:var(--primary);">Summe</h3>
-          <div class="result-item">
-            <span>Nettobetrag gesamt</span>
-            <span id="resNetto" class="highlight">0,00 €</span>
+            <div id="linesContainer" style="display: flex; flex-direction: column; gap: 8px;"></div>
+            <button type="button" class="btn" id="addLineBtn" style="margin-top:4px;">+ Position hinzufügen</button>
           </div>
-          <div class="result-item">
-            <span>MwSt gesamt</span>
-            <span id="resTax">0,00 €</span>
-          </div>
-          <div class="result-item success" style="margin-top:8px;">
-            <span>Bruttobetrag gesamt</span>
-            <span id="resBrutto">0,00 €</span>
-          </div>
-          <div style="margin-top:12px;text-align:right;">
-            <button type="button" class="btn" id="csvExportBtn" style="font-size:0.85rem;">CSV exportieren</button>
+
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div class="hero-net-card">
+              <span class="hero-net-label">Bruttobetrag gesamt</span>
+              <div class="hero-net-val" id="resBrutto">0,00 €</div>
+              <div class="hero-net-sub">Endbetrag inklusive Mehrwertsteuer</div>
+
+              <div class="sub-cards-grid">
+                <div class="sub-net-card">
+                  <div class="label">Nettobetrag gesamt</div>
+                  <div class="val" id="resNetto" style="color: var(--color-ink, #0f172a);">0,00 €</div>
+                  <div class="desc">Warenwert vor Steuern</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="label">Enthaltene MwSt</div>
+                  <div class="val" id="resTax" style="color: var(--color-accent, #1858C7);">0,00 €</div>
+                  <div class="desc">Steueranteil</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="text-align:right;">
+              <button type="button" class="btn" id="csvExportBtn" style="font-size:0.85rem;">📄 CSV exportieren</button>
+            </div>
           </div>
         </div>
 

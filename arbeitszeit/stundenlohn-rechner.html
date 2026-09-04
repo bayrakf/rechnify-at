@@ -140,162 +140,169 @@
   </header>
 
   <main class="site-main">
-    <div class="calculator-container">
+    <div class="calculator-container cockpit-layout">
       <div class="calculator-card">
 
-        <div class="calc-header">
-          <div class="calc-icon">⚡</div>
-          <h1>Stundenlohnrechner Österreich</h1>
-          <p>Berechne deinen Brutto-Stundenlohn aus Monats- oder Jahresgehalt — und erhalte eine Netto-Schätzung.</p>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">⚡</span>
+            <div>
+              <h1>Stundenlohnrechner Österreich 2026</h1>
+              <p>Berechne deinen Brutto-Stundenlohn aus Monats- oder Jahresgehalt — inkl. Netto-Schätzung.</p>
+            </div>
+          </div>
         </div>
 
-        <div class="calc-body" style="padding: 24px;">
-
-          <!-- Eingabemethode -->
-          <div class="input-group">
-            <label for="inputMode">Eingabemethode</label>
-            <select id="inputMode" onchange="toggleMode()">
-              <option value="monthly">Monatsgehalt (Brutto)</option>
-              <option value="annual">Jahresgehalt (Brutto)</option>
-            </select>
-          </div>
-
-          <!-- Monatsgehalt -->
-          <div class="input-group" id="monthlyGroup">
-            <label for="monthly">Bruttomonatsgehalt</label>
-            <div class="input-suffix">
-              <input type="number" id="monthly" value="3500" placeholder="z.B. 3.500" min="0" step="50" inputmode="numeric" oninput="calculate()" />
-              <span class="suffix">€</span>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <!-- Eingabemethode -->
+            <div class="input-group">
+              <label for="inputMode">Eingabemethode</label>
+              <select id="inputMode" onchange="toggleMode()">
+                <option value="monthly">Monatsgehalt (Brutto)</option>
+                <option value="annual">Jahresgehalt (Brutto)</option>
+              </select>
             </div>
-            <div class="quick-chips-wrap">
-              <span class="quick-chip-label">Schnellwahl:</span>
-              <button type="button" class="quick-chip" data-target="monthly" data-val="2200">2.200 €</button>
-              <button type="button" class="quick-chip" data-target="monthly" data-val="2800">2.800 €</button>
-              <button type="button" class="quick-chip active" data-target="monthly" data-val="3500">3.500 € (Median)</button>
-              <button type="button" class="quick-chip" data-target="monthly" data-val="4500">4.500 €</button>
-              <button type="button" class="quick-chip" data-target="monthly" data-val="6000">6.000 €</button>
-            </div>
-          </div>
 
-          <!-- Jahresgehalt -->
-          <div class="input-group" id="annualGroup" style="display:none;">
-            <label for="annual">Bruttojahresgehalt</label>
-            <div class="input-suffix">
-              <input type="number" id="annual" value="49000" placeholder="z.B. 49.000" min="0" step="500" inputmode="numeric" oninput="calculate()" />
-              <span class="suffix">€</span>
-            </div>
-            <div class="quick-chips-wrap">
-              <span class="quick-chip-label">Schnellwahl:</span>
-              <button type="button" class="quick-chip" data-target="annual" data-val="30800">30.800 €</button>
-              <button type="button" class="quick-chip" data-target="annual" data-val="39200">39.200 €</button>
-              <button type="button" class="quick-chip active" data-target="annual" data-val="49000">49.000 € (Median)</button>
-              <button type="button" class="quick-chip" data-target="annual" data-val="63000">63.000 €</button>
-              <button type="button" class="quick-chip" data-target="annual" data-val="84000">84.000 €</button>
-            </div>
-          </div>
-
-          <!-- Wochenstunden -->
-          <div class="input-group">
-            <label for="weekhours">Wochenstunden</label>
-            <select id="weekhours" onchange="calculate()">
-              <option value="40">40 Stunden (Vollzeit Standard)</option>
-              <option value="38.5" selected>38,5 Stunden (Vollzeit AT Standard)</option>
-              <option value="36">36 Stunden</option>
-              <option value="30">30 Stunden (Teilzeit)</option>
-              <option value="25">25 Stunden (Teilzeit)</option>
-              <option value="20">20 Stunden (Halbtags)</option>
-              <option value="custom">Andere...</option>
-            </select>
-          </div>
-
-          <div class="input-group" id="customHoursGroup" style="display:none;">
-            <label for="customHours">Wochenstunden (eigene Eingabe)</label>
-            <div class="input-suffix">
-              <input type="number" id="customHours" placeholder="z.B. 32" min="1" max="60" step="0.5" oninput="calculate()" />
-              <span class="suffix">Std.</span>
-            </div>
-          </div>
-
-          <!-- Sonderzahlungen -->
-          <div class="input-group">
-            <label for="sonder">13. &amp; 14. Gehalt (Urlaubs-/Weihnachtsgeld)</label>
-            <select id="sonder" onchange="calculate()">
-              <option value="yes">Ja (Standard in Österreich)</option>
-              <option value="no">Nein</option>
-            </select>
-          </div>
-
-          <!-- Zuschläge (optional, KV-abhängig) -->
-          <div style="margin-top: 8px; padding: 16px; background: var(--soft-row); border: 1px solid var(--border); border-radius: 12px;">
-            <strong style="font-size: var(--text-sm);">Zuschläge (optional)</strong>
-            <p style="font-size: var(--text-xs); color: var(--muted); margin: 6px 0 12px;">Stunden × Stundenlohn × (1 + Zuschlag%). Sätze je Kollektivvertrag — Beispiele nur zur Orientierung.</p>
-            <div class="input-row" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-              <div class="input-group" style="margin:0;">
-                <label for="hNormal">Normale Stunden</label>
-                <input type="number" id="hNormal" min="0" step="0.5" placeholder="z.B. 160" oninput="calculate()" />
+            <!-- Monatsgehalt -->
+            <div class="input-group" id="monthlyGroup">
+              <label for="monthly">Bruttomonatsgehalt</label>
+              <div class="input-suffix">
+                <input type="number" id="monthly" value="3500" placeholder="z.B. 3.500" min="0" step="50" inputmode="numeric" oninput="calculate()" />
+                <span class="suffix">€</span>
               </div>
-              <div class="input-group" style="margin:0;">
-                <label for="zNormal">Zuschlag % (Normal)</label>
-                <input type="number" id="zNormal" min="0" step="1" placeholder="0" oninput="calculate()" />
-              </div>
-              <div class="input-group" style="margin:0;">
-                <label for="hNacht">Nachtstunden</label>
-                <input type="number" id="hNacht" min="0" step="0.5" placeholder="Stunden" oninput="calculate()" />
-              </div>
-              <div class="input-group" style="margin:0;">
-                <label for="zNacht">Zuschlag % Nacht <span style="font-weight:normal;color:var(--muted);">(Beispiel KV, prüfen)</span></label>
-                <input type="number" id="zNacht" min="0" step="1" placeholder="z.B. 25" oninput="calculate()" />
-              </div>
-              <div class="input-group" style="margin:0;">
-                <label for="hSonntag">Sonntagsstunden</label>
-                <input type="number" id="hSonntag" min="0" step="0.5" placeholder="Stunden" oninput="calculate()" />
-              </div>
-              <div class="input-group" style="margin:0;">
-                <label for="zSonntag">Zuschlag % Sonntag <span style="font-weight:normal;color:var(--muted);">(Beispiel KV, prüfen)</span></label>
-                <input type="number" id="zSonntag" min="0" step="1" placeholder="z.B. 50" oninput="calculate()" />
-              </div>
-              <div class="input-group" style="margin:0;">
-                <label for="hFeiertag">Feiertagsstunden</label>
-                <input type="number" id="hFeiertag" min="0" step="0.5" placeholder="Stunden" oninput="calculate()" />
-              </div>
-              <div class="input-group" style="margin:0;">
-                <label for="zFeiertag">Zuschlag % Feiertag <span style="font-weight:normal;color:var(--muted);">(Beispiel KV, prüfen)</span></label>
-                <input type="number" id="zFeiertag" min="0" step="1" placeholder="z.B. 100" oninput="calculate()" />
-              </div>
-            </div>
-            <div id="zuschlagResult" style="display:none; margin-top:12px; padding:12px; background:var(--card); border-radius:8px; font-size:var(--text-sm);"></div>
-          </div>
-
-          <!-- Ergebnis -->
-          <div class="result-box" id="result" style="display:none;">
-            <strong style="font-size: var(--text-base); color: var(--text);">⚡ Dein Stundenlohn</strong>
-            <div class="result-grid">
-              <div class="result-card highlight">
-                <div class="label">Brutto-Stundenlohn</div>
-                <div class="value" id="resHourlyBrutto">–</div>
-                <div class="sub">pro Stunde</div>
-              </div>
-              <div class="result-card">
-                <div class="label">Netto-Stundenlohn (ca.)</div>
-                <div class="value" id="resHourlyNetto">–</div>
-                <div class="sub">Schätzwert</div>
-              </div>
-              <div class="result-card">
-                <div class="label">Monatsstunden</div>
-                <div class="value" id="resMonthHours">–</div>
-                <div class="sub">Stunden/Monat</div>
-              </div>
-              <div class="result-card">
-                <div class="label">Jahresstunden</div>
-                <div class="value" id="resYearHours">–</div>
-                <div class="sub">Stunden/Jahr</div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="monthly" data-val="2200">2.200 €</button>
+                <button type="button" class="quick-chip" data-target="monthly" data-val="2800">2.800 €</button>
+                <button type="button" class="quick-chip active" data-target="monthly" data-val="3500">3.500 € (Median)</button>
+                <button type="button" class="quick-chip" data-target="monthly" data-val="4500">4.500 €</button>
+                <button type="button" class="quick-chip" data-target="monthly" data-val="6000">6.000 €</button>
               </div>
             </div>
 
-            <div class="info-box" id="infoBox"></div>
+            <!-- Jahresgehalt -->
+            <div class="input-group" id="annualGroup" style="display:none;">
+              <label for="annual">Bruttojahresgehalt</label>
+              <div class="input-suffix">
+                <input type="number" id="annual" value="49000" placeholder="z.B. 49.000" min="0" step="500" inputmode="numeric" oninput="calculate()" />
+                <span class="suffix">€</span>
+              </div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="annual" data-val="30800">30.800 €</button>
+                <button type="button" class="quick-chip" data-target="annual" data-val="39200">39.200 €</button>
+                <button type="button" class="quick-chip active" data-target="annual" data-val="49000">49.000 € (Median)</button>
+                <button type="button" class="quick-chip" data-target="annual" data-val="63000">63.000 €</button>
+                <button type="button" class="quick-chip" data-target="annual" data-val="84000">84.000 €</button>
+              </div>
+            </div>
+
+            <!-- Wochenstunden -->
+            <div class="input-group">
+              <label for="weekhours">Wochenstunden</label>
+              <select id="weekhours" onchange="calculate()">
+                <option value="40">40 Stunden (Vollzeit Standard)</option>
+                <option value="38.5" selected>38,5 Stunden (Vollzeit AT Standard)</option>
+                <option value="36">36 Stunden</option>
+                <option value="30">30 Stunden (Teilzeit)</option>
+                <option value="25">25 Stunden (Teilzeit)</option>
+                <option value="20">20 Stunden (Halbtags)</option>
+                <option value="custom">Andere...</option>
+              </select>
+            </div>
+
+            <div class="input-group" id="customHoursGroup" style="display:none;">
+              <label for="customHours">Wochenstunden (eigene Eingabe)</label>
+              <div class="input-suffix">
+                <input type="number" id="customHours" placeholder="z.B. 32" min="1" max="60" step="0.5" oninput="calculate()" />
+                <span class="suffix">Std.</span>
+              </div>
+            </div>
+
+            <!-- Sonderzahlungen -->
+            <div class="input-group">
+              <label for="sonder">13. &amp; 14. Gehalt (Urlaubs-/Weihnachtsgeld)</label>
+              <select id="sonder" onchange="calculate()">
+                <option value="yes">Ja (Standard in Österreich)</option>
+                <option value="no">Nein</option>
+              </select>
+            </div>
+
+            <!-- Zuschläge (optional, KV-abhängig) -->
+            <details style="margin-top: 8px; padding: 12px; background: var(--soft-row); border: 1px solid var(--border); border-radius: 12px;">
+              <summary style="cursor:pointer; font-weight:600; font-size: var(--text-sm); color: var(--text);">➕ Zuschläge berechnen (optional)</summary>
+              <p style="font-size: var(--text-xs); color: var(--muted); margin: 6px 0 12px;">Stunden × Stundenlohn × (1 + Zuschlag%). Sätze je Kollektivvertrag.</p>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div class="input-group" style="margin:0;">
+                  <label for="hNormal">Normale Std.</label>
+                  <input type="number" id="hNormal" min="0" step="0.5" placeholder="z.B. 160" oninput="calculate()" />
+                </div>
+                <div class="input-group" style="margin:0;">
+                  <label for="zNormal">Zuschlag % (Normal)</label>
+                  <input type="number" id="zNormal" min="0" step="1" placeholder="0" oninput="calculate()" />
+                </div>
+                <div class="input-group" style="margin:0;">
+                  <label for="hNacht">Nacht Std.</label>
+                  <input type="number" id="hNacht" min="0" step="0.5" placeholder="Std." oninput="calculate()" />
+                </div>
+                <div class="input-group" style="margin:0;">
+                  <label for="zNacht">Zuschlag % Nacht</label>
+                  <input type="number" id="zNacht" min="0" step="1" placeholder="z.B. 25" oninput="calculate()" />
+                </div>
+                <div class="input-group" style="margin:0;">
+                  <label for="hSonntag">Sonntag Std.</label>
+                  <input type="number" id="hSonntag" min="0" step="0.5" placeholder="Std." oninput="calculate()" />
+                </div>
+                <div class="input-group" style="margin:0;">
+                  <label for="zSonntag">Zuschlag % Sonntag</label>
+                  <input type="number" id="zSonntag" min="0" step="1" placeholder="z.B. 50" oninput="calculate()" />
+                </div>
+                <div class="input-group" style="margin:0;">
+                  <label for="hFeiertag">Feiertag Std.</label>
+                  <input type="number" id="hFeiertag" min="0" step="0.5" placeholder="Std." oninput="calculate()" />
+                </div>
+                <div class="input-group" style="margin:0;">
+                  <label for="zFeiertag">Zuschlag % Feiertag</label>
+                  <input type="number" id="zFeiertag" min="0" step="1" placeholder="z.B. 100" oninput="calculate()" />
+                </div>
+              </div>
+              <div id="zuschlagResult" style="display:none; margin-top:12px; padding:12px; background:var(--card); border-radius:8px; font-size:var(--text-sm);"></div>
+            </details>
           </div>
 
-        </div><!-- /calc-body -->
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="result">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Brutto-Stundenlohn</span>
+                <div class="hero-net-val" id="resHourlyBrutto">–</div>
+                <div class="hero-net-sub">pro Arbeitsstunde</div>
+
+                <div class="sub-cards-grid">
+                  <div class="sub-net-card">
+                    <div class="label">Netto-Stundenlohn (ca.)</div>
+                    <div class="val" id="resHourlyNetto" style="color: var(--color-ink, #0f172a); font-weight:700;">–</div>
+                    <div class="desc">Schätzwert nach SV &amp; LSt</div>
+                  </div>
+                  <div class="sub-net-card">
+                    <div class="label">Monatsstunden</div>
+                    <div class="val" id="resMonthHours" style="color: var(--color-accent, #1858C7); font-weight:700;">–</div>
+                    <div class="desc">Monatsdurchschnitt</div>
+                  </div>
+                  <div class="sub-net-card">
+                    <div class="label">Jahresstunden</div>
+                    <div class="val" id="resYearHours" style="color: var(--color-ink, #0f172a); font-weight:700;">–</div>
+                    <div class="desc">Gesamt pro Jahr</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-box" id="infoBox" style="margin-top: 16px;"></div>
+            </div>
+          </div>
+        </div>
 
         <!-- FAQ -->
         <div style="padding: 24px; border-top: 1px solid var(--border);">
