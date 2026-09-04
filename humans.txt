@@ -1,5 +1,5 @@
 /* TEAM */
-Developer: Firat Bayrak
+Team: rechnify.at
 Contact: kontakt@rechnify.at
 Location: Vienna, Austria
 

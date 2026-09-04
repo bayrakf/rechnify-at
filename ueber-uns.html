@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Über uns | rechnify.at</title>
-  <meta name="description" content="Erfahre mehr über rechnify.at – Die kostenlose Plattform für Online-Rechner und nützliche Tools für Österreich." />
+  <title>Über uns | rechnify.at – Unabhängige Online-Rechner</title>
+  <meta name="description" content="Erfahre mehr über rechnify.at: Unsere Mission, Qualitätsstandards, Local-First-Datenschutz und verlässliche Rechtsgrundlagen für Österreich & Deutschland." />
+  
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Über uns | rechnify.at" />
-  <meta property="og:description" content="Erfahre mehr über rechnify.at – Die kostenlose Plattform für Online-Rechner und nützliche Tools für Österreich." />
+  <meta property="og:description" content="Verlässliche, werbefreie Online-Rechner für Finanzen, Gehalt und Arbeitszeit in Österreich und Deutschland." />
   <meta property="og:url" content="https://rechnify.at/ueber-uns.html" />
   <meta property="og:locale" content="de_AT" />
   <meta property="og:locale:alternate" content="de_DE" />
   <meta property="og:site_name" content="rechnify.at" />
-  
   <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
   <meta property="og:image:alt" content="rechnify.at Logo" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://rechnify.at/assets/images/og-share.png" />
+  
   <link rel="canonical" href="https://rechnify.at/ueber-uns.html" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/ueber-uns.html" />
@@ -32,11 +33,70 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#1858C7" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "Über rechnify.at",
+    "description": "Erfahre mehr über rechnify.at: Unsere Mission, Qualitätsstandards, Local-First-Datenschutz und verlässliche Rechtsgrundlagen für Österreich & Deutschland.",
+    "url": "https://rechnify.at/ueber-uns.html",
+    "inLanguage": "de-AT",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "rechnify.at",
+      "url": "https://rechnify.at",
+      "logo": "https://rechnify.at/assets/images/logo-72.webp",
+      "description": "Unabhängiges Online-Portal für Gehalts-, Finanz-, Arbeitszeit- und Alltagsrechner in Österreich und Deutschland."
+    }
+  }
+  </script>
+
+  <style>
+    .pillar-card {
+      background: var(--color-paper-2, #f8fafc);
+      border: 1px solid var(--color-rule, #e2e8f0);
+      border-radius: var(--radius-md, 10px);
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .pillar-card:hover {
+      border-color: var(--color-primary, #1858C7);
+      transform: translateY(-2px);
+    }
+    .pillar-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .pillar-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    .pillar-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-ink, #0f172a);
+      margin: 0;
+    }
+    .source-tag {
+      display: inline-block;
+      background: var(--color-paper, #ffffff);
+      border: 1px solid var(--color-rule, #e2e8f0);
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--color-ink-2, #334155);
+      margin-right: 6px;
+      margin-top: 6px;
+    }
+  </style>
 </head>
 <body>
 
@@ -46,11 +106,11 @@
         <picture><source srcset="/assets/images/logo-72.webp" type="image/webp" /><img src="/assets/images/logo-72.jpg" alt="rechnify Logo" width="36" height="36" decoding="async" /></picture>
         <span class="site-logo-text">rechnify<span>.at</span></span>
       </a>
-      <nav class="site-nav" id="siteNav">
+      <nav class="site-nav" id="siteNav" aria-label="Hauptnavigation">
         <a href="/">🏠 Start</a>
+        <a href="/finanzen/gehaltsrechner.html">💶 Gehalt</a>
         <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
         <a href="/ueber-uns.html" class="active">Über uns</a>
-        <a href="/kontakt.html">Kontakt</a>
       </nav>
       <div class="header-actions">
         <div class="country-toggle-group" id="countryToggleGroup">
@@ -72,40 +132,88 @@
   </nav>
 
   <main class="site-main">
-    <div class="card" style="max-width:800px; margin:24px auto;">
-      <div style="text-align: center; margin-bottom: 32px;">
-        <h1 style="font-size:var(--text-3xl); font-weight:800; color:var(--primary); margin-bottom:12px;">Über rechnify.at</h1>
-        <p class="subtitle" style="font-size:var(--text-lg); color:var(--muted); max-width:600px; margin: 0 auto;">Unsere Mission: Komplexe Rechnungen für den Alltag in Österreich so einfach und sicher wie möglich zu machen.</p>
+    <div class="card" style="max-width:840px; margin:24px auto;">
+      
+      <div style="text-align: center; margin-bottom: 36px;">
+        <span style="font-size: 2.5rem; display: inline-block; margin-bottom: 8px;">🚀</span>
+        <h1 style="font-size:var(--text-3xl); font-weight:800; color:var(--color-ink); margin-bottom:12px; letter-spacing: -0.02em;">Über rechnify.at</h1>
+        <p class="subtitle" style="font-size:1.1rem; color:var(--color-ink-2); max-width:640px; margin: 0 auto; line-height: 1.5;">
+          Schnelle, verlässliche und datenschutzkonforme Online-Rechner für Finanzen, Gehalt und Arbeitsrecht in Österreich und Deutschland.
+        </p>
       </div>
 
       <div class="content-section" style="margin-top:0;">
-        <h2>Die Idee hinter rechnify.at</h2>
-        <p>Egal ob es um das tägliche Erfassen der Arbeitszeit, das schnelle Berechnen der Mehrwertsteuer oder das Ausrechnen von Prozenten geht – fast jeder braucht im Alltag ab und zu einen Rechner, der über den Standard-Taschenrechner hinausgeht.</p>
-        <p>Oft stößt man dabei auf überladene Websites voller störender Popups, Cookie-Banner und komplizierten Formularen. Genau das wollen wir mit rechnify.at ändern.</p>
+        <h2 style="font-size:1.35rem; margin-bottom:12px;">Warum rechnify.at?</h2>
+        <p style="line-height:1.6; color:var(--color-ink-2);">
+          Wer im Alltag nach einem Gehaltsrechner, einer Kündigungsfrist oder der Pendlerpauschale sucht, landet meist auf Seiten, die von Werbebannern erdrückt werden, minutenlange Ladezeiten haben oder persönliche Daten abfragen.
+        </p>
+        <p style="line-height:1.6; color:var(--color-ink-2);">
+          <strong>rechnify.at</strong> wurde gegründet, um genau das Gegenteil zu beweisen: Rechner müssen blitzschnell laden, einfach verständlich sein und deine Privatsphäre bedingungslos respektieren. Kein Registrierungszwang, keine Tracking-Wüsten, keine Cookie-Schranken.
+        </p>
 
-        <h3 style="margin-top:32px;">Unsere Prinzipien</h3>
-        <ul style="list-style-type: none; padding-left: 0;">
-          <li style="margin-bottom: 16px;">
-            <strong>🔒 100% Datenschutz:</strong> Wir speichern deine Daten nicht. Alle Berechnungen laufen lokal in deinem eigenen Browser ab. Kein Server erfährt jemals, wie lange du arbeitest oder welches Gehalt du berechnest.
-          </li>
-          <li style="margin-bottom: 16px;">
-            <strong>⚡ Schnell & Einfach:</strong> Kein Login, keine Registrierung, keine Newsletter-Popups. Seite öffnen und direkt lostippen.
-          </li>
-          <li style="margin-bottom: 16px;">
-            <strong>🇦🇹🇩🇪 Fokus Österreich & Deutschland:</strong> Wo es nötig ist (z.B. bei der MwSt., Steuern oder dem Urlaubsgesetz), sind unsere Tools speziell auf das österreichische und deutsche Recht zugeschnitten.
-          </li>
-          <li style="margin-bottom: 16px;">
-            <strong>🌙 Modernes Design:</strong> Klar, aufgeräumt und natürlich mit Dark Mode für die Nachtschwärmer.
-          </li>
-        </ul>
+        <h2 style="font-size:1.35rem; margin-top:36px; margin-bottom:16px;">Unsere 4 Kernprinzipien</h2>
 
-        <h3 style="margin-top:32px;">Wie finanziert sich rechnify.at?</h3>
-        <p>Derzeit betreiben wir diese Plattform komplett aus eigener Tasche. Zukünftig planen wir, die Serverkosten durch dezente, unaufdringliche Werbeanzeigen oder Empfehlungslinks (Affiliate) zu passender Software (wie z.B. professionellen Zeiterfassungstools für Unternehmen) zu decken. Unser Fokus bleibt dabei aber immer auf einer hervorragenden Nutzererfahrung.</p>
-
-        <div style="text-align: center; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border);">
-          <p style="margin-bottom: 16px;">Hast du eine Idee für einen neuen Rechner oder Feedback zu einem bestehenden Tool?</p>
-          <a href="/kontakt.html" class="btn">Schreib uns eine Nachricht</a>
+        <div class="pillar-card">
+          <div class="pillar-header">
+            <span class="pillar-icon">🔒</span>
+            <h3 class="pillar-title">100% Local-First & Datenschutz</h3>
+          </div>
+          <p style="margin:0; font-size:0.92rem; color:var(--color-ink-2); line-height:1.5;">
+            Deine Gehalts- und Arbeitszeitdaten gehören ausschließlich dir. Sämtliche mathematischen Berechnungen finden <strong>zu 100% lokal in deinem eigenen Browser</strong> statt (Client-Side). Kein Server speichert jemals dein Einkommen, deine Arbeitszeiten oder deine Steuerabzüge.
+          </p>
         </div>
+
+        <div class="pillar-card">
+          <div class="pillar-header">
+            <span class="pillar-icon">⚡</span>
+            <h3 class="pillar-title">Modernes Cockpit-Design & High Performance</h3>
+          </div>
+          <p style="margin:0; font-size:0.92rem; color:var(--color-ink-2); line-height:1.5;">
+            Schluss mit endlosem Scrollen: Unsere Rechner nutzen ein 2-Spalten-Cockpit (Eingaben links, Ergebnisse & Grafiken sofort rechts). Ohne schwere JavaScript-Frameworks optimiert – für Ladezeiten unter 50 Millisekunden auf Desktop und Smartphone.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-header">
+            <span class="pillar-icon">⚖️</span>
+            <h3 class="pillar-title">Präzise gesetzliche Grundlagen (2026)</h3>
+          </div>
+          <p style="margin:0 0 10px; font-size:0.92rem; color:var(--color-ink-2); line-height:1.5;">
+            Alle steuerlichen und arbeitsrechtlichen Berechnungen basieren auf den aktuellen Gesetzesständen und Verordnungen:
+          </p>
+          <div>
+            <span class="source-tag">🇦🇹 EStG 1988 (Steuertarife 2026)</span>
+            <span class="source-tag">🇦🇹 AngG § 20 & ABGB § 1159</span>
+            <span class="source-tag">🇦🇹 AZG (Arbeitszeitgesetz)</span>
+            <span class="source-tag">🇦🇹 BMF & RIS Verordnungen</span>
+            <span class="source-tag">🇩🇪 BGB § 622 (Kündigungsrecht)</span>
+            <span class="source-tag">🇩🇪 BUrlG & EStG (DE)</span>
+          </div>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-header">
+            <span class="pillar-icon">🎯</span>
+            <h3 class="pillar-title">Österreich & Deutschland klar getrennt</h3>
+          </div>
+          <p style="margin:0; font-size:0.92rem; color:var(--color-ink-2); line-height:1.5;">
+            Österreichische Spezifika wie das 13. und 14. Gehalt (Urlaubs- und Weihnachtsgeld), die Pendlerpauschale samt Pendlereuro, der Familienbonus Plus oder die § 68 Überstundenbefreiung unterscheiden sich grundlegend von den deutschen Regelungen. Auf rechnify.at ist jedes Tool präzise für den jeweiligen Rechtsraum aufgebaut.
+          </p>
+        </div>
+
+        <h2 style="font-size:1.35rem; margin-top:36px; margin-bottom:12px;">Qualitätssicherung & Transparenz</h2>
+        <p style="line-height:1.6; color:var(--color-ink-2);">
+          Gesetze, Steuertarife und Sozialversicherungsbeiträge ändern sich regelmäßig (wie die jährliche Valorisierung der Grenzbeträge und die Abschaffung der kalten Progression). Unsere Berechnungsmodelle werden bei jeder gesetzlichen Neuerung aktualisiert und fortlaufend gegen offizielle Prüfinstanzen (wie den BMF-Brutto-Netto-Rechner) abgeglichen.
+        </p>
+
+        <div style="background:var(--color-paper-2); border:1px solid var(--color-rule); border-radius:12px; padding:24px; text-align:center; margin-top:36px;">
+          <h3 style="margin:0 0 8px; font-size:1.15rem; color:var(--color-ink);">Feedback, Fehler gefunden oder Rechner-Wunsch?</h3>
+          <p style="margin:0 0 16px; font-size:0.92rem; color:var(--color-ink-2);">
+            Wir entwickeln rechnify.at stetig weiter. Wenn dir ein Rechner fehlt oder du eine Frage zu einer Berechnung hast, erreichst du uns direkt:
+          </p>
+          <a href="mailto:kontakt@rechnify.at" class="btn" style="display:inline-block; text-decoration:none; padding:10px 20px;">✉️ kontakt@rechnify.at</a>
+        </div>
+
       </div>
     </div>
   </main>
@@ -114,7 +222,7 @@
     <div class="footer-inner">
       <div class="footer-bottom">
         <span class="footer-copy">© 2026 rechnify.at</span>
-        <nav class="footer-legal-links">
+        <nav class="footer-legal-links" aria-label="Rechtliche Links">
           <a href="/impressum.html">Impressum</a>
           <a href="/datenschutz.html">Datenschutzerklärung</a>
         </nav>
