@@ -29,6 +29,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" />
 
   <style>
     .calc-body { padding: 24px; }
@@ -127,21 +128,35 @@
       <div class="calc-body">
         
         <div class="input-row">
-          <div class="input-group">
+          <div class="input-group" style="margin-bottom:12px;">
             <label for="brutto">Aktuelles Bruttogehalt (€ / Monat)</label>
-            <input type="number" id="brutto" min="0" step="100" placeholder="z. B. 3500" value="3500" />
+            <input type="number" id="brutto" inputmode="numeric" min="0" step="50" placeholder="z. B. 4100" value="4100" />
+          </div>
+          <div class="quick-chips-wrap">
+            <span class="quick-chip-label">Brutto:</span>
+            <button type="button" class="quick-chip" data-brutto="2800">2.800 €</button>
+            <button type="button" class="quick-chip active" data-brutto="4100">4.100 € (Median)</button>
+            <button type="button" class="quick-chip" data-brutto="5200">5.200 €</button>
+            <button type="button" class="quick-chip" data-brutto="6500">6.500 €</button>
           </div>
         </div>
         
         <div class="input-row">
           <div class="input-group">
             <label for="stunden_alt">Bisherige Wochenstunden</label>
-            <input type="number" id="stunden_alt" min="1" max="60" step="0.5" placeholder="z. B. 38.5" value="38.5" />
+            <input type="number" id="stunden_alt" inputmode="decimal" min="1" max="60" step="0.5" placeholder="z. B. 40" value="40" />
           </div>
           
           <div class="input-group">
             <label for="stunden_neu">Neue Wochenstunden (Teilzeit)</label>
-            <input type="number" id="stunden_neu" min="1" max="60" step="0.5" placeholder="z. B. 30" value="30" />
+            <input type="number" id="stunden_neu" inputmode="decimal" min="1" max="60" step="0.5" placeholder="z. B. 32" value="32" />
+            <div class="quick-chips-wrap" style="margin-top:8px; margin-bottom:0;">
+              <span class="quick-chip-label">Ziel:</span>
+              <button type="button" class="quick-chip active" data-hours="32">32h (4-Tage)</button>
+              <button type="button" class="quick-chip" data-hours="30">30h</button>
+              <button type="button" class="quick-chip" data-hours="25">25h</button>
+              <button type="button" class="quick-chip" data-hours="20">20h (Halbtags)</button>
+            </div>
           </div>
         </div>
 
@@ -294,6 +309,26 @@
         
         document.getElementById('resFazit').innerHTML = fazit;
       };
+
+      // Quick Brutto chips
+      document.querySelectorAll('[data-brutto]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('[data-brutto]').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          bruttoIn.value = btn.dataset.brutto;
+          calculate();
+        });
+      });
+
+      // Quick Hours chips
+      document.querySelectorAll('[data-hours]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('[data-hours]').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          stdNeuIn.value = btn.dataset.hours;
+          calculate();
+        });
+      });
 
       [bruttoIn, stdAltIn, stdNeuIn].forEach(el => el.addEventListener('input', calculate));
       if (document.getElementById('hasSonder')) document.getElementById('hasSonder').addEventListener('change', calculate);

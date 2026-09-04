@@ -191,9 +191,18 @@
           <div class="input-group">
             <label for="grossMonthly" id="grossMonthlyLabel">Bruttogehalt (pro Monat)</label>
             <div class="input-suffix">
-              <input type="number" id="grossMonthly" placeholder="z.B. 4000" min="0" step="100">
+              <input type="number" id="grossMonthly" inputmode="numeric" placeholder="z.B. 4100" min="0" step="50" value="4100">
               <span class="suffix">€</span>
             </div>
+          </div>
+
+          <div class="quick-chips-wrap">
+            <span class="quick-chip-label">Schnellwahl:</span>
+            <button type="button" class="quick-chip" data-val="2500">2.500 €</button>
+            <button type="button" class="quick-chip" data-val="3200">3.200 €</button>
+            <button type="button" class="quick-chip active" data-val="4100">4.100 € (Median)</button>
+            <button type="button" class="quick-chip" data-val="5200">5.200 €</button>
+            <button type="button" class="quick-chip" data-val="7000">7.000 €</button>
           </div>
 
           <div class="input-group">
@@ -223,14 +232,14 @@
               <div class="input-group" style="margin: 0;">
                 <label for="hoursCurrent">Aktuelle Stunden</label>
                 <div class="input-suffix">
-                  <input type="number" id="hoursCurrent" value="40" min="1" max="60">
+                  <input type="number" id="hoursCurrent" inputmode="numeric" value="40" min="1" max="60">
                   <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
                 </div>
               </div>
               <div class="input-group" style="margin: 0;">
                 <label for="hoursTarget">Ziel-Stunden</label>
                 <div class="input-suffix">
-                  <input type="number" id="hoursTarget" value="32" min="1" max="60">
+                  <input type="number" id="hoursTarget" inputmode="numeric" value="32" min="1" max="60">
                   <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
                 </div>
               </div>
@@ -258,6 +267,21 @@
                 <div class="text-sm text-muted">Abzüge pro Monat</div>
                 <div class="big-number text-danger" id="resDeductionsMonthly" style="color: var(--danger);">-- €</div>
                 <div class="sub-number">Steuer & Sozialabgaben</div>
+              </div>
+            </div>
+
+            <!-- Gehaltserhöhungs-Schnellrechner -->
+            <div class="raise-box">
+              <div class="raise-box-header">
+                <span class="raise-box-title">💼 Gehaltserhöhung: Was bleibt dir netto?</span>
+                <div style="display: flex; gap: 6px;">
+                  <button type="button" class="quick-chip raise-chip" data-raise="200">+200 €</button>
+                  <button type="button" class="quick-chip raise-chip" data-raise="400">+400 €</button>
+                  <button type="button" class="quick-chip raise-chip" data-raise="600">+600 €</button>
+                </div>
+              </div>
+              <div id="raisePreviewText" class="raise-box-desc">
+                Tippe auf einen Betrag, um sofort zu sehen, wie viel Netto dir nach Lohnsteuer &amp; Sozialabgaben bleibt.
               </div>
             </div>
 
@@ -625,8 +649,40 @@
         const el = document.getElementById(id);
         if (el) el.addEventListener('change', () => calcBtn.click());
       });
-      const gross = document.getElementById('grossMonthly');
-      if (gross && gross.value) calcBtn.click();
+
+      // Quick salary chips
+      document.querySelectorAll('.quick-chips-wrap .quick-chip[data-val]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.quick-chips-wrap .quick-chip').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const grossInput = document.getElementById('grossMonthly');
+          if (grossInput) {
+            grossInput.value = btn.dataset.val;
+            calcBtn.click();
+          }
+        });
+      });
+
+      // Raise simulator chips
+      document.querySelectorAll('.raise-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const raise = parseFloat(btn.dataset.raise) || 0;
+          const currentGross = parseFloat(document.getElementById('grossMonthly').value) || 0;
+          if (currentGross <= 0 || raise <= 0) return;
+
+          const resOld = calcTaxesDE(currentGross);
+          const resNew = calcTaxesDE(currentGross + raise);
+          const netMonthlyDiff = resNew.netMonthly - resOld.netMonthly;
+          const netYearDiff = (resNew.netMonthly * 12) - (resOld.netMonthly * 12);
+
+          const preview = document.getElementById('raisePreviewText');
+          if (preview) {
+            preview.innerHTML = `Bei <strong>+${raise} € Brutto</strong> mehr erhältst du jeden Monat <strong>+${netMonthlyDiff.toLocaleString('de-DE', { maximumFractionDigits: 0 })} € Netto</strong> zusätzlich aufs Konto. Aufs Jahr gerechnet sind das <strong>+${netYearDiff.toLocaleString('de-DE', { maximumFractionDigits: 0 })} € Netto</strong>.`;
+          }
+        });
+      });
+
+      calcBtn.click();
     })();
   </script>
 </body>

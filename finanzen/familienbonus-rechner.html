@@ -33,6 +33,7 @@
   <meta name="theme-color" content="#1858C7" />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" />
 
   <style>
     .calc-body { padding: 24px; }
@@ -75,12 +76,25 @@
         <div class="calc-body">
           <div class="input-group">
             <label for="kidsUnder18">Anzahl Kinder unter 18 (volles Jahr)</label>
-            <input type="number" id="kidsUnder18" placeholder="z.B. 1" min="0" value="0">
+            <input type="number" id="kidsUnder18" placeholder="z.B. 1" min="0" value="1" inputmode="numeric">
+            <div class="quick-chips-wrap">
+              <span class="quick-chip-label">Schnellwahl:</span>
+              <button type="button" class="quick-chip" data-target="kidsUnder18" data-val="0">0 Kinder</button>
+              <button type="button" class="quick-chip active" data-target="kidsUnder18" data-val="1">1 Kind (2.000 €)</button>
+              <button type="button" class="quick-chip" data-target="kidsUnder18" data-val="2">2 Kinder (4.000 €)</button>
+              <button type="button" class="quick-chip" data-target="kidsUnder18" data-val="3">3 Kinder (6.000 €)</button>
+            </div>
           </div>
 
           <div class="input-group">
             <label for="kidsOver18">Anzahl Kinder über 18 (volles Jahr, mit Familienbeihilfe)</label>
-            <input type="number" id="kidsOver18" placeholder="z.B. 0" min="0" value="0">
+            <input type="number" id="kidsOver18" placeholder="z.B. 0" min="0" value="0" inputmode="numeric">
+            <div class="quick-chips-wrap">
+              <span class="quick-chip-label">Schnellwahl:</span>
+              <button type="button" class="quick-chip active" data-target="kidsOver18" data-val="0">0</button>
+              <button type="button" class="quick-chip" data-target="kidsOver18" data-val="1">1 Kind (650 €)</button>
+              <button type="button" class="quick-chip" data-target="kidsOver18" data-val="2">2 Kinder (1.300 €)</button>
+            </div>
           </div>
 
           <div class="input-group">
@@ -109,9 +123,7 @@
             </label>
           </div>
 
-          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Berechnen</button>
-
-          <div id="result" class="result-box hidden">
+          <div id="result" class="result-box">
             <div class="text-sm text-muted">Steuerersparnis pro Jahr</div>
             <div class="big-number text-success" id="resYearly">-- €</div>
             <div class="sub-number" id="resMonthly">-- € pro Monat (Ø)</div>
@@ -183,7 +195,7 @@
   <script src="/assets/js/core.js?v=3.1"></script>
   <script>
     'use strict';
-    document.getElementById('calculate').addEventListener('click', () => {
+    function calcBonus() {
       const u18 = parseInt(document.getElementById('kidsUnder18').value) || 0;
       const o18 = parseInt(document.getElementById('kidsOver18').value) || 0;
       const newbornMonth = parseInt(document.getElementById('newbornMonth').value) || 0;
@@ -240,9 +252,30 @@
       } else {
         bdNewborn.style.display = 'none';
       }
-      
-      document.getElementById('result').classList.remove('hidden');
+    }
+
+    ['kidsUnder18', 'kidsOver18'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calcBonus);
     });
+    ['newbornMonth', 'splitPartners'].forEach(id => {
+      document.getElementById(id).addEventListener('change', calcBonus);
+    });
+
+    document.querySelectorAll('.quick-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const targetId = chip.dataset.target;
+        const val = chip.dataset.val;
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        input.value = val;
+        chip.parentElement.querySelectorAll('.quick-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        calcBonus();
+      });
+    });
+
+    window.addEventListener('DOMContentLoaded', calcBonus);
+    calcBonus();
   </script>
 </body>
 </html>

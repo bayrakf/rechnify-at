@@ -33,8 +33,9 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#1858C7" />
-    <link rel="stylesheet" href="/tokens.css?v=1.2" />
+  <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" />
 
   <style>
     .calc-body { padding: 24px; }
@@ -132,15 +133,29 @@
             <div class="input-group">
               <label for="purchasePrice">Anschaffungskosten (Kaufpreis)</label>
               <div class="input-suffix">
-                <input type="number" id="purchasePrice" value="5000" min="0" step="100">
+                <input type="number" id="purchasePrice" value="5000" min="0" step="100" inputmode="numeric">
                 <span class="suffix">€</span>
+              </div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="purchasePrice" data-val="1000">1.000 €</button>
+                <button type="button" class="quick-chip" data-target="purchasePrice" data-val="2500">2.500 €</button>
+                <button type="button" class="quick-chip active" data-target="purchasePrice" data-val="5000">5.000 €</button>
+                <button type="button" class="quick-chip" data-target="purchasePrice" data-val="10000">10.000 €</button>
               </div>
             </div>
             <div class="input-group">
               <label for="sellPrice">Veräußerungserlös (Verkaufspreis)</label>
               <div class="input-suffix">
-                <input type="number" id="sellPrice" value="8000" min="0" step="100">
+                <input type="number" id="sellPrice" value="8000" min="0" step="100" inputmode="numeric">
                 <span class="suffix">€</span>
+              </div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="sellPrice" data-val="3000">3.000 €</button>
+                <button type="button" class="quick-chip active" data-target="sellPrice" data-val="8000">8.000 €</button>
+                <button type="button" class="quick-chip" data-target="sellPrice" data-val="15000">15.000 €</button>
+                <button type="button" class="quick-chip" data-target="sellPrice" data-val="25000">25.000 €</button>
               </div>
             </div>
           </div>
@@ -153,9 +168,7 @@
             </select>
           </div>
 
-          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Steuer berechnen</button>
-
-          <div id="result" class="result-box hidden">
+          <div id="result" class="result-box">
             <h3>Berechnungsergebnis</h3>
             
             <div class="input-row">
@@ -244,7 +257,7 @@
   <script>
     'use strict';
 
-    document.getElementById('calculate').addEventListener('click', () => {
+    function calculateKrypto() {
       const purchase = parseFloat(document.getElementById('purchasePrice').value) || 0;
       const sell = parseFloat(document.getElementById('sellPrice').value) || 0;
       const isNew = document.getElementById('assetAge').value === 'neu';
@@ -274,9 +287,28 @@
       } else {
         document.getElementById('altbestandInfo').innerHTML = '';
       }
+    }
 
-      document.getElementById('result').classList.remove('hidden');
+    ['purchasePrice', 'sellPrice'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calculateKrypto);
     });
+    document.getElementById('assetAge').addEventListener('change', calculateKrypto);
+
+    document.querySelectorAll('.quick-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const targetId = chip.dataset.target;
+        const val = chip.dataset.val;
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        input.value = val;
+        chip.parentElement.querySelectorAll('.quick-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        calculateKrypto();
+      });
+    });
+
+    window.addEventListener('DOMContentLoaded', calculateKrypto);
+    calculateKrypto();
   </script>
 </body>
 </html>

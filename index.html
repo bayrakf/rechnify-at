@@ -584,11 +584,19 @@
     <h1 class="hero-h1">Präzisionsrechner für Österreich und Deutschland</h1>
     <p class="hero-sub">Brutto-Netto, Überstunden, MwSt und mehr — lokal im Browser, ohne Datenweitergabe.</p>
     <div class="hero-btns">
-      <button type="button" class="btn-p" id="heroAt">Österreich wählen</button>
-      <button type="button" class="btn-s" id="heroDe">Deutschland wählen</button>
+      <a href="/finanzen/gehaltsrechner.html" class="btn-p" id="heroAt">🚀 Brutto-Netto Rechner 2026</a>
+      <a href="/de/finanzen/gehaltsrechner.html" class="btn-s" id="heroDe">🇩🇪 Gehaltsrechner DE</a>
+    </div>
+    <div class="quick-chips-wrap" style="margin-top: 24px; justify-content: center; max-width: 650px;">
+      <a href="/finanzen/gehaltsrechner.html" class="quick-chip">💰 Brutto-Netto AT</a>
+      <a href="/arbeitszeit/teilzeitrechner.html" class="quick-chip">⚖️ Teilzeit</a>
+      <a href="/arbeitszeit/stundenlohn-rechner.html" class="quick-chip">⏱️ Stundenlohn</a>
+      <a href="/arbeitszeit/ueberstundenrechner.html" class="quick-chip">💼 Überstunden</a>
+      <a href="/finanzen/pendlerrechner.html" class="quick-chip">🚗 Pendler</a>
+      <a href="/finanzen/kryptosteuerrechner.html" class="quick-chip">📈 Krypto</a>
     </div>
     <div class="scroll-hint" aria-hidden="true">
-      <span>Entdecken</span>
+      <span>Alle 50+ Rechner</span>
       <span>↓</span>
     </div>
   </section>
@@ -1184,13 +1192,8 @@
       }
     });
 
-    function pickCountryAndScroll(c) {
-      setCountry(c, true);
-      const target = document.getElementById('finanzen') || document.getElementById('main-content');
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    document.getElementById('heroAt')?.addEventListener('click', () => pickCountryAndScroll('at'));
-    document.getElementById('heroDe')?.addEventListener('click', () => pickCountryAndScroll('de'));
+    document.getElementById('heroAt')?.addEventListener('click', () => setCountry('at', true));
+    document.getElementById('heroDe')?.addEventListener('click', () => setCountry('de', true));
 
     /* ── Sticky sidebar: active category on scroll ─────────────────── */
     const sections = document.querySelectorAll('.category-section');

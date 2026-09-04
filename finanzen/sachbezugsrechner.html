@@ -37,6 +37,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" />
 
   <style>
     .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
@@ -113,8 +114,15 @@
           <div class="input-group" id="priceGroup">
             <label for="carPrice">Tatsächliche Anschaffungskosten (inkl. USt &amp; NoVA)</label>
             <div class="input-suffix">
-              <input type="number" id="carPrice" placeholder="z.B. 45000" min="0" step="1000" oninput="calculate()" />
+              <input type="number" id="carPrice" value="45000" placeholder="z.B. 45000" min="0" step="1000" inputmode="numeric" oninput="calculate()" />
               <span class="suffix">€</span>
+            </div>
+            <div class="quick-chips-wrap">
+              <span class="quick-chip-label">Schnellwahl:</span>
+              <button type="button" class="quick-chip" data-target="carPrice" data-val="30000">30.000 €</button>
+              <button type="button" class="quick-chip active" data-target="carPrice" data-val="45000">45.000 € (Mittelklasse)</button>
+              <button type="button" class="quick-chip" data-target="carPrice" data-val="60000">60.000 €</button>
+              <button type="button" class="quick-chip" data-target="carPrice" data-val="80000">80.000 €</button>
             </div>
           </div>
 
@@ -318,6 +326,19 @@
 
     // Init fields
     toggleCarFields();
+
+    document.querySelectorAll('.quick-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const targetId = chip.dataset.target;
+        const val = chip.dataset.val;
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        input.value = val;
+        chip.parentElement.querySelectorAll('.quick-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        calculate();
+      });
+    });
   </script>
 
 </body>

@@ -37,6 +37,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.0" />
+  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" />
 
   <style>
     .calc-body { padding: 24px; }
@@ -143,19 +145,39 @@
         <div class="input-row">
           <div class="input-group">
             <label for="hours">Anzahl der Überstunden</label>
-            <input type="number" id="hours" min="0" step="0.5" placeholder="z. B. 10" value="10" />
+            <input type="number" id="hours" min="0" step="0.5" placeholder="z. B. 10" value="10" inputmode="decimal" />
+            <div class="quick-chips-wrap">
+              <span class="quick-chip-label">Schnellwahl:</span>
+              <button type="button" class="quick-chip" data-target="hours" data-val="5">5 h</button>
+              <button type="button" class="quick-chip active" data-target="hours" data-val="10">10 h</button>
+              <button type="button" class="quick-chip" data-target="hours" data-val="15">15 h</button>
+              <button type="button" class="quick-chip" data-target="hours" data-val="20">20 h</button>
+            </div>
           </div>
           
           <div class="input-group">
             <label for="wage">Brutto-Stundenlohn (€)</label>
-            <input type="number" id="wage" min="0" step="0.1" placeholder="z. B. 20.50" value="20" />
+            <input type="number" id="wage" min="0" step="0.1" placeholder="z. B. 20.50" value="20" inputmode="decimal" />
+            <div class="quick-chips-wrap">
+              <span class="quick-chip-label">Schnellwahl:</span>
+              <button type="button" class="quick-chip" data-target="wage" data-val="16">16 €</button>
+              <button type="button" class="quick-chip active" data-target="wage" data-val="20">20 €</button>
+              <button type="button" class="quick-chip" data-target="wage" data-val="25">25 €</button>
+              <button type="button" class="quick-chip" data-target="wage" data-val="32">32 €</button>
+            </div>
             <div class="text-muted text-xs mt-4">Tipp: Bruttogehalt ÷ 173 = ungefährer Stundenlohn (bei 40h-Woche)</div>
           </div>
         </div>
 
         <div class="input-group">
           <label for="surcharge">Vertraglicher Zuschlag (%)</label>
-          <input type="number" id="surcharge" min="0" max="200" step="1" value="0" />
+          <input type="number" id="surcharge" min="0" max="200" step="1" value="0" inputmode="numeric" />
+          <div class="quick-chips-wrap">
+            <span class="quick-chip-label">Schnellwahl:</span>
+            <button type="button" class="quick-chip active" data-target="surcharge" data-val="0">0% (Standard)</button>
+            <button type="button" class="quick-chip" data-target="surcharge" data-val="25">25% (Tarif)</button>
+            <button type="button" class="quick-chip" data-target="surcharge" data-val="50">50%</button>
+          </div>
           <div class="text-muted text-xs mt-4">In DE gibt es meist keinen gesetzlichen Zuschlag. Trage hier ein, was im Arbeits- oder Tarifvertrag steht (z.B. 25%).</div>
         </div>
         
@@ -370,6 +392,19 @@
       wageInput.addEventListener('input', calculate);
       calcModeSelect.addEventListener('change', calculate);
       surchargeInput.addEventListener('input', calculate);
+
+      document.querySelectorAll('.quick-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const targetId = chip.dataset.target;
+          const val = chip.dataset.val;
+          const input = document.getElementById(targetId);
+          if (!input) return;
+          input.value = val;
+          chip.parentElement.querySelectorAll('.quick-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          calculate();
+        });
+      });
 
       // Initial calc
       calculate();
