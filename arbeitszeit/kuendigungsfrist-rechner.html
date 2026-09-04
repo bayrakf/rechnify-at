@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kündigungsfrist Rechner Österreich 2026 | rechnify.at</title>
-  <meta name="description" content="Gesetzliche Mindestfristen nach AngG §20 / ABGB-Angleichung. KV/Vertrag können abweichen." />
+  <meta name="description" content="Gesetzliche Kündigungsfrist für Österreich nach AngG § 20 & ABGB § 1159 berechnen. Exakter Austrittstermin, Fristenstaffel für AG & AN sowie Postensuchtage." />
   <link rel="canonical" href="https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html" />
   <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html" />
   <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/kuendigungsfrist-rechner.html" />
@@ -12,8 +12,8 @@
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Kündigungsfrist Rechner Österreich 2026" />
-  <meta property="og:description" content="Gesetzliche Mindestfristen nach AngG §20 / ABGB-Angleichung. KV/Vertrag können abweichen." />
+  <meta property="og:title" content="Kündigungsfrist Rechner Österreich 2026 | rechnify.at" />
+  <meta property="og:description" content="Gesetzliche Kündigungsfristen nach AngG § 20 / ABGB § 1159 berechnen. Austrittsdatum, Fristenstaffel & Postensuchtage im Überblick." />
   <meta property="og:url" content="https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html" />
   <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
   <meta property="og:locale" content="de_AT" />
@@ -23,67 +23,456 @@
   <meta name="theme-color" content="#1858C7" />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+
   <style>
-    .calc-body{padding:24px}
-    .input-group{margin-bottom:16px}
-    .input-group label{display:block;margin-bottom:6px;font-weight:600}
-    .input-group input,.input-group select{width:100%;padding:12px;border:1px solid var(--color-rule);border-radius:10px;background:var(--color-paper);color:var(--color-ink);font-size:16px}
-    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    @media(max-width:600px){.input-row{grid-template-columns:1fr}}
-    .result-box{margin-top:20px;padding:20px;border:1px solid var(--color-rule);border-radius:12px;background:var(--color-paper-2)}
-    .result-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-rule)}
-    .result-item:last-child{border-bottom:0}
-    .result-item.highlight{font-weight:700;font-size:1.15em;color:var(--color-primary)}
-    .help{font-size:.9rem;color:var(--color-ink-3);margin-top:12px}
-    .ext-links a{margin-right:12px}
+    .quick-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .quick-chip {
+      background: var(--color-paper-2, #f8fafc);
+      border: 1px solid var(--color-rule, #e2e8f0);
+      border-radius: var(--radius-sm, 6px);
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--color-ink-2, #334155);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .quick-chip:hover {
+      border-color: var(--color-primary, #1858C7);
+      color: var(--color-primary, #1858C7);
+      background: color-mix(in oklch, var(--color-primary, #1858C7) 8%, transparent);
+    }
+    .quick-chip.active {
+      background: var(--color-primary, #1858C7);
+      color: #fff;
+      border-color: var(--color-primary, #1858C7);
+    }
+    .tier-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-top: 12px;
+    }
+    .tier-table th, .tier-table td {
+      padding: 9px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--color-rule, #e2e8f0);
+    }
+    .tier-table th {
+      background: var(--color-paper-2, #f8fafc);
+      font-weight: 700;
+      color: var(--color-ink, #0f172a);
+    }
+    .tier-table tr.active-row {
+      background: color-mix(in oklch, var(--color-success, #166534) 10%, var(--color-paper, #ffffff));
+      font-weight: 700;
+      color: var(--color-success, #166534);
+    }
+    .info-callout {
+      background: var(--color-paper-2, #f8fafc);
+      border: 1px solid var(--color-rule, #e2e8f0);
+      border-left: 4px solid var(--color-primary, #1858C7);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--color-ink-2, #334155);
+      margin-top: 16px;
+    }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Kündigungsfrist Rechner Österreich 2026",
+    "description": "Gesetzliche Kündigungsfristen nach AngG § 20 & ABGB § 1159 berechnen. Exakter Austrittstermin, Fristenstaffel für AG & AN sowie Postensuchtage.",
+    "url": "https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-AT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Welche Kündigungsfrist gilt bei Kündigung durch den Arbeitgeber in Österreich?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Die gesetzliche Frist richtet sich nach den vollendeten Dienstjahren: 6 Wochen (1.–2. Dienstjahr), 2 Monate (ab 3. Dienstjahr), 3 Monate (ab 6. Dienstjahr), 4 Monate (ab 16. Dienstjahr) und 5 Monate (ab 26. Dienstjahr). Kündigungstermin ist gesetzlich das Kalendervierteljahr, sofern im Vertrag nicht der 15. oder das Monatsende vereinbart wurde."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Welche Kündigungsfrist gilt bei Kündigung durch den Arbeitnehmer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Für Arbeitnehmer gilt gesetzlich eine Frist von einem Monat zum Letzten eines Kalendermonats (§ 20 Abs. 4 AngG). Diese Frist kann vertraglich auf bis zu 6 Monate verlängert werden, darf aber nie länger sein als die Frist für den Arbeitgeber."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Was sind Postensuchtage in Österreich?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Wird das Dienstverhältnis durch den Arbeitgeber gekündigt, steht dem Arbeitnehmer während der Kündigungsfrist auf Verlangen wöchentlich ein Fünftel der regelmäßigen wöchentlichen Arbeitszeit (z. B. 1 ganzer Arbeitstag bei einer 5-Tage-Woche) als bezahlte Freizeit zur Arbeitssuche zu (§ 22 AngG)."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
-  <header class="site-header"><div class="header-inner">
-    <a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a>
-  </div></header>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <picture><source srcset="/assets/images/logo-72.webp" type="image/webp" /><img src="/assets/images/logo-72.jpg" alt="rechnify Logo" width="36" height="36" decoding="async" /></picture>
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/finanzen/gehaltsrechner.html">💶 Gehalt</a>
+        <a href="/arbeitszeit/kommen-gehen-rechner.html" class="active">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
+          <a href="/de/arbeitszeit/kuendigungsfrist-rechner.html" class="country-pill" style="text-decoration:none;" title="Deutschland">🇩🇪 DE</a>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/arbeitszeit/">Arbeitszeit</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Kündigungsfrist Rechner Österreich</span>
+  </nav>
+
   <main class="site-main">
-    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Kündigungsfrist Rechner Österreich</h1>
-    <p class="subtitle">Gesetzliche Mindestfristen nach AngG §20 / ABGB-Angleichung. KV/Vertrag können abweichen.</p></div>
-    <div class="card"><div class="calc-body">
-
-        <div class="input-row">
-          <div class="input-group"><label for="who">Wer kündigt?</label>
-            <select id="who"><option value="ag">Arbeitgeber</option><option value="an">Arbeitnehmer</option></select></div>
-          <div class="input-group"><label for="jahre">Vollendete Dienstjahre</label>
-            <input type="number" id="jahre" min="0" max="45" value="4" /></div>
-        </div>
-        <div class="result-box" id="resultBox">
-          <div class="result-item highlight"><span>Gesetzliche Frist</span><span id="res">—</span></div>
-          <div class="result-item"><span>Hinweis Termin</span><span id="term">—</span></div>
-          <p class="help">AG (AngG §20 Abs. 2): 6 Wochen (1.–2. DJ), 2 Monate (ab 3.), 3 Monate (ab 6.), 4 Monate (ab 16.), 5 Monate (ab 26.); typisch zum <strong>Kalendervierteljahr</strong>, sofern nichts anderes vereinbart (§20 Abs. 3: 15. oder Monatsende möglich). AN: 1 Monat zum Monatsende (§20 Abs. 4), vertraglich verlängerbar. Arbeiter:innen seit Angleichung ähnliche Mindestfristen — KV kann abweichen. <a href="https://www.wko.at/arbeitsrecht/kuendigungsfristen" rel="noopener" target="_blank">WKO</a>, <a href="https://www.ris.bka.gv.at/" rel="noopener" target="_blank">RIS AngG §20</a>.</p>
-        </div>
-        <script>
-        document.addEventListener('DOMContentLoaded',()=>{
-          const ag=(y)=>y>=25?'5 Monate':y>=15?'4 Monate':y>=5?'3 Monate':y>=2?'2 Monate':'6 Wochen';
-          const calc=()=>{
-            const y=+jahre.value||0;
-            if(who.value==='ag'){res.textContent=ag(y);term.textContent='i.d.R. zum Quartalsende (vertraglich oft Monatsende/15.)';}
-            else{res.textContent='1 Monat';term.textContent='zum letzten Tag des Kalendermonats';}
-          };
-          const who=document.getElementById('who'),jahre=document.getElementById('jahre'),res=document.getElementById('res'),term=document.getElementById('term');
-          [who,jahre].forEach(e=>e.addEventListener('input',calc));who.addEventListener('change',calc);calc();
-        });
-        </script>
-
-        <div class="seo-crosslink" style="margin-top: 24px; padding: 18px; background: var(--color-paper-2); border-radius: 10px; border: 1px solid var(--color-rule);">
-          <h4 style="margin: 0 0 8px; font-size: 1rem; color: var(--color-ink);">💼 Wichtig bei Kündigung & Jobwechsel:</h4>
-          <p style="margin: 0 0 10px; font-size: 0.95rem; color: var(--color-ink-2);">Berechne deine finale Abrechnung und Ansprüche vor dem Austritt:</p>
-          <ul style="margin: 0; padding-left: 20px; font-size: 0.95rem; color: var(--color-ink);">
-            <li style="margin-bottom: 6px;"><a href="/finanzen/gehaltsrechner.html" style="font-weight: 600; color: var(--color-primary);">Brutto-Netto-Gehaltsrechner ➔</a> <span style="color: var(--color-ink-3);">(Netto inkl. 13./14. Gehalt berechnen)</span></li>
-            <li style="margin-bottom: 6px;"><a href="/arbeitszeit/urlaubstage-rechner.html" style="font-weight: 600; color: var(--color-primary);">Urlaubstage-Rechner ➔</a> <span style="color: var(--color-ink-3);">(Resturlaub & Auszahlung ermitteln)</span></li>
-            <li><a href="/arbeitszeit/ueberstundenrechner.html" style="font-weight: 600; color: var(--color-primary);">Überstundenrechner ➔</a> <span style="color: var(--color-ink-3);">(Offene Überstunden & Zuschläge)</span></li>
-          </ul>
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
+        
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">⚖️</span>
+            <div>
+              <h1>Kündigungsfrist Rechner Österreich 2026</h1>
+              <p>Gesetzliche Fristen nach AngG § 20 & ABGB § 1159 (Angestellte & Arbeiter)</p>
+            </div>
+          </div>
         </div>
 
-    <p class="help" style="margin-top:16px;"><a href="/de/arbeitszeit/kuendigungsfrist-rechner.html">Kündigungsfrist Deutschland ➔</a></p>
-    </div></div>
+        <div class="cockpit-grid">
+          <!-- LINKS: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-group">
+              <label for="who">Wer kündigt?</label>
+              <select id="who">
+                <option value="ag" selected>Arbeitgeber (Kündigung durch AG)</option>
+                <option value="an">Arbeitnehmer (Selbstkündigung durch AN)</option>
+              </select>
+            </div>
+
+            <div class="input-group" id="yearsWrapper">
+              <label for="jahre">Vollendete Dienstjahre</label>
+              <input type="number" id="jahre" min="0" max="45" value="4" />
+              <div class="quick-chips">
+                <button type="button" class="quick-chip" data-y="1">1 J.</button>
+                <button type="button" class="quick-chip" data-y="2">2 J.</button>
+                <button type="button" class="quick-chip active" data-y="4">4 J.</button>
+                <button type="button" class="quick-chip" data-y="5">5 J.</button>
+                <button type="button" class="quick-chip" data-y="10">10 J.</button>
+                <button type="button" class="quick-chip" data-y="16">16 J.</button>
+                <button type="button" class="quick-chip" data-y="26">26 J.</button>
+              </div>
+            </div>
+
+            <div class="input-group" id="terminWrapper">
+              <label for="termin">Vereinbarter Kündigungstermin</label>
+              <select id="termin">
+                <option value="quartal" selected>Quartalsende (Gesetzlicher Standard)</option>
+                <option value="monat">Monatsende (sofern im Dienstvertrag)</option>
+                <option value="15_monat">15. oder Monatsende (§ 20 Abs. 3)</option>
+              </select>
+              <span class="text-muted text-xs" style="margin-top:4px; display:block;">Ohne vertragliche Vereinbarung gilt für den AG immer das Quartalsende.</span>
+            </div>
+
+            <div class="input-group">
+              <label for="kuendigungDate">Datum des Kündigungsausspruchs</label>
+              <input type="date" id="kuendigungDate" />
+              <span class="text-muted text-xs" style="margin-top:4px; display:block;">Tag, an dem das Kündigungsschreiben zugeht.</span>
+            </div>
+          </div>
+
+          <!-- RECHTS: ERGEBNISSE -->
+          <div class="cockpit-right" id="resultBox">
+            <div class="hero-net-card">
+              <div class="hero-net-label">GESETZLICHE KÜNDIGUNGSFRIST</div>
+              <div class="hero-net-val" id="res">2 Monate</div>
+              <div class="hero-net-sub" id="subEndInfo">
+                Letzter Arbeitstag: <strong id="endDate">—</strong> (<span id="term">—</span>)
+              </div>
+            </div>
+
+            <div class="sub-cards-grid">
+              <div class="sub-net-card">
+                <div class="label">Rechtsgrundlage</div>
+                <div class="val" style="font-size:1.05rem;" id="basisLabel">§ 20 Abs. 2 AngG</div>
+                <div class="desc">Gesetzliche Mindestfrist</div>
+              </div>
+              <div class="sub-net-card">
+                <div class="label">Postensuchtage</div>
+                <div class="val" style="font-size:1.05rem;" id="postenVal">1/5 der Wochenzeit</div>
+                <div class="desc">Bezahlte Freizeit zur Stellensuche</div>
+              </div>
+              <div class="sub-net-card">
+                <div class="label">Kündigungstermin</div>
+                <div class="val" style="font-size:1.05rem;" id="terminVal">Quartalsende</div>
+                <div class="desc">31.03. / 30.06. / 30.09. / 31.12.</div>
+              </div>
+              <div class="sub-net-card">
+                <div class="label">Kollektivvertrag</div>
+                <div class="val" style="font-size:1.05rem;">Günstigkeitsprinzip</div>
+                <div class="desc">Darf Frist für AN nicht verkürzen</div>
+              </div>
+            </div>
+
+            <!-- TABELLE: GESETZLICHE STAFFELUNG -->
+            <div style="background:var(--color-paper); border:1px solid var(--color-rule); border-radius:var(--radius-md); padding:16px; margin-top:6px;">
+              <h3 style="font-size:0.95rem; font-weight:700; margin:0 0 8px; color:var(--color-ink);">Gesetzliche Fristenstaffel für Arbeitgeber (AngG § 20)</h3>
+              <table class="tier-table">
+                <thead>
+                  <tr>
+                    <th>Dienstzeit</th>
+                    <th>Frist</th>
+                    <th>Termin</th>
+                  </tr>
+                </thead>
+                <tbody id="tierTableBody">
+                  <tr data-min="0" data-max="1">
+                    <td>1. & 2. Dienstjahr</td>
+                    <td>6 Wochen</td>
+                    <td>Quartalsende (oder vereinbart)</td>
+                  </tr>
+                  <tr data-min="2" data-max="4" class="active-row">
+                    <td>ab 3. Dienstjahr</td>
+                    <td>2 Monate</td>
+                    <td>Quartalsende (oder vereinbart)</td>
+                  </tr>
+                  <tr data-min="5" data-max="14">
+                    <td>ab 6. Dienstjahr</td>
+                    <td>3 Monate</td>
+                    <td>Quartalsende (oder vereinbart)</td>
+                  </tr>
+                  <tr data-min="15" data-max="24">
+                    <td>ab 16. Dienstjahr</td>
+                    <td>4 Monate</td>
+                    <td>Quartalsende (oder vereinbart)</td>
+                  </tr>
+                  <tr data-min="25" data-max="99">
+                    <td>ab 26. Dienstjahr</td>
+                    <td>5 Monate</td>
+                    <td>Quartalsende (oder vereinbart)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="info-callout">
+              <strong>💡 Wichtiger Praxishinweis:</strong> Die Kündigung wird erst wirksam, wenn sie dem Empfänger <em>zugegangen</em> ist. Die Frist beginnt am Folgetag zu laufen und endet am jeweiligen Kündigungstermin.
+            </div>
+
+          </div>
+        </div>
+
+        <!-- CROSSLINKS -->
+        <div style="padding: 20px 24px; border-top: 1px solid var(--color-rule); background: var(--color-paper-2);">
+          <h4 style="margin: 0 0 8px; font-size: 0.95rem; color: var(--color-ink);">💼 Weitere wichtige Rechner bei Jobwechsel & Kündigung:</h4>
+          <div style="display:flex; flex-wrap:wrap; gap:12px; font-size:0.9rem;">
+            <a href="/finanzen/gehaltsrechner.html" style="font-weight:600; color:var(--color-primary);">💶 Brutto-Netto-Rechner</a>
+            <span style="color:var(--color-rule);">|</span>
+            <a href="/arbeitszeit/urlaubstage-rechner.html" style="font-weight:600; color:var(--color-primary);">🏖️ Urlaubstage & Resturlaub</a>
+            <span style="color:var(--color-rule);">|</span>
+            <a href="/arbeitszeit/ueberstundenrechner.html" style="font-weight:600; color:var(--color-primary);">⏱️ Überstundenrechner (§ 68)</a>
+            <span style="color:var(--color-rule);">|</span>
+            <a href="/finanzen/abfertigungsrechner.html" style="font-weight:600; color:var(--color-primary);">🪙 Abfertigungsrechner</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FAQ SECTION -->
+    <section class="seo-faq-section" style="max-width:1120px; margin:40px auto 0; padding:0 16px;">
+      <h2 style="font-size:1.4rem; font-weight:700; margin-bottom:16px;">Häufig gestellte Fragen (FAQ) zur Kündigungsfrist in Österreich</h2>
+      
+      <details class="faq-item" style="background:var(--color-paper); border:1px solid var(--color-rule); border-radius:8px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="font-weight:700; cursor:pointer; color:var(--color-ink);">Welche Kündigungsfrist gilt bei Kündigung durch den Arbeitnehmer?</summary>
+        <p style="margin:10px 0 0; color:var(--color-ink-2); line-height:1.5;">Für Angestellte gilt bei einer Kündigung durch den Arbeitnehmer (Selbstkündigung) gesetzlich eine Kündigungsfrist von <strong>1 Monat</strong> zum <strong>Letzten eines Kalendermonats</strong> (§ 20 Abs. 4 AngG). Vertraglich kann diese Frist auf bis zu 6 Monate verlängert werden, sie darf jedoch keinesfalls länger sein als die Frist, die der Arbeitgeber einzuhalten hat.</p>
+      </details>
+
+      <details class="faq-item" style="background:var(--color-paper); border:1px solid var(--color-rule); border-radius:8px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="font-weight:700; cursor:pointer; color:var(--color-ink);">Was sind Postensuchtage und wann habe ich Anspruch darauf?</summary>
+        <p style="margin:10px 0 0; color:var(--color-ink-2); line-height:1.5;">Wird das Arbeitsverhältnis durch den Arbeitgeber gekündigt, steht dem Arbeitnehmer auf Verlangen während der Kündigungsfrist eine bezahlte Freizeit im Ausmaß von <strong>einem Fünftel der regelmäßigen wöchentlichen Arbeitszeit</strong> zu (bei einer 5-Tage-Woche entspricht das 1 Arbeitstag bzw. 8 Stunden pro Woche). Bei einer Kündigung durch den Arbeitnehmer besteht gesetzlich kein automatischer Anspruch auf Postensuchtage, sofern der Kollektivvertrag nichts Günstigeres regelt.</p>
+      </details>
+
+      <details class="faq-item" style="background:var(--color-paper); border:1px solid var(--color-rule); border-radius:8px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="font-weight:700; cursor:pointer; color:var(--color-ink);">Gilt das Kündigungsrecht auch für Arbeiter?</summary>
+        <p style="margin:10px 0 0; color:var(--color-ink-2); line-height:1.5;">Ja, seit der Angleichung von Arbeitern und Angestellten im ABGB (§ 1159 ABGB) gelten für Arbeiter grundsätzlich dieselben gesetzlichen Kündigungsfristen und -termine wie für Angestellte. Ausnahmen bestehen jedoch in Saisonbranchen (z. B. Baugewerbe oder Gastronomie), in denen Kollektivverträge abweichende Sonderregelungen vorsehen können.</p>
+      </details>
+
+      <details class="faq-item" style="background:var(--color-paper); border:1px solid var(--color-rule); border-radius:8px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="font-weight:700; cursor:pointer; color:var(--color-ink);">Was passiert, wenn die Frist falsch berechnet wird?</summary>
+        <p style="margin:10px 0 0; color:var(--color-ink-2); line-height:1.5;">Wird eine Kündigung mit zu kurzer Frist oder zu einem unzulässigen Termin ausgesprochen (sog. Kündigung zur Unzeit), wird das Dienstverhältnis dennoch zum genannten Tag beendet. Dem Arbeitnehmer steht jedoch eine Kündigungsentschädigung für den Zeitraum zu, um den die Frist verkürzt wurde (volles Entgelt inklusive anteiliger Sonderzahlungen).</p>
+      </details>
+    </section>
   </main>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const who = document.getElementById('who');
+    const jahre = document.getElementById('jahre');
+    const termin = document.getElementById('termin');
+    const kuendigungDate = document.getElementById('kuendigungDate');
+    const res = document.getElementById('res');
+    const term = document.getElementById('term');
+    const endDate = document.getElementById('endDate');
+    const basisLabel = document.getElementById('basisLabel');
+    const postenVal = document.getElementById('postenVal');
+    const terminVal = document.getElementById('terminVal');
+    const terminWrapper = document.getElementById('terminWrapper');
+    const chips = document.querySelectorAll('.quick-chip');
+    const rows = document.querySelectorAll('#tierTableBody tr');
+
+    // Default to today
+    const today = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    kuendigungDate.value = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+
+    // Quick chips
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        jahre.value = chip.dataset.y;
+        calc();
+      });
+    });
+
+    const formatLong = (d) => {
+      const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+      return `${d.getDate()}. ${months[d.getMonth()]} ${d.getFullYear()}`;
+    };
+
+    const calc = () => {
+      const y = Math.max(0, parseInt(jahre.value, 10) || 0);
+      const isAg = who.value === 'ag';
+      const termMode = termin.value;
+      const dParts = (kuendigungDate.value || '').split('-');
+      const startDate = dParts.length === 3 ? new Date(+dParts[0], +dParts[1] - 1, +dParts[2]) : new Date();
+
+      if (isAg) {
+        terminWrapper.style.display = 'block';
+        basisLabel.textContent = '§ 20 Abs. 2 AngG';
+        postenVal.textContent = '1/5 der Wochenzeit';
+
+        let fristText = '';
+        let fristMonths = 0;
+        let fristDays = 0;
+
+        if (y >= 25) { fristText = '5 Monate'; fristMonths = 5; }
+        else if (y >= 15) { fristText = '4 Monate'; fristMonths = 4; }
+        else if (y >= 5) { fristText = '3 Monate'; fristMonths = 3; }
+        else if (y >= 2) { fristText = '2 Monate'; fristMonths = 2; }
+        else { fristText = '6 Wochen'; fristDays = 42; }
+
+        res.textContent = fristText;
+
+        // Calculate exit date
+        const expDate = new Date(startDate);
+        if (fristMonths > 0) {
+          expDate.setMonth(expDate.getMonth() + fristMonths);
+        } else {
+          expDate.setDate(expDate.getDate() + fristDays);
+        }
+
+        let finalExit;
+        if (termMode === 'monat') {
+          finalExit = new Date(expDate.getFullYear(), expDate.getMonth() + 1, 0);
+          term.textContent = 'zum Monatsende';
+          terminVal.textContent = 'Monatsende';
+        } else if (termMode === '15_monat') {
+          if (expDate.getDate() <= 15) {
+            finalExit = new Date(expDate.getFullYear(), expDate.getMonth(), 15);
+            term.textContent = 'zum 15. des Monats';
+            terminVal.textContent = '15. des Monats';
+          } else {
+            finalExit = new Date(expDate.getFullYear(), expDate.getMonth() + 1, 0);
+            term.textContent = 'zum Monatsende';
+            terminVal.textContent = 'Monatsende';
+          }
+        } else {
+          // Quartal (2 = Mar, 5 = Jun, 8 = Sep, 11 = Dec)
+          const m = expDate.getMonth();
+          const qMonth = m < 3 ? 2 : m < 6 ? 5 : m < 9 ? 8 : 11;
+          finalExit = new Date(expDate.getFullYear(), qMonth + 1, 0);
+          term.textContent = 'zum Kalendervierteljahr';
+          terminVal.textContent = 'Quartalsende';
+        }
+
+        endDate.textContent = formatLong(finalExit);
+
+        // Highlight table row
+        rows.forEach(r => {
+          const min = parseInt(r.dataset.min, 10);
+          const max = parseInt(r.dataset.max, 10);
+          if (y >= min && y <= max) {
+            r.classList.add('active-row');
+          } else {
+            r.classList.remove('active-row');
+          }
+        });
+
+      } else {
+        // Arbeitnehmer-Kündigung
+        terminWrapper.style.display = 'none';
+        res.textContent = '1 Monat';
+        basisLabel.textContent = '§ 20 Abs. 4 AngG';
+        postenVal.textContent = 'Kein gesetzl. Anspruch';
+        term.textContent = 'zum Monatsletzten';
+        terminVal.textContent = 'Monatsende';
+
+        const expDate = new Date(startDate);
+        expDate.setMonth(expDate.getMonth() + 1);
+        const finalExit = new Date(expDate.getFullYear(), expDate.getMonth() + 1, 0);
+        endDate.textContent = formatLong(finalExit);
+
+        rows.forEach(r => r.classList.remove('active-row'));
+      }
+    };
+
+    [who, jahre, termin, kuendigungDate].forEach(el => {
+      el.addEventListener('input', calc);
+      el.addEventListener('change', calc);
+    });
+
+    calc();
+  });
+  </script>
+
   <script src="/assets/js/analytics.js?v=3.1"></script>
   <script src="/assets/js/ui.js?v=3.1"></script>
   <script src="/assets/js/tools.js?v=3.1"></script>

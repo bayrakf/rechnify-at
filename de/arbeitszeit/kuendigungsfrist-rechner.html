@@ -4,15 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kündigungsfrist Rechner Deutschland 2026 | rechnify.at</title>
-  <meta name="description" content="Gesetzliche Fristen nach BGB §622. Vertrag/Tarif können länger sein." />
+  <meta name="description" content="Gesetzliche Kündigungsfristen nach BGB § 622 für Arbeitnehmer & Arbeitgeber berechnen. Exakter Austrittstermin, Fristenstaffel & Probezeit." />
   <link rel="canonical" href="https://rechnify.at/de/arbeitszeit/kuendigungsfrist-rechner.html" />
   <link rel="alternate" hreflang="de-DE" href="https://rechnify.at/de/arbeitszeit/kuendigungsfrist-rechner.html" />
   <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html" />
   <link rel="alternate" hreflang="x-default" href="https://rechnify.at/arbeitszeit/kuendigungsfrist-rechner.html" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Kündigungsfrist Rechner Deutschland 2026" />
-  <meta property="og:description" content="Gesetzliche Fristen nach BGB §622. Vertrag/Tarif können länger sein." />
+  <meta property="og:title" content="Kündigungsfrist Rechner Deutschland 2026 | rechnify.at" />
+  <meta property="og:description" content="Gesetzliche Fristen nach BGB § 622 berechnen. Exaktes Austrittsdatum, Fristentabelle für AG & AN sowie Probezeit-Regeln." />
   <meta property="og:url" content="https://rechnify.at/de/arbeitszeit/kuendigungsfrist-rechner.html" />
   <meta property="og:image" content="https://rechnify.at/assets/images/og-share.png" />
   <meta property="og:locale" content="de_DE" />
@@ -22,67 +23,477 @@
   <meta name="theme-color" content="#1858C7" />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+
   <style>
-    .calc-body{padding:24px}
-    .input-group{margin-bottom:16px}
-    .input-group label{display:block;margin-bottom:6px;font-weight:600}
-    .input-group input,.input-group select{width:100%;padding:12px;border:1px solid var(--color-rule);border-radius:10px;background:var(--color-paper);color:var(--color-ink);font-size:16px}
-    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    @media(max-width:600px){.input-row{grid-template-columns:1fr}}
-    .result-box{margin-top:20px;padding:20px;border:1px solid var(--color-rule);border-radius:12px;background:var(--color-paper-2)}
-    .result-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-rule)}
-    .result-item:last-child{border-bottom:0}
-    .result-item.highlight{font-weight:700;font-size:1.15em;color:var(--color-primary)}
-    .help{font-size:.9rem;color:var(--color-ink-3);margin-top:12px}
-    .ext-links a{margin-right:12px}
+    .quick-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .quick-chip {
+      background: var(--color-paper-2, #f8fafc);
+      border: 1px solid var(--color-rule, #e2e8f0);
+      border-radius: var(--radius-sm, 6px);
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--color-ink-2, #334155);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .quick-chip:hover {
+      border-color: var(--color-primary, #1858C7);
+      color: var(--color-primary, #1858C7);
+      background: color-mix(in oklch, var(--color-primary, #1858C7) 8%, transparent);
+    }
+    .quick-chip.active {
+      background: var(--color-primary, #1858C7);
+      color: #fff;
+      border-color: var(--color-primary, #1858C7);
+    }
+    .tier-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-top: 12px;
+    }
+    .tier-table th, .tier-table td {
+      padding: 9px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--color-rule, #e2e8f0);
+    }
+    .tier-table th {
+      background: var(--color-paper-2, #f8fafc);
+      font-weight: 700;
+      color: var(--color-ink, #0f172a);
+    }
+    .tier-table tr.active-row {
+      background: color-mix(in oklch, var(--color-success, #166534) 10%, var(--color-paper, #ffffff));
+      font-weight: 700;
+      color: var(--color-success, #166534);
+    }
+    .info-callout {
+      background: var(--color-paper-2, #f8fafc);
+      border: 1px solid var(--color-rule, #e2e8f0);
+      border-left: 4px solid var(--color-primary, #1858C7);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--color-ink-2, #334155);
+      margin-top: 16px;
+    }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Kündigungsfrist Rechner Deutschland 2026",
+    "description": "Gesetzliche Kündigungsfristen nach BGB § 622 für Arbeitnehmer & Arbeitgeber berechnen. Exakter Austrittstermin, Fristenstaffel & Probezeit.",
+    "url": "https://rechnify.at/de/arbeitszeit/kuendigungsfrist-rechner.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "de-DE",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Welche gesetzliche Kündigungsfrist gilt für Arbeitnehmer in Deutschland?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Für Arbeitnehmer gilt nach § 622 Abs. 1 BGB eine gesetzliche Grundkündigungsfrist von vier Wochen zum 15. oder zum Ende eines Kalendermonats. In Arbeits- oder Tarifverträgen kann vereinbart werden, dass für den Arbeitnehmer dieselben verlängerten Fristen wie für den Arbeitgeber gelten."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Wie lang ist die Kündigungsfrist in der Probezeit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Während einer vereinbarten Probezeit (maximal 6 Monate) beträgt die Kündigungsfrist zwei Wochen (§ 622 Abs. 3 BGB). Die Kündigung kann zu jedem beliebigen Kalendertag ausgesprochen werden und muss nicht zum 15. oder Monatsende erfolgen."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Wann verlängert sich die Kündigungsfrist für den Arbeitgeber?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Die Kündigungsfrist für den Arbeitgeber verlängert sich nach Betriebszugehörigkeit: ab 2 Jahren (1 Monat), 5 Jahren (2 Monate), 8 Jahren (3 Monate), 10 Jahren (4 Monate), 12 Jahren (5 Monate), 15 Jahren (6 Monate) und ab 20 Jahren (7 Monate) – jeweils zum Ende eines Kalendermonats."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
-  <header class="site-header"><div class="header-inner">
-    <a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a>
-  </div></header>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="rechnify.at – Startseite">
+        <picture><source srcset="/assets/images/logo-72.webp" type="image/webp" /><img src="/assets/images/logo-72.jpg" alt="rechnify Logo" width="36" height="36" decoding="async" /></picture>
+        <span class="site-logo-text">rechnify<span>.at</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <a href="/">🏠 Start</a>
+        <a href="/de/finanzen/gehaltsrechner.html">💶 Gehalt</a>
+        <a href="/de/arbeitszeit/kommen-gehen-rechner.html" class="active">⏰ Arbeitszeit</a>
+        <a href="/ueber-uns.html">Über uns</a>
+      </nav>
+      <div class="header-actions">
+        <div class="country-toggle-group" id="countryToggleGroup">
+          <a href="/arbeitszeit/kuendigungsfrist-rechner.html" class="country-pill" style="text-decoration:none;" title="Österreich">🇦🇹 AT</a>
+          <button class="country-pill active" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+        </div>
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">rechnify.at</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/de/arbeitszeit/">Arbeitszeit</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Kündigungsfrist Rechner Deutschland</span>
+  </nav>
+
   <main class="site-main">
-    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Kündigungsfrist Rechner Deutschland</h1>
-    <p class="subtitle">Gesetzliche Fristen nach BGB §622. Vertrag/Tarif können länger sein.</p></div>
-    <div class="card"><div class="calc-body">
-
-        <div class="input-row">
-          <div class="input-group"><label for="who">Wer kündigt?</label>
-            <select id="who"><option value="ag">Arbeitgeber</option><option value="an">Arbeitnehmer</option></select></div>
-          <div class="input-group"><label for="jahre">Betriebszugehörigkeit (Jahre)</label>
-            <input type="number" id="jahre" min="0" max="45" value="6" /></div>
-        </div>
-        <div class="result-box" id="resultBox">
-          <div class="result-item highlight"><span>Gesetzliche Frist</span><span id="res">—</span></div>
-          <div class="result-item"><span>Zum</span><span id="term">—</span></div>
-          <p class="help">BGB §622: AG-Fristen nach Betriebszugehörigkeit (ab 2/5/8/10/12/15/20 Jahren: 1–7 Monate zum Monatsende; darunter 4 Wochen zum 15. oder Monatsende). AN: 4 Wochen zum 15. oder Monatsende. Probezeit/besondere Vereinbarungen möglich. <a href="https://www.gesetze-im-internet.de/bgb/__622.html" rel="noopener" target="_blank">gesetze-im-internet.de §622</a>.</p>
-        </div>
-        <script>
-        document.addEventListener('DOMContentLoaded',()=>{
-          const ag=(y)=>{if(y>=20)return[7,'Monatsende'];if(y>=15)return[6,'Monatsende'];if(y>=12)return[5,'Monatsende'];if(y>=10)return[4,'Monatsende'];if(y>=8)return[3,'Monatsende'];if(y>=5)return[2,'Monatsende'];if(y>=2)return[1,'Monatsende'];return[0,'15. oder Monatsende'];};
-          const calc=()=>{
-            const y=+jahre.value||0;
-            if(who.value==='an'){res.textContent='4 Wochen';term.textContent='15. oder Letzter des Kalendermonats';return;}
-            const [m,t]=ag(y);res.textContent=m?`${m} Monat(e)`:'4 Wochen';term.textContent=t;
-          };
-          const who=document.getElementById('who'),jahre=document.getElementById('jahre'),res=document.getElementById('res'),term=document.getElementById('term');
-          [who,jahre].forEach(e=>e.addEventListener('input',calc));who.addEventListener('change',calc);calc();
-        });
-        </script>
-
-        <div class="seo-crosslink" style="margin-top: 24px; padding: 18px; background: var(--color-paper-2); border-radius: 10px; border: 1px solid var(--color-rule);">
-          <h4 style="margin: 0 0 8px; font-size: 1rem; color: var(--color-ink);">💼 Wichtig bei Kündigung & Jobwechsel:</h4>
-          <p style="margin: 0 0 10px; font-size: 0.95rem; color: var(--color-ink-2);">Berechne deine finale Abrechnung und Ansprüche vor dem Austritt:</p>
-          <ul style="margin: 0; padding-left: 20px; font-size: 0.95rem; color: var(--color-ink);">
-            <li style="margin-bottom: 6px;"><a href="/de/finanzen/gehaltsrechner.html" style="font-weight: 600; color: var(--color-primary);">Brutto-Netto-Gehaltsrechner (DE) ➔</a> <span style="color: var(--color-ink-3);">(Nettogehalt nach Steuerklassen berechnen)</span></li>
-            <li style="margin-bottom: 6px;"><a href="/arbeitszeit/urlaubstage-rechner.html" style="font-weight: 600; color: var(--color-primary);">Urlaubstage-Rechner ➔</a> <span style="color: var(--color-ink-3);">(Resturlaub & Auszahlung ermitteln)</span></li>
-            <li><a href="/arbeitszeit/ueberstundenrechner.html" style="font-weight: 600; color: var(--color-primary);">Überstundenrechner ➔</a> <span style="color: var(--color-ink-3);">(Offene Überstunden & Zuschläge)</span></li>
-          </ul>
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
+        
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">⚖️</span>
+            <div>
+              <h1>Kündigungsfrist Rechner Deutschland 2026</h1>
+              <p>Gesetzliche Fristen nach BGB § 622 (Arbeitgeber & Arbeitnehmer)</p>
+            </div>
+          </div>
         </div>
 
-        <p class="help" style="margin-top:16px;"><a href="/arbeitszeit/kuendigungsfrist-rechner.html">Kündigungsfrist Österreich ➔</a></p>
-    </div></div>
+        <div class="cockpit-grid">
+          <!-- LINKS: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-group">
+              <label for="who">Wer kündigt?</label>
+              <select id="who">
+                <option value="ag" selected>Arbeitgeber (Kündigung durch AG)</option>
+                <option value="an">Arbeitnehmer (Selbstkündigung durch AN)</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label>Status / Probezeit</label>
+              <div style="display:flex; align-items:center; gap:8px; margin-top:4px;">
+                <input type="checkbox" id="isProbezeit" style="width:auto; cursor:pointer;" />
+                <label for="isProbezeit" style="margin:0; font-weight:normal; cursor:pointer;">Noch in der Probezeit (max. 6 Monate)</label>
+              </div>
+            </div>
+
+            <div class="input-group" id="yearsWrapper">
+              <label for="jahre">Betriebszugehörigkeit (Jahre)</label>
+              <input type="number" id="jahre" min="0" max="45" value="6" />
+              <div class="quick-chips">
+                <button type="button" class="quick-chip" data-y="1">1 J.</button>
+                <button type="button" class="quick-chip" data-y="2">2 J.</button>
+                <button type="button" class="quick-chip" data-y="5">5 J.</button>
+                <button type="button" class="quick-chip active" data-y="6">6 J.</button>
+                <button type="button" class="quick-chip" data-y="8">8 J.</button>
+                <button type="button" class="quick-chip" data-y="10">10 J.</button>
+                <button type="button" class="quick-chip" data-y="15">15 J.</button>
+                <button type="button" class="quick-chip" data-y="20">20 J.</button>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="kuendigungDate">Datum des Kündigungsausspruchs</label>
+              <input type="date" id="kuendigungDate" />
+              <span class="text-muted text-xs" style="margin-top:4px; display:block;">Tag des Zugangs des Kündigungsschreibens.</span>
+            </div>
+          </div>
+
+          <!-- RECHTS: ERGEBNISSE -->
+          <div class="cockpit-right" id="resultBox">
+            <div class="hero-net-card">
+              <div class="hero-net-label">GESETZLICHE KÜNDIGUNGSFRIST</div>
+              <div class="hero-net-val" id="res">2 Monate</div>
+              <div class="hero-net-sub" id="subEndInfo">
+                Letzter Arbeitstag: <strong id="endDate">—</strong> (<span id="term">—</span>)
+              </div>
+            </div>
+
+            <div class="sub-cards-grid">
+              <div class="sub-net-card">
+                <div class="label">Rechtsgrundlage</div>
+                <div class="val" style="font-size:1.05rem;" id="basisLabel">§ 622 Abs. 2 BGB</div>
+                <div class="desc">Gesetzliche Mindestfrist</div>
+              </div>
+              <div class="sub-net-card">
+                <div class="label">Kündigungstermin</div>
+                <div class="val" style="font-size:1.05rem;" id="terminVal">Monatsende</div>
+                <div class="desc">Letzter Tag des Kalendermonats</div>
+              </div>
+              <div class="sub-net-card">
+                <div class="label">Schriftform</div>
+                <div class="val" style="font-size:1.05rem;">§ 623 BGB</div>
+                <div class="desc">Zwingend schriftlich mit Unterschrift</div>
+              </div>
+              <div class="sub-net-card">
+                <div class="label">Tarifvertrag / Vertrag</div>
+                <div class="val" style="font-size:1.05rem;">Günstigkeitsprinzip</div>
+                <div class="desc">Kann längere Fristen vorsehen</div>
+              </div>
+            </div>
+
+            <!-- TABELLE: GESETZLICHE STAFFELUNG DE -->
+            <div style="background:var(--color-paper); border:1px solid var(--color-rule); border-radius:var(--radius-md); padding:16px; margin-top:6px;">
+              <h3 style="font-size:0.95rem; font-weight:700; margin:0 0 8px; color:var(--color-ink);">Gesetzliche Fristenstaffel für Arbeitgeber (BGB § 622 Abs. 2)</h3>
+              <table class="tier-table">
+                <thead>
+                  <tr>
+                    <th>Betriebszugehörigkeit</th>
+                    <th>Frist</th>
+                    <th>Termin</th>
+                  </tr>
+                </thead>
+                <tbody id="tierTableBody">
+                  <tr data-min="0" data-max="1">
+                    <td>Unter 2 Jahre</td>
+                    <td>4 Wochen</td>
+                    <td>15. oder Monatsende</td>
+                  </tr>
+                  <tr data-min="2" data-max="4">
+                    <td>Ab 2 Jahre</td>
+                    <td>1 Monat</td>
+                    <td>Monatsende</td>
+                  </tr>
+                  <tr data-min="5" data-max="7" class="active-row">
+                    <td>Ab 5 Jahre</td>
+                    <td>2 Monate</td>
+                    <td>Monatsende</td>
+                  </tr>
+                  <tr data-min="8" data-max="9">
+                    <td>Ab 8 Jahre</td>
+                    <td>3 Monate</td>
+                    <td>Monatsende</td>
+                  </tr>
+                  <tr data-min="10" data-max="11">
+                    <td>Ab 10 Jahre</td>
+                    <td>4 Monate</td>
+                    <td>Monatsende</td>
+                  </tr>
+                  <tr data-min="12" data-max="14">
+                    <td>Ab 12 Jahre</td>
+                    <td>5 Monate</td>
+                    <td>Monatsende</td>
+                  </tr>
+                  <tr data-min="15" data-max="19">
+                    <td>Ab 15 Jahre</td>
+                    <td>6 Monate</td>
+                    <td>Monatsende</td>
+                  </tr>
+                  <tr data-min="20" data-max="99">
+                    <td>Ab 20 Jahre</td>
+                    <td>7 Monate</td>
+                    <td>Monatsende</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="info-callout">
+              <strong>💡 Wichtiger Hinweis:</strong> Nach § 623 BGB ist eine Kündigung per E-Mail, WhatsApp oder Fax gesetzlich <strong>nichtig</strong>. Sie muss eigenhändig unterschrieben im Original auf Papier zugehen.
+            </div>
+
+          </div>
+        </div>
+
+        <!-- CROSSLINKS -->
+        <div style="padding: 20px 24px; border-top: 1px solid var(--color-rule); background: var(--color-paper-2);">
+          <h4 style="margin: 0 0 8px; font-size: 0.95rem; color: var(--color-ink);">💼 Weitere wichtige Rechner bei Jobwechsel & Kündigung:</h4>
+          <div style="display:flex; flex-wrap:wrap; gap:12px; font-size:0.9rem;">
+            <a href="/de/finanzen/gehaltsrechner.html" style="font-weight:600; color:var(--color-primary);">💶 Brutto-Netto-Rechner (DE)</a>
+            <span style="color:var(--color-rule);">|</span>
+            <a href="/arbeitszeit/urlaubstage-rechner.html" style="font-weight:600; color:var(--color-primary);">🏖️ Resturlaub berechnen</a>
+            <span style="color:var(--color-rule);">|</span>
+            <a href="/de/arbeitszeit/ueberstundenrechner.html" style="font-weight:600; color:var(--color-primary);">⏱️ Überstunden & Auszahlung</a>
+            <span style="color:var(--color-rule);">|</span>
+            <a href="/de/finanzen/gehaltserhoehung-rechner.html" style="font-weight:600; color:var(--color-primary);">📈 Gehaltserhöhung Netto</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FAQ SECTION -->
+    <section class="seo-faq-section" style="max-width:1120px; margin:40px auto 0; padding:0 16px;">
+      <h2 style="font-size:1.4rem; font-weight:700; margin-bottom:16px;">Häufig gestellte Fragen (FAQ) zur Kündigungsfrist in Deutschland</h2>
+      
+      <details class="faq-item" style="background:var(--color-paper); border:1px solid var(--color-rule); border-radius:8px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="font-weight:700; cursor:pointer; color:var(--color-ink);">Gilt für Arbeitnehmer immer nur die Frist von 4 Wochen?</summary>
+        <p style="margin:10px 0 0; color:var(--color-ink-2); line-height:1.5;">Gesetzlich gilt nach § 622 Abs. 1 BGB für Arbeitnehmer eine Frist von 4 Wochen zum 15. oder zum Monatsende. <strong>Achtung:</strong> In sehr vielen Arbeitsverträgen oder Tarifverträgen ist vereinbart, dass für den Arbeitnehmer dieselben verlängerten Fristen wie für den Arbeitgeber gelten (z. B. 3 Monate zum Quartalsende). Prüfe daher immer deinen Dienstvertrag!</p>
+      </details>
+
+      <details class="faq-item" style="background:var(--color-paper); border:1px solid var(--color-rule); border-radius:8px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="font-weight:700; cursor:pointer; color:var(--color-ink);">Wie wird die Frist von 4 Wochen exakt berechnet?</summary>
+        <p style="margin:10px 0 0; color:var(--color-ink-2); line-height:1.5;">Vier Wochen bedeuten genau <strong>28 Kalendertage</strong> (nicht 1 Monat). Endet die Kündigung zum 15. eines Monats, muss die Kündigung spätestens 28 Tage vorher beim Arbeitgeber eingegangen sein (also meist am 17. oder 18. des Vormonats). Endet sie zum Monatsende, ebenfalls 28 Tage vor dem letzten Tag des Monats.</p>
+      </details>
+
+      <details class="faq-item" style="background:var(--color-paper); border:1px solid var(--color-rule); border-radius:8px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="font-weight:700; cursor:pointer; color:var(--color-ink);">Was gilt in der Probezeit?</summary>
+        <p style="margin:10px 0 0; color:var(--color-ink-2); line-height:1.5;">Ist im Arbeitsvertrag eine Probezeit vereinbart (maximal 6 Monate nach § 622 Abs. 3 BGB), beträgt die Kündigungsfrist für beide Seiten <strong>2 Wochen</strong>. Sie kann zu jedem beliebigen Kalendertag enden und ist nicht an den 15. oder das Monatsende gebunden.</p>
+      </details>
+
+      <details class="faq-item" style="background:var(--color-paper); border:1px solid var(--color-rule); border-radius:8px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="font-weight:700; cursor:pointer; color:var(--color-ink);">Muss eine Kündigung begründet werden?</summary>
+        <p style="margin:10px 0 0; color:var(--color-ink-2); line-height:1.5;">Arbeitnehmer müssen eine ordentliche Kündigung nie begründen. Arbeitgeber müssen eine Kündigung im Kündigungsschreiben selbst meist nicht begründen, müssen aber bei Anwendbarkeit des Kündigungsschutzgesetzes (KSchG – bei mehr als 10 Beschäftigten und nach 6 Monaten Wartezeit) einen gesetzlich anerkannten Kündigungsgrund (betriebs-, personen- oder verhaltensbedingt) nachweisen können.</p>
+      </details>
+    </section>
   </main>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const who = document.getElementById('who');
+    const jahre = document.getElementById('jahre');
+    const isProbezeit = document.getElementById('isProbezeit');
+    const kuendigungDate = document.getElementById('kuendigungDate');
+    const res = document.getElementById('res');
+    const term = document.getElementById('term');
+    const endDate = document.getElementById('endDate');
+    const basisLabel = document.getElementById('basisLabel');
+    const terminVal = document.getElementById('terminVal');
+    const yearsWrapper = document.getElementById('yearsWrapper');
+    const chips = document.querySelectorAll('.quick-chip');
+    const rows = document.querySelectorAll('#tierTableBody tr');
+
+    // Default to today
+    const today = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    kuendigungDate.value = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+
+    // Quick chips
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        jahre.value = chip.dataset.y;
+        isProbezeit.checked = false;
+        calc();
+      });
+    });
+
+    const formatLong = (d) => {
+      const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+      return `${d.getDate()}. ${months[d.getMonth()]} ${d.getFullYear()}`;
+    };
+
+    const calc = () => {
+      const y = Math.max(0, parseInt(jahre.value, 10) || 0);
+      const isAg = who.value === 'ag';
+      const inProbe = isProbezeit.checked;
+      const dParts = (kuendigungDate.value || '').split('-');
+      const startDate = dParts.length === 3 ? new Date(+dParts[0], +dParts[1] - 1, +dParts[2]) : new Date();
+
+      if (inProbe) {
+        yearsWrapper.style.opacity = '0.5';
+        res.textContent = '2 Wochen';
+        basisLabel.textContent = '§ 622 Abs. 3 BGB';
+        term.textContent = 'zu jedem beliebigen Kalendertag';
+        terminVal.textContent = 'Tagesgenau';
+
+        const expDate = new Date(startDate);
+        expDate.setDate(expDate.getDate() + 14);
+        endDate.textContent = formatLong(expDate);
+
+        rows.forEach(r => r.classList.remove('active-row'));
+        return;
+      }
+
+      yearsWrapper.style.opacity = '1';
+
+      if (isAg) {
+        basisLabel.textContent = y >= 2 ? '§ 622 Abs. 2 BGB' : '§ 622 Abs. 1 BGB';
+
+        let fristText = '4 Wochen';
+        let fristMonths = 0;
+        let fristDays = 28;
+        let targetTerm = '15. oder Monatsende';
+
+        if (y >= 20) { fristText = '7 Monate'; fristMonths = 7; targetTerm = 'Monatsende'; }
+        else if (y >= 15) { fristText = '6 Monate'; fristMonths = 6; targetTerm = 'Monatsende'; }
+        else if (y >= 12) { fristText = '5 Monate'; fristMonths = 5; targetTerm = 'Monatsende'; }
+        else if (y >= 10) { fristText = '4 Monate'; fristMonths = 4; targetTerm = 'Monatsende'; }
+        else if (y >= 8) { fristText = '3 Monate'; fristMonths = 3; targetTerm = 'Monatsende'; }
+        else if (y >= 5) { fristText = '2 Monate'; fristMonths = 2; targetTerm = 'Monatsende'; }
+        else if (y >= 2) { fristText = '1 Monat'; fristMonths = 1; targetTerm = 'Monatsende'; }
+
+        res.textContent = fristText;
+        term.textContent = `zum ${targetTerm}`;
+        terminVal.textContent = targetTerm;
+
+        // Calculate exit date
+        const expDate = new Date(startDate);
+        if (fristMonths > 0) {
+          expDate.setMonth(expDate.getMonth() + fristMonths);
+          // Month end
+          const finalExit = new Date(expDate.getFullYear(), expDate.getMonth() + 1, 0);
+          endDate.textContent = formatLong(finalExit);
+        } else {
+          expDate.setDate(expDate.getDate() + fristDays);
+          let finalExit;
+          if (expDate.getDate() <= 15) {
+            finalExit = new Date(expDate.getFullYear(), expDate.getMonth(), 15);
+          } else {
+            finalExit = new Date(expDate.getFullYear(), expDate.getMonth() + 1, 0);
+          }
+          endDate.textContent = formatLong(finalExit);
+        }
+
+        // Highlight table row
+        rows.forEach(r => {
+          const min = parseInt(r.dataset.min, 10);
+          const max = parseInt(r.dataset.max, 10);
+          if (y >= min && y <= max) {
+            r.classList.add('active-row');
+          } else {
+            r.classList.remove('active-row');
+          }
+        });
+
+      } else {
+        // Arbeitnehmer Kündigung
+        res.textContent = '4 Wochen';
+        basisLabel.textContent = '§ 622 Abs. 1 BGB';
+        term.textContent = 'zum 15. oder Monatsende';
+        terminVal.textContent = '15. oder Monatsende';
+
+        const expDate = new Date(startDate);
+        expDate.setDate(expDate.getDate() + 28);
+        let finalExit;
+        if (expDate.getDate() <= 15) {
+          finalExit = new Date(expDate.getFullYear(), expDate.getMonth(), 15);
+        } else {
+          finalExit = new Date(expDate.getFullYear(), expDate.getMonth() + 1, 0);
+        }
+        endDate.textContent = formatLong(finalExit);
+
+        rows.forEach(r => r.classList.remove('active-row'));
+      }
+    };
+
+    [who, jahre, isProbezeit, kuendigungDate].forEach(el => {
+      el.addEventListener('input', calc);
+      el.addEventListener('change', calc);
+    });
+
+    calc();
+  });
+  </script>
+
   <script src="/assets/js/analytics.js?v=3.1"></script>
   <script src="/assets/js/ui.js?v=3.1"></script>
   <script src="/assets/js/tools.js?v=3.1"></script>
