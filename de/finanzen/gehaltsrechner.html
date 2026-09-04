@@ -38,6 +38,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" />
 
   <style>
     .calc-body { padding: 24px; }
@@ -285,73 +286,77 @@
               </div>
             </div>
 
-            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
-              <h3>Detaillierte Abrechnung (Monatlich)</h3>
-              <div style="display:flex; justify-content:space-between; margin-top: 8px;">
-                <span class="text-muted">Brutto:</span>
-                <strong id="resGrossMonthlyDetail">-- €</strong>
+            <!-- Unified Details & Insights Panel -->
+            <div class="details-panel">
+              <nav class="seg-nav" role="tablist">
+                <button type="button" class="seg-btn active" data-tab="tab-monat-de" role="tab">📊 Monatsabrechnung</button>
+                <button type="button" class="seg-btn" data-tab="tab-jahr-de" role="tab">📅 Jahresübersicht</button>
+                <button type="button" class="seg-btn" data-tab="tab-insights-de" role="tab">💡 Gehalts-Vergleich</button>
+              </nav>
+
+              <!-- Pane 1: Monatsabrechnung -->
+              <div id="tab-monat-de" class="seg-pane active" role="tabpanel">
+                <div class="seg-row">
+                  <span>Brutto:</span>
+                  <strong id="resGrossMonthlyDetail">-- €</strong>
+                </div>
+                <div class="seg-row">
+                  <span>- Lohnsteuer:</span>
+                  <strong id="resTaxMonthly" style="color: var(--danger, #dc2626);">-- €</strong>
+                </div>
+                <div class="seg-row">
+                  <span>- Kirchensteuer:</span>
+                  <strong id="resChurchTaxMonthly" style="color: var(--danger, #dc2626);">-- €</strong>
+                </div>
+                <div class="seg-row">
+                  <span>- Sozialabgaben (ca. 20,5%):</span>
+                  <strong id="resSvMonthly" style="color: var(--danger, #dc2626);">-- €</strong>
+                </div>
+                <div class="seg-row total">
+                  <span>Netto (Monat):</span>
+                  <strong id="resNetMonthlyDetail" class="text-success" style="font-size: 1.15em;">-- €</strong>
+                </div>
               </div>
-              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
-                <span class="text-muted">- Lohnsteuer:</span>
-                <strong id="resTaxMonthly" style="color: var(--danger);">-- €</strong>
+
+              <!-- Pane 2: Jahresabrechnung -->
+              <div id="tab-jahr-de" class="seg-pane" role="tabpanel">
+                <div class="seg-row">
+                  <span>Brutto (gesamt):</span>
+                  <strong id="resGrossYear">-- €</strong>
+                </div>
+                <div class="seg-row">
+                  <span>- Lohnsteuer:</span>
+                  <strong id="resTaxYear" style="color: var(--danger, #dc2626);">-- €</strong>
+                </div>
+                <div class="seg-row">
+                  <span>- Kirchensteuer:</span>
+                  <strong id="resChurchTaxYear" style="color: var(--danger, #dc2626);">-- €</strong>
+                </div>
+                <div class="seg-row">
+                  <span>- Sozialabgaben:</span>
+                  <strong id="resSvYear" style="color: var(--danger, #dc2626);">-- €</strong>
+                </div>
+                <div class="seg-row total">
+                  <span>Netto (gesamt pro Jahr):</span>
+                  <strong id="resNetYear" class="text-success" style="font-size: 1.15em;">-- €</strong>
+                </div>
               </div>
-              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
-                <span class="text-muted">- Kirchensteuer:</span>
-                <strong id="resChurchTaxMonthly" style="color: var(--danger);">-- €</strong>
-              </div>
-              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
-                <span class="text-muted">- Sozialabgaben (ca. 20,5%):</span>
-                <strong id="resSvMonthly" style="color: var(--danger);">-- €</strong>
-              </div>
-              <div style="display:flex; justify-content:space-between; margin-top: 12px; padding-top: 8px; border-top: 1px dashed var(--border);">
-                <span><strong>Netto (Monat):</strong></span>
-                <strong id="resNetMonthlyDetail" class="text-success" style="font-size: 1.2em;">-- €</strong>
+
+              <!-- Pane 3: Gehalts-Vergleich & Kaufkraft -->
+              <div id="tab-insights-de" class="seg-pane" role="tabpanel">
+                <div style="margin-bottom: 12px;">
+                  <strong style="font-size: 0.84rem; color: var(--color-ink, #0f172a);">📊 Gehalts-Ranking Deutschland:</strong>
+                  <p id="salaryRankingText" style="font-size: 0.84rem; color: var(--color-ink-2, #334155); margin: 4px 0 0; line-height: 1.45;"></p>
+                </div>
+                <div style="padding-top: 10px; border-top: 1px solid var(--color-rule, #e2e8f0);">
+                  <strong style="font-size: 0.84rem; color: var(--color-ink, #0f172a);">📉 Kaufkraft & Inflation (5 Jahre):</strong>
+                  <p id="inflationText" style="font-size: 0.84rem; color: var(--color-ink-2, #334155); margin: 4px 0 0; line-height: 1.45;"></p>
+                </div>
               </div>
             </div>
 
-            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
-              <h3>Detaillierte Jahresabrechnung (12×)</h3>
-              <div style="display:flex; justify-content:space-between; margin-top: 8px;">
-                <span class="text-muted">Brutto (gesamt):</span>
-                <strong id="resGrossYear">-- €</strong>
-              </div>
-              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
-                <span class="text-muted">- Lohnsteuer:</span>
-                <strong id="resTaxYear" style="color: var(--danger);">-- €</strong>
-              </div>
-              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
-                <span class="text-muted">- Kirchensteuer:</span>
-                <strong id="resChurchTaxYear" style="color: var(--danger);">-- €</strong>
-              </div>
-              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
-                <span class="text-muted">- Sozialabgaben:</span>
-                <strong id="resSvYear" style="color: var(--danger);">-- €</strong>
-              </div>
-              <div style="display:flex; justify-content:space-between; margin-top: 12px; padding-top: 8px; border-top: 1px dashed var(--border);">
-                <span><strong>Netto (gesamt pro Jahr):</strong></span>
-                <strong id="resNetYear" class="text-success" style="font-size: 1.2em;">-- €</strong>
-              </div>
-            </div>
-
-            <!-- Premium Insight: Ranking -->
-            <div id="salaryRankingInsight" class="premium-insight" style="display: none; margin-top: 24px; padding: 16px; background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 1px solid #fde047; border-radius: 12px;">
-              <h4 style="margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>📊</span> Premium-Wissen: Gehalts-Ranking DE</h4>
-              <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #854d0e;">
-                <span id="salaryRankingText"></span>
-              </p>
-            </div>
-
-            <!-- Premium Insight: Kaufkraft Schock -->
-            <div id="inflationInsight" class="premium-insight" style="display: none; margin-top: 16px; padding: 16px; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border: 1px solid #fca5a5; border-radius: 12px;">
-              <h4 style="margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>📉</span> Premium-Wissen: Inflations-Schock</h4>
-              <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #991b1b;">
-                <span id="inflationText"></span>
-              </p>
-            </div>
-
-            
-            <div class="seo-crosslink" style="margin-top: 24px; padding: 15px; background: var(--color-paper-2); border-radius: 10px; border: 1px dashed var(--color-primary); text-align: center;">
-                <p style="margin: 0; font-size: 0.95rem;">💡 <strong>Tipp:</strong> Überlegst du deine Stunden zu reduzieren? <br><a href="/de/arbeitszeit/teilzeitrechner.html" style="font-weight: bold; color: var(--color-primary); display: inline-block; margin-top: 5px;">Nutze unseren Teilzeitrechner ➔</a></p>
+            <div style="margin-top: 16px; text-align: center; font-size: 0.85rem; color: var(--color-ink-3, #64748b);">
+              Überlegst du Stunden zu reduzieren? <a href="/de/arbeitszeit/teilzeitrechner.html" style="font-weight: 600; color: var(--color-accent, #1858C7);">Teilzeitrechner nutzen ➔</a>
             </div>
 
             <!-- Premium Girokonto Affiliate Box -->
@@ -422,12 +427,14 @@
           </div>
       </section>
 
-      <!-- Embed Widget -->
-      <div class="embed-widget" style="margin-top: 32px; padding: 24px; background: var(--soft); border-radius: 12px; border: 1px dashed var(--primary);">
-        <h3 style="margin-top: 0; display: flex; align-items: center; gap: 8px;"><span>💻</span> Rechner auf deiner Website einbinden</h3>
-        <p style="font-size: 14px; margin-bottom: 12px;">Kopiere diesen Code, um den Brutto-Netto-Rechner kostenlos in deinen HR-Blog oder deine Firmenwebsite einzubinden:</p>
-        <textarea readonly style="width: 100%; height: 60px; font-family: monospace; font-size: 12px; padding: 12px; border-radius: 6px; border: 1px solid var(--border); resize: none;" onclick="this.select()">&lt;iframe src="https://rechnify.at/de/finanzen/gehaltsrechner.html?widget=true" width="100%" height="600" style="border:none; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"&gt;&lt;/iframe&gt;</textarea>
-      </div>
+      <!-- Embed Widget (Quiet Progressive Disclosure) -->
+      <details class="embed-details">
+        <summary>💻 Rechner als Widget auf deiner Website einbinden</summary>
+        <div class="embed-content">
+          <p>Kostenlos per iFrame in deinen HR-Blog oder deine Firmenwebsite einbinden:</p>
+          <textarea readonly onclick="this.select()"><iframe src="https://rechnify.at/de/finanzen/gehaltsrechner.html?widget=true" width="100%" height="600" style="border:none; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe></textarea>
+        </div>
+      </details>
 
       
       <!-- Passende Rechner -->
@@ -599,39 +606,29 @@
       document.getElementById('resNetYear').textContent = (res.netMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
 
       // --- Premium Insight: Ranking ---
-      const rankingInsight = document.getElementById('salaryRankingInsight');
       const rankingText = document.getElementById('salaryRankingText');
-      // DE Median is around 4100
-      if (grossMonthly > 0) {
+      if (rankingText && grossMonthly > 0) {
         let text = "";
         const medianDE = 4100;
         if (grossMonthly < medianDE) {
           const diff = medianDE - grossMonthly;
-          text = `Dein Gehalt liegt aktuell unter dem deutschen Durchschnitt (Median-Brutto für Vollzeit: ca. <strong>4.100 €</strong>). Dir fehlen noch <strong>${diff.toLocaleString('de-DE')} €</strong> bis zur "Mitte" der Gesellschaft. Ein guter Grund für die nächste Gehaltsverhandlung!`;
+          text = `Dein Gehalt liegt unter dem deutschen Vollzeit-Median (ca. <strong>4.100 €</strong>). Dir fehlen noch <strong>${diff.toLocaleString('de-DE')} €</strong> bis zur Mitte der Gesellschaft.`;
         } else if (grossMonthly >= medianDE && grossMonthly < 6000) {
-          text = `Stark! Du verdienst mehr als der Median (Mitte) der Deutschen (Vollzeit: ca. <strong>4.100 €</strong>). Du gehörst zur soliden Mittel- bis Oberschicht.`;
+          text = `Stark! Du verdienst mehr als der Median der Beschäftigten (Vollzeit: ca. <strong>4.100 €</strong>). Du gehörst zur soliden Mitte.`;
         } else if (grossMonthly >= 6000 && grossMonthly < 8000) {
-          text = `Respekt! Mit diesem Gehalt gehörst du zu den absoluten Top-Verdienern (Top 10-15%) in Deutschland. Dein Einkommen ist weit überdurchschnittlich.`;
+          text = `Respekt! Mit diesem Gehalt gehörst du zu den oberen 10-15% in Deutschland.`;
         } else {
-          text = `Wow. Du verdienst mehr als ca. 95% der Angestellten in Deutschland. Du zählst zur absoluten Einkommens-Elite.`;
+          text = `Exzellent! Du verdienst mehr als ca. 95% der Angestellten in Deutschland.`;
         }
         rankingText.innerHTML = text;
-        rankingInsight.style.display = 'block';
-      } else {
-        rankingInsight.style.display = 'none';
       }
 
       // --- Premium Insight: Inflations-Schock ---
-      const inflationInsight = document.getElementById('inflationInsight');
       const inflationText = document.getElementById('inflationText');
-      if (res.netMonthly > 0) {
-        // 2.5% inflation per year for 5 years
+      if (inflationText && res.netMonthly > 0) {
         const purchasingPower = res.netMonthly * Math.pow(1 - 0.025, 5);
         const lost = res.netMonthly - purchasingPower;
-        inflationText.innerHTML = `Wenn du in den nächsten 5 Jahren keine Gehaltserhöhung bekommst, ist dein aktuelles Netto durch die Inflation (EZB-Ziel 2,5%) in 5 Jahren nur noch ca. <strong>${purchasingPower.toLocaleString('de-DE', {maximumFractionDigits:0})} €</strong> wert. Du verlierst schleichend <strong>${lost.toLocaleString('de-DE', {maximumFractionDigits:0})} €</strong> an Kaufkraft pro Monat!`;
-        inflationInsight.style.display = 'block';
-      } else {
-        inflationInsight.style.display = 'none';
+        inflationText.innerHTML = `Achtung: Dein heutiges Netto von <strong>${res.netMonthly.toLocaleString('de-DE', {maximumFractionDigits:0})} €</strong> ist bei 2,5% Inflation in 5 Jahren real nur noch <strong>${purchasingPower.toLocaleString('de-DE', {maximumFractionDigits:0})} €</strong> wert (Kaufkraftverlust: -${lost.toLocaleString('de-DE', {maximumFractionDigits:0})} €/Monat).`;
       }
 
       document.getElementById('result').classList.remove('hidden');
@@ -686,6 +683,19 @@
           if (preview) {
             preview.innerHTML = `Bei <strong>+${raise} € Brutto</strong> mehr erhältst du jeden Monat <strong>+${netMonthlyDiff.toLocaleString('de-DE', { maximumFractionDigits: 0 })} € Netto</strong> zusätzlich aufs Konto. Aufs Jahr gerechnet sind das <strong>+${netYearDiff.toLocaleString('de-DE', { maximumFractionDigits: 0 })} € Netto</strong>.`;
           }
+        });
+      });
+
+      // Details segmented tab switching
+      document.querySelectorAll('.details-panel .seg-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const panel = btn.closest('.details-panel');
+          if (!panel) return;
+          panel.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+          panel.querySelectorAll('.seg-pane').forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const target = panel.querySelector('#' + btn.dataset.tab);
+          if (target) target.classList.add('active');
         });
       });
 

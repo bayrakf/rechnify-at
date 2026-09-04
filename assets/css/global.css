@@ -1548,3 +1548,41 @@ body.dark .affiliate-banner {
 body.dark .scale-marker {
   background: var(--color-ink) !important;
 }
+
+/* ── Modern calm overrides for legacy embed widgets and SEO crosslinks ── */
+.embed-widget {
+  margin-top: 24px !important;
+  padding: 16px 20px !important;
+  background: var(--color-paper-2) !important;
+  border: 1px solid var(--color-rule) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.embed-widget h3 {
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 6px !important;
+  color: var(--color-ink) !important;
+}
+
+.embed-widget p {
+  font-size: 0.8rem !important;
+  color: var(--color-ink-3) !important;
+  margin-bottom: 8px !important;
+}
+
+.embed-widget textarea {
+  border: 1px solid var(--color-rule) !important;
+  background: var(--color-paper) !important;
+  color: var(--color-ink-2) !important;
+  border-radius: 8px !important;
+  font-size: 0.75rem !important;
+  box-sizing: border-box !important;
+}
+
+.seo-crosslink {
+  border: 1px solid var(--color-rule) !important;
+  background: var(--color-paper-2) !important;
+  border-radius: var(--radius-md) !important;
+}
+

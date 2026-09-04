@@ -433,92 +433,64 @@
                 </div>
               </div>
             </div>
-            <button class="expand-toggle" data-toggle-target="jahresabrechnung"
-              data-text-expand="📊 Jahresabrechnung anzeigen" data-text-collapse="📊 Jahresabrechnung ausblenden">
-              <span class="icon">▼</span>
-              <span class="toggle-text">📊 Jahresabrechnung anzeigen</span>
-            </button>
+            <!-- Unified Details & Insights Panel -->
+            <div class="details-panel">
+              <nav class="seg-nav" role="tablist">
+                <button type="button" class="seg-btn active" data-tab="tab-jahresabrechnung" role="tab">📊 Jahresübersicht</button>
+                <button type="button" class="seg-btn" data-tab="tab-dienstgeber" role="tab">🏢 Arbeitgeberkosten</button>
+                <button type="button" class="seg-btn" data-tab="tab-insights" role="tab">💡 Gehalts-Vergleich</button>
+              </nav>
 
-            <div id="jahresabrechnung" class="hidden"
-              style="margin-top:16px; padding:16px; background:var(--color-paper-2); border:1px solid var(--color-rule); border-radius:12px;">
-              <h3 style="margin-top:0;">Detaillierte Jahresabrechnung</h3>
-              <div style="display:flex; justify-content:space-between; margin-top: 8px;">
-                <span class="text-muted">Brutto (gesamt):</span>
-                <strong id="resGrossYear">-- €</strong>
+              <!-- Pane 1: Jahresabrechnung -->
+              <div id="tab-jahresabrechnung" class="seg-pane active" role="tabpanel">
+                <div class="seg-row">
+                  <span>Brutto (gesamt pro Jahr):</span>
+                  <strong id="resGrossYear">-- €</strong>
+                </div>
+                <div class="seg-row">
+                  <span>- Sozialversicherung (SV):</span>
+                  <strong id="resSvYear" style="color: var(--danger, #dc2626);">-- €</strong>
+                </div>
+                <div class="seg-row">
+                  <span>- Lohnsteuer:</span>
+                  <strong id="resTaxYear" style="color: var(--danger, #dc2626);">-- €</strong>
+                </div>
+                <div class="seg-row total">
+                  <span>Netto (gesamt pro Jahr):</span>
+                  <strong id="resNetYear" class="text-success" style="font-size: 1.15em;">-- €</strong>
+                </div>
               </div>
-              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
-                <span class="text-muted">- Sozialversicherung (SV):</span>
-                <strong id="resSvYear" style="color: var(--danger);">-- €</strong>
+
+              <!-- Pane 2: Arbeitgeberkosten -->
+              <div id="tab-dienstgeber" class="seg-pane" role="tabpanel">
+                <p class="seg-note">
+                  Zusätzlich zum Bruttogehalt zahlt der Arbeitgeber <strong>Lohnnebenkosten</strong> (SV-Dienstgeberanteil, Kommunalsteuer, DB, DZ, Vorsorgekasse). Wichtiges Argument für Gehaltsverhandlungen!
+                </p>
+                <div class="seg-row">
+                  <span>Lohnnebenkosten (pro Jahr):</span>
+                  <strong id="resLnkYear">-- €</strong>
+                </div>
+                <div class="seg-row total">
+                  <span>Gesamtkosten für den Arbeitgeber:</span>
+                  <strong id="resTotalCostYear" style="color: var(--color-accent, #1858C7); font-size: 1.1em;">-- €</strong>
+                </div>
               </div>
-              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
-                <span class="text-muted">- Lohnsteuer:</span>
-                <strong id="resTaxYear" style="color: var(--danger);">-- €</strong>
-              </div>
-              <div
-                style="display:flex; justify-content:space-between; margin-top: 12px; padding-top: 8px; border-top: 1px dashed var(--border);">
-                <span><strong>Netto (gesamt pro Jahr):</strong></span>
-                <strong id="resNetYear" class="text-success" style="font-size: 1.2em;">-- €</strong>
+
+              <!-- Pane 3: Gehalts-Vergleich & Kaufkraft -->
+              <div id="tab-insights" class="seg-pane" role="tabpanel">
+                <div style="margin-bottom: 12px;">
+                  <strong style="font-size: 0.84rem; color: var(--color-ink, #0f172a);">📊 Statistik Austria Vergleich:</strong>
+                  <p id="rankingText" style="font-size: 0.84rem; color: var(--color-ink-2, #334155); margin: 4px 0 0; line-height: 1.45;"></p>
+                </div>
+                <div style="padding-top: 10px; border-top: 1px solid var(--color-rule, #e2e8f0);">
+                  <strong style="font-size: 0.84rem; color: var(--color-ink, #0f172a);">📉 Kaufkraft & Inflation (5 Jahre):</strong>
+                  <p id="inflationText" style="font-size: 0.84rem; color: var(--color-ink-2, #334155); margin: 4px 0 0; line-height: 1.45;"></p>
+                </div>
               </div>
             </div>
 
-            <!-- Dienstgeberkosten als ausklappbare Section -->
-            <button class="expand-toggle" data-toggle-target="dienstgeberkosten"
-              data-text-expand="🏢 Arbeitgeberkosten anzeigen" data-text-collapse="🏢 Arbeitgeberkosten ausblenden"
-              style="margin-top:16px; background:color-mix(in oklch, #fff8e1 80%, var(--color-paper)); border-color:#ffe082; color:#b08d00;">
-              <span class="icon" style="color:#b08d00;">▼</span>
-              <span class="toggle-text">🏢 Arbeitgeberkosten anzeigen</span>
-            </button>
-            <div id="dienstgeberkosten" class="hidden"
-              style="margin-top:0; padding: 16px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 0 0 12px 12px;">
-              <p style="font-size: 13px; color: #8f7200; margin-bottom: 12px; line-height: 1.4;">Zusätzlich zu deinem
-                Bruttogehalt zahlt dein Arbeitgeber noch hohe <strong>Lohnnebenkosten</strong> (SV-Dienstgeberanteil,
-                Kommunalsteuer, DB, DZ, Vorsorgekasse). Wichtig für Gehaltsverhandlungen!</p>
-              <div style="display:flex; justify-content:space-between; font-size: 14px;">
-                <span style="color: #b08d00;">Lohnnebenkosten (pro Jahr):</span>
-                <strong id="resLnkYear" style="color: #b08d00;">-- €</strong>
-              </div>
-              <div
-                style="display:flex; justify-content:space-between; font-size: 15px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ffe082;">
-                <strong style="color: #b08d00;">Gesamtkosten für den Arbeitgeber:</strong>
-                <strong id="resTotalCostYear" style="color: #b08d00; font-size: 1.1em;">-- €</strong>
-              </div>
-            </div>
-
-            <!-- Premium Insights ausklappbar -->
-            <button class="expand-toggle" data-toggle-target="premiumInsights"
-              data-text-expand="📊 Gehalt-Insights anzeigen" data-text-collapse="📊 Gehalt-Insights ausblenden"
-              style="margin-top:16px;">
-              <span class="icon">▼</span>
-              <span class="toggle-text">📊 Gehalt-Insights anzeigen</span>
-            </button>
-            <div id="premiumInsights" class="hidden"
-              style="margin-top:0; flex-direction: column; gap: 16px; padding:16px; border:1px solid var(--color-rule); border-radius:0 0 12px 12px;">
-              <!-- Ranking -->
-              <div style="padding: 16px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;">
-                <h4 style="margin-top: 0; color: #166534; display: flex; align-items: center; gap: 8px;"><span>📊</span>
-                  Gehalts-Ranking Österreich</h4>
-                <p id="rankingText" style="font-size: 14px; color: #15803d; margin: 0; line-height: 1.4;"></p>
-                <div style="font-size: 11px; color: #166534; margin-top: 8px; opacity: 0.8;">Quelle: Statistik Austria,
-                  Medianlohn Vollzeit (Stand 2024/2025: ca. 3.650 € Brutto/Monat)</div>
-              </div>
-
-              <!-- Kaufkraft -->
-              <div style="padding: 16px; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 12px;">
-                <h4 style="margin-top: 0; color: #9f1239; display: flex; align-items: center; gap: 8px;"><span>📉</span>
-                  Inflations-Schock (Kaufkraft)</h4>
-                <p id="inflationText" style="font-size: 14px; color: #be123c; margin: 0; line-height: 1.4;"></p>
-                <div style="font-size: 11px; color: #9f1239; margin-top: 8px; opacity: 0.8;">Annahme: 2,5%
-                  durchschnittliche Inflation pro Jahr (langfristiges EZB-Ziel)</div>
-              </div>
-            </div>
-
-
-            <div class="seo-crosslink"
-              style="margin-top: 24px; padding: 15px; background: var(--color-paper-2); border-radius: 10px; border: 1px dashed var(--color-primary); text-align: center;">
-              <p style="margin: 0; font-size: 0.95rem;">💡 <strong>Tipp:</strong> Überlegst du deine Stunden zu
-                reduzieren? <br><a href="/arbeitszeit/teilzeitrechner.html"
-                  style="font-weight: bold; color: var(--color-primary); display: inline-block; margin-top: 5px;">Nutze
-                  unseren Teilzeitrechner ➔</a></p>
+            <div style="margin-top: 16px; text-align: center; font-size: 0.85rem; color: var(--color-ink-3, #64748b);">
+              Überlegst du Stunden zu reduzieren? <a href="/arbeitszeit/teilzeitrechner.html" style="font-weight: 600; color: var(--color-accent, #1858C7);">Teilzeitrechner nutzen ➔</a>
             </div>
 
           </div>
@@ -595,17 +567,14 @@
         </div>
       </section>
 
-      <!-- Embed Widget -->
-      <div class="embed-widget"
-        style="margin-top: 32px; padding: 24px; background: var(--soft); border-radius: 12px; border: 1px dashed var(--primary);">
-        <h3 style="margin-top: 0; display: flex; align-items: center; gap: 8px;"><span>💻</span> Rechner auf deiner
-          Website einbinden</h3>
-        <p style="font-size: 14px; margin-bottom: 12px;">Kopiere diesen Code, um den Brutto-Netto-Rechner kostenlos in
-          deinen HR-Blog oder deine Firmenwebsite einzubinden:</p>
-        <textarea readonly
-          style="width: 100%; height: 60px; font-family: monospace; font-size: 12px; padding: 12px; border-radius: 6px; border: 1px solid var(--border); resize: none;"
-          onclick="this.select()"><iframe src="https://rechnify.at/finanzen/gehaltsrechner.html?widget=true" width="100%" height="600" style="border:none; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe></textarea>
-      </div>
+      <!-- Embed Widget (Quiet Progressive Disclosure) -->
+      <details class="embed-details">
+        <summary>💻 Rechner als Widget auf deiner Website einbinden</summary>
+        <div class="embed-content">
+          <p>Kostenlos per iFrame in deinen HR-Blog oder deine Firmenwebsite einbinden:</p>
+          <textarea readonly onclick="this.select()"><iframe src="https://rechnify.at/finanzen/gehaltsrechner.html?widget=true" width="100%" height="600" style="border:none; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe></textarea>
+        </div>
+      </details>
 
     </div>
   </main>
@@ -873,9 +842,6 @@
       const loss = res.netMonthly - netAfter5Years;
       document.getElementById('inflationText').innerHTML = `Achtung: Dein heutiges Netto von <strong>${res.netMonthly.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong> ist in 5 Jahren faktisch nur noch <strong>${netAfter5Years.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong> wert (Kaufkraftverlust: -${loss.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €).`;
 
-      document.getElementById('premiumInsights').classList.remove('hidden');
-      document.getElementById('premiumInsights').style.display = 'flex';
-
       // Update breakdown bar
       const breakdownNetto = res.netMonthly;
       const breakdownSV = res.svMonthly;
@@ -946,6 +912,19 @@
           if (preview) {
             preview.innerHTML = `Bei <strong>+${raise} € Brutto</strong> mehr erhältst du jeden Monat <strong>+${netMonthlyDiff.toLocaleString('de-AT', { maximumFractionDigits: 0 })} € Netto</strong> zusätzlich aufs Konto. Aufs Jahr gerechnet sind das <strong>+${netYearDiff.toLocaleString('de-AT', { maximumFractionDigits: 0 })} € Netto</strong> (inkl. Urlaubsgeld &amp; Weihnachtsgeld).`;
           }
+        });
+      });
+
+      // Details segmented tab switching
+      document.querySelectorAll('.details-panel .seg-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const panel = btn.closest('.details-panel');
+          if (!panel) return;
+          panel.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+          panel.querySelectorAll('.seg-pane').forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const target = panel.querySelector('#' + btn.dataset.tab);
+          if (target) target.classList.add('active');
         });
       });
 
