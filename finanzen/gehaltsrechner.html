@@ -786,7 +786,7 @@
       });
     }
 
-    document.getElementById('calculate').addEventListener('click', () => {
+    function calculateGehalt() {
       const rawGross = parseFloat(document.getElementById('grossMonthly').value) || 0;
       const salaryMode = document.getElementById('salaryMode') ? document.getElementById('salaryMode').value : 'monat';
       const hasSonder = document.getElementById('hasSonderzahlungen').value === 'ja';
@@ -890,18 +890,18 @@
       }
 
       document.getElementById('result').classList.remove('hidden');
-    });
+    }
+
+    const calcBtn = document.getElementById('calculate');
+    if (calcBtn) calcBtn.addEventListener('click', calculateGehalt);
 
     /* ── Live calculation: recalc while typing (debounced) ────────
      * 'input' covers text/number fields, 'change' covers select + checkbox. */
     (function initLiveCalc() {
-      const calcBtn = document.getElementById('calculate');
-      if (!calcBtn) return;
-
       let calcTimeout;
       const trigger = (delay) => {
         clearTimeout(calcTimeout);
-        calcTimeout = setTimeout(() => calcBtn.click(), delay);
+        calcTimeout = setTimeout(calculateGehalt, delay);
       };
 
       const typedFields = ['grossMonthly', 'hoursCurrent', 'hoursTarget'];
@@ -924,7 +924,7 @@
           const grossInput = document.getElementById('grossMonthly');
           if (grossInput) {
             grossInput.value = btn.dataset.val;
-            calcBtn.click();
+            calculateGehalt();
           }
         });
       });
@@ -950,7 +950,7 @@
       });
 
       // Show result immediately on load with default or restored value
-      calcBtn.click();
+      calculateGehalt();
     })();
 
     /* ── Shareable URL + PDF Export ─────────────────────────────── */

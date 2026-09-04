@@ -544,7 +544,7 @@
       });
     }
 
-    document.getElementById('calculate').addEventListener('click', () => {
+    function calculateGehaltDE() {
       const rawGross = parseFloat(document.getElementById('grossMonthly').value) || 0;
       if (!rawGross) {
         document.getElementById('result').classList.add('hidden');
@@ -635,19 +635,26 @@
       }
 
       document.getElementById('result').classList.remove('hidden');
-    });
+    }
+
+    const calcBtn = document.getElementById('calculate');
+    if (calcBtn) calcBtn.addEventListener('click', calculateGehaltDE);
 
     /* Live calculation */
     (function initLiveCalc() {
-      const calcBtn = document.getElementById('calculate');
-      if (!calcBtn) return;
+      let calcTimeout;
+      const trigger = (delay) => {
+        clearTimeout(calcTimeout);
+        calcTimeout = setTimeout(calculateGehaltDE, delay);
+      };
+
       ['grossMonthly', 'hoursCurrent', 'hoursTarget'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.addEventListener('input', () => calcBtn.click());
+        if (el) el.addEventListener('input', () => trigger(400));
       });
       ['salaryMode', 'taxClass', 'churchTax', 'simulatePartTime'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.addEventListener('change', () => calcBtn.click());
+        if (el) el.addEventListener('change', () => trigger(0));
       });
 
       // Quick salary chips
@@ -658,7 +665,7 @@
           const grossInput = document.getElementById('grossMonthly');
           if (grossInput) {
             grossInput.value = btn.dataset.val;
-            calcBtn.click();
+            calculateGehaltDE();
           }
         });
       });
@@ -682,7 +689,7 @@
         });
       });
 
-      calcBtn.click();
+      calculateGehaltDE();
     })();
   </script>
 </body>

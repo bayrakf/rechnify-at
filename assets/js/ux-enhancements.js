@@ -206,17 +206,9 @@
     }
   }
 
-  // ── SMOOTH SCROLL TO RESULT ────────────────────────────────────
+  // ── SMOOTH SCROLL TO RESULT (Disabled to prevent jarring jumps on load & live typing) ──
   function scrollToResult() {
-    const result = document.getElementById('result');
-    if (!result || result.classList.contains('hidden')) return;
-
-    setTimeout(() => {
-      result.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'nearest'
-      });
-    }, 100);
+    // Intentionally no-op: prevents fighting the user's scroll position while typing or loading
   }
 
   // ── INITIALIZE ALL ─────────────────────────────────────────────
@@ -226,16 +218,6 @@
     initModalTriggers();
     initPredefinedModals();
     initStickyCTA();
-
-    // Scroll to result when calculation is done
-    const calcBtn = document.getElementById('calculate');
-    if (calcBtn) {
-      const originalOnClick = calcBtn.onclick;
-      calcBtn.onclick = function() {
-        if (originalOnClick) originalOnClick.call(this);
-        setTimeout(scrollToResult, 200);
-      };
-    }
   }
 
   // Run on DOMContentLoaded
