@@ -14,7 +14,10 @@ ROOT = Path(__file__).resolve().parents[1]
 HOST = "rechnify.at"
 KEY = "48203d7933394ec8a062b7e4943c572b"
 KEY_LOCATION = f"https://{HOST}/{KEY}.txt"
-ENDPOINT = "https://api.indexnow.org/indexnow"
+ENDPOINTS = [
+    "https://api.indexnow.org/indexnow",
+    "https://yandex.com/indexnow",
+]
 SITEMAP = ROOT / "sitemap.xml"
 
 
@@ -32,26 +35,29 @@ def submit(urls: list[str]) -> int:
         "urlList": urls,
     }
     data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(
-        ENDPOINT,
-        data=data,
-        headers={"Content-Type": "application/json; charset=utf-8"},
-        method="POST",
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=60) as res:
-            code = res.getcode()
-            body = res.read().decode("utf-8", errors="replace")
-            print(f"IndexNow {code}: {len(urls)} URLs")
-            if body:
-                print(body[:500])
-            return 0 if code in (200, 202) else 1
-    except urllib.error.HTTPError as e:
-        print(f"IndexNow HTTP {e.code}: {e.read().decode('utf-8', errors='replace')[:500]}", file=sys.stderr)
-        return 1
-    except urllib.error.URLError as e:
-        print(f"IndexNow error: {e}", file=sys.stderr)
-        return 1
+    success = False
+    for ep in ENDPOINTS:
+        req = urllib.request.Request(
+            ep,
+            data=data,
+            headers={"Content-Type": "application/json; charset=utf-8"},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=30) as res:
+                code = res.getcode()
+                body = res.read().decode("utf-8", errors="replace")
+                print(f"IndexNow ({ep}) {code}: {len(urls)} URLs")
+                if body:
+                    print(body[:300])
+                if code in (200, 202):
+                    success = True
+                    break
+        except urllib.error.HTTPError as e:
+            print(f"IndexNow ({ep}) HTTP {e.code}: {e.read().decode('utf-8', errors='replace')[:200]}", file=sys.stderr)
+        except urllib.error.URLError as e:
+            print(f"IndexNow ({ep}) error: {e}", file=sys.stderr)
+    return 0 if success else 1
 
 
 def main() -> int:
