@@ -91,86 +91,94 @@
   </header>
 
   <main class="site-main">
-    <div class="calculator-container">
+    <div class="calculator-container cockpit-layout">
       <div class="calculator-card">
 
-        <div class="calc-header">
-          <div class="calc-icon">🚗</div>
-          <h1 style="margin-bottom:8px;">Pendlerpauschale Rechner Österreich</h1>
-          <p>Berechne deine Pendlerpauschale und den zustehenden Pendlereuro für das Jahr 2026.</p>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">🚗</span>
+            <div>
+              <h1>Pendlerpauschale Rechner Österreich 2026</h1>
+              <p>Berechne deine Pendlerpauschale und den zustehenden Pendlereuro.</p>
+            </div>
+          </div>
         </div>
 
-        <div class="calc-body" style="padding: 24px;">
-
-          <!-- Entfernung -->
-          <div class="input-group" style="margin-bottom:12px;">
-            <label for="distance">Einfache Fahrtstrecke (Arbeitsweg in km)</label>
-            <div class="input-suffix">
-              <input type="number" id="distance" inputmode="numeric" placeholder="z.B. 25" min="0" step="1" value="25" oninput="calculate()" />
-              <span class="suffix">km</span>
-            </div>
-          </div>
-          <div class="quick-chips-wrap">
-            <span class="quick-chip-label">Strecke:</span>
-            <button type="button" class="quick-chip" data-dist="10">10 km</button>
-            <button type="button" class="quick-chip active" data-dist="25">25 km</button>
-            <button type="button" class="quick-chip" data-dist="40">40 km</button>
-            <button type="button" class="quick-chip" data-dist="60">60 km</button>
-          </div>
-
-          <!-- Zumutbarkeit Öffis -->
-          <div class="input-group">
-            <label for="publicTransport">Benutzung von öffentlichen Verkehrsmitteln</label>
-            <select id="publicTransport" onchange="calculate()">
-              <option value="reasonable">Zumutbar (Kleine Pendlerpauschale)</option>
-              <option value="unreasonable">Unzumutbar (Große Pendlerpauschale)</option>
-            </select>
-          </div>
-
-          <!-- Pendeltage -->
-          <div class="input-group">
-            <label for="daysPerMonth">Pendeltage pro Kalendermonat</label>
-            <select id="daysPerMonth" onchange="calculate()">
-              <option value="full">Mindestens 11 Tage (Voller Anspruch)</option>
-              <option value="two-thirds">8 bis 10 Tage (2/3 Anspruch)</option>
-              <option value="one-third">4 bis 7 Tage (1/3 Anspruch)</option>
-              <option value="none">Weniger als 4 Tage (Kein Anspruch)</option>
-            </select>
-          </div>
-
-          <!-- Ergebnis -->
-          <div class="result-box" id="result" style="display:none;">
-            <strong style="font-size: var(--text-base); color: var(--text);">📊 Berechnungsergebnis</strong>
-            <div class="result-grid result-grid-3">
-              <div class="result-card highlight">
-                <div class="label">Pendlerpauschale (Jahr)</div>
-                <div class="value" id="resPauschaleYear">–</div>
-                <div class="sub">LSt-Minderung pro Jahr</div>
-              </div>
-              <div class="result-card highlight">
-                <div class="label">Pendlereuro (Jahr)</div>
-                <div class="value" id="resEuroYear">–</div>
-                <div class="sub">Direkt-Abzug pro Jahr</div>
-              </div>
-              <div class="result-card">
-                <div class="label">Monatlicher Anteil</div>
-                <div class="value" id="resMonthCombined">–</div>
-                <div class="sub">Pauschale + Pendlereuro ÷ 12</div>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <!-- Entfernung -->
+            <div class="input-group" style="margin-bottom:0;">
+              <label for="distance">Einfache Fahrtstrecke (Arbeitsweg in km)</label>
+              <div class="input-suffix">
+                <input type="number" id="distance" inputmode="numeric" placeholder="z.B. 25" min="0" step="1" value="25" oninput="calculate()" />
+                <span class="suffix">km</span>
               </div>
             </div>
-            <div class="result-grid" style="margin-top:12px;">
-              <div class="result-card">
-                <div class="label">Pendlerpauschale (Monat)</div>
-                <div class="value" id="resPauschaleValue">–</div>
-              </div>
-              <div class="result-card">
-                <div class="label">Pendlereuro (Monat)</div>
-                <div class="value" id="resEuroValue">–</div>
-              </div>
+            <div class="quick-chips-wrap">
+              <span class="quick-chip-label">Strecke:</span>
+              <button type="button" class="quick-chip" data-dist="10">10 km</button>
+              <button type="button" class="quick-chip active" data-dist="25">25 km</button>
+              <button type="button" class="quick-chip" data-dist="40">40 km</button>
+              <button type="button" class="quick-chip" data-dist="60">60 km</button>
             </div>
-            <div class="info-box" id="infoBox"></div>
+
+            <!-- Zumutbarkeit Öffis -->
+            <div class="input-group">
+              <label for="publicTransport">Benutzung von öffentlichen Verkehrsmitteln</label>
+              <select id="publicTransport" onchange="calculate()">
+                <option value="reasonable">Zumutbar (Kleine Pendlerpauschale)</option>
+                <option value="unreasonable">Unzumutbar (Große Pendlerpauschale)</option>
+              </select>
+            </div>
+
+            <!-- Pendeltage -->
+            <div class="input-group">
+              <label for="daysPerMonth">Pendeltage pro Kalendermonat</label>
+              <select id="daysPerMonth" onchange="calculate()">
+                <option value="full">Mindestens 11 Tage (Voller Anspruch)</option>
+                <option value="two-thirds">8 bis 10 Tage (2/3 Anspruch)</option>
+                <option value="one-third">4 bis 7 Tage (1/3 Anspruch)</option>
+                <option value="none">Weniger als 4 Tage (Kein Anspruch)</option>
+              </select>
+            </div>
           </div>
 
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="result">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Pendlerpauschale (Jahr)</span>
+                <div class="hero-net-val" id="resPauschaleYear">–</div>
+                <div class="hero-net-sub">Lohnsteuerminderung pro Jahr</div>
+
+                <div class="sub-cards-grid">
+                  <div class="sub-net-card">
+                    <div class="label">Pendlereuro (Jahr)</div>
+                    <div class="val" id="resEuroYear" style="color: var(--color-accent, #1858C7); font-weight:700;">–</div>
+                    <div class="desc">Direkt-Abzug von LSt</div>
+                  </div>
+                  <div class="sub-net-card">
+                    <div class="label">Monatlicher Anteil</div>
+                    <div class="val" id="resMonthCombined" style="color: var(--color-ink, #0f172a); font-weight:700;">–</div>
+                    <div class="desc">Pauschale + Euro ÷ 12</div>
+                  </div>
+                  <div class="sub-net-card">
+                    <div class="label">Pauschale (Monat)</div>
+                    <div class="val" id="resPauschaleValue" style="color: var(--color-ink, #0f172a); font-weight:700;">–</div>
+                    <div class="desc">Monatsanteil</div>
+                  </div>
+                  <div class="sub-net-card">
+                    <div class="label">Pendlereuro (Monat)</div>
+                    <div class="val" id="resEuroValue" style="color: var(--color-accent, #1858C7); font-weight:700;">–</div>
+                    <div class="desc">Monatsanteil</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-box" id="infoBox" style="margin-top: 16px;"></div>
+            </div>
+          </div>
         </div>
 
         <!-- FAQ -->

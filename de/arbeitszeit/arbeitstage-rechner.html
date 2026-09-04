@@ -115,74 +115,87 @@
 
   <main class="site-main">
     
-    <div class="page-hero" style="padding-top:10px;">
-      <h1 style="margin-bottom:8px;">Arbeitstage-Rechner (Deutschland)</h1>
-      <p class="subtitle">Wie viele Werktage und Arbeitstage hat dein Zeitraum?</p>
-    </div>
-
-    <!-- CALCULATOR -->
-    <div class="card">
-      <div class="calc-body">
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
         
-        <div class="input-row">
-          <div class="input-group">
-            <label for="startDate">Startdatum</label>
-            <input type="date" id="startDate" />
-          </div>
-          <div class="input-group">
-            <label for="endDate">Enddatum</label>
-            <input type="date" id="endDate" />
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">📅</span>
+            <div>
+              <h1>Arbeitstage-Rechner Deutschland 2026</h1>
+              <p>Ermittle die exakte Anzahl der Werktage und Arbeitstage abzüglich Wochenenden und Feiertagen nach Bundesland.</p>
+            </div>
           </div>
         </div>
 
-        
-        <div class="input-row">
-          <div class="input-group">
-            <label for="bundesland">Bundesland</label>
-            <select id="bundesland">
-              <option value="ALL">Alle / Einheitlich</option>
-              <option value="BW">Baden-Württemberg</option>
-              <option value="BY">Bayern</option>
-              <option value="BE">Berlin</option>
-              <option value="NW">Nordrhein-Westfalen</option>
-              <option value="HE">Hessen</option>
-              <option value="RP">Rheinland-Pfalz</option>
-              <option value="SL">Saarland</option>
-              <option value="ST">Sachsen-Anhalt</option>
-            </select>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-group">
+              <label for="startDate">Startdatum</label>
+              <input type="date" id="startDate" />
+            </div>
+            <div class="input-group">
+              <label for="endDate">Enddatum</label>
+              <input type="date" id="endDate" />
+            </div>
+            <div class="input-group">
+              <label for="bundesland">Bundesland</label>
+              <select id="bundesland">
+                <option value="ALL">Alle / Einheitlich</option>
+                <option value="BW">Baden-Württemberg</option>
+                <option value="BY">Bayern</option>
+                <option value="BE">Berlin</option>
+                <option value="NW">Nordrhein-Westfalen</option>
+                <option value="HE">Hessen</option>
+                <option value="RP">Rheinland-Pfalz</option>
+                <option value="SL">Saarland</option>
+                <option value="ST">Sachsen-Anhalt</option>
+              </select>
+            </div>
           </div>
-        </div>
-    
-        
-        <div class="result-box" id="resultBox">
-          <div class="result-item">
-            <span>Kalendertage gesamt</span>
-            <span id="resTotal">--</span>
-          </div>
-          <div class="result-item muted">
-            <span>Wochentage (Mo–Fr)</span>
-            <span id="resWeekdays">--</span>
-          </div>
-          <div class="result-item muted">
-            <span>Davon Wochenenden</span>
-            <span id="resWeekend">--</span>
-          </div>
-          <div class="result-item muted">
-            <span>Davon Feiertage (werktags)</span>
-            <span id="resHolidays">--</span>
-          </div>
-          <div class="result-item highlight">
-            <span>Arbeitstage (Mo-Fr)</span>
-            <span id="resWorking">--</span>
-          </div>
-          
-          <div class="holiday-list" id="holidayListWrap" style="display:none;">
-            <strong>Gefundene Feiertage:</strong>
-            <ul id="holidayList"></ul>
-          </div>
-          
-          <div class="seo-crosslink" style="margin-top: 24px; padding: 15px; background: var(--color-paper-2); border-radius: 10px; border: 1px dashed var(--color-primary); text-align: center;">
-            <p style="margin: 0; font-size: 0.95rem;">💡 <strong>Tipp:</strong> Hol das Maximum aus deinen Urlaubstagen! <br><a href="/de/arbeitszeit/brueckentage-planer.html" style="font-weight: bold; color: var(--color-primary); display: inline-block; margin-top: 5px;">Zum Brückentage-Planer ➔</a></p>
+
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="resultBox">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Tatsächliche Arbeitstage (Mo–Fr)</span>
+                <div class="hero-net-val" id="resWorking">--</div>
+                <div class="hero-net-sub">Netto-Arbeitstage im gewählten Zeitraum</div>
+              </div>
+
+              <div class="sub-cards-grid">
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Kalendertage</div>
+                  <div class="sub-net-val" id="resTotal">--</div>
+                  <div class="sub-net-period">gesamt</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Wochentage</div>
+                  <div class="sub-net-val" id="resWeekdays">--</div>
+                  <div class="sub-net-period">Mo–Fr</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Wochenenden</div>
+                  <div class="sub-net-val" id="resWeekend" style="color: var(--muted);">--</div>
+                  <div class="sub-net-period">Sa &amp; So</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Feiertage</div>
+                  <div class="sub-net-val" id="resHolidays" style="color: var(--primary);">--</div>
+                  <div class="sub-net-period">im Bundesland</div>
+                </div>
+              </div>
+
+              <div class="holiday-list" id="holidayListWrap" style="display:none; margin-top: 16px;">
+                <strong>Gefundene Feiertage:</strong>
+                <ul id="holidayList"></ul>
+              </div>
+
+              <div class="seo-crosslink" style="margin-top: 16px; padding: 12px; background: var(--color-paper-2); border-radius: 10px; border: 1px dashed var(--color-primary); text-align: center;">
+                <p style="margin: 0; font-size: 0.9rem;">💡 <strong>Tipp:</strong> Hol das Maximum aus deinen Urlaubstagen! <br><a href="/de/arbeitszeit/brueckentage-planer.html" style="font-weight: bold; color: var(--color-primary); display: inline-block; margin-top: 4px;">Zum Brückentage-Planer ➔</a></p>
+              </div>
+            </div>
           </div>
         </div>
 

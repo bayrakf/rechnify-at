@@ -88,49 +88,87 @@
   </nav>
 
   <main class="site-main">
-    <div class="page-hero" style="padding-top:10px;">
-      <h1 style="margin-bottom:8px;">Stromkosten Rechner</h1>
-      <p class="subtitle">Berechne deine jährlichen und monatlichen Stromkosten aus kWh-Verbrauch, Arbeitspreis und Grundgebühr.</p>
-    </div>
-
-    <div class="card">
-      <div class="calc-body">
-        <div class="input-row">
-          <div class="input-group">
-            <label for="kwh">Verbrauch (kWh / Jahr)</label>
-            <input type="number" id="kwh" value="3500" min="0" step="50" placeholder="z. B. 3500" />
-          </div>
-          <div class="input-group">
-            <label for="preis">Arbeitspreis (€ / kWh)</label>
-            <input type="number" id="preis" value="0.28" min="0" step="0.01" placeholder="z. B. 0.28" />
-          </div>
-        </div>
-        <div class="input-row">
-          <div class="input-group">
-            <label for="grund">Grundgebühr (€ / Jahr)</label>
-            <input type="number" id="grund" value="120" min="0" step="5" placeholder="z. B. 120" />
-          </div>
-          <div class="input-group">
-            <label for="pers">Personen im Haushalt</label>
-            <input type="number" id="pers" value="2" min="1" max="10" step="1" />
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
+        
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">⚡</span>
+            <div>
+              <h1>Stromkosten Rechner 2026</h1>
+              <p>Berechne deine jährlichen und monatlichen Stromkosten aus kWh-Verbrauch, Arbeitspreis und Grundgebühr.</p>
+            </div>
           </div>
         </div>
 
-        <div class="result-box" id="resultBox">
-          <div class="result-item highlight">
-            <span>Kosten / Jahr</span>
-            <span id="jahr">—</span>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-group">
+              <label for="kwh">Verbrauch (kWh / Jahr)</label>
+              <div class="input-suffix">
+                <input type="number" id="kwh" value="3500" min="0" step="50" placeholder="z. B. 3500" inputmode="numeric" />
+                <span class="suffix">kWh</span>
+              </div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Haushalt:</span>
+                <button type="button" class="quick-chip" data-target="kwh" data-val="1800">1 Pers (1.800)</button>
+                <button type="button" class="quick-chip active" data-target="kwh" data-val="3500">2 Pers (3.500)</button>
+                <button type="button" class="quick-chip" data-target="kwh" data-val="4500">3-4 Pers (4.500)</button>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="preis">Arbeitspreis (€ / kWh)</label>
+              <div class="input-suffix">
+                <input type="number" id="preis" value="0.28" min="0" step="0.01" placeholder="z. B. 0.28" inputmode="decimal" />
+                <span class="suffix">€/kWh</span>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="grund">Grundgebühr (€ / Jahr)</label>
+              <div class="input-suffix">
+                <input type="number" id="grund" value="120" min="0" step="5" placeholder="z. B. 120" inputmode="numeric" />
+                <span class="suffix">€/Jahr</span>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="pers">Personen im Haushalt</label>
+              <input type="number" id="pers" value="2" min="1" max="10" step="1" inputmode="numeric" />
+            </div>
           </div>
-          <div class="result-item">
-            <span>Kosten / Monat</span>
-            <span id="mon">—</span>
+
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="resultBox">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Geschätzte Stromkosten pro Jahr</span>
+                <div class="hero-net-val" id="jahr">—</div>
+                <div class="hero-net-sub">inkl. Grundpreis und Verbrauch</div>
+              </div>
+
+              <div class="sub-cards-grid">
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Kosten / Monat</div>
+                  <div class="sub-net-val" id="mon">—</div>
+                  <div class="sub-net-period">Abschlagszahlung</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Pro Person / Monat</div>
+                  <div class="sub-net-val" id="pp" style="color: var(--primary);">—</div>
+                  <div class="sub-net-period">Haushaltsanteil</div>
+                </div>
+              </div>
+
+              <div class="info-box" style="margin-top: 14px; font-size: 13px;">
+                💡 <strong>Spartipp:</strong> Vergleiche regelmäßig deinen Stromtarif. Ein Wechsel von 35 Cent auf 25 Cent spart bei 3.500 kWh ganze <strong>350 € jährlich</strong>!
+              </div>
+            </div>
           </div>
-          <div class="result-item">
-            <span>pro Person / Monat</span>
-            <span id="pp">—</span>
-          </div>
-          <p class="help">Berechnung basiert auf deinen exakten Eingaben (Arbeitspreis × Verbrauch + Grundpreis).</p>
         </div>
+
       </div>
     </div>
 
@@ -197,6 +235,20 @@
       };
 
       [kwh, preis, grund, pers].forEach(el => el.addEventListener('input', calc));
+
+      document.querySelectorAll('.quick-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const targetId = chip.dataset.target;
+          const val = chip.dataset.val;
+          const input = document.getElementById(targetId);
+          if (!input) return;
+          input.value = val;
+          chip.parentElement.querySelectorAll('.quick-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          calc();
+        });
+      });
+
       calc();
     });
   </script>

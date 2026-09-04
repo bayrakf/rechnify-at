@@ -88,69 +88,84 @@
   </header>
 
   <main class="site-main">
-    <div class="calculator-container">
+    <div class="calculator-container cockpit-layout">
       <div class="calculator-card">
 
-        <div class="calc-header">
-          <div class="calc-icon">🚗</div>
-          <h1 style="margin-bottom:8px;">Firmenwagenrechner & Sachbezug Deutschland</h1>
-          <p>Berechne die Dienstwagenbesteuerung nach der 1% Regelung (0.25%, 0.5% oder 1.0%) für Deutschland.</p>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">🚗</span>
+            <div>
+              <h1>Firmenwagenrechner &amp; Sachbezug Deutschland 2026</h1>
+              <p>Berechne die Dienstwagenbesteuerung nach der 1% Regelung (0,25%, 0,5% oder 1,0%) für Deutschland.</p>
+            </div>
+          </div>
         </div>
 
-        <div class="calc-body" style="padding: 24px;">
-
-          <!-- Fahrzeugantrieb -->
-          <div class="input-group">
-            <label for="engineType">Antriebsart des Dienstwagens</label>
-            <select id="engineType" onchange="calculate()">
-              <option value="combustion">Verbrennungsmotor / Hybrid ohne Förderung (1,0%)</option>
-              <option value="hybrid">Plug-in-Hybrid gefördert (0,5%)</option>
-              <option value="electric_low">Reines E-Auto bis 70.000 € Bruttolistenpreis (0,25%)</option>
-              <option value="electric_high">Reines E-Auto über 70.000 € Bruttolistenpreis (0,5%)</option>
-            </select>
-          </div>
-
-          <!-- Bruttolistenpreis -->
-          <div class="input-group">
-            <label for="listPrice">Inländischer Bruttolistenpreis (BLP zum Zeitpunkt der Erstzulassung)</label>
-            <div class="input-suffix">
-              <input type="number" id="listPrice" placeholder="z.B. 50000" min="0" step="1000" oninput="calculate()" />
-              <span class="suffix">€</span>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <!-- Fahrzeugantrieb -->
+            <div class="input-group">
+              <label for="engineType">Antriebsart des Dienstwagens</label>
+              <select id="engineType" onchange="calculate()">
+                <option value="combustion">Verbrennungsmotor / Hybrid ohne Förderung (1,0%)</option>
+                <option value="hybrid">Plug-in-Hybrid gefördert (0,5%)</option>
+                <option value="electric_low">Reines E-Auto bis 70.000 € Bruttolistenpreis (0,25%)</option>
+                <option value="electric_high">Reines E-Auto über 70.000 € Bruttolistenpreis (0,5%)</option>
+              </select>
             </div>
-          </div>
 
-          <!-- Entfernungskilometer -->
-          <div class="input-group">
-            <label for="workDistance">Entfernung zwischen Wohnung und erster Tätigkeitsstätte</label>
-            <div class="input-suffix">
-              <input type="number" id="workDistance" placeholder="z.B. 15" min="0" max="200" step="1" oninput="calculate()" />
-              <span class="suffix">km</span>
-            </div>
-          </div>
-
-          <!-- Ergebnis -->
-          <div class="result-box" id="result" style="display:none;">
-            <strong style="font-size: var(--text-base); color: var(--text);">📊 Berechnungsergebnis (monatlich)</strong>
-            <div class="result-grid">
-              <div class="result-card highlight">
-                <div class="label">Pauschalwert (1% Regelung)</div>
-                <div class="value" id="resPauschalValue">–</div>
-                <div class="sub">vom Listenpreis</div>
+            <!-- Bruttolistenpreis -->
+            <div class="input-group">
+              <label for="listPrice">Inländischer Bruttolistenpreis (BLP zum Zeitpunkt der Erstzulassung)</label>
+              <div class="input-suffix">
+                <input type="number" id="listPrice" value="50000" placeholder="z.B. 50000" min="0" step="1000" inputmode="numeric" oninput="calculate()" />
+                <span class="suffix">€</span>
               </div>
-              <div class="result-card">
-                <div class="label">Wohnung/Arbeit (0,03% / km)</div>
-                <div class="value" id="resDistanceValue">–</div>
-                <div class="sub">für Pendelstrecke</div>
-              </div>
-              <div class="result-card" style="grid-column: span 2;">
-                <div class="label">Gesamter Geldwerter Vorteil</div>
-                <div class="value" id="resTotalValue" style="color: var(--primary);">–</div>
-                <div class="sub">dieser Betrag erhöht dein zu versteuerndes Brutto</div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="listPrice" data-val="35000">35.000 €</button>
+                <button type="button" class="quick-chip active" data-target="listPrice" data-val="50000">50.000 €</button>
+                <button type="button" class="quick-chip" data-target="listPrice" data-val="65000">65.000 €</button>
+                <button type="button" class="quick-chip" data-target="listPrice" data-val="85000">85.000 €</button>
               </div>
             </div>
-            <div class="info-box" id="infoBox"></div>
+
+            <!-- Entfernungskilometer -->
+            <div class="input-group">
+              <label for="workDistance">Entfernung zwischen Wohnung und erster Tätigkeitsstätte</label>
+              <div class="input-suffix">
+                <input type="number" id="workDistance" value="15" placeholder="z.B. 15" min="0" max="200" step="1" inputmode="numeric" oninput="calculate()" />
+                <span class="suffix">km</span>
+              </div>
+            </div>
           </div>
 
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="result">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Gesamter Geldwerter Vorteil</span>
+                <div class="hero-net-val" id="resTotalValue">–</div>
+                <div class="hero-net-sub">erhöht monatlich dein zu versteuerndes Brutto</div>
+              </div>
+
+              <div class="sub-cards-grid">
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Pauschalwert</div>
+                  <div class="sub-net-val" id="resPauschalValue">–</div>
+                  <div class="sub-net-period">vom Listenpreis</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Wohnung / Arbeit</div>
+                  <div class="sub-net-val" id="resDistanceValue">–</div>
+                  <div class="sub-net-period">0,03% pro km</div>
+                </div>
+              </div>
+
+              <div class="info-box" id="infoBox" style="margin-top: 14px;"></div>
+            </div>
+          </div>
         </div>
 
         <!-- FAQ -->
@@ -273,6 +288,21 @@
 
       info.innerHTML = `Bei der 1%-Pauschalmethode beträgt dein geldwerter Vorteil insgesamt <strong>${total.toLocaleString('de-DE', { maximumFractionDigits: 2 })} €</strong> im Monat. Diesen Betrag versteuerst du individuell über deine Lohnsteuer.`;
     }
+
+    calculate();
+
+    document.querySelectorAll('.quick-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const targetId = chip.dataset.target;
+        const val = chip.dataset.val;
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        input.value = val;
+        chip.parentElement.querySelectorAll('.quick-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        calculate();
+      });
+    });
   </script>
 
 </body>

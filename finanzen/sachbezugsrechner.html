@@ -89,79 +89,87 @@
   </header>
 
   <main class="site-main">
-    <div class="calculator-container">
+    <div class="calculator-container cockpit-layout">
       <div class="calculator-card">
 
-        <div class="calc-header">
-          <div class="calc-icon">🚗</div>
-          <h1 style="margin-bottom:8px;">Firmenwagenrechner & Sachbezug Österreich</h1>
-          <p>Berechne die steuerlichen Auswirkungen deines Firmenwagens (Dienstwagens) für das Jahr 2026.</p>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">🚗</span>
+            <div>
+              <h1>Firmenwagenrechner &amp; Sachbezug Österreich 2026</h1>
+              <p>Berechne die steuerlichen Auswirkungen deines Firmenwagens (Dienstwagens).</p>
+            </div>
+          </div>
         </div>
 
-        <div class="calc-body" style="padding: 24px;">
-
-          <!-- Fahrzeugtyp -->
-          <div class="input-group">
-            <label for="carType">Fahrzeugtyp</label>
-            <select id="carType" onchange="toggleCarFields()">
-              <option value="verbrenner">Dienstwagen (Benzin, Diesel, Hybrid)</option>
-              <option value="elektro">Elektroauto (CO2-Ausstoß = 0 g/km)</option>
-              <option value="fahrrad">Dienstfahrrad / E-Bike</option>
-            </select>
-          </div>
-
-          <!-- Anschaffungspreis -->
-          <div class="input-group" id="priceGroup">
-            <label for="carPrice">Tatsächliche Anschaffungskosten (inkl. USt &amp; NoVA)</label>
-            <div class="input-suffix">
-              <input type="number" id="carPrice" value="45000" placeholder="z.B. 45000" min="0" step="1000" inputmode="numeric" oninput="calculate()" />
-              <span class="suffix">€</span>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <!-- Fahrzeugtyp -->
+            <div class="input-group">
+              <label for="carType">Fahrzeugtyp</label>
+              <select id="carType" onchange="toggleCarFields()">
+                <option value="verbrenner">Dienstwagen (Benzin, Diesel, Hybrid)</option>
+                <option value="elektro">Elektroauto (CO2-Ausstoß = 0 g/km)</option>
+                <option value="fahrrad">Dienstfahrrad / E-Bike</option>
+              </select>
             </div>
-            <div class="quick-chips-wrap">
-              <span class="quick-chip-label">Schnellwahl:</span>
-              <button type="button" class="quick-chip" data-target="carPrice" data-val="30000">30.000 €</button>
-              <button type="button" class="quick-chip active" data-target="carPrice" data-val="45000">45.000 € (Mittelklasse)</button>
-              <button type="button" class="quick-chip" data-target="carPrice" data-val="60000">60.000 €</button>
-              <button type="button" class="quick-chip" data-target="carPrice" data-val="80000">80.000 €</button>
-            </div>
-          </div>
 
-          <!-- CO2 Ausstoß -->
-          <div class="input-group" id="co2Group">
-            <label for="co2Limits">CO2-Ausstoß (WLTP-Grenzwert)</label>
-            <select id="co2Limits" onchange="calculate()">
-              <option value="low">Bis zu 129 g/km (1,5% Sachbezug)</option>
-              <option value="high">Über 129 g/km (2,0% Sachbezug)</option>
-            </select>
-          </div>
-
-          <!-- Kilometerleistung privat -->
-          <div class="input-group" id="kmGroup">
-            <label for="privateKm">Private Nutzung pro Jahr</label>
-            <select id="privateKm" onchange="calculate()">
-              <option value="full">Mehr als 6.000 km / Jahr (Voller Sachbezug)</option>
-              <option value="half">Bis zu 6.000 km / Jahr (Halber Sachbezug - Nachweis nötig)</option>
-            </select>
-          </div>
-
-          <!-- Ergebnis -->
-          <div class="result-box" id="result" style="display:none;">
-            <strong style="font-size: var(--text-base); color: var(--text);">📊 Berechnungsergebnis</strong>
-            <div class="result-grid">
-              <div class="result-card highlight">
-                <div class="label">Monatlicher Sachbezug</div>
-                <div class="value" id="resMonthlyValue">–</div>
-                <div class="sub">erhöht das Bruttogehalt</div>
+            <!-- Anschaffungspreis -->
+            <div class="input-group" id="priceGroup">
+              <label for="carPrice">Tatsächliche Anschaffungskosten (inkl. USt &amp; NoVA)</label>
+              <div class="input-suffix">
+                <input type="number" id="carPrice" value="45000" placeholder="z.B. 45000" min="0" step="1000" inputmode="numeric" oninput="calculate()" />
+                <span class="suffix">€</span>
               </div>
-              <div class="result-card">
-                <div class="label">Sachbezugssatz</div>
-                <div class="value" id="resPercentRate">–</div>
-                <div class="sub">vom Anschaffungspreis</div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="carPrice" data-val="30000">30.000 €</button>
+                <button type="button" class="quick-chip active" data-target="carPrice" data-val="45000">45.000 € (Mittelklasse)</button>
+                <button type="button" class="quick-chip" data-target="carPrice" data-val="60000">60.000 €</button>
+                <button type="button" class="quick-chip" data-target="carPrice" data-val="80000">80.000 €</button>
               </div>
             </div>
-            <div class="info-box" id="infoBox"></div>
+
+            <!-- CO2 Ausstoß -->
+            <div class="input-group" id="co2Group">
+              <label for="co2Limits">CO2-Ausstoß (WLTP-Grenzwert)</label>
+              <select id="co2Limits" onchange="calculate()">
+                <option value="low">Bis zu 129 g/km (1,5% Sachbezug)</option>
+                <option value="high">Über 129 g/km (2,0% Sachbezug)</option>
+              </select>
+            </div>
+
+            <!-- Kilometerleistung privat -->
+            <div class="input-group" id="kmGroup">
+              <label for="privateKm">Private Nutzung pro Jahr</label>
+              <select id="privateKm" onchange="calculate()">
+                <option value="full">Mehr als 6.000 km / Jahr (Voller Sachbezug)</option>
+                <option value="half">Bis zu 6.000 km / Jahr (Halber Sachbezug - Nachweis nötig)</option>
+              </select>
+            </div>
           </div>
 
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="result">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Monatlicher Sachbezug</span>
+                <div class="hero-net-val" id="resMonthlyValue">–</div>
+                <div class="hero-net-sub">geldwerter Vorteil (erhöht das Steuerbrutto)</div>
+
+                <div class="sub-cards-grid">
+                  <div class="sub-net-card">
+                    <div class="label">Sachbezugssatz</div>
+                    <div class="val" id="resPercentRate" style="color: var(--color-accent, #1858C7); font-weight:700;">–</div>
+                    <div class="desc">vom Anschaffungspreis</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-box" id="infoBox" style="margin-top: 16px;"></div>
+            </div>
+          </div>
         </div>
 
         <!-- FAQ -->

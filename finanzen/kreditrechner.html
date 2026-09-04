@@ -127,68 +127,94 @@
 
   <main class="site-main">
     
-    <div class="page-hero" style="padding-top:10px;">
-      <h1 style="margin-bottom:8px;">Kreditrechner (Österreich)</h1>
-      <p class="subtitle">Berechne die monatliche Rate und Zinskosten für deinen Kredit.</p>
-    </div>
-
-    <!-- CALCULATOR -->
-    <div class="card">
-      <div class="calc-body">
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
         
-        <div class="input-row">
-          <div class="input-group">
-            <label for="kreditbetrag">Kreditbetrag (€)</label>
-            <input type="number" id="kreditbetrag" min="0" step="500" placeholder="z. B. 20000" value="20000" />
-          </div>
-          <div class="input-group">
-            <label for="zinssatz">Sollzinssatz (p.a. in %)</label>
-            <input type="number" id="zinssatz" min="0" step="0.1" placeholder="z. B. 4.5" value="4.5" />
-          </div>
-        </div>
-        
-        <div class="input-row">
-          <div class="input-group">
-            <label for="laufzeit">Laufzeit</label>
-            <input type="number" id="laufzeit" min="1" step="1" placeholder="z. B. 60" value="60" />
-          </div>
-          <div class="input-group">
-            <label for="laufzeitEinheit">Einheit</label>
-            <select id="laufzeitEinheit">
-              <option value="monate">Monate</option>
-              <option value="jahre">Jahre</option>
-            </select>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">💳</span>
+            <div>
+              <h1>Kreditrechner Österreich 2026</h1>
+              <p>Berechne die monatliche Rate und Zinskosten für deinen Kredit.</p>
+            </div>
           </div>
         </div>
 
-        <div class="result-box" id="resultBox">
-          <h3 style="margin-top:0; margin-bottom:16px; color:var(--color-primary);">Dein Ergebnis</h3>
-          
-          <div class="result-item highlight">
-            <span>Monatliche Rate</span>
-            <span id="resRate">-- €</span>
-          </div>
-          <div class="result-item">
-            <span>Gesamte Zinskosten</span>
-            <span id="resZinsen">-- €</span>
-          </div>
-          <div class="result-item muted">
-            <span>Zurückzuzahlen gesamt</span>
-            <span id="resGesamt">-- €</span>
-          </div>
-          
-          <p class="text-muted text-xs mt-16" style="margin-bottom:0;">Annuitätendarlehen, konstante Rate, nachschüssige Verzinsung. Kein Effektivzins/Nebenkosten.</p>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-group">
+              <label for="kreditbetrag">Kreditbetrag (€)</label>
+              <div class="input-suffix">
+                <input type="number" id="kreditbetrag" min="0" step="500" placeholder="z. B. 20000" value="20000" inputmode="numeric" />
+                <span class="suffix">€</span>
+              </div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="kreditbetrag" data-val="10000">10.000 €</button>
+                <button type="button" class="quick-chip active" data-target="kreditbetrag" data-val="20000">20.000 €</button>
+                <button type="button" class="quick-chip" data-target="kreditbetrag" data-val="35000">35.000 €</button>
+                <button type="button" class="quick-chip" data-target="kreditbetrag" data-val="50000">50.000 €</button>
+              </div>
+            </div>
 
-          <div class="broker-box">
-              <h4 style="margin-top:0; margin-bottom:8px;">Kredite vergleichen und sparen</h4>
-              <p style="margin:0; font-size:14px; color: var(--color-ink-2);">Finde die besten Konditionen für deinen Ratenkredit.</p>
-              <a href="https://durchblicker.at/kredit" target="_blank" rel="noopener nofollow" class="broker-btn">Zum Kreditvergleich</a>
+            <div class="input-group">
+              <label for="zinssatz">Sollzinssatz (p.a. in %)</label>
+              <div class="input-suffix">
+                <input type="number" id="zinssatz" min="0" step="0.1" placeholder="z. B. 4.5" value="4.5" inputmode="decimal" />
+                <span class="suffix">%</span>
+              </div>
+            </div>
+
+            <div class="input-row">
+              <div class="input-group">
+                <label for="laufzeit">Laufzeit</label>
+                <input type="number" id="laufzeit" min="1" step="1" placeholder="z. B. 60" value="60" inputmode="numeric" />
+              </div>
+              <div class="input-group">
+                <label for="laufzeitEinheit">Einheit</label>
+                <select id="laufzeitEinheit">
+                  <option value="monate" selected>Monate</option>
+                  <option value="jahre">Jahre</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="resultBox">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Monatliche Kreditrate</span>
+                <div class="hero-net-val" id="resRate">-- €</div>
+                <div class="hero-net-sub">konstante monatliche Annuität</div>
+              </div>
+
+              <div class="sub-cards-grid">
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Gesamte Zinskosten</div>
+                  <div class="sub-net-val" id="resZinsen" style="color: var(--danger, #dc2626);">-- €</div>
+                  <div class="sub-net-period">reine Zinsen</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Gesamtrückzahlung</div>
+                  <div class="sub-net-val" id="resGesamt">-- €</div>
+                  <div class="sub-net-period">Kredit + Zinsen</div>
+                </div>
+              </div>
+
+              <div class="broker-box" style="margin-top: 16px;">
+                <h4 style="margin-top:0; margin-bottom:6px; font-size:14px;">Kredite vergleichen und sparen</h4>
+                <p style="margin:0; font-size:13px; color: var(--color-ink-2);">Finde die besten Konditionen für deinen Ratenkredit.</p>
+                <a href="https://durchblicker.at/kredit" target="_blank" rel="noopener nofollow" class="broker-btn" style="margin-top:8px;">Zum Kreditvergleich</a>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div id="tilgungsplan" style="margin-top:24px;"></div>
+        <div id="tilgungsplan" style="margin-top:24px; padding: 0 16px 16px;"></div>
 
-        <div class="seo-crosslink" style="margin-top: 20px; padding: 15px; background: var(--color-paper-2); border-radius: 10px; border: 1px dashed var(--color-primary); text-align: center;">
+        <div class="seo-crosslink" style="margin: 16px; padding: 15px; background: var(--color-paper-2); border-radius: 10px; border: 1px dashed var(--color-primary); text-align: center;">
           <p style="margin: 0;">🚗 Auto finanzieren? <a href="/finanzen/leasingrechner.html" style="font-weight: bold; color: var(--color-primary);">Barkauf · Kredit · Leasing vergleichen ➔</a></p>
         </div>
 
@@ -268,6 +294,20 @@
       }
 
       [bIn, zIn, lIn, lEIn].forEach(el => el.addEventListener('input', calculate));
+
+      document.querySelectorAll('.quick-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const targetId = chip.dataset.target;
+          const val = chip.dataset.val;
+          const input = document.getElementById(targetId);
+          if (!input) return;
+          input.value = val;
+          chip.parentElement.querySelectorAll('.quick-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          calculate();
+        });
+      });
+
       calculate();
     });
   </script>

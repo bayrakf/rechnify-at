@@ -133,76 +133,100 @@
 
   <main class="site-main">
     
-    <div class="page-hero" style="padding-top:10px;">
-      <h1 style="margin-bottom:8px;">ETF Sparplan Rechner (Deutschland)</h1>
-      <p class="subtitle">Berechne den Zinseszinseffekt und visualisiere deinen Vermögensaufbau.</p>
-    </div>
-
-    <!-- CALCULATOR -->
-    <div class="card">
-      <div class="calc-body">
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
         
-        <div class="input-row">
-          <div class="input-group">
-            <label for="startkapital">Startkapital (€)</label>
-            <input type="number" id="startkapital" min="0" step="100" placeholder="z. B. 5000" value="5000" />
-          </div>
-          
-          <div class="input-group">
-            <label for="sparrate">Monatliche Sparrate (€)</label>
-            <input type="number" id="sparrate" min="0" step="50" placeholder="z. B. 200" value="200" />
-          </div>
-        </div>
-        
-        <div class="input-row">
-          <div class="input-group">
-            <label for="laufzeit">Anlagedauer (Jahre)</label>
-            <input type="number" id="laufzeit" min="1" max="50" step="1" placeholder="z. B. 15" value="15" />
-          </div>
-          
-          <div class="input-group">
-            <label for="rendite">Erwartete Rendite (% p.a.)</label>
-            <input type="number" id="rendite" min="0" step="0.1" placeholder="z. B. 7.0" value="7.0" />
-          </div>
-        </div>
-        
-        <div class="input-row">
-          <div class="input-group">
-            <label for="kosten">TER / Kosten (% p.a.)</label>
-            <input type="number" id="kosten" min="0" step="0.01" placeholder="z. B. 0.20" value="0.20" />
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">📈</span>
+            <div>
+              <h1>ETF Sparplan Rechner Deutschland 2026</h1>
+              <p>Berechne den Zinseszinseffekt und visualisiere deinen langfristigen Vermögensaufbau.</p>
+            </div>
           </div>
         </div>
 
-        <div class="result-box" id="resultBox">
-          <h3 style="margin-top:0; margin-bottom:16px; color:var(--color-primary);">Ergebnis nach <span id="resJahre">15</span> Jahren</h3>
-          
-          <div class="result-item highlight">
-            <span>Endkapital</span>
-            <span id="resEndkapital">-- €</span>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-group">
+              <label for="startkapital">Startkapital (€)</label>
+              <div class="input-suffix">
+                <input type="number" id="startkapital" min="0" step="100" placeholder="z. B. 5000" value="5000" inputmode="numeric" />
+                <span class="suffix">€</span>
+              </div>
+            </div>
+            
+            <div class="input-group">
+              <label for="sparrate">Monatliche Sparrate (€)</label>
+              <div class="input-suffix">
+                <input type="number" id="sparrate" min="0" step="50" placeholder="z. B. 200" value="200" inputmode="numeric" />
+                <span class="suffix">€</span>
+              </div>
+            </div>
+            
+            <div class="input-group">
+              <label for="laufzeit">Anlagedauer (Jahre)</label>
+              <div class="input-suffix">
+                <input type="number" id="laufzeit" min="1" max="50" step="1" placeholder="z. B. 15" value="15" inputmode="numeric" />
+                <span class="suffix">Jahre</span>
+              </div>
+            </div>
+            
+            <div class="input-group">
+              <label for="rendite">Erwartete Rendite (% p.a.)</label>
+              <div class="input-suffix">
+                <input type="number" id="rendite" min="0" step="0.1" placeholder="z. B. 7.0" value="7.0" inputmode="decimal" />
+                <span class="suffix">%</span>
+              </div>
+            </div>
+            
+            <div class="input-group">
+              <label for="kosten">TER / Kosten (% p.a.)</label>
+              <div class="input-suffix">
+                <input type="number" id="kosten" min="0" step="0.01" placeholder="z. B. 0.20" value="0.20" inputmode="decimal" />
+                <span class="suffix">%</span>
+              </div>
+            </div>
           </div>
-          <div class="result-item">
-            <span>Eigene Einzahlungen</span>
-            <span id="resEinzahlungen">-- €</span>
-          </div>
-          <div class="result-item success">
-            <span>Davon Zinserträge</span>
-            <span id="resZinsen">-- €</span>
-          </div>
-          <div class="result-item muted">
-            <span>Abgezogene Kosten (TER)</span>
-            <span id="resKosten">-- €</span>
-          </div>
-          
-          
 
-          <div class="chart-container">
-             <canvas id="etfChart"></canvas>
-          </div>
-          
-          <div class="broker-ad">
-              <h4>Noch keinen passenden Broker gefunden?</h4>
-              <p style="font-size:14px; margin:0;">Starte jetzt deinen ETF-Sparplan kostengünstig und komplett online.</p>
-              <a href="https://www.traderepublic.com/de-de" target="_blank" rel="noopener nofollow" class="broker-btn">Trade Republic entdecken</a>
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="resultBox">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Endkapital (nach <span id="resJahre">15</span> Jahren)</span>
+                <div class="hero-net-val" id="resEndkapital">-- €</div>
+                <div class="hero-net-sub">vor Kapitalertragsteuer / Teilfreistellung</div>
+              </div>
+
+              <div class="sub-cards-grid">
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Eigene Einzahlungen</div>
+                  <div class="sub-net-val" id="resEinzahlungen">-- €</div>
+                  <div class="sub-net-period">Eigenkapital</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Zinserträge</div>
+                  <div class="sub-net-val" id="resZinsen" style="color: var(--success, #16a34a);">-- €</div>
+                  <div class="sub-net-period">Zinseszins</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Kosten (TER)</div>
+                  <div class="sub-net-val" id="resKosten" style="color: var(--muted);">-- €</div>
+                  <div class="sub-net-period">Fondskosten</div>
+                </div>
+              </div>
+
+              <div class="chart-container" style="margin-top: 20px;">
+                <canvas id="etfChart"></canvas>
+              </div>
+
+              <div class="broker-ad" style="margin-top: 16px;">
+                <h4>Noch keinen passenden Broker gefunden?</h4>
+                <p style="font-size:14px; margin:0;">Starte jetzt deinen ETF-Sparplan kostengünstig und komplett online.</p>
+                <a href="https://www.traderepublic.com/de-de" target="_blank" rel="noopener nofollow" class="broker-btn">Trade Republic entdecken</a>
+              </div>
+            </div>
           </div>
         </div>
 

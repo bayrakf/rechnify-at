@@ -235,122 +235,134 @@
 
   <main class="site-main">
     
-    <div class="page-hero" style="padding-top:10px;">
-      <div class="calc-icon">📈</div>
-      <h1 style="margin-bottom:8px;">Überstundenrechner (Österreich)</h1>
-      <p class="subtitle">Berechne deine Auszahlung oder den Zeitausgleich für geleistete Überstunden – inkl. 50% oder 100% Zuschlag.</p>
-    </div>
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
 
-    <!-- CALCULATOR -->
-    <div class="card">
-      <div class="calc-body">
-        
-        <div class="input-row">
-          <div class="input-group">
-            <label for="hours">Anzahl der Überstunden</label>
-            <input type="number" id="hours" min="0" step="0.5" placeholder="z. B. 10" value="10" inputmode="decimal" />
-            <div class="quick-chips-wrap">
-              <span class="quick-chip-label">Schnellwahl:</span>
-              <button type="button" class="quick-chip" data-target="hours" data-val="5">5 h</button>
-              <button type="button" class="quick-chip active" data-target="hours" data-val="10">10 h</button>
-              <button type="button" class="quick-chip" data-target="hours" data-val="15">15 h</button>
-              <button type="button" class="quick-chip" data-target="hours" data-val="20">20 h</button>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">📈</span>
+            <div>
+              <h1>Überstundenrechner Österreich 2026</h1>
+              <p>Auszahlung oder Zeitausgleich für Überstunden berechnen (50 % oder 100 % Zuschlag).</p>
             </div>
-          </div>
-          
-          <div class="input-group">
-            <label for="wage">
-              Brutto-Stundenlohn (€)
-              <span class="tooltip-trigger" data-tooltip="Monatsgehalt ÷ 167 = ungefährer Stundenlohn bei 38,5h/Woche">ⓘ</span>
-            </label>
-            <input type="number" id="wage" min="0" step="0.1" placeholder="z. B. 20.50" value="20" inputmode="decimal" />
-            <div class="quick-chips-wrap">
-              <span class="quick-chip-label">Schnellwahl:</span>
-              <button type="button" class="quick-chip" data-target="wage" data-val="16">16 €</button>
-              <button type="button" class="quick-chip active" data-target="wage" data-val="20">20 €</button>
-              <button type="button" class="quick-chip" data-target="wage" data-val="25">25 €</button>
-              <button type="button" class="quick-chip" data-target="wage" data-val="32">32 €</button>
-            </div>
-            <div class="text-muted text-xs mt-4">Tipp: Bruttogehalt ÷ 167 = Stundenlohn (38,5h/Woche)</div>
           </div>
         </div>
 
-        <div class="input-group">
-          <label>Art des Zuschlags
-              <button class="modal-trigger" data-modal="ueberstundenzuschlag" data-modal-title="" data-modal-content="" style="font-size:0.8rem; margin-left:6px;">ⓘ Zuschläge erklärt</button>
-            </label>
-          <div class="toggle-group" id="surcharge-toggles">
-            <div class="toggle-btn active" data-surcharge="1.5">50% Zuschlag<br/><span style="font-size:12px;font-weight:normal;">(Normalfall)</span></div>
-            <div class="toggle-btn" data-surcharge="2.0">100% Zuschlag<br/><span style="font-size:12px;font-weight:normal;">(Nacht/Feiertag/Sonntag)</span></div>
-          </div>
-        </div>
-        
-        <div class="input-group" style="margin-top:24px;">
-          <label>Was möchtest du berechnen?</label>
-          <select id="calcMode">
-            <option value="payout">Auszahlung (Brutto)</option>
-            <option value="time">Zeitausgleich (ZA)</option>
-          </select>
-        </div>
-
-        <div class="result-box" id="resultBox">
-          <h3 style="margin-top:0; margin-bottom:16px; color:var(--primary);">Ergebnis</h3>
-          
-          <div id="payoutResult">
-            <div class="result-item">
-              <span>Grundlohn für <span id="resHours">10</span> Std.</span>
-              <span id="resBaseWage">200,00 €</span>
-            </div>
-            <div class="result-item">
-              <span>Überstundenzuschlag (<span id="resSurchargePercent">50</span>%)</span>
-              <span id="resSurchargeAmount">100,00 €</span>
-            </div>
-            <div class="result-item success" style="margin-top:8px;">
-              <span>Brutto-Auszahlung gesamt</span>
-              <span id="resTotalPayout">300,00 €</span>
-            </div>
-
-            <!-- Premium Feature: Steuerfreibetrag -->
-            <div id="taxFreeBlock" style="margin-top: 24px; padding: 16px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 12px; display: none;">
-              <h4 style="margin-top: 0; color: #2e7d32; display: flex; align-items: center; gap: 8px;"><span>🎁</span> Steuerfreibetrag (1:1 Netto)</h4>
-              <p id="taxFreeText" style="font-size: 13px; color: #1b5e20; margin-bottom: 12px; line-height: 1.4;">In Österreich ist der Zuschlag der ersten 18 Überstunden komplett steuerfrei. Dieser Teil fließt 1:1 netto auf dein Konto!</p>
-              <div style="display:flex; justify-content:space-between; font-size: 15px; font-weight: 600;">
-                <span style="color: #2e7d32;">Steuerfrei (Dein Netto-Vorteil):</span>
-                <strong id="resTaxFree" style="color: #2e7d32; font-size: 1.1em;">-- €</strong>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-group">
+              <label for="hours">Anzahl der Überstunden</label>
+              <input type="number" id="hours" min="0" step="0.5" placeholder="z. B. 10" value="10" inputmode="decimal" />
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="hours" data-val="5">5 h</button>
+                <button type="button" class="quick-chip active" data-target="hours" data-val="10">10 h</button>
+                <button type="button" class="quick-chip" data-target="hours" data-val="15">15 h</button>
+                <button type="button" class="quick-chip" data-target="hours" data-val="20">20 h</button>
               </div>
             </div>
 
-            <div class="text-muted text-xs mt-16">
-              Hinweis: Der restliche Betrag ist lohnsteuer- und sozialversicherungspflichtig. Die genaue Netto-Auszahlung am Ende hängt von deinem Gesamteinkommen ab.
+            <div class="input-group">
+              <label for="wage">
+                Brutto-Stundenlohn (€)
+                <span class="tooltip-trigger" data-tooltip="Monatsgehalt ÷ 167 = ungefährer Stundenlohn bei 38,5h/Woche">ⓘ</span>
+              </label>
+              <input type="number" id="wage" min="0" step="0.1" placeholder="z. B. 20.50" value="20" inputmode="decimal" />
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="wage" data-val="16">16 €</button>
+                <button type="button" class="quick-chip active" data-target="wage" data-val="20">20 €</button>
+                <button type="button" class="quick-chip" data-target="wage" data-val="25">25 €</button>
+                <button type="button" class="quick-chip" data-target="wage" data-val="32">32 €</button>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>Art des Zuschlags
+                <button class="modal-trigger" data-modal="ueberstundenzuschlag" data-modal-title="" data-modal-content="" style="font-size:0.8rem; margin-left:6px;">ⓘ Info</button>
+              </label>
+              <div class="toggle-group" id="surcharge-toggles">
+                <div class="toggle-btn active" data-surcharge="1.5">50% Zuschlag<br/><span style="font-size:11px;font-weight:normal;">(Normal)</span></div>
+                <div class="toggle-btn" data-surcharge="2.0">100% Zuschlag<br/><span style="font-size:11px;font-weight:normal;">(Nacht/Feiertag)</span></div>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>Berechnungsmethode</label>
+              <select id="calcMode">
+                <option value="payout">Auszahlung (Brutto)</option>
+                <option value="time">Zeitausgleich (ZA)</option>
+              </select>
             </div>
           </div>
 
-          <div id="timeResult" class="hidden">
-            <div class="result-item">
-              <span>Geleistete Stunden</span>
-              <span id="resTimeHours">10 Std.</span>
-            </div>
-            <div class="result-item">
-              <span>Faktor (<span id="resTimePercent">50</span>% Zuschlag)</span>
-              <span id="resTimeFactor">x 1,5</span>
-            </div>
-            <div class="result-item success" style="margin-top:8px;">
-              <span>Guthaben Zeitausgleich</span>
-              <span id="resTotalTime">15 Std.</span>
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="resultBox">
+              <div id="payoutResult">
+                <div class="hero-net-card">
+                  <span class="hero-net-label">Brutto-Auszahlung gesamt</span>
+                  <div class="hero-net-val" id="resTotalPayout">300,00 €</div>
+                  <div class="hero-net-sub">Gesamtvergütung für <span id="resHours">10</span> Überstunden</div>
+
+                  <div class="sub-cards-grid">
+                    <div class="sub-net-card">
+                      <div class="label">Grundlohn</div>
+                      <div class="val" id="resBaseWage" style="color: var(--color-ink, #0f172a); font-weight:700;">200,00 €</div>
+                      <div class="desc">Normallohnanteil</div>
+                    </div>
+                    <div class="sub-net-card">
+                      <div class="label">Zuschlag (<span id="resSurchargePercent">50</span> %)</div>
+                      <div class="val" id="resSurchargeAmount" style="color: var(--color-accent, #1858C7); font-weight:700;">100,00 €</div>
+                      <div class="desc">Überstundenzuschlag</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Premium Feature: Steuerfreibetrag -->
+                <div id="taxFreeBlock" style="margin-top: 14px; padding: 14px 16px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 12px; display: none;">
+                  <h4 style="margin: 0 0 4px; color: #2e7d32; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;"><span>🎁</span> Steuerfreibetrag (1:1 Netto)</h4>
+                  <p id="taxFreeText" style="font-size: 12px; color: #1b5e20; margin: 0 0 8px; line-height: 1.4;">In Österreich ist der Zuschlag der ersten 18 Überstunden steuerfrei.</p>
+                  <div style="display:flex; justify-content:space-between; font-size: 14px; font-weight: 600;">
+                    <span style="color: #2e7d32;">Steuerfrei (Netto-Vorteil):</span>
+                    <strong id="resTaxFree" style="color: #2e7d32; font-size: 1.1em;">-- €</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div id="timeResult" class="hidden">
+                <div class="hero-net-card">
+                  <span class="hero-net-label">Guthaben Zeitausgleich</span>
+                  <div class="hero-net-val" id="resTotalTime">15 Std.</div>
+                  <div class="hero-net-sub">Freizeitausgleich inklusive Zuschlag</div>
+
+                  <div class="sub-cards-grid">
+                    <div class="sub-net-card">
+                      <div class="label">Geleistete Stunden</div>
+                      <div class="val" id="resTimeHours" style="color: var(--color-ink, #0f172a); font-weight:700;">10 Std.</div>
+                      <div class="desc">Arbeitszeit</div>
+                    </div>
+                    <div class="sub-net-card">
+                      <div class="label">Faktor (<span id="resTimePercent">50</span> % Zuschlag)</div>
+                      <div class="val" id="resTimeFactor" style="color: var(--color-accent, #1858C7); font-weight:700;">x 1,5</div>
+                      <div class="desc">Ausgleichsfaktor</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="share-actions" style="margin-top: 12px; text-align: right;">
+                <button class="btn-share" id="shareBtn" type="button" style="font-size: 0.85rem;">🔗 Ergebnis teilen</button>
+              </div>
+              <div id="shareToast" class="share-toast" style="display:none;">Link kopiert!</div>
             </div>
           </div>
         </div>
 
-
-        <!-- Share Action -->
-        <div class="share-actions">
-          <button class="btn-share" id="shareBtn" type="button">🔗 Ergebnis teilen</button>
-        </div>
-        <div id="shareToast" class="share-toast" style="display:none;">Link kopiert!</div>
-
-        <div class="result-box" style="margin-top:24px;">
-          <h3 style="margin-top:0; margin-bottom:8px; color:var(--primary);">Monatsprotokoll</h3>
-          <p class="text-muted text-xs" style="margin-bottom:16px;">Nur lokale Speicherung im Browser</p>
+        <!-- Monatsprotokoll -->
+        <div style="padding: 20px 24px; border-top: 1px solid var(--border); background: var(--color-paper-2);">
+          <h3 style="margin-top:0; margin-bottom:8px; color:var(--primary); font-size: 1.05rem;">📅 Monatsprotokoll (Lokal im Browser)</h3>
           <div class="input-row">
             <div class="input-group" style="margin-bottom:12px;">
               <label for="logMonth">Monat</label>

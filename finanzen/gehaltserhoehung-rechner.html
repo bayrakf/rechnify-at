@@ -136,97 +136,120 @@
   </header>
 
   <main class="site-main">
-    <div class="calculator-container">
+    <div class="calculator-container cockpit-layout">
       <div class="calculator-card">
         
-        <div class="calc-header">
-          <div class="calc-icon">📈</div>
-          <h1>Gehaltserhöhung Rechner</h1>
-          <p>Finde heraus, wie viel Netto-Plus dir von deiner Bruttogehaltserhöhung in Österreich wirklich bleibt.</p>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">📈</span>
+            <div>
+              <h1>Gehaltserhöhung Rechner Österreich 2026</h1>
+              <p>Finde heraus, wie viel Netto-Plus dir von deiner Bruttogehaltserhöhung in Österreich wirklich bleibt.</p>
+            </div>
+          </div>
         </div>
 
-        <div class="calc-body">
-          <div class="input-row">
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
             <div class="input-group">
               <label for="currentGross">Aktuelles Bruttogehalt (Monat)</label>
               <div class="input-suffix">
-                <input type="number" id="currentGross" value="3000" min="0" step="100">
+                <input type="number" id="currentGross" value="3000" min="0" step="100" inputmode="numeric">
                 <span class="suffix">€</span>
               </div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="currentGross" data-val="2500">2.500 €</button>
+                <button type="button" class="quick-chip active" data-target="currentGross" data-val="3000">3.000 €</button>
+                <button type="button" class="quick-chip" data-target="currentGross" data-val="4000">4.000 €</button>
+                <button type="button" class="quick-chip" data-target="currentGross" data-val="5000">5.000 €</button>
+              </div>
             </div>
+
             <div class="input-group">
               <label for="raiseAmount">Erhöhung (Brutto / Monat)</label>
               <div class="input-suffix">
-                <input type="number" id="raiseAmount" value="200" min="0" step="50">
+                <input type="number" id="raiseAmount" value="200" min="0" step="50" inputmode="numeric">
                 <span class="suffix">€</span>
               </div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="raiseAmount" data-val="100">+100 €</button>
+                <button type="button" class="quick-chip active" data-target="raiseAmount" data-val="200">+200 €</button>
+                <button type="button" class="quick-chip" data-target="raiseAmount" data-val="300">+300 €</button>
+                <button type="button" class="quick-chip" data-target="raiseAmount" data-val="500">+500 €</button>
+              </div>
             </div>
+
+            <div class="input-group">
+              <label for="hasSonderzahlungen">13. &amp; 14. Gehalt (Urlaubs-/Weihnachtsgeld)</label>
+              <select id="hasSonderzahlungen">
+                <option value="ja">Ja, Sonderzahlungen (Standard)</option>
+                <option value="nein">Nein, nur 12 Gehälter</option>
+              </select>
+            </div>
+
+            <button class="btn" id="calculate" style="width: 100%; margin-top: 8px;">Erhöhung berechnen</button>
           </div>
 
-          <div class="input-group">
-            <label for="hasSonderzahlungen">13. & 14. Gehalt (Urlaubs-/Weihnachtsgeld)</label>
-            <select id="hasSonderzahlungen">
-              <option value="ja">Ja, ich erhalte Sonderzahlungen (Standard)</option>
-              <option value="nein">Nein, ich erhalte nur 12 Gehälter</option>
-            </select>
-          </div>
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="result" class="result-box">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Reales monatliches Netto-Plus (12x)</span>
+                <div class="hero-net-val" id="resNetMonthlyDiff">+ 0,00 €</div>
+                <div class="hero-net-sub" id="resPercentageKeep">Du behältst ca. --% deiner Erhöhung</div>
+              </div>
 
-          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Erhöhung berechnen</button>
+              <div class="sub-cards-grid">
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Zusätzliches Brutto / Jahr</div>
+                  <div class="sub-net-val" id="resGrossYearlyDiff">-- €</div>
+                  <div class="sub-net-period">Jahresbasis</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Zusätzliches Netto / Jahr</div>
+                  <div class="sub-net-val" id="resNetYearlyDiff" style="color: var(--success, #16a34a);">-- €</div>
+                  <div class="sub-net-period">inkl. Sonderzahlungen</div>
+                </div>
+              </div>
 
-          <div id="result" class="result-box hidden">
-            
-            <div class="diff-display">
-              <div class="text-sm text-muted">Dein reales monatliches Netto-Plus (12x)</div>
-              <div class="diff-val" id="resNetMonthlyDiff">+ 0,00 €</div>
-              <div class="text-xs text-muted" id="resPercentageKeep">Du behältst ca. --% deiner Erhöhung.</div>
+              <div class="comparison-grid" style="margin-top: 16px;">
+                <!-- Vorher -->
+                <div class="comparison-card">
+                  <h4 class="text-muted" style="margin-bottom: 8px;">Vor der Erhöhung</h4>
+                  <table class="details-table text-sm" style="width:100%;">
+                    <tr><td>Brutto monatl.:</td><td class="text-right" id="grossOld">-- €</td></tr>
+                    <tr><td>SV-Beitrag:</td><td class="text-right text-danger" id="svOld">-- €</td></tr>
+                    <tr><td>Lohnsteuer:</td><td class="text-right text-danger" id="taxOld">-- €</td></tr>
+                    <tr style="font-weight:600;"><td>Netto monatl.:</td><td class="text-right text-success" id="netOld">-- €</td></tr>
+                  </table>
+                </div>
+                
+                <!-- Nachher -->
+                <div class="comparison-card" style="border-color: var(--primary);">
+                  <h4 style="margin-bottom: 8px; color: var(--primary);">Nach der Erhöhung</h4>
+                  <table class="details-table text-sm" style="width:100%;">
+                    <tr><td>Brutto monatl.:</td><td class="text-right" id="grossNew">-- €</td></tr>
+                    <tr><td>SV-Beitrag:</td><td class="text-right text-danger" id="svNew">-- €</td></tr>
+                    <tr><td>Lohnsteuer:</td><td class="text-right text-danger" id="taxNew">-- €</td></tr>
+                    <tr style="font-weight:600;"><td>Netto monatl.:</td><td class="text-right text-success" id="netNew">-- €</td></tr>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Premium Girokonto Affiliate Box -->
+              <div class="affiliate-banner" style="margin-top: 16px;">
+                <div class="icon">💳</div>
+                <div class="content">
+                  <strong>Mehr Netto vom Brutto behalten?</strong><br/>
+                  Wechsle zu einem gebührenfreien Girokonto in Österreich und spare bis zu 150 € Kontoführung pro Jahr!
+                </div>
+                <a href="https://www.durchblicker.at/konto" target="_blank" rel="noopener sponsored" class="btn-aff">Girokonten vergleichen</a>
+              </div>
+
             </div>
-
-            <div class="comparison-grid">
-              <!-- Vorher -->
-              <div class="comparison-card">
-                <h4 class="text-muted">Vor der Erhöhung</h4>
-                <table class="details-table text-sm">
-                  <tr><td>Brutto monatlich:</td><td class="text-right" id="grossOld">-- €</td></tr>
-                  <tr><td>Sozialversicherung:</td><td class="text-right text-danger" id="svOld">-- €</td></tr>
-                  <tr><td>Lohnsteuer:</td><td class="text-right text-danger" id="taxOld">-- €</td></tr>
-                  <tr style="font-weight:600;"><td>Netto monatlich:</td><td class="text-right text-success" id="netOld">-- €</td></tr>
-                </table>
-              </div>
-              
-              <!-- Nachher -->
-              <div class="comparison-card" style="border-color: var(--primary);">
-                <h4>Nach der Erhöhung</h4>
-                <table class="details-table text-sm">
-                  <tr><td>Brutto monatlich:</td><td class="text-right" id="grossNew">-- €</td></tr>
-                  <tr><td>Sozialversicherung:</td><td class="text-right text-danger" id="svNew">-- €</td></tr>
-                  <tr><td>Lohnsteuer:</td><td class="text-right text-danger" id="taxNew">-- €</td></tr>
-                  <tr style="font-weight:600;"><td>Netto monatlich:</td><td class="text-right text-success" id="netNew">-- €</td></tr>
-                </table>
-              </div>
-            </div>
-
-            <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 14px;">
-              <strong>Zusätzliche Auswirkungen aufs Jahr:</strong>
-              <div style="display:flex; justify-content:space-between; margin-top: 8px;">
-                <span class="text-muted">Zusätzliches Brutto (Jahr):</span>
-                <span id="resGrossYearlyDiff">-- €</span>
-              </div>
-              <div style="display:flex; justify-content:space-between; margin-top: 4px;">
-                <span class="text-muted">Zusätzliches Netto (Jahr):</span>
-                <span class="text-success" style="font-weight:600;" id="resNetYearlyDiff">-- €</span>
-              </div>
-            </div>
-
-            <!-- Premium Girokonto Affiliate Box -->
-            <div class="affiliate-banner">
-              <div class="icon">💳</div>
-              <div class="content">
-                <strong>Mehr Netto vom Brutto behalten?</strong><br/>
-                Wechsle zu einem komplett gebührenfreien Girokonto in Österreich und spare bis zu 150 € Kontoführungsgebühren pro Jahr!
-              </div>
-              <a href="https://www.durchblicker.at/konto" target="_blank" rel="noopener sponsored" class="btn-aff">Girokonten vergleichen</a>
-            </div>
-
           </div>
         </div>
 
@@ -424,6 +447,32 @@
 
       document.getElementById('result').classList.remove('hidden');
     });
+
+    // Real-time calculation on input change
+    ['currentGross', 'raiseAmount', 'hasSonderzahlungen'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', () => document.getElementById('calculate').click());
+        el.addEventListener('change', () => document.getElementById('calculate').click());
+      }
+    });
+
+    // Quick chips
+    document.querySelectorAll('.quick-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const targetId = chip.dataset.target;
+        const val = chip.dataset.val;
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        input.value = val;
+        chip.parentElement.querySelectorAll('.quick-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        document.getElementById('calculate').click();
+      });
+    });
+
+    // Initial calculation
+    document.getElementById('calculate').click();
   </script>
 </body>
 </html>

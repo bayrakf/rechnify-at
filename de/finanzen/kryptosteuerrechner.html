@@ -118,97 +118,121 @@
   </header>
 
   <main class="site-main">
-    <div class="calculator-container">
+    <div class="calculator-container cockpit-layout">
       <div class="calculator-card">
         
-        <div class="calc-header">
-          <div class="calc-icon">🪙</div>
-          <h1>Krypto Steuerrechner Deutschland</h1>
-          <p>Berechne die Steuern auf deine Gewinne aus Bitcoin und anderen Kryptowährungen nach deutschem Steuerrecht.</p>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">🪙</span>
+            <div>
+              <h1>Krypto Steuerrechner Deutschland 2026</h1>
+              <p>Berechne die Steuern auf deine Gewinne aus Bitcoin und anderen Kryptowährungen nach deutschem Steuerrecht.</p>
+            </div>
+          </div>
         </div>
 
-        <div class="calc-body">
-          <div class="input-row">
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
             <div class="input-group">
               <label for="purchasePrice">Anschaffungskosten (Kaufpreis)</label>
               <div class="input-suffix">
-                <input type="number" id="purchasePrice" value="5000" min="0" step="100">
+                <input type="number" id="purchasePrice" value="5000" min="0" step="100" inputmode="numeric">
                 <span class="suffix">€</span>
               </div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="purchasePrice" data-val="1000">1.000 €</button>
+                <button type="button" class="quick-chip" data-target="purchasePrice" data-val="2500">2.500 €</button>
+                <button type="button" class="quick-chip active" data-target="purchasePrice" data-val="5000">5.000 €</button>
+                <button type="button" class="quick-chip" data-target="purchasePrice" data-val="10000">10.000 €</button>
+              </div>
             </div>
+
             <div class="input-group">
               <label for="sellPrice">Veräußerungserlös (Verkaufspreis)</label>
               <div class="input-suffix">
-                <input type="number" id="sellPrice" value="8000" min="0" step="100">
+                <input type="number" id="sellPrice" value="8000" min="0" step="100" inputmode="numeric">
                 <span class="suffix">€</span>
               </div>
-            </div>
-          </div>
-
-          <div class="input-row">
-            <div class="input-group">
-              <label for="holdingPeriod">Haltefrist</label>
-              <select id="holdingPeriod">
-                <option value="unter">Weniger als 1 Jahr (steuerrelevant)</option>
-                <option value="ueber">Mindestens 1 Jahr (steuerfrei)</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label for="taxRate">Persönlicher Steuersatz (ca.)</label>
-              <div class="input-suffix">
-                <input type="number" id="taxRate" value="30" min="0" max="45" step="1">
-                <span class="suffix">%</span>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="sellPrice" data-val="3000">3.000 €</button>
+                <button type="button" class="quick-chip active" data-target="sellPrice" data-val="8000">8.000 €</button>
+                <button type="button" class="quick-chip" data-target="sellPrice" data-val="15000">15.000 €</button>
+                <button type="button" class="quick-chip" data-target="sellPrice" data-val="25000">25.000 €</button>
               </div>
             </div>
-          </div>
 
-          <div class="input-group">
-            <label for="totalYearlyGains">Deine gesamten Krypto-Gewinne in diesem Kalenderjahr (inkl. diesem)</label>
-            <div class="input-suffix">
-              <input type="number" id="totalYearlyGains" value="3000" min="0" step="100">
-              <span class="suffix">€</span>
-            </div>
-            <div class="text-xs text-muted" style="margin-top:4px;">Erforderlich für die Ermittlung der Freigrenze von 1.000 € (ab 2024).</div>
-          </div>
-
-          <button class="btn" id="calculate" style="width: 100%; margin-top: 10px;">Steuer berechnen</button>
-
-          <div id="result" class="result-box hidden">
-            <h3>Berechnungsergebnis</h3>
-            
             <div class="input-row">
-              <div class="result-card">
-                <div class="text-sm text-muted">Gewinn aus diesem Verkauf</div>
-                <div class="big-number text-success" id="resProfit">-- €</div>
+              <div class="input-group">
+                <label for="holdingPeriod">Haltefrist</label>
+                <select id="holdingPeriod">
+                  <option value="unter">&lt; 1 Jahr (steuerpflichtig)</option>
+                  <option value="ueber">≥ 1 Jahr (steuerfrei)</option>
+                </select>
               </div>
-              <div class="result-card">
-                <div class="text-sm text-muted">Fällige Steuer</div>
-                <div class="big-number text-danger" id="resTax" style="color: var(--danger);">-- €</div>
+              <div class="input-group">
+                <label for="taxRate">Steuersatz</label>
+                <div class="input-suffix">
+                  <input type="number" id="taxRate" value="30" min="0" max="45" step="1" inputmode="numeric">
+                  <span class="suffix">%</span>
+                </div>
               </div>
             </div>
 
-            <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 15px; display:flex; justify-content:space-between;">
-              <span><strong>Nettogewinn (nach Steuern):</strong></span>
-              <strong class="text-success" style="font-size: 1.2em;" id="resNetProfit">-- €</strong>
-            </div>
-
-            <div id="cryptoPremiumInsight" class="premium-insight" style="display: none; margin-top: 24px; padding: 16px; background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 1px solid #fde047; border-radius: 12px;">
-              <h4 style="margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>💡</span> Premium-Wissen: Der Haltefrist-Trick</h4>
-              <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #854d0e;">
-                <span id="cryptoAdviceText"></span>
-              </p>
-            </div>
-
-            <!-- Premium Broker Affiliate Box -->
-            <div class="affiliate-banner">
-              <div class="icon">📈</div>
-              <div class="content">
-                <strong>Suchst du einen sicheren Krypto-Broker in Deutschland?</strong><br/>
-                Nutze Trade Republic, um sicher Bitcoin und über 50 andere Kryptowährungen zu handeln – zu unschlagbar günstigen Konditionen!
+            <div class="input-group">
+              <label for="totalYearlyGains">Gesamte Krypto-Gewinne im Kalenderjahr</label>
+              <div class="input-suffix">
+                <input type="number" id="totalYearlyGains" value="3000" min="0" step="100" inputmode="numeric">
+                <span class="suffix">€</span>
               </div>
-              <a href="https://www.check24.de/girokonto/" target="_blank" rel="noopener sponsored" class="btn-aff">Zu Trade Republic</a>
+              <div class="text-xs text-muted" style="margin-top:4px;">Freigrenze ab 2024: 1.000 € pro Kalenderjahr.</div>
             </div>
 
+            <button class="btn" id="calculate" style="width: 100%; margin-top: 8px;">Steuer berechnen</button>
+          </div>
+
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="result" class="result-box">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Nettogewinn (nach Steuern)</span>
+                <div class="hero-net-val" id="resNetProfit">-- €</div>
+                <div class="hero-net-sub">tatsächlich verbleibender Betrag</div>
+              </div>
+
+              <div class="sub-cards-grid">
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Gewinn aus Verkauf</div>
+                  <div class="sub-net-val" id="resProfit" style="color: var(--success, #16a34a);">-- €</div>
+                  <div class="sub-net-period">vor Steuern</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Fällige Steuer</div>
+                  <div class="sub-net-val" id="resTax" style="color: var(--danger, #dc2626);">-- €</div>
+                  <div class="sub-net-period">Einkommensteuer</div>
+                </div>
+              </div>
+
+              <div id="cryptoPremiumInsight" class="premium-insight" style="display: none; margin-top: 16px; padding: 14px; background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 1px solid #fde047; border-radius: 12px;">
+                <h4 style="margin: 0 0 6px 0; display: flex; align-items: center; gap: 8px; font-size: 14px;"><span>💡</span> Premium-Wissen: Haltefrist-Effekt</h4>
+                <p style="margin: 0; font-size: 13px; line-height: 1.4; color: #854d0e;">
+                  <span id="cryptoAdviceText"></span>
+                </p>
+              </div>
+
+              <!-- Premium Broker Affiliate Box -->
+              <div class="affiliate-banner" style="margin-top: 16px;">
+                <div class="icon">📈</div>
+                <div class="content">
+                  <strong>Suchst du einen sicheren Krypto-Broker in Deutschland?</strong><br/>
+                  Nutze Trade Republic, um sicher Bitcoin und Kryptowährungen zu handeln – zu unschlagbar günstigen Konditionen!
+                </div>
+                <a href="https://www.check24.de/girokonto/" target="_blank" rel="noopener sponsored" class="btn-aff">Zu Trade Republic</a>
+              </div>
+
+            </div>
           </div>
         </div>
 
@@ -313,6 +337,32 @@
 
       document.getElementById('result').classList.remove('hidden');
     });
+
+    // Real-time calculation on input change
+    ['purchasePrice', 'sellPrice', 'taxRate', 'totalYearlyGains'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', () => document.getElementById('calculate').click());
+      }
+    });
+    document.getElementById('holdingPeriod').addEventListener('change', () => document.getElementById('calculate').click());
+
+    // Quick chips
+    document.querySelectorAll('.quick-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const targetId = chip.dataset.target;
+        const val = chip.dataset.val;
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        input.value = val;
+        chip.parentElement.querySelectorAll('.quick-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        document.getElementById('calculate').click();
+      });
+    });
+
+    // Initial calculation
+    document.getElementById('calculate').click();
   </script>
 </body>
 </html>

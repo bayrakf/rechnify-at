@@ -497,6 +497,159 @@ body.dark .site-logo img {
   margin: 0 auto;
 }
 
+.calculator-container.cockpit-layout {
+  max-width: 1120px;
+  width: 100%;
+}
+
+.cockpit-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--color-rule, #e2e8f0);
+  background: var(--color-paper-2, #f8fafc);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cockpit-header-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cockpit-header h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.01em;
+  color: var(--color-ink, #0f172a);
+}
+
+.cockpit-header p {
+  font-size: 0.84rem;
+  color: var(--color-ink-3, #64748b);
+  margin: 2px 0 0 0;
+}
+
+.cockpit-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+@media (min-width: 960px) {
+  .cockpit-grid {
+    grid-template-columns: 360px 1fr;
+    gap: 32px;
+    padding: 28px;
+    align-items: start;
+  }
+}
+
+.cockpit-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cockpit-left .input-field,
+.cockpit-left .input-group {
+  margin-bottom: 0;
+}
+
+.cockpit-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* ── Hero Net / Result Card ────────────────────────────────────── */
+.hero-net-card {
+  background: linear-gradient(135deg, color-mix(in oklch, var(--color-accent, #1858C7) 6%, var(--color-paper, #ffffff)) 0%, var(--color-paper-2, #f8fafc) 100%);
+  border: 1.5px solid color-mix(in oklch, var(--color-accent, #1858C7) 25%, transparent);
+  border-radius: var(--radius-lg, 14px);
+  padding: 18px 22px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.hero-net-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-3, #64748b);
+  margin-bottom: 2px;
+}
+
+.hero-net-val {
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--color-success, #166534);
+  letter-spacing: -0.02em;
+  font-feature-settings: "tnum";
+}
+
+.hero-net-sub {
+  font-size: 0.8rem;
+  color: var(--color-ink-2, #334155);
+  margin-top: 4px;
+}
+
+.sub-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.sub-net-card {
+  background: var(--color-paper, #ffffff);
+  border: 1px solid var(--color-rule, #e2e8f0);
+  border-radius: var(--radius-md, 10px);
+  padding: 10px 14px;
+}
+
+.sub-net-card .label {
+  font-size: 0.74rem;
+  color: var(--color-ink-3, #64748b);
+  margin-bottom: 2px;
+}
+
+.sub-net-card .val {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-success, #166534);
+  letter-spacing: -0.01em;
+}
+
+.sub-net-card .desc {
+  font-size: 0.72rem;
+  color: var(--color-ink-3, #64748b);
+}
+
+@media (max-width: 600px) {
+  .cockpit-header {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .cockpit-grid {
+    padding: 16px;
+    gap: 20px;
+  }
+  .hero-net-val {
+    font-size: 1.85rem;
+  }
+  .sub-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .calculator-card {
   background: var(--color-paper-2);
   border: 1px solid var(--color-rule);
@@ -577,12 +730,31 @@ body.dark .site-logo img {
 
 .result-box {
   margin-top: var(--space-md);
-  background: var(--color-paper);
-  border: 1px solid var(--color-rule);
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, color-mix(in oklch, var(--color-accent) 6%, var(--color-paper)) 0%, var(--color-paper-2) 100%);
+  border: 1.5px solid color-mix(in oklch, var(--color-accent) 22%, transparent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: background var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--color-rule);
+  font-size: 0.95rem;
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.result-item.highlight,
+.result-item.success {
+  font-weight: 700;
+  color: var(--color-success);
 }
 
 .result-box h3 {

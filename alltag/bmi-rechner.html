@@ -148,51 +148,85 @@
 
   <main class="site-main">
     
-    <div class="page-hero" style="padding-top:10px;">
-      <h1 style="margin-bottom:8px;">BMI Rechner</h1>
-      <p class="subtitle">Berechne deinen Body-Mass-Index, um zu prüfen, ob du Normalgewicht hast.</p>
-    </div>
-
-    <!-- CALCULATOR -->
-    <div class="card">
-      <div class="calc-body">
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
         
-        <div class="input-row">
-          <div class="input-group">
-            <label for="height">Körpergröße (cm)</label>
-            <input type="number" id="height" min="50" max="250" placeholder="z. B. 175" value="175" />
-          </div>
-          
-          <div class="input-group">
-            <label for="weight">Gewicht (kg)</label>
-            <input type="number" id="weight" min="20" max="300" step="0.1" placeholder="z. B. 70" value="70" />
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">⚖️</span>
+            <div>
+              <h1>BMI Rechner 2026</h1>
+              <p>Berechne deinen Body-Mass-Index (WHO-Standard) und prüfe dein Idealgewicht.</p>
+            </div>
           </div>
         </div>
 
-        <div class="result-box" id="resultBox">
-          <div style="font-size:14px; color:var(--muted); margin-bottom:8px;">Dein Body-Mass-Index:</div>
-          <div class="result-value" id="resValue">22.9</div>
-          <div class="result-label" id="resLabel" style="color: #2ecc71;">Normalgewicht</div>
-          
-          <svg viewBox="0 0 200 110" style="width:100%; max-width:280px; margin:16px auto; display:block;" aria-hidden="true">
-            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e2e8f0" stroke-width="14" stroke-linecap="round"/>
-            <path d="M 20 100 A 80 80 0 0 1 56 36" fill="none" stroke="#3498db" stroke-width="14"/>
-            <path d="M 56 36 A 80 80 0 0 1 100 20" fill="none" stroke="#2ecc71" stroke-width="14"/>
-            <path d="M 100 20 A 80 80 0 0 1 144 36" fill="none" stroke="#f1c40f" stroke-width="14"/>
-            <path d="M 144 36 A 80 80 0 0 1 180 100" fill="none" stroke="#e74c3c" stroke-width="14"/>
-            <line id="gaugeNeedle" x1="100" y1="100" x2="100" y2="28" stroke="var(--text)" stroke-width="3" stroke-linecap="round" transform="rotate(-90 100 100)"/>
-            <circle cx="100" cy="100" r="5" fill="var(--text)"/>
-          </svg>
-          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--muted); max-width:280px; margin:0 auto;">
-            <span>18,5</span><span>25</span><span>30</span>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-group">
+              <label for="height">Körpergröße (cm)</label>
+              <div class="input-suffix">
+                <input type="number" id="height" min="50" max="250" placeholder="z. B. 175" value="175" inputmode="numeric" />
+                <span class="suffix">cm</span>
+              </div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="height" data-val="165">165 cm</button>
+                <button type="button" class="quick-chip active" data-target="height" data-val="175">175 cm</button>
+                <button type="button" class="quick-chip" data-target="height" data-val="180">180 cm</button>
+                <button type="button" class="quick-chip" data-target="height" data-val="185">185 cm</button>
+              </div>
+            </div>
+            
+            <div class="input-group">
+              <label for="weight">Gewicht (kg)</label>
+              <div class="input-suffix">
+                <input type="number" id="weight" min="20" max="300" step="0.5" placeholder="z. B. 70" value="70" inputmode="decimal" />
+                <span class="suffix">kg</span>
+              </div>
+              <div class="quick-chips-wrap">
+                <span class="quick-chip-label">Schnellwahl:</span>
+                <button type="button" class="quick-chip" data-target="weight" data-val="60">60 kg</button>
+                <button type="button" class="quick-chip active" data-target="weight" data-val="70">70 kg</button>
+                <button type="button" class="quick-chip" data-target="weight" data-val="80">80 kg</button>
+                <button type="button" class="quick-chip" data-target="weight" data-val="90">90 kg</button>
+              </div>
+            </div>
           </div>
-          
-          <div class="scale-bar" style="display:none;">
-            <div class="scale-marker" id="resMarker"></div>
-          </div>
-          
-          <div class="text-muted text-xs mt-16 text-left">
-            Legende: Blau (< 18.5) Untergewicht | Grün (18.5 - 24.9) Normalgewicht | Gelb (25 - 29.9) Übergewicht | Rot (≥ 30) Adipositas.
+
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="resultBox">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Dein Body-Mass-Index (BMI)</span>
+                <div class="hero-net-val" id="resValue">22.9</div>
+                <div class="hero-net-sub" id="resLabel" style="font-size: 1.05rem; font-weight: 700; color: #86efac;">Normalgewicht</div>
+              </div>
+
+              <div style="background: var(--surface, #fff); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-top: 14px; text-align: center;">
+                <svg viewBox="0 0 200 110" style="width:100%; max-width:240px; margin:0 auto; display:block;" aria-hidden="true">
+                  <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e2e8f0" stroke-width="14" stroke-linecap="round"/>
+                  <path d="M 20 100 A 80 80 0 0 1 56 36" fill="none" stroke="#3498db" stroke-width="14"/>
+                  <path d="M 56 36 A 80 80 0 0 1 100 20" fill="none" stroke="#2ecc71" stroke-width="14"/>
+                  <path d="M 100 20 A 80 80 0 0 1 144 36" fill="none" stroke="#f1c40f" stroke-width="14"/>
+                  <path d="M 144 36 A 80 80 0 0 1 180 100" fill="none" stroke="#e74c3c" stroke-width="14"/>
+                  <line id="gaugeNeedle" x1="100" y1="100" x2="100" y2="28" stroke="var(--text)" stroke-width="3" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+                  <circle cx="100" cy="100" r="5" fill="var(--text)"/>
+                </svg>
+                <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--muted); max-width:240px; margin:4px auto 0;">
+                  <span>18,5</span><span>25</span><span>30</span>
+                </div>
+                
+                <div class="scale-bar" style="display:none;">
+                  <div class="scale-marker" id="resMarker"></div>
+                </div>
+              </div>
+
+              <div class="text-muted text-xs" style="margin-top: 12px; line-height: 1.4;">
+                Blau (&lt; 18,5) Untergewicht • Grün (18,5–24,9) Normalgewicht • Gelb (25–29,9) Übergewicht • Rot (≥ 30) Adipositas.
+              </div>
+            </div>
           </div>
         </div>
 
@@ -326,6 +360,19 @@
 
       heightInput.addEventListener('input', calculate);
       weightInput.addEventListener('input', calculate);
+
+      document.querySelectorAll('.quick-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const targetId = chip.dataset.target;
+          const val = chip.dataset.val;
+          const input = document.getElementById(targetId);
+          if (!input) return;
+          input.value = val;
+          chip.parentElement.querySelectorAll('.quick-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          calculate();
+        });
+      });
 
       calculate();
     });

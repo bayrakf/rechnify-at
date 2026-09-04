@@ -88,62 +88,70 @@
   </header>
 
   <main class="site-main">
-    <div class="calculator-container">
+    <div class="calculator-container cockpit-layout">
       <div class="calculator-card">
 
-        <div class="calc-header">
-          <div class="calc-icon">🚗</div>
-          <h1 style="margin-bottom:8px;">Pendlerpauschale Rechner Deutschland</h1>
-          <p>Berechne die steuerliche Absetzbarkeit deines Arbeitswegs (Werbungskosten) für Deutschland.</p>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">🚗</span>
+            <div>
+              <h1>Pendlerpauschale Rechner Deutschland 2026</h1>
+              <p>Berechne die steuerliche Absetzbarkeit deines Arbeitswegs (Werbungskosten).</p>
+            </div>
+          </div>
         </div>
 
-        <div class="calc-body" style="padding: 24px;">
-
-          <!-- Entfernung -->
-          <div class="input-group">
-            <label for="distance">Einfache Entfernung zum Arbeitsplatz (in km)</label>
-            <div class="input-suffix">
-              <input type="number" id="distance" placeholder="z.B. 25" min="0" step="1" oninput="calculate()" />
-              <span class="suffix">km</span>
-            </div>
-          </div>
-
-          <!-- Arbeitstage -->
-          <div class="input-group">
-            <label for="workdays">Arbeitstage pro Jahr (an denen du gependelt bist)</label>
-            <div class="input-suffix">
-              <input type="number" id="workdays" value="220" min="0" max="365" step="1" oninput="calculate()" />
-              <span class="suffix">Tage</span>
-            </div>
-          </div>
-
-          <!-- Pkw Nutzung -->
-          <div class="input-group">
-            <label for="vehicle">Verwendetes Verkehrsmittel</label>
-            <select id="vehicle" onchange="calculate()">
-              <option value="car">Eigener Pkw oder Firmenwagen (kein Cap)</option>
-              <option value="public">Öffentliche Verkehrsmittel / Sonstige (max. 4.500 €)</option>
-            </select>
-          </div>
-
-          <!-- Ergebnis -->
-          <div class="result-box" id="result" style="display:none;">
-            <strong style="font-size: var(--text-base); color: var(--text);">📊 Berechnungsergebnis (Werbungskosten)</strong>
-            <div class="result-grid">
-              <div class="result-card highlight">
-                <div class="label">Entfernungspauschale pro Jahr</div>
-                <div class="value" id="resYearValue">–</div>
-                <div class="sub">mindert zu versteuerndes Einkommen</div>
-              </div>
-              <div class="result-card">
-                <div class="label">Monatlicher Anteil (Schnitt)</div>
-                <div class="value" id="resMonthValue">–</div>
-                <div class="sub">pro Monat</div>
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <!-- Entfernung -->
+            <div class="input-group">
+              <label for="distance">Einfache Entfernung zum Arbeitsplatz (in km)</label>
+              <div class="input-suffix">
+                <input type="number" id="distance" placeholder="z.B. 25" min="0" step="1" oninput="calculate()" />
+                <span class="suffix">km</span>
               </div>
             </div>
-            <div class="info-box" id="infoBox"></div>
+
+            <!-- Arbeitstage -->
+            <div class="input-group">
+              <label for="workdays">Arbeitstage pro Jahr (an denen du gependelt bist)</label>
+              <div class="input-suffix">
+                <input type="number" id="workdays" value="220" min="0" max="365" step="1" oninput="calculate()" />
+                <span class="suffix">Tage</span>
+              </div>
+            </div>
+
+            <!-- Pkw Nutzung -->
+            <div class="input-group">
+              <label for="vehicle">Verwendetes Verkehrsmittel</label>
+              <select id="vehicle" onchange="calculate()">
+                <option value="car">Eigener Pkw oder Firmenwagen (kein Cap)</option>
+                <option value="public">Öffentliche Verkehrsmittel / Sonstige (max. 4.500 €)</option>
+              </select>
+            </div>
           </div>
 
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="result">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Entfernungspauschale pro Jahr</span>
+                <div class="hero-net-val" id="resYearValue">–</div>
+                <div class="hero-net-sub">mindert dein zu versteuerndes Einkommen (Werbungskosten)</div>
+
+                <div class="sub-cards-grid">
+                  <div class="sub-net-card">
+                    <div class="label">Monatlicher Anteil (Schnitt)</div>
+                    <div class="val" id="resMonthValue" style="color: var(--color-ink, #0f172a); font-weight:700;">–</div>
+                    <div class="desc">Entlastung pro Monat</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-box" id="infoBox" style="margin-top: 16px;"></div>
+            </div>
+          </div>
         </div>
 
         <!-- FAQ -->

@@ -151,83 +151,102 @@
 
   <main class="site-main">
     
-    <div class="page-hero" style="padding-top:10px;">
-      <div class="calc-icon">🏖️</div>
-      <h1 style="margin-bottom:8px;">Urlaubstage Rechner (Österreich)</h1>
-      <p class="subtitle">Wie viel gesetzlicher Urlaub steht dir zu? Berechne deinen Anspruch (Teilzeit, Vollzeit, Aliquot).</p>
-    </div>
-
-    <!-- CALCULATOR -->
-    <div class="card">
-      <div class="calc-body">
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
         
-        <div class="input-group">
-          <label for="workdays">An wie vielen Tagen pro Woche arbeitest du (im Schnitt)?</label>
-          <select id="workdays">
-            <option value="1">1 Tag pro Woche</option>
-            <option value="2">2 Tage pro Woche</option>
-            <option value="3">3 Tage pro Woche</option>
-            <option value="4">4 Tage pro Woche</option>
-            <option value="5" selected>5 Tage pro Woche (Normalfall)</option>
-            <option value="6">6 Tage pro Woche</option>
-          </select>
-        </div>
-
-        <div class="input-group">
-          <label>Hast du bereits 25 Dienstjahre erreicht?</label>
-          <div class="toggle-group" id="seniority-toggles">
-            <div class="toggle-btn active" data-weeks="5">Nein (5 Wochen)</div>
-            <div class="toggle-btn" data-weeks="6">Ja (6 Wochen)</div>
-          </div>
-          <div class="text-muted text-xs mt-4">Nach 25 anrechenbaren Dienstjahren (inkl. Schul-/Studienzeiten) entsteht Anspruch auf die 6. Urlaubswoche.</div>
-        </div>
-        
-        <div class="input-group" style="margin-top:24px;">
-          <label>Möchtest du den Urlaub für ein ganzes Jahr oder anteilig (aliquot) berechnen?</label>
-          <select id="calcMode">
-            <option value="full">Ganzes Urlaubsjahr (voller Anspruch)</option>
-            <option value="aliquot">Anteilig (Aliquotierung nach Monaten)</option>
-          </select>
-        </div>
-        
-        <div class="input-group hidden" id="monthsWrapper">
-          <label for="months">Für wie viele volle Monate warst/bist du beschäftigt?</label>
-          <input type="number" id="months" min="1" max="11" value="6" />
-          <div class="text-muted text-xs mt-4">Wichtig: In den ersten 6 Monaten des ersten Arbeitsjahres entsteht der Urlaub anteilig (pro Monat). Bei Austritt während des Jahres wird ebenfalls anteilig berechnet.</div>
-        </div>
-
-        <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">
-          <h3 style="margin-top: 0; display: flex; align-items: center; gap: 8px;"><span>💸</span> Resturlaub & Auszahlung (Premium)</h3>
-          <p class="text-sm text-muted" style="margin-bottom: 16px;">Wenn du kündigst, muss offener Urlaub ausbezahlt werden (Urlaubsersatzleistung). Finde heraus, wie viel er wert ist.</p>
-          
-          <div class="input-group">
-            <label for="consumedDays">Wie viele Urlaubstage hast du heuer schon verbraucht?</label>
-            <input type="number" id="consumedDays" min="0" value="0" step="0.5" />
-          </div>
-
-          <div class="input-group">
-            <label for="grossSalary">Dein Brutto-Monatsgehalt (€) (optional)</label>
-            <input type="number" id="grossSalary" min="0" placeholder="z.B. 2500" />
-            <div class="text-muted text-xs mt-4">Wird benötigt, um den Euro-Wert deines Resturlaubs zu berechnen.</div>
-          </div>
-        </div>
-
-        <div class="result-box" id="resultBox">
-          <div class="result-label" id="resLabel">Dein Gesamt-Urlaubsanspruch:</div>
-          <div class="result-value" id="resValue">25 Tage</div>
-          <div class="text-muted text-sm mt-8" id="resDetail">bei 5 Wochen für ein volles Urlaubsjahr.</div>
-          
-          <div id="premiumResult" style="margin-top: 24px; padding-top: 24px; border-top: 1px dashed var(--border); display: none; text-align: left;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-              <span style="font-weight: 600; color: var(--text);">Davon offener Resturlaub:</span>
-              <span id="resRemainingDays" style="font-weight: bold; font-size: 1.1em; color: var(--primary);">0 Tage</span>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;">🏖️</span>
+            <div>
+              <h1>Urlaubstage Rechner Österreich 2026</h1>
+              <p>Wie viel gesetzlicher Urlaub steht dir zu? Berechne deinen Anspruch (Teilzeit, Vollzeit, Aliquot).</p>
             </div>
-            <div id="payoutRow" style="display: flex; justify-content: space-between; padding: 12px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 8px; margin-top: 8px;">
-              <span style="font-weight: 600; color: #2e7d32;">Wert bei Auszahlung (Brutto):</span>
-              <span id="resPayoutValue" style="font-weight: 800; font-size: 1.2em; color: #2e7d32;">-- €</span>
+          </div>
+        </div>
+
+        <div class="cockpit-grid">
+          <!-- LEFT COLUMN: EINGABEN -->
+          <div class="cockpit-left">
+            <div class="input-group">
+              <label for="workdays">Arbeitstage pro Woche (im Schnitt)</label>
+              <select id="workdays">
+                <option value="1">1 Tag pro Woche</option>
+                <option value="2">2 Tage pro Woche</option>
+                <option value="3">3 Tage pro Woche</option>
+                <option value="4">4 Tage pro Woche</option>
+                <option value="5" selected>5 Tage pro Woche (Standard)</option>
+                <option value="6">6 Tage pro Woche</option>
+              </select>
             </div>
-            <div class="text-muted text-xs mt-8" id="payoutNote" style="display: none;">
-              <strong>Hinweis:</strong> Die Urlaubsersatzleistung wird inklusive der aliquoten Sonderzahlungen (Urlaubs- und Weihnachtsgeld) berechnet. Sie ist jedoch lohnsteuer- und sozialversicherungspflichtig!
+
+            <div class="input-group">
+              <label>Bereits 25 Dienstjahre erreicht?</label>
+              <div class="toggle-group" id="seniority-toggles">
+                <div class="toggle-btn active" data-weeks="5">Nein (5 Wochen)</div>
+                <div class="toggle-btn" data-weeks="6">Ja (6 Wochen)</div>
+              </div>
+              <div class="text-muted text-xs mt-4">Nach 25 Dienstjahren entsteht Anspruch auf die 6. Urlaubswoche.</div>
+            </div>
+            
+            <div class="input-group">
+              <label for="calcMode">Berechnungszeitraum</label>
+              <select id="calcMode">
+                <option value="full">Ganzes Urlaubsjahr (voller Anspruch)</option>
+                <option value="aliquot">Anteilig (Aliquotierung nach Monaten)</option>
+              </select>
+            </div>
+            
+            <div class="input-group hidden" id="monthsWrapper">
+              <label for="months">Beschäftigungsdauer (volle Monate)</label>
+              <input type="number" id="months" min="1" max="11" value="6" inputmode="numeric" />
+              <div class="text-muted text-xs mt-4">Bei Ein- oder Austritt während des Urlaubsjahres.</div>
+            </div>
+
+            <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);">
+              <label style="font-weight: 600; margin-bottom: 8px; display: block;">Resturlaub &amp; Urlaubsersatzleistung</label>
+              <div class="input-group">
+                <label for="consumedDays">Bereits verbrauchte Urlaubstage</label>
+                <input type="number" id="consumedDays" min="0" value="0" step="0.5" inputmode="numeric" />
+              </div>
+
+              <div class="input-group">
+                <label for="grossSalary">Brutto-Monatsgehalt (optional)</label>
+                <div class="input-suffix">
+                  <input type="number" id="grossSalary" min="0" placeholder="z.B. 3000" inputmode="numeric" />
+                  <span class="suffix">€</span>
+                </div>
+                <div class="text-muted text-xs mt-4">Wird für den Wert der Urlaubsersatzleistung benötigt.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: COCKPIT RESULTS -->
+          <div class="cockpit-right">
+            <div id="resultBox">
+              <div class="hero-net-card">
+                <span class="hero-net-label" id="resLabel">Dein Gesamt-Urlaubsanspruch</span>
+                <div class="hero-net-val" id="resValue">25 Tage</div>
+                <div class="hero-net-sub" id="resDetail">bei 5 Wochen für ein volles Urlaubsjahr</div>
+              </div>
+
+              <div class="sub-cards-grid">
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Offener Resturlaub</div>
+                  <div class="sub-net-val" id="resRemainingDays" style="color: var(--primary);">25 Tage</div>
+                  <div class="sub-net-period">verbleibend</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="sub-net-label">Wert bei Auszahlung</div>
+                  <div class="sub-net-val" id="resPayoutValue" style="color: var(--success, #16a34a);">-- €</div>
+                  <div class="sub-net-period">Urlaubsersatzleistung</div>
+                </div>
+              </div>
+
+              <div id="premiumResult" style="margin-top: 14px;">
+                <div class="text-muted text-xs" id="payoutNote" style="display: none; padding: 10px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; color: #166534;">
+                  <strong>Hinweis:</strong> Die Urlaubsersatzleistung wird inklusive aliquoter Sonderzahlungen (13./14. Gehalt) berechnet und ist steuer- &amp; SV-pflichtig.
+                </div>
+              </div>
             </div>
           </div>
         </div>
