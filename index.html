@@ -111,9 +111,9 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--c-rule);
-      border-radius: var(--r-full);
+      border-radius: var(--r-md);
       padding: 8px 14px;
-      box-shadow: var(--sh-md);
+      box-shadow: var(--sh-sm);
     }
 
     .pill-logo {
@@ -151,7 +151,7 @@
       gap: 3px;
       background: var(--c-paper2);
       border: 1px solid var(--c-rule);
-      border-radius: var(--r-full);
+      border-radius: var(--r-sm);
       padding: 3px;
     }
 
@@ -159,7 +159,7 @@
       all: unset;
       cursor: pointer;
       padding: 5px 13px;
-      border-radius: var(--r-full);
+      border-radius: var(--r-sm);
       font-size: .78rem;
       font-weight: 600;
       font-family: var(--f-display);
@@ -294,18 +294,15 @@
       font-weight: 600;
       font-size: .9rem;
       padding: 12px 22px;
-      border-radius: var(--r-full);
+      border-radius: var(--r-sm);
       text-decoration: none;
       border: none;
       cursor: pointer;
-      transition: background var(--dur) var(--ease-out), transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
-      box-shadow: 0 4px 16px color-mix(in oklch, var(--c-accent) 35%, transparent);
+      transition: background var(--dur) var(--ease-out);
     }
 
     .btn-p:hover {
       background: var(--c-accent-h);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px color-mix(in oklch, var(--c-accent) 40%, transparent);
     }
 
     .btn-p:focus-visible {
@@ -314,7 +311,7 @@
     }
 
     .btn-p:active {
-      transform: translateY(0);
+      background: var(--c-accent-h);
     }
 
     .btn-s {
@@ -326,7 +323,7 @@
       font-weight: 600;
       font-size: .9rem;
       padding: 12px 20px;
-      border-radius: var(--r-full);
+      border-radius: var(--r-sm);
       text-decoration: none;
       background: var(--c-paper2);
       border: 1px solid var(--c-rule);
@@ -356,19 +353,6 @@
       font-family: var(--f-display);
       letter-spacing: .07em;
       text-transform: uppercase;
-      animation: bob 2.2s ease-in-out infinite;
-    }
-
-    @keyframes bob {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(7px);
-      }
     }
 
     /* ── VALUE STRIP ──────────────────────────────────────────────── */

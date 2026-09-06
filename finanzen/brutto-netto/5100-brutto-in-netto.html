@@ -42,18 +42,16 @@
 
   <style>
     .calc-body { padding: 24px; }
-    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
     .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-    .result-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+    .result-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center; }
 
     .affiliate-banner {
       margin-top: 24px;
       padding: 16px;
-      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-      border: 1px solid #bae6fd;
-      border-radius: 12px;
-      display: flex;
-      gap: 16px;
+      background: var(--color-paper-2, #f8fafc);
+      border: 1px solid var(--color-rule, #e2e8f0);
+      border-radius: 8px; display: flex; gap: 16px;
       align-items: center;
     }
     .affiliate-banner .icon { font-size: 28px; }
@@ -324,7 +322,7 @@
       <div class="embed-widget" style="margin-top: 32px; padding: 24px; background: var(--soft); border-radius: 12px; border: 1px dashed var(--primary);">
         <h3 style="margin-top: 0; display: flex; align-items: center; gap: 8px;"><span>💻</span> Rechner auf deiner Website einbinden</h3>
         <p style="font-size: 14px; margin-bottom: 12px;">Kopiere diesen Code, um den Brutto-Netto-Rechner kostenlos in deinen HR-Blog oder deine Firmenwebsite einzubinden:</p>
-        <textarea readonly style="width: 100%; height: 60px; font-family: monospace; font-size: 12px; padding: 12px; border-radius: 6px; border: 1px solid var(--border); resize: none;" onclick="this.select()">&lt;iframe src="https://rechnify.at/finanzen/gehaltsrechner.html?widget=true" width="100%" height="600" style="border:none; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"&gt;&lt;/iframe&gt;</textarea>
+        <textarea readonly style="width: 100%; height: 60px; font-family: monospace; font-size: 12px; padding: 12px; border-radius: 6px; border: 1px solid var(--border); resize: none;" onclick="this.select()">&lt;iframe src="https://rechnify.at/finanzen/gehaltsrechner.html?widget=true" width="100%" height="600" style="border:1px solid #cbd5e1; border-radius:8px;"&gt;&lt;/iframe&gt;</textarea>
       </div>
 
       

@@ -42,18 +42,16 @@
 
   <style>
     .calc-body { padding: 24px; }
-    .result-box { margin-top: 24px; background: var(--color-paper); border: 1px solid var(--color-rule); border-radius: 14px; padding: 20px; }
+    .result-box { margin-top: 24px; background: var(--color-paper); border: 1px solid var(--color-rule); border-radius: 10px; padding: 20px; }
     .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-    .result-card { background: var(--color-paper-2); border: 1px solid var(--color-rule); border-radius: 12px; padding: 16px; text-align: center; }
+    .result-card { background: var(--color-paper-2); border: 1px solid var(--color-rule); border-radius: 8px; padding: 16px; text-align: center; }
 
     .affiliate-banner {
       margin-top: 24px;
       padding: 16px;
       background: var(--color-accent-s);
       border: 1px solid color-mix(in oklch, var(--color-accent) 25%, transparent);
-      border-radius: 12px;
-      display: flex;
-      gap: 16px;
+      border-radius: 8px; display: flex; gap: 16px;
       align-items: center;
     }
     .affiliate-banner .icon { font-size: 28px; }
@@ -441,7 +439,7 @@
         <summary>💻 Rechner als Widget auf deiner Website einbinden</summary>
         <div class="embed-content">
           <p>Kostenlos per iFrame in deinen HR-Blog oder deine Firmenwebsite einbinden:</p>
-          <textarea readonly onclick="this.select()"><iframe src="https://rechnify.at/de/finanzen/gehaltsrechner.html?widget=true" width="100%" height="600" style="border:none; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe></textarea>
+          <textarea readonly onclick="this.select()"><iframe src="https://rechnify.at/de/finanzen/gehaltsrechner.html?widget=true" width="100%" height="600" style="border:1px solid #cbd5e1; border-radius:8px;"></iframe></textarea>
         </div>
       </details>
 
@@ -582,7 +580,7 @@
         const resNew = calcTaxesDE(calcGross);
         const bruttoLossPct = ((baseGross - calcGross) / baseGross) * 100;
         const nettoLossPct = ((resOld.netMonthly - resNew.netMonthly) / resOld.netMonthly) * 100;
-        partTimeHtml = `<div style="margin-bottom: 24px; padding: 16px; background: #e0f2fe; border: 1px solid #bae6fd; border-radius: 12px; color: #0369a1;">
+        partTimeHtml = `<div style="margin-bottom: 24px; padding: 16px; background: #e0f2fe; border: 1px solid var(--color-rule, #e2e8f0); border-radius: 12px; color: #0369a1;">
           <h4 style="margin-top: 0; color: #0284c7;">⚖️ Teilzeit-Ergebnis (${hoursNew}h statt ${hoursOld}h)</h4>
           <p style="font-size: 14px; margin-bottom: 12px;">Brutto −${bruttoLossPct.toFixed(1)}%, Netto nur −${nettoLossPct.toFixed(1)}% (Steuerprogression).</p>
           <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px; margin-bottom: 4px;">

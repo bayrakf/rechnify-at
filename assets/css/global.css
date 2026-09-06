@@ -568,11 +568,11 @@ body.dark .site-logo img {
 
 /* ── Hero Net / Result Card ────────────────────────────────────── */
 .hero-net-card {
-  background: linear-gradient(135deg, color-mix(in oklch, var(--color-accent, #1858C7) 6%, var(--color-paper, #ffffff)) 0%, var(--color-paper-2, #f8fafc) 100%);
-  border: 1.5px solid color-mix(in oklch, var(--color-accent, #1858C7) 25%, transparent);
-  border-radius: var(--radius-lg, 14px);
+  background: var(--color-paper-2, #f8fafc);
+  border: 1px solid var(--color-rule, #e2e8f0);
+  border-radius: var(--radius-card, 10px);
   padding: 18px 22px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: none;
 }
 
 .hero-net-label {
@@ -662,7 +662,7 @@ body.dark .site-logo img {
   text-align: center;
   padding: var(--space-lg) var(--space-lg) var(--space-md);
   border-bottom: 1px solid var(--color-rule);
-  background: linear-gradient(180deg, var(--color-paper) 0%, var(--color-paper-2) 100%);
+  background: var(--color-paper);
 }
 
 .calc-header h1 {
@@ -730,11 +730,11 @@ body.dark .site-logo img {
 
 .result-box {
   margin-top: var(--space-md);
-  background: linear-gradient(135deg, color-mix(in oklch, var(--color-accent) 6%, var(--color-paper)) 0%, var(--color-paper-2) 100%);
-  border: 1.5px solid color-mix(in oklch, var(--color-accent) 22%, transparent);
-  border-radius: var(--radius-lg);
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-card);
   padding: var(--space-md) var(--space-lg);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: none;
   transition: background var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
 }
 
@@ -867,12 +867,11 @@ body.dark .site-logo img {
   font-weight: 600;
   font-size: var(--text-sm);
   text-decoration: none;
-  transition: background var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+  transition: background var(--dur-short) var(--ease-out);
 }
 
 .affiliate-banner .btn-aff:hover {
   background: var(--color-accent-h);
-  transform: translateY(-1px);
 }
 
 .affiliate-banner .btn-aff:focus-visible {
@@ -913,11 +912,10 @@ body.dark .site-logo img {
   position: relative;
   overflow: hidden;
   min-width: 0;
-  transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+  transition: box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
 }
 
 .tool-card:hover {
-  transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
   border-color: color-mix(in oklch, var(--color-accent) 40%, transparent);
   text-decoration: none;
@@ -1173,13 +1171,12 @@ body.dark .site-logo img {
   color: var(--color-ink);
   font-size: var(--text-sm);
   font-weight: 500;
-  transition: border-color var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+  transition: border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
 }
 
 .related-tool-link:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
-  transform: translateY(-1px);
   text-decoration: none;
 }
 
@@ -1200,14 +1197,12 @@ button, .btn {
   cursor: pointer;
   min-height: 42px;
   text-decoration: none;
-  transition: background var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), opacity var(--dur-short) var(--ease-out);
+  transition: background var(--dur-short) var(--ease-out), opacity var(--dur-short) var(--ease-out);
 }
 
 button:hover, .btn:hover,
 button.is-hover, .btn.is-hover {
   background: var(--color-accent-h);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px color-mix(in oklch, var(--color-accent) 35%, transparent);
   color: var(--color-accent-ink);
   text-decoration: none;
 }
@@ -1220,8 +1215,7 @@ button.is-focus, .btn.is-focus {
 
 button:active, .btn:active,
 button.is-active, .btn.is-active {
-  transform: translateY(1px);
-  box-shadow: none;
+  background: var(--color-accent-h);
 }
 
 button:disabled, .btn:disabled,

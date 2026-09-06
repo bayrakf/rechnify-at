@@ -40,7 +40,7 @@
   <style>
     .calc-body { padding: 24px; }
     .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .result-box { margin-top: 24px; background: var(--soft); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
     
     .big-number { font-size: 32px; font-weight: 800; color: var(--primary); margin: 8px 0; }
     .sub-number { font-size: 16px; color: var(--muted); }
@@ -48,11 +48,9 @@
     .affiliate-banner {
       margin-top: 24px;
       padding: 16px;
-      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-      border: 1px solid #bae6fd;
-      border-radius: 12px;
-      display: flex;
-      gap: 16px;
+      background: var(--color-paper-2, #f8fafc);
+      border: 1px solid var(--color-rule, #e2e8f0);
+      border-radius: 8px; display: flex; gap: 16px;
       align-items: center;
     }
     .affiliate-banner .icon { font-size: 28px; }
@@ -291,7 +289,7 @@
       document.getElementById('resNetProfit').className = isLoss ? 'text-danger' : 'text-success';
 
       if (isLoss && isNew) {
-        document.getElementById('altbestandInfo').innerHTML = `<div style="margin-top: 16px; padding: 12px; background: #fee2e2; border: 1px solid #fca5a5; border-radius: 8px; color: #991b1b; font-size: 14px;"><strong>📉 Verlustausgleich (§ 27 Abs. 8 EStG):</strong> Dieser realisierte Krypto-Verlust kann im Rahmen deiner Einkommensteuererklärung mit anderen Krypto-Gewinnen oder 27,5%-Kapitalerträgen desselben Kalenderjahres steuermindernd gegengerechnet werden.</div>`;
+        document.getElementById('altbestandInfo').innerHTML = `<div style="margin-top: 16px; padding: 12px; background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; color: #991b1b; font-size: 14px;"><strong>📉 Verlustausgleich (§ 27 Abs. 8 EStG):</strong> Dieser realisierte Krypto-Verlust kann im Rahmen deiner Einkommensteuererklärung mit anderen Krypto-Gewinnen oder 27,5%-Kapitalerträgen desselben Kalenderjahres steuermindernd gegengerechnet werden.</div>`;
       } else if (!isNew && profit > 0) {
         document.getElementById('altbestandInfo').innerHTML = `<div style="margin-top: 16px; padding: 12px; background: #dcfce7; border: 1px solid #86efac; border-radius: 8px; color: #166534; font-size: 14px;"><strong>🎉 Altbestand-Retter:</strong> Vor dem 01.03.2021 gekauft? Deine Gewinne sind komplett <strong>steuerfrei (0% KESt)</strong>!</div>`;
       } else {

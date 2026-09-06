@@ -907,7 +907,7 @@
         <summary>💻 Rechner als Widget auf deiner Website einbinden</summary>
         <div class="embed-content">
           <p>Kostenlos per iFrame in deinen HR-Blog oder deine Firmenwebsite einbinden:</p>
-          <textarea readonly onclick="this.select()"><iframe src="https://rechnify.at/finanzen/gehaltsrechner.html?widget=true" width="100%" height="600" style="border:none; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe></textarea>
+          <textarea readonly onclick="this.select()"><iframe src="https://rechnify.at/finanzen/gehaltsrechner.html?widget=true" width="100%" height="600" style="border:1px solid #cbd5e1; border-radius:8px;"></iframe></textarea>
         </div>
       </details>
 
@@ -1118,7 +1118,7 @@
         const bruttoDiff = baseGross - calcGross;
         const nettoDiff = resOld.netMonthly - resNew.netMonthly;
 
-        partTimeHtml = `<div style="margin-bottom: 24px; padding: 16px; background: #e0f2fe; border: 1px solid #bae6fd; border-radius: 12px; color: #0369a1;">
+        partTimeHtml = `<div style="margin-bottom: 24px; padding: 16px; background: #e0f2fe; border: 1px solid var(--color-rule, #e2e8f0); border-radius: 12px; color: #0369a1;">
           <h4 style="margin-top: 0; color: #0284c7; display: flex; align-items: center; gap: 8px;"><span>⚖️</span> Teilzeit-Ergebnis (${hoursNew}h statt ${hoursOld}h)</h4>
           <p style="font-size: 14px; margin-bottom: 12px;">Du verzichtest auf <strong>${bruttoLossPct.toFixed(1)}%</strong> deines Bruttogehalts (-${bruttoDiff.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €), verlierst aber durch die Steuerprogression nur <strong>${nettoLossPct.toFixed(1)}%</strong> deines Nettos (-${nettoDiff.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €)!</p>
           <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px; margin-bottom: 4px;">
