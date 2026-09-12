@@ -5,7 +5,17 @@
    ============================================================ */
 
 // Import order: analytics → ui → tools
-// Each module defines its own init functions
+// Anti-Clickjacking: prevent framing unless explicitly requested as widget
+if (window.top !== window.self) {
+  const isWidget = window.location.search.includes('widget=true');
+  if (!isWidget) {
+    try {
+      window.top.location = window.self.location;
+    } catch (e) {
+      document.documentElement.style.display = 'none';
+    }
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   // UI

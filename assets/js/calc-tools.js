@@ -29,7 +29,12 @@
   }
 
   function downloadCsv(filename, header, rows) {
-    const esc = (v) => `"${String(v).replace(/"/g, '""')}"`;
+    const esc = (v) => {
+      let s = String(v ?? '');
+      // CWE-1236 CSV Injection defense: prefix formula triggers with single quote
+      if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+      return `"${s.replace(/"/g, '""')}"`;
+    };
     const lines = [header.map(esc).join(';')].concat(rows.map((r) => r.map(esc).join(';')));
     const blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a');
