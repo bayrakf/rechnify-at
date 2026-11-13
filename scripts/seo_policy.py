@@ -38,6 +38,28 @@ EXCLUDED_FILES = {
     "finanzen/gehalt/handwerker-gehalt-netto.html",
     "finanzen/gehalt/ingenieur-gehalt-netto.html",
     "finanzen/gehalt/professor-gehalt-netto.html",
+    # DE-Berufsseiten ohne passende Berufsgruppe in der BA-Entgeltstatistik: keine belegte Gehaltszahl
+    "de/finanzen/gehalt/abteilungsleiter-gehalt-netto.html",
+    "de/finanzen/gehalt/anwalt-gehalt-netto.html",
+    "de/finanzen/gehalt/apotheker-gehalt-netto.html",
+    "de/finanzen/gehalt/data-scientist-gehalt-netto.html",
+    "de/finanzen/gehalt/elektriker-gehalt-netto.html",
+    "de/finanzen/gehalt/filialleiter-gehalt-netto.html",
+    "de/finanzen/gehalt/geschaeftsfuehrer-gehalt-netto.html",
+    "de/finanzen/gehalt/handwerker-gehalt-netto.html",
+    "de/finanzen/gehalt/hr-manager-gehalt-netto.html",
+    "de/finanzen/gehalt/ingenieur-gehalt-netto.html",
+    "de/finanzen/gehalt/marketing-manager-gehalt-netto.html",
+    "de/finanzen/gehalt/maschinenbau-gehalt-netto.html",
+    "de/finanzen/gehalt/pilot-gehalt-netto.html",
+    "de/finanzen/gehalt/polizist-gehalt-netto.html",
+    "de/finanzen/gehalt/product-manager-gehalt-netto.html",
+    "de/finanzen/gehalt/professor-gehalt-netto.html",
+    "de/finanzen/gehalt/psychologe-gehalt-netto.html",
+    "de/finanzen/gehalt/steuerberater-gehalt-netto.html",
+    "de/finanzen/gehalt/tierarzt-gehalt-netto.html",
+    "de/finanzen/gehalt/tischler-gehalt-netto.html",
+    "de/finanzen/gehalt/ux-designer-gehalt-netto.html",
 }
 
 EXCLUDED_DIRS = ("graphify-out/", "scripts/", "node_modules/", "scratch/")
