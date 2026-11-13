@@ -25,6 +25,12 @@ EXCLUDED_FILES = {
     "datenschutz.html",
     "404.html",
     "embed.html",
+    # AT-Staedteseiten: kein amtlicher Stadt-Median verfuegbar, nur Rechner-Verweis (thin)
+    "finanzen/gehalt/gehalt-wien.html",
+    "finanzen/gehalt/gehalt-graz.html",
+    "finanzen/gehalt/gehalt-linz.html",
+    "finanzen/gehalt/gehalt-salzburg.html",
+    "finanzen/gehalt/gehalt-innsbruck.html",
 }
 
 EXCLUDED_DIRS = ("graphify-out/", "scripts/", "node_modules/", "scratch/")
