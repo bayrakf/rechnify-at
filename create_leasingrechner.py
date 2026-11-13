@@ -291,7 +291,7 @@ def generate_at():
     
     html = template.replace("{PATH_PREFIX}", "") \
                    .replace("{LOCALE}", "de_AT") \
-                   .replace("{COUNTRY_NAME}", "(Österreich)") \
+                   .replace("{COUNTRY_NAME}", "Österreich") \
                    .replace("{AT_ACTIVE}", "active") \
                    .replace("{DE_ACTIVE}", "") \
                    .replace("{ALT_LINKS}", alt_links) \
@@ -313,7 +313,7 @@ def generate_de():
     
     html = template.replace("{PATH_PREFIX}", "de/") \
                    .replace("{LOCALE}", "de_DE") \
-                   .replace("{COUNTRY_NAME}", "(Deutschland)") \
+                   .replace("{COUNTRY_NAME}", "Deutschland") \
                    .replace("{AT_ACTIVE}", "") \
                    .replace("{DE_ACTIVE}", "active") \
                    .replace("{ALT_LINKS}", alt_links) \
