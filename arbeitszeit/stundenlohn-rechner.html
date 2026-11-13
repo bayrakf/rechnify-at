@@ -460,36 +460,103 @@
       calculate();
     });
 
-    /* ── Austrian Netto estimator ──────────────────────────────── */
-    function estimateNetto(jahresbrutto) {
-      // SV-Beitrag: 18.07% (gedeckelt bei 6930 €/Monat = 83160/Jahr)
-      const hbg = 83160;
-      const svRate = 0.1807;
-      const sv = Math.min(jahresbrutto, hbg) * svRate;
-      const basis = jahresbrutto - sv;
+    /* ── Netto AT 2026 (gleiche Logik wie finanzen/gehaltsrechner.html) ── */
+    function calcTaxes(grossMonthly, hasSonder) {
+      // AV-Versichertenanteil 2026 gestaffelt; bis zur Geringfuegigkeitsgrenze keine SV
+      const AV = grossMonthly <= 2225 ? 0 : grossMonthly <= 2427 ? 0.01 : grossMonthly <= 2630 ? 0.02 : 0.0295;
+      const SV_RATE = grossMonthly <= 551.10 ? 0 : 0.1512 + AV;
+      const SV_RATE_SONDER = grossMonthly <= 551.10 ? 0 : 0.1412 + AV;
+      const BBG_MONTHLY = 6930;
+      const VAB_MONTHLY = 496 / 12;
 
-      // Lohnsteuer 2026 (Jahrestabelle)
-      let lst = 0;
-      if (basis <= 13539) {
-        lst = 0;
-      } else if (basis <= 21992) {
-        lst = (basis - 13539) * 0.20;
-      } else if (basis <= 36458) {
-        lst = 1690.60 + (basis - 21992) * 0.30;
-      } else if (basis <= 70365) {
-        lst = 6030.40 + (basis - 36458) * 0.40;
-      } else if (basis <= 104859) {
-        lst = 19593.20 + (basis - 70365) * 0.48;
-      } else if (basis <= 1000000) {
-        lst = 36150.32 + (basis - 104859) * 0.50;
-      } else {
-        lst = 483720.82 + (basis - 1000000) * 0.55;
+      let svMonthly = grossMonthly * SV_RATE;
+      if (grossMonthly > BBG_MONTHLY) svMonthly = BBG_MONTHLY * SV_RATE;
+
+      const taxBaseMonthly = grossMonthly - svMonthly;
+      const taxBaseYearly = Math.max(0, taxBaseMonthly * 12 - 132); // Werbungskostenpauschale
+
+      let taxYearly = 0;
+      if (taxBaseYearly > 104859) {
+        taxYearly += (taxBaseYearly - 104859) * 0.50;
+        taxYearly += (104859 - 70365) * 0.48;
+        taxYearly += (70365 - 36458) * 0.40;
+        taxYearly += (36458 - 21992) * 0.30;
+        taxYearly += (21992 - 13539) * 0.20;
+      } else if (taxBaseYearly > 70365) {
+        taxYearly += (taxBaseYearly - 70365) * 0.48;
+        taxYearly += (70365 - 36458) * 0.40;
+        taxYearly += (36458 - 21992) * 0.30;
+        taxYearly += (21992 - 13539) * 0.20;
+      } else if (taxBaseYearly > 36458) {
+        taxYearly += (taxBaseYearly - 36458) * 0.40;
+        taxYearly += (36458 - 21992) * 0.30;
+        taxYearly += (21992 - 13539) * 0.20;
+      } else if (taxBaseYearly > 21992) {
+        taxYearly += (taxBaseYearly - 21992) * 0.30;
+        taxYearly += (21992 - 13539) * 0.20;
+      } else if (taxBaseYearly > 13539) {
+        taxYearly += (taxBaseYearly - 13539) * 0.20;
       }
 
-      // Verkehrsabsetzbetrag (496 €)
-      lst = Math.max(0, lst - 496);
+      let taxMonthly = (taxYearly / 12) - VAB_MONTHLY;
+      if (taxMonthly < 0) taxMonthly = 0;
 
-      return jahresbrutto - sv - lst;
+      const netMonthly = grossMonthly - svMonthly - taxMonthly;
+
+      let grossSonder = 0, svSonder = 0, taxSonder = 0, netSonder = 0;
+
+      if (hasSonder) {
+        grossSonder = grossMonthly;
+        svSonder = grossSonder * SV_RATE_SONDER;
+        if (grossSonder > BBG_MONTHLY) svSonder = BBG_MONTHLY * SV_RATE_SONDER;
+
+        let sonderTaxBase = (grossSonder - svSonder) * 2;
+        let sonderTaxYearly = 0;
+        let remaining = sonderTaxBase;
+
+        if (remaining > 620 && grossSonder * 2 > 2615) { // Freigrenze sonstige Bezuege 2026
+          let t1 = Math.min(remaining - 620, 24380);
+          sonderTaxYearly += t1 * 0.06;
+          remaining -= (620 + t1);
+
+          if (remaining > 0) {
+            let t2 = Math.min(remaining, 25000);
+            sonderTaxYearly += t2 * 0.27;
+            remaining -= t2;
+
+            if (remaining > 0) {
+              let t3 = Math.min(remaining, 33333);
+              sonderTaxYearly += t3 * 0.3575;
+            }
+          }
+        }
+        taxSonder = sonderTaxYearly / 2;
+        if (taxSonder < 0) taxSonder = 0;
+        netSonder = grossSonder - svSonder - taxSonder;
+      }
+
+      const totalGrossYear = (grossMonthly * 12) + (grossSonder * 2);
+      const totalSvYear = (svMonthly * 12) + (svSonder * 2);
+      const totalTaxYear = (taxMonthly * 12) + (taxSonder * 2);
+      const totalNetYear = totalGrossYear - totalSvYear - totalTaxYear;
+
+      let svDgMonthly = grossMonthly * 0.2103;
+      if (grossMonthly > BBG_MONTHLY) svDgMonthly = BBG_MONTHLY * 0.2103;
+      let otherLnkMonthly = grossMonthly * 0.0859;
+      let totalLnkMonthly = svDgMonthly + otherLnkMonthly;
+
+      let totalLnkSonder = 0;
+      if (hasSonder) {
+        let svDgSonder = grossMonthly * 0.2053;
+        if (grossMonthly > BBG_MONTHLY) svDgSonder = BBG_MONTHLY * 0.2053;
+        let otherLnkSonder = grossMonthly * 0.0859;
+        totalLnkSonder = (svDgSonder + otherLnkSonder) * 2;
+      }
+
+      const lnkYearly = (totalLnkMonthly * 12) + totalLnkSonder;
+      const totalCostYearly = totalGrossYear + lnkYearly;
+
+      return { netMonthly, netSonder, totalGrossYear, totalSvYear, totalTaxYear, totalNetYear, lnkYearly, totalCostYearly };
     }
 
     function fmt(n) {
@@ -527,7 +594,7 @@
       const hourlyBrutto = yearBrutto / yearH;
 
       // Netto schätzen
-      const yearNetto  = estimateNetto(yearBrutto);
+      const yearNetto  = calcTaxes(monthBrutto, hasSonder).totalNetYear;
       const hourlyNetto = yearNetto / yearH;
 
       document.getElementById('resHourlyBrutto').textContent = fmt(hourlyBrutto);

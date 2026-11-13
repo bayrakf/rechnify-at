@@ -67,13 +67,110 @@
           <div class="result-item"><span>Δ Brutto</span><span id="dB">—</span></div>
           <div class="result-item highlight"><span>Δ Netto (Schätzung AT)</span><span id="dN">—</span></div>
           <div class="result-item"><span>Δ Jahr (×14)</span><span id="dY">—</span></div>
-          <p class="help">Schätzung: Netto ≈ Brutto − SV 18,07% (gedeckelt) − grobe Lohnsteuer. Kein Ersatz für den <a href="/finanzen/gehaltsrechner.html">Gehaltsrechner</a>. Auch <a href="/arbeitszeit/kuendigungsfrist-rechner.html">Kündigungsfrist</a> und <a href="/finanzen/abfertigungsrechner.html">Abfertigung</a> prüfen.</p>
+          <p class="help">Schätzung: Netto nach SV (inkl. AV-Staffel) und Lohnsteuer 2026, 13./14. Gehalt mit 6 %. Kein Ersatz für den <a href="/finanzen/gehaltsrechner.html">Gehaltsrechner</a>. Auch <a href="/arbeitszeit/kuendigungsfrist-rechner.html">Kündigungsfrist</a> und <a href="/finanzen/abfertigungsrechner.html">Abfertigung</a> prüfen.</p>
         </div>
         <script>
         document.addEventListener('DOMContentLoaded',()=>{
-          const approx=b=>{const sv=Math.min(b,6930)*0.1807;const base=(b-sv)*12;let t=0;if(base>13539)t=Math.min(base,21992)-13539;t*=0.2;if(base>21992)t+=(Math.min(base,36458)-21992)*0.3;if(base>36458)t+=(Math.min(base,70365)-36458)*0.4;if(base>70365)t+=(Math.min(base,104859)-70365)*0.48;if(base>104859)t+=(base-104859)*0.5;return b-sv-t/12;};
+          function calcTaxes(grossMonthly, hasSonder) {
+      // AV-Versichertenanteil 2026 gestaffelt; bis zur Geringfuegigkeitsgrenze keine SV
+      const AV = grossMonthly <= 2225 ? 0 : grossMonthly <= 2427 ? 0.01 : grossMonthly <= 2630 ? 0.02 : 0.0295;
+      const SV_RATE = grossMonthly <= 551.10 ? 0 : 0.1512 + AV;
+      const SV_RATE_SONDER = grossMonthly <= 551.10 ? 0 : 0.1412 + AV;
+      const BBG_MONTHLY = 6930;
+      const VAB_MONTHLY = 496 / 12;
+
+      let svMonthly = grossMonthly * SV_RATE;
+      if (grossMonthly > BBG_MONTHLY) svMonthly = BBG_MONTHLY * SV_RATE;
+
+      const taxBaseMonthly = grossMonthly - svMonthly;
+      const taxBaseYearly = Math.max(0, taxBaseMonthly * 12 - 132); // Werbungskostenpauschale
+
+      let taxYearly = 0;
+      if (taxBaseYearly > 104859) {
+        taxYearly += (taxBaseYearly - 104859) * 0.50;
+        taxYearly += (104859 - 70365) * 0.48;
+        taxYearly += (70365 - 36458) * 0.40;
+        taxYearly += (36458 - 21992) * 0.30;
+        taxYearly += (21992 - 13539) * 0.20;
+      } else if (taxBaseYearly > 70365) {
+        taxYearly += (taxBaseYearly - 70365) * 0.48;
+        taxYearly += (70365 - 36458) * 0.40;
+        taxYearly += (36458 - 21992) * 0.30;
+        taxYearly += (21992 - 13539) * 0.20;
+      } else if (taxBaseYearly > 36458) {
+        taxYearly += (taxBaseYearly - 36458) * 0.40;
+        taxYearly += (36458 - 21992) * 0.30;
+        taxYearly += (21992 - 13539) * 0.20;
+      } else if (taxBaseYearly > 21992) {
+        taxYearly += (taxBaseYearly - 21992) * 0.30;
+        taxYearly += (21992 - 13539) * 0.20;
+      } else if (taxBaseYearly > 13539) {
+        taxYearly += (taxBaseYearly - 13539) * 0.20;
+      }
+
+      let taxMonthly = (taxYearly / 12) - VAB_MONTHLY;
+      if (taxMonthly < 0) taxMonthly = 0;
+
+      const netMonthly = grossMonthly - svMonthly - taxMonthly;
+
+      let grossSonder = 0, svSonder = 0, taxSonder = 0, netSonder = 0;
+
+      if (hasSonder) {
+        grossSonder = grossMonthly;
+        svSonder = grossSonder * SV_RATE_SONDER;
+        if (grossSonder > BBG_MONTHLY) svSonder = BBG_MONTHLY * SV_RATE_SONDER;
+
+        let sonderTaxBase = (grossSonder - svSonder) * 2;
+        let sonderTaxYearly = 0;
+        let remaining = sonderTaxBase;
+
+        if (remaining > 620 && grossSonder * 2 > 2615) { // Freigrenze sonstige Bezuege 2026
+          let t1 = Math.min(remaining - 620, 24380);
+          sonderTaxYearly += t1 * 0.06;
+          remaining -= (620 + t1);
+
+          if (remaining > 0) {
+            let t2 = Math.min(remaining, 25000);
+            sonderTaxYearly += t2 * 0.27;
+            remaining -= t2;
+
+            if (remaining > 0) {
+              let t3 = Math.min(remaining, 33333);
+              sonderTaxYearly += t3 * 0.3575;
+            }
+          }
+        }
+        taxSonder = sonderTaxYearly / 2;
+        if (taxSonder < 0) taxSonder = 0;
+        netSonder = grossSonder - svSonder - taxSonder;
+      }
+
+      const totalGrossYear = (grossMonthly * 12) + (grossSonder * 2);
+      const totalSvYear = (svMonthly * 12) + (svSonder * 2);
+      const totalTaxYear = (taxMonthly * 12) + (taxSonder * 2);
+      const totalNetYear = totalGrossYear - totalSvYear - totalTaxYear;
+
+      let svDgMonthly = grossMonthly * 0.2103;
+      if (grossMonthly > BBG_MONTHLY) svDgMonthly = BBG_MONTHLY * 0.2103;
+      let otherLnkMonthly = grossMonthly * 0.0859;
+      let totalLnkMonthly = svDgMonthly + otherLnkMonthly;
+
+      let totalLnkSonder = 0;
+      if (hasSonder) {
+        let svDgSonder = grossMonthly * 0.2053;
+        if (grossMonthly > BBG_MONTHLY) svDgSonder = BBG_MONTHLY * 0.2053;
+        let otherLnkSonder = grossMonthly * 0.0859;
+        totalLnkSonder = (svDgSonder + otherLnkSonder) * 2;
+      }
+
+      const lnkYearly = (totalLnkMonthly * 12) + totalLnkSonder;
+      const totalCostYearly = totalGrossYear + lnkYearly;
+
+      return { netMonthly, netSonder, totalGrossYear, totalSvYear, totalTaxYear, totalNetYear, lnkYearly, totalCostYearly };
+    }
+          const approx=b=>calcTaxes(b,true).netMonthly, yearNet=b=>calcTaxes(b,true).totalNetYear;
           const euro=n=>CalcTools.euro(n,'de-AT');
-          const calc=()=>{const a=+alt.value||0,n=+neu.value||0;const na=approx(a),nn=approx(n);dB.textContent=euro(n-a);dN.textContent=euro(nn-na);dY.textContent=euro((nn-na)*14);};
+          const calc=()=>{const a=+alt.value||0,n=+neu.value||0;const na=approx(a),nn=approx(n);dB.textContent=euro(n-a);dN.textContent=euro(nn-na);dY.textContent=euro(yearNet(n)-yearNet(a));};
           const alt=document.getElementById('alt'),neu=document.getElementById('neu'),dB=document.getElementById('dB'),dN=document.getElementById('dN'),dY=document.getElementById('dY');
           [alt,neu].forEach(e=>e.addEventListener('input',calc));calc();
         });

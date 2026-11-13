@@ -115,7 +115,7 @@
       "name": "Wie hoch ist der Sozialversicherungsbeitrag für Arbeitnehmer in Österreich?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Der reguläre Sozialversicherungsbeitrag für Angestellte und Arbeiter beträgt 18,07% des Bruttogehalts, gedeckelt bis zur Höchstbeitragsgrundlage (6.930 € pro Monat im Jahr 2026)."
+        "text": "Der reguläre Sozialversicherungsbeitrag für Angestellte und Arbeiter beträgt 18,07% des Bruttogehalts, gedeckelt bis zur Höchstbeitragsgrundlage (6.930 € pro Monat im Jahr 2026). Bis 2.630 € Monatsbrutto ist er niedriger, weil der Anteil zur Arbeitslosenversicherung gestaffelt ist (0 bis 2,95 %)."
       }
     }, {
       "@type": "Question",
@@ -407,7 +407,7 @@
               Österreich?</button>
             <div class="faq-answer">
               <p>Der reguläre Sozialversicherungsbeitrag für Angestellte und Arbeiter beträgt 18,07% des Bruttogehalts,
-                gedeckelt bis zur Höchstbeitragsgrundlage (6.930 € pro Monat im Jahr 2026).</p>
+                gedeckelt bis zur Höchstbeitragsgrundlage (6.930 € pro Monat im Jahr 2026). Bis 2.630 € Monatsbrutto ist er niedriger, weil der Anteil zur Arbeitslosenversicherung gestaffelt ist (0 bis 2,95 %).</p>
             </div>
           </div>
 
@@ -488,8 +488,10 @@
     'use strict';
 
     function calcTaxes(grossMonthly, hasSonder) {
-      const SV_RATE = 0.1807;
-      const SV_RATE_SONDER = 0.1707;
+      // AV-Versichertenanteil 2026 gestaffelt; bis zur Geringfuegigkeitsgrenze keine SV
+      const AV = grossMonthly <= 2225 ? 0 : grossMonthly <= 2427 ? 0.01 : grossMonthly <= 2630 ? 0.02 : 0.0295;
+      const SV_RATE = grossMonthly <= 551.10 ? 0 : 0.1512 + AV;
+      const SV_RATE_SONDER = grossMonthly <= 551.10 ? 0 : 0.1412 + AV;
       const BBG_MONTHLY = 6930;
       const VAB_MONTHLY = 496 / 12;
 
@@ -497,7 +499,7 @@
       if (grossMonthly > BBG_MONTHLY) svMonthly = BBG_MONTHLY * SV_RATE;
 
       const taxBaseMonthly = grossMonthly - svMonthly;
-      const taxBaseYearly = taxBaseMonthly * 12;
+      const taxBaseYearly = Math.max(0, taxBaseMonthly * 12 - 132); // Werbungskostenpauschale
 
       let taxYearly = 0;
       if (taxBaseYearly > 104859) {
@@ -538,7 +540,7 @@
         let sonderTaxYearly = 0;
         let remaining = sonderTaxBase;
 
-        if (remaining > 620) {
+        if (remaining > 620 && grossSonder * 2 > 2615) { // Freigrenze sonstige Bezuege 2026
           let t1 = Math.min(remaining - 620, 24380);
           sonderTaxYearly += t1 * 0.06;
           remaining -= (620 + t1);
