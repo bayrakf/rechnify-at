@@ -98,7 +98,7 @@
               <div class="quick-chips-wrap">
                 <span class="quick-chip-label">Schnellwahl:</span>
                 <button type="button" class="quick-chip active" data-target="kidsOver18" data-val="0">0</button>
-                <button type="button" class="quick-chip" data-target="kidsOver18" data-val="1">1 Kind (650 €)</button>
+                <button type="button" class="quick-chip" data-target="kidsOver18" data-val="1">1 Kind (700 €)</button>
                 <button type="button" class="quick-chip" data-target="kidsOver18" data-val="2">2 Kinder (1.300 €)</button>
               </div>
             </div>
@@ -171,9 +171,9 @@
           <strong>Wie wird der Geburtsmonat berechnet?</strong><br/>
           In Österreich gibt es keine tagesgenaue Abrechnung beim Familienbonus. Sobald ein Kind an einem Tag im Monat auf der Welt ist (z.B. Geburt am 31. Mai), steht der Familienbonus für den <strong>gesamten Monat Mai</strong> in voller Höhe (166,68 €) zu. Wird das Kind im Mai geboren, erhält man den Bonus für 8 Monate des Jahres.<br/><br/>
           
-          <strong>Regeln 2024 - 2026:</strong><br/>
-          Pro Kind unter 18 Jahren: max. 2.000 € / Jahr (166,68 € / Monat).<br/>
-          Pro Kind über 18 Jahren (wenn Familienbeihilfe bezogen wird): max. 650 € / Jahr (54,18 € / Monat).
+          <strong>Regeln 2026:</strong><br/>
+          Pro Kind unter 18 Jahren: max. 2.000,16 € / Jahr (166,68 € / Monat).<br/>
+          Pro Kind über 18 Jahren (wenn Familienbeihilfe bezogen wird): max. 700,08 € / Jahr (58,34 € / Monat).
         </div>
 
       </div>
@@ -216,14 +216,14 @@
       const o18 = parseInt(document.getElementById('kidsOver18').value) || 0;
       const newbornMonth = parseInt(document.getElementById('newbornMonth').value) || 0;
       
-      const yearlyU18 = u18 * 2000;
-      const yearlyO18 = o18 * 650;
+      const yearlyU18 = u18 * 2000.16;
+      const yearlyO18 = o18 * 700.08;
       
       let yearlyNewborn = 0;
       let newbornMonthsCount = 0;
       if (newbornMonth > 0 && newbornMonth <= 12) {
         newbornMonthsCount = 12 - newbornMonth + 1;
-        yearlyNewborn = newbornMonthsCount * (2000 / 12);
+        yearlyNewborn = newbornMonthsCount * 166.68;
       }
       
       const totalYearly = yearlyU18 + yearlyO18 + yearlyNewborn;
@@ -250,14 +250,14 @@
       
       if (u18 > 0) {
         bdUnder18.style.display = 'list-item';
-        bdUnder18.textContent = u18 + 'x Kind(er) unter 18 (volles Jahr): ' + yearlyU18.toLocaleString('de-AT') + ' €';
+        bdUnder18.textContent = u18 + 'x Kind(er) unter 18 (volles Jahr): ' + yearlyU18.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       } else {
         bdUnder18.style.display = 'none';
       }
       
       if (o18 > 0) {
         bdOver18.style.display = 'list-item';
-        bdOver18.textContent = o18 + 'x Kind(er) über 18 (volles Jahr): ' + yearlyO18.toLocaleString('de-AT') + ' €';
+        bdOver18.textContent = o18 + 'x Kind(er) über 18 (volles Jahr): ' + yearlyO18.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       } else {
         bdOver18.style.display = 'none';
       }

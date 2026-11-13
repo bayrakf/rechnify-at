@@ -144,11 +144,19 @@
                 <option value="BW">Baden-Württemberg</option>
                 <option value="BY">Bayern</option>
                 <option value="BE">Berlin</option>
-                <option value="NW">Nordrhein-Westfalen</option>
+                <option value="BB">Brandenburg</option>
+                <option value="HB">Bremen</option>
+                <option value="HH">Hamburg</option>
                 <option value="HE">Hessen</option>
+                <option value="MV">Mecklenburg-Vorpommern</option>
+                <option value="NI">Niedersachsen</option>
+                <option value="NW">Nordrhein-Westfalen</option>
                 <option value="RP">Rheinland-Pfalz</option>
                 <option value="SL">Saarland</option>
+                <option value="SN">Sachsen</option>
                 <option value="ST">Sachsen-Anhalt</option>
+                <option value="SH">Schleswig-Holstein</option>
+                <option value="TH">Thüringen</option>
               </select>
             </div>
           </div>
@@ -280,11 +288,15 @@
             add("1. Weihnachtsfeiertag", new Date(year, 11, 25));
             add("2. Weihnachtsfeiertag", new Date(year, 11, 26));
             
-            // Simplified Bundesland logic (most common ones)
+            // Landesweite Feiertage (nur regionale Feiertage einzelner Gemeinden fehlen)
             if (['BW', 'BY', 'ST'].includes(bundesland)) add("Heilige Drei Könige", new Date(year, 0, 6));
+            if (['BE', 'MV'].includes(bundesland)) add("Internationaler Frauentag", new Date(year, 2, 8));
             if (['BW', 'BY', 'NW', 'RP', 'SL', 'HE'].includes(bundesland)) add("Fronleichnam", addDays(easter, 60));
             if (['BY', 'SL'].includes(bundesland)) add("Mariä Himmelfahrt", new Date(year, 7, 15));
+            if (bundesland === 'TH') add("Weltkindertag", new Date(year, 8, 20));
+            if (['BB', 'HB', 'HH', 'MV', 'NI', 'SN', 'ST', 'SH', 'TH'].includes(bundesland)) add("Reformationstag", new Date(year, 9, 31));
             if (['BW', 'BY', 'NW', 'RP', 'SL'].includes(bundesland)) add("Allerheiligen", new Date(year, 10, 1));
+            if (bundesland === 'SN') { const d = new Date(year, 10, 22); d.setDate(22 - ((d.getDay() + 4) % 7)); add("Buß- und Bettag", d); }
         }
         return holidays;
     }

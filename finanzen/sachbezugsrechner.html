@@ -133,8 +133,8 @@
             <div class="input-group" id="co2Group">
               <label for="co2Limits">CO2-Ausstoß (WLTP-Grenzwert)</label>
               <select id="co2Limits" onchange="calculate()">
-                <option value="low">Bis zu 129 g/km (1,5% Sachbezug)</option>
-                <option value="high">Über 129 g/km (2,0% Sachbezug)</option>
+                <option value="low">Bis CO2-Grenzwert, Erstzulassung 2025/2026: 126 g/km (1,5% Sachbezug)</option>
+                <option value="high">Über CO2-Grenzwert, Erstzulassung 2025/2026: 126 g/km (2,0% Sachbezug)</option>
               </select>
             </div>
 
@@ -198,7 +198,7 @@
           <details>
             <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie hoch ist der maximale Sachbezugswert?</summary>
             <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
-              Der maximale Sachbezug bei Verbrennern liegt bei **960 € im Monat** (für Autos mit über 129g CO2/km bei vollem Sachbezug) bzw. **720 € im Monat** (für schadstoffarme Autos bis 129g CO2/km).
+              Der maximale Sachbezug bei Verbrennern liegt bei <strong>960 € im Monat</strong> (2 % bei CO2 über dem Grenzwert) bzw. <strong>720 € im Monat</strong> (1,5 % bis zum Grenzwert). Maßgeblich ist der Grenzwert im Jahr der Erstzulassung: 2024 129 g/km, 2025 und 2026 126 g/km.
             </p>
           </details>
         </div>
