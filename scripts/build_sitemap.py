@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import datetime
 import os
+import re
 import subprocess
 import sys
 
@@ -18,13 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from seo_policy import ROOT, all_pages, should_index, twin_of, url_for
 
 TODAY = datetime.date.today().isoformat()
-
-# Wichtigere Seiten bekommen eine hoehere Prioritaet.
-PRIORITIES = (
-    ("index.html", "1.0"),
-    ("finanzen/gehaltsrechner.html", "0.9"),
-    ("de/finanzen/gehaltsrechner.html", "0.9"),
-)
+RE_ALT = re.compile(r'<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"')
 
 
 def lastmod(rel: str) -> str:
@@ -36,18 +31,12 @@ def lastmod(rel: str) -> str:
     return out or TODAY  # neue, noch nicht committete Seite
 
 
-def priority(rel: str) -> str:
-    for path, value in PRIORITIES:
-        if rel == path:
-            return value
-    if rel.endswith("index.html"):
-        return "0.8"
-    if "/brutto-netto/" in rel or "/gehalt/" in rel:
-        return "0.5"
-    return "0.7"
-
-
 def alternates(rel: str) -> str:
+    """hreflang der Seite selbst hat Vorrang, damit Sitemap und Seite nicht widersprechen."""
+    with open(os.path.join(ROOT, rel), encoding="utf-8") as fh:
+        own = RE_ALT.findall(fh.read(20000))
+    if own:
+        return "\n".join(f'    <xhtml:link rel="alternate" hreflang="{l}" href="{h}"/>' for l, h in own)
     twin = twin_of(rel)
     if twin and should_index(twin):
         at, de = (twin, rel) if rel.startswith("de/") else (rel, twin)
@@ -74,7 +63,6 @@ def main() -> int:
             f"    <loc>{url_for(rel)}</loc>\n"
             f"{alternates(rel)}\n"
             f"    <lastmod>{lastmod(rel)}</lastmod>\n"
-            f"    <priority>{priority(rel)}</priority>\n"
             "  </url>"
         )
 
