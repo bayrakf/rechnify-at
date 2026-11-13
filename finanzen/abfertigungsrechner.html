@@ -55,29 +55,38 @@
       </div>
     </div></header>
   <main class="site-main">
-    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Abfertigungsrechner Österreich</h1>
-    <p class="subtitle">Abfertigung alt (Staffel) und neu (1,53 % BMSVG) schätzen. Orientierungswerte, keine Rechtsberatung.</p></div>
-    <div class="card"><div class="calc-body">
-
-        <div class="input-row">
-          <div class="input-group"><label for="sys">System</label>
-            <select id="sys"><option value="neu">Abfertigung NEU (Beginn ab 1.1.2003)</option><option value="alt">Abfertigung ALT (Beginn vor 2003)</option></select>
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;" aria-hidden="true">💼</span>
+            <div>
+              <h1>Abfertigungsrechner Österreich</h1>
+              <p>Abfertigung alt (Staffel) und neu (1,53 % BMSVG) schätzen. Orientierungswerte, keine Rechtsberatung.</p>
+            </div>
           </div>
-          <div class="input-group"><label for="brutto">Monatsbrutto (€)</label>
-            <input type="number" id="brutto" min="0" step="50" value="3000" /></div>
         </div>
-        <div class="input-row">
-          <div class="input-group"><label for="jahre">Dienstjahre</label>
-            <input type="number" id="jahre" min="0" max="45" step="1" value="8" /></div>
-          <div class="input-group"><label for="sz">Sonderzahlungen/Jahr (Monatsgehälter)</label>
-            <input type="number" id="sz" min="0" max="14" step="1" value="2" title="AT oft 13.+14. = 2" /></div>
+        <div class="cockpit-grid">
+          <div class="cockpit-left">
+            <div class="input-group"><label for="sys">System</label> <select id="sys"><option value="neu">Abfertigung NEU (Beginn ab 1.1.2003)</option><option value="alt">Abfertigung ALT (Beginn vor 2003)</option></select> </div>
+            <div class="input-group"><label for="brutto">Monatsbrutto (€)</label> <input type="number" id="brutto" min="0" step="50" value="3000" /></div>
+            <div class="input-group"><label for="jahre">Dienstjahre</label> <input type="number" id="jahre" min="0" max="45" step="1" value="8" /></div>
+            <div class="input-group"><label for="sz">Sonderzahlungen/Jahr (Monatsgehälter)</label> <input type="number" id="sz" min="0" max="14" step="1" value="2" title="AT oft 13.+14. = 2" /></div>
+          </div>
+          <div class="cockpit-right">
+            <div id="resultBox">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Schätzung</span>
+                <div class="hero-net-val" id="res">—</div>
+                <div class="hero-net-sub">Details: <span id="det">—</span></div>
+              </div>
+              <p class="help">NEU: AG zahlt laufend <strong>1,53&nbsp;%</strong> des Entgelts (inkl. Sonderzahlungen) in eine BV-Kasse (BMSVG). Hier: grobe Summe Beiträge ohne Verzinsung/Verwaltungskosten. ALT: gesetzliche Staffel in Monatsentgelten (ab 3/5/10/15/20/25 Jahren → 2/3/4/6/9/12). Anspruch ALT hängt von Beendigungsart ab. Quellen: <a href="https://www.usp.gv.at/themen/mitarbeiter-und-gesundheit/beendigung-des-arbeitsverhaeltnisses/abfertigung.html" rel="noopener" target="_blank">USP.gv.at</a>, <a href="https://ris.bka.gv.at/" rel="noopener" target="_blank">RIS</a>.</p>
+            </div>
+          </div>
         </div>
-        <div class="result-box" id="resultBox">
-          <div class="result-item highlight"><span>Schätzung</span><span id="res">—</span></div>
-          <div class="result-item"><span>Details</span><span id="det">—</span></div>
-          <p class="help">NEU: AG zahlt laufend <strong>1,53&nbsp;%</strong> des Entgelts (inkl. Sonderzahlungen) in eine BV-Kasse (BMSVG). Hier: grobe Summe Beiträge ohne Verzinsung/Verwaltungskosten. ALT: gesetzliche Staffel in Monatsentgelten (ab 3/5/10/15/20/25 Jahren → 2/3/4/6/9/12). Anspruch ALT hängt von Beendigungsart ab. Quellen: <a href="https://www.usp.gv.at/themen/mitarbeiter-und-gesundheit/beendigung-des-arbeitsverhaeltnisses/abfertigung.html" rel="noopener" target="_blank">USP.gv.at</a>, <a href="https://ris.bka.gv.at/" rel="noopener" target="_blank">RIS</a>.</p>
-        </div>
-        <script>
+      </div>
+    </div>
+    <script>
         document.addEventListener('DOMContentLoaded',()=>{
           const euro=n=>CalcTools.euro(n,'de-AT');
           const altMonths=y=>{if(y>=25)return 12;if(y>=20)return 9;if(y>=15)return 6;if(y>=10)return 4;if(y>=5)return 3;if(y>=3)return 2;return 0;};
@@ -101,8 +110,6 @@
           sysEl.addEventListener('change',calc); calc();
         });
         </script>
-
-    </div></div>
   </main>
   <footer class="site-footer">
     <div class="footer-inner">

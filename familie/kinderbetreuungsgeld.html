@@ -180,13 +180,20 @@
   </nav>
 
   <main class="site-main">
-    <div class="page-hero" style="padding-top:10px;">
-      <h1 style="margin-bottom:8px;">Kinderbetreuungsgeld (AT)</h1>
-      <p class="subtitle">Vergleiche das pauschale KBG-Konto mit dem einkommensabhängigen Kinderbetreuungsgeld (eaKBG) inklusive Günstigkeitsrechnung.</p>
-    </div>
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;" aria-hidden="true">👶</span>
+            <div>
+              <h1>Kinderbetreuungsgeld (AT)</h1>
+              <p>Vergleiche das pauschale KBG-Konto mit dem einkommensabhängigen Kinderbetreuungsgeld (eaKBG) inklusive Günstigkeitsrechnung.</p>
+            </div>
+          </div>
+        </div>
 
-    <div class="card calculator-card">
-      <div class="calc-body">
+        <div class="cockpit-grid">
+          <div class="cockpit-left">
         
         <div class="tab-container">
           <button class="btn-secondary active" id="tabKonto">KBG-Konto (Pauschal)</button>
@@ -255,8 +262,10 @@
         </div>
 
         <button id="calculate" class="btn" style="width: 100%;">Berechnen</button>
+          </div>
 
-        <div id="result" class="hidden">
+          <div class="cockpit-right">
+        <div id="result">
           <div class="result-box">
             <h3 style="margin-top:0; text-align:center;">Dein Kinderbetreuungsgeld</h3>
             
@@ -304,8 +313,11 @@
 
           </div>
         </div>
+          </div>
+        </div>
 
-        <div style="margin-top: 24px;">
+        <div class="calc-body" style="padding-top: 0;">
+        <div>
           <h3>Vergleich der Modelle</h3>
           <table class="comparison-table">
             <thead>
@@ -347,6 +359,7 @@
           - <strong>Zuverdienstgrenze:</strong> Beim eaKBG gilt die strenge Grenze von max. <strong>8.600 € pro Kalenderjahr</strong>.
         </div>
 
+        </div>
       </div>
     </div>
     
@@ -576,6 +589,13 @@
 
       document.getElementById('result').classList.remove('hidden');
     });
+
+    // Cockpit: Ergebnis live statt erst nach Klick
+    const recalc = () => document.getElementById('calculate').click();
+    document.querySelectorAll('#viewKonto input, #viewKonto select, #viewEakbg input, #viewEakbg select')
+      .forEach((el) => el.addEventListener('input', recalc));
+    [tabKonto, tabEakbg, methodWochengeld, methodSteuer].forEach((el) => el.addEventListener('click', recalc));
+    recalc();
 
   </script>
 </body>

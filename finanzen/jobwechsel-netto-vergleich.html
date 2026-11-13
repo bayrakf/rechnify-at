@@ -55,21 +55,39 @@
       </div>
     </div></header>
   <main class="site-main">
-    <div class="page-hero" style="padding-top:10px"><h1 style="margin-bottom:8px">Jobwechsel: Netto alt vs neu</h1>
-    <p class="subtitle">Altes vs neues Brutto grob vergleichen (AT-Richtwert). Für exakte Netto: Gehaltsrechner.</p></div>
-    <div class="card"><div class="calc-body">
-
-        <div class="input-row">
-          <div class="input-group"><label for="alt">Aktuelles Brutto (€/Monat)</label><input type="number" id="alt" value="3200" min="0" step="50" /></div>
-          <div class="input-group"><label for="neu">Neues Brutto (€/Monat)</label><input type="number" id="neu" value="3800" min="0" step="50" /></div>
+    <div class="calculator-container cockpit-layout">
+      <div class="calculator-card">
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <span style="font-size: 1.6rem; line-height: 1;" aria-hidden="true">🔄</span>
+            <div>
+              <h1>Jobwechsel: Netto alt vs neu</h1>
+              <p>Altes vs neues Brutto grob vergleichen (AT-Richtwert). Für exakte Netto: Gehaltsrechner.</p>
+            </div>
+          </div>
         </div>
-        <div class="result-box" id="resultBox">
-          <div class="result-item"><span>Δ Brutto</span><span id="dB">—</span></div>
-          <div class="result-item highlight"><span>Δ Netto (Schätzung AT)</span><span id="dN">—</span></div>
-          <div class="result-item"><span>Δ Jahr (×14)</span><span id="dY">—</span></div>
-          <p class="help">Schätzung: Netto nach SV (inkl. AV-Staffel) und Lohnsteuer 2026, 13./14. Gehalt mit 6 %. Kein Ersatz für den <a href="/finanzen/gehaltsrechner.html">Gehaltsrechner</a>. Auch <a href="/arbeitszeit/kuendigungsfrist-rechner.html">Kündigungsfrist</a> und <a href="/finanzen/abfertigungsrechner.html">Abfertigung</a> prüfen.</p>
+        <div class="cockpit-grid">
+          <div class="cockpit-left">
+            <div class="input-group"><label for="alt">Aktuelles Brutto (€/Monat)</label><input type="number" id="alt" value="3200" min="0" step="50" /></div>
+            <div class="input-group"><label for="neu">Neues Brutto (€/Monat)</label><input type="number" id="neu" value="3800" min="0" step="50" /></div>
+          </div>
+          <div class="cockpit-right">
+            <div id="resultBox">
+              <div class="hero-net-card">
+                <span class="hero-net-label">Δ Netto (Schätzung AT)</span>
+                <div class="hero-net-val" id="dN">—</div>
+              </div>
+              <div class="sub-cards-grid">
+                <div class="sub-net-card"><div class="label">Δ Brutto</div><div class="val" id="dB">—</div></div>
+                <div class="sub-net-card"><div class="label">Δ Jahr (×14)</div><div class="val" id="dY">—</div></div>
+              </div>
+              <p class="help">Schätzung: Netto nach SV (inkl. AV-Staffel) und Lohnsteuer 2026, 13./14. Gehalt mit 6 %. Kein Ersatz für den <a href="/finanzen/gehaltsrechner.html">Gehaltsrechner</a>. Auch <a href="/arbeitszeit/kuendigungsfrist-rechner.html">Kündigungsfrist</a> und <a href="/finanzen/abfertigungsrechner.html">Abfertigung</a> prüfen.</p>
+            </div>
+          </div>
         </div>
-        <script>
+      </div>
+    </div>
+    <script>
         document.addEventListener('DOMContentLoaded',()=>{
           function calcTaxes(grossMonthly, hasSonder) {
       // AV-Versichertenanteil 2026 gestaffelt; bis zur Geringfuegigkeitsgrenze keine SV
@@ -175,8 +193,6 @@
           [alt,neu].forEach(e=>e.addEventListener('input',calc));calc();
         });
         </script>
-
-    </div></div>
   </main>
   <footer class="site-footer">
     <div class="footer-inner">
