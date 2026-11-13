@@ -31,6 +31,13 @@ EXCLUDED_FILES = {
     "finanzen/gehalt/gehalt-linz.html",
     "finanzen/gehalt/gehalt-salzburg.html",
     "finanzen/gehalt/gehalt-innsbruck.html",
+    # AT-Berufsseiten ohne AMS-Gehaltskompass-Beruf: keine belegte Gehaltszahl
+    "finanzen/gehalt/abteilungsleiter-gehalt-netto.html",
+    "finanzen/gehalt/filialleiter-gehalt-netto.html",
+    "finanzen/gehalt/geschaeftsfuehrer-gehalt-netto.html",
+    "finanzen/gehalt/handwerker-gehalt-netto.html",
+    "finanzen/gehalt/ingenieur-gehalt-netto.html",
+    "finanzen/gehalt/professor-gehalt-netto.html",
 }
 
 EXCLUDED_DIRS = ("graphify-out/", "scripts/", "node_modules/", "scratch/")
