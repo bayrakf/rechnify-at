@@ -38,42 +38,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
-  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" />
-
-  <style>
-    .calc-body { padding: 24px; }
-    .result-box { margin-top: 24px; background: var(--color-paper); border: 1px solid var(--color-rule); border-radius: 10px; padding: 20px; }
-    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-    .result-card { background: var(--color-paper-2); border: 1px solid var(--color-rule); border-radius: 8px; padding: 16px; text-align: center; }
-
-    .affiliate-banner {
-      margin-top: 24px;
-      padding: 16px;
-      background: var(--color-accent-s);
-      border: 1px solid color-mix(in oklch, var(--color-accent) 25%, transparent);
-      border-radius: 8px; display: flex; gap: 16px;
-      align-items: center;
-    }
-    .affiliate-banner .icon { font-size: 28px; }
-    .affiliate-banner .content { flex: 1; font-size: 14px; color: var(--color-ink-2); }
-    .affiliate-banner .btn-aff {
-      background: var(--color-accent);
-      color: var(--color-accent-ink);
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-    .affiliate-banner .btn-aff:hover { background: var(--color-accent-h); }
-
-    @media (max-width: 600px) {
-      .result-grid { grid-template-columns: 1fr; }
-      .affiliate-banner { flex-direction: column; text-align: center; }
-    }
-  </style>
+  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.1" />
 
   <script type="application/ld+json">
   {
@@ -151,9 +116,9 @@
         <span class="site-logo-text">rechnify<span>.at</span></span>
       </a>
       <nav class="site-nav" id="siteNav">
-        <a href="/">🏠 Start</a>
-        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
-        <a href="/familie/schwangerschaftsrechner.html">👶 Familie</a>
+        <a href="/de/">Start</a>
+        <a href="/de/#finanzen" class="active">Finanzen</a>
+        <a href="/de/#arbeitszeit">Arbeitszeit</a>
       </nav>
       <div class="header-actions">
         <div class="country-toggle-group" id="countryToggleGroup">
@@ -185,24 +150,24 @@
         <div class="cockpit-grid">
           <!-- LEFT COLUMN: EINGABEN -->
           <div class="cockpit-left">
-            <div class="input-group" style="margin-bottom:0;">
-              <label for="salaryMode">Eingabemethode</label>
+            <div class="input-field">
+              <label class="input-label" for="salaryMode">Eingabemethode</label>
               <select id="salaryMode">
                 <option value="monat" selected>Monatsgehalt (Brutto)</option>
                 <option value="jahr">Jahresgehalt (Brutto)</option>
               </select>
             </div>
 
-            <div class="input-group" style="margin-bottom:0;">
-              <label for="grossMonthly" id="grossMonthlyLabel">Bruttogehalt (pro Monat)</label>
-              <div class="input-suffix">
-                <input type="number" id="grossMonthly" inputmode="numeric" placeholder="z.B. 4100" min="0" step="50" value="4100">
+            <div class="input-field">
+              <label class="input-label" for="grossMonthly" id="grossMonthlyLabel">Bruttogehalt (pro Monat)</label>
+              <div class="input-with-suffix">
+                <input type="number" id="grossMonthly" inputmode="numeric" placeholder="z.B. 4.100" min="0" step="50" value="4100">
                 <span class="suffix">€</span>
               </div>
             </div>
 
-            <div class="quick-chips-wrap" style="margin: 0;">
-              <span class="quick-chip-label">Schnellwahl:</span>
+            <div class="quick-chips-wrap">
+              <span class="quick-chip-label">Häufig:</span>
               <button type="button" class="quick-chip" data-val="2500">2.500 €</button>
               <button type="button" class="quick-chip" data-val="3200">3.200 €</button>
               <button type="button" class="quick-chip active" data-val="4100">4.100 € (Median)</button>
@@ -210,8 +175,8 @@
               <button type="button" class="quick-chip" data-val="7000">7.000 €</button>
             </div>
 
-            <div class="input-group" style="margin-bottom:0;">
-              <label for="taxClass">Steuerklasse</label>
+            <div class="input-field">
+              <label class="input-label" for="taxClass">Steuerklasse</label>
               <select id="taxClass">
                 <option value="1">Klasse 1 (Single / ledig)</option>
                 <option value="3">Klasse 3 (Verheiratet, Besserverdiener)</option>
@@ -220,47 +185,44 @@
               </select>
             </div>
 
-            <div class="input-group" style="margin-bottom:0;">
-              <label for="churchTax">Kirchensteuer</label>
+            <div class="input-field">
+              <label class="input-label" for="churchTax">Kirchensteuer</label>
               <select id="churchTax">
                 <option value="nein">Nein</option>
-                <option value="ja">Ja (ca. 8-9% der Lohnsteuer)</option>
+                <option value="ja">Ja (ca. 8–9% der Lohnsteuer)</option>
               </select>
             </div>
 
-            <div style="padding: 12px 14px; background: var(--color-paper-2, #f8fafc); border: 1px solid var(--color-rule, #e2e8f0); border-radius: 10px;">
-              <label style="display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--color-accent, #1858C7); font-size: 0.88rem;">
+            <div class="teilzeit-box">
+              <label class="teilzeit-label" for="simulatePartTime">
                 <input type="checkbox" id="simulatePartTime" style="width: 16px; height: 16px; margin: 0; cursor: pointer;">
-                ⚖️ Teilzeit-Simulator
+                <span>⚖️ Teilzeit-Simulator</span>
               </label>
               <div id="partTimeInputs" style="margin-top: 12px; display: none; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div class="input-group" style="margin: 0;">
-                  <label for="hoursCurrent">Aktuell</label>
-                  <div class="input-suffix">
-                    <input type="number" id="hoursCurrent" inputmode="numeric" value="40" min="1" max="60">
-                    <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
-                  </div>
+                <div class="input-field" style="margin: 0;">
+                  <label class="input-label" for="hoursCurrent" style="font-size: 0.78rem;">Aktuell (h/Wo)</label>
+                  <input type="number" id="hoursCurrent" inputmode="numeric" value="40" min="1" max="60">
                 </div>
-                <div class="input-group" style="margin: 0;">
-                  <label for="hoursTarget">Ziel</label>
-                  <div class="input-suffix">
-                    <input type="number" id="hoursTarget" inputmode="numeric" value="32" min="1" max="60">
-                    <span class="suffix" style="border-left: none; background: transparent; padding-left: 0;">h</span>
-                  </div>
+                <div class="input-field" style="margin: 0;">
+                  <label class="input-label" for="hoursTarget" style="font-size: 0.78rem;">Ziel (h/Wo)</label>
+                  <input type="number" id="hoursTarget" inputmode="numeric" value="32" min="1" max="60">
                 </div>
               </div>
             </div>
 
-            <button class="btn" id="calculate" style="width: 100%; margin-top: 4px; padding: 12px;">Berechnen</button>
+            <button class="btn" id="calculate">Berechnen</button>
           </div>
 
           <!-- RIGHT COLUMN: COCKPIT RESULTS -->
           <div class="cockpit-right" id="result">
             <div id="partTimeResultBox"></div>
 
-            <!-- Hero Net Card -->
+            <!-- 1. Hero Net Card -->
             <div class="hero-net-card">
-              <span class="hero-net-label">Dein Netto-Gehalt</span>
+              <div class="hero-net-header">
+                <span class="hero-net-label">Dein Netto-Gehalt</span>
+                <span style="font-size: 0.8rem; color: var(--color-ink-3, #64748b);">Deutschland 2026</span>
+              </div>
               <div class="hero-net-val" id="resNetMonthly">-- €</div>
               <div class="hero-net-sub">Monatliche Netto-Auszahlung aufs Girokonto (12×)</div>
 
@@ -268,43 +230,49 @@
                 <div class="sub-net-card">
                   <div class="label">Jahres-Netto (gesamt)</div>
                   <div class="val" id="resNetYearCard">-- €</div>
-                  <div class="desc">Auszahlung pro Jahr</div>
+                  <div class="desc">12 Auszahlungen</div>
                 </div>
                 <div class="sub-net-card">
                   <div class="label">Abzüge pro Monat</div>
                   <div class="val" id="resDeductionsMonthly" style="color: var(--danger, #dc2626);">-- €</div>
-                  <div class="desc">Steuer &amp; Sozialabgaben</div>
+                  <div class="desc">Steuern &amp; Sozialabgaben</div>
                 </div>
               </div>
             </div>
 
-            <!-- Gehaltserhöhungs-Schnellrechner -->
-            <div class="raise-box" style="margin: 0;">
-              <div class="raise-box-header">
-                <span class="raise-box-title">💼 Gehaltserhöhung: Was bleibt dir netto?</span>
-                <div style="display: flex; gap: 6px;">
-                  <button type="button" class="quick-chip raise-chip" data-raise="200">+200 €</button>
-                  <button type="button" class="quick-chip raise-chip" data-raise="400">+400 €</button>
-                  <button type="button" class="quick-chip raise-chip" data-raise="600">+600 €</button>
-                </div>
-              </div>
-              <div id="raisePreviewText" class="raise-box-desc">
-                Tippe auf einen Betrag, um sofort zu sehen, wie viel Netto dir nach Lohnsteuer &amp; Sozialabgaben bleibt.
-              </div>
-            </div>
-
-            <!-- Unified Details & Insights Panel -->
-            <div class="details-panel" style="margin: 0;">
+            <!-- 2. Verschachteltes Details-Panel (Progressive Disclosure) -->
+            <div class="details-panel">
               <nav class="seg-nav" role="tablist">
-                <button type="button" class="seg-btn active" data-tab="tab-monat-de" role="tab">📊 Monatsabrechnung</button>
-                <button type="button" class="seg-btn" data-tab="tab-jahr-de" role="tab">📅 Jahresübersicht</button>
-                <button type="button" class="seg-btn" data-tab="tab-insights-de" role="tab">💡 Gehalts-Vergleich</button>
+                <button type="button" class="seg-btn active" data-tab="tab-aufteilung" role="tab">📊 Aufteilung</button>
+                <button type="button" class="seg-btn" data-tab="tab-jahresabrechnung" role="tab">📅 Jahresübersicht</button>
+                <button type="button" class="seg-btn" data-tab="tab-erhoehung" role="tab">💼 Gehaltserhöhung</button>
+                <button type="button" class="seg-btn" data-tab="tab-arbeitgeber" role="tab">🏢 Arbeitgeber</button>
+                <button type="button" class="seg-btn" data-tab="tab-insights" role="tab">💡 Einordnung</button>
               </nav>
 
-              <!-- Pane 1: Monatsabrechnung -->
-              <div id="tab-monat-de" class="seg-pane active" role="tabpanel">
+              <!-- Pane 1: Visuelle Aufteilung (Monat) -->
+              <div id="tab-aufteilung" class="seg-pane active" role="tabpanel">
+                <div class="breakdown-bar">
+                  <div class="breakdown-segment netto" id="breakdownNetto" style="flex-basis: 60%;"></div>
+                  <div class="breakdown-segment sv" id="breakdownSV" style="flex-basis: 20%;"></div>
+                  <div class="breakdown-segment tax" id="breakdownTax" style="flex-basis: 20%;"></div>
+                </div>
+                <div class="breakdown-legend">
+                  <div class="breakdown-legend-item">
+                    <div class="breakdown-legend-dot netto"></div>
+                    <span>Netto: <strong id="legendNetto">-- €</strong> (<span id="legendNettoPct">--%</span>)</span>
+                  </div>
+                  <div class="breakdown-legend-item">
+                    <div class="breakdown-legend-dot sv"></div>
+                    <span>Sozialabgaben: <strong id="legendSV">-- €</strong> (<span id="legendSVPct">--%</span>)</span>
+                  </div>
+                  <div class="breakdown-legend-item">
+                    <div class="breakdown-legend-dot tax"></div>
+                    <span>Steuern: <strong id="legendTax">-- €</strong> (<span id="legendTaxPct">--%</span>)</span>
+                  </div>
+                </div>
                 <div class="seg-row">
-                  <span>Brutto:</span>
+                  <span>Brutto (Monat):</span>
                   <strong id="resGrossMonthlyDetail">-- €</strong>
                 </div>
                 <div class="seg-row">
@@ -316,7 +284,7 @@
                   <strong id="resChurchTaxMonthly" style="color: var(--danger, #dc2626);">-- €</strong>
                 </div>
                 <div class="seg-row">
-                  <span>- Sozialabgaben (ca. 20,5%):</span>
+                  <span>- Sozialabgaben (ca. 20–21%):</span>
                   <strong id="resSvMonthly" style="color: var(--danger, #dc2626);">-- €</strong>
                 </div>
                 <div class="seg-row total">
@@ -326,9 +294,9 @@
               </div>
 
               <!-- Pane 2: Jahresabrechnung -->
-              <div id="tab-jahr-de" class="seg-pane" role="tabpanel">
+              <div id="tab-jahresabrechnung" class="seg-pane" role="tabpanel">
                 <div class="seg-row">
-                  <span>Brutto (gesamt):</span>
+                  <span>Brutto (gesamt pro Jahr):</span>
                   <strong id="resGrossYear">-- €</strong>
                 </div>
                 <div class="seg-row">
@@ -349,40 +317,81 @@
                 </div>
               </div>
 
-              <!-- Pane 3: Gehalts-Vergleich & Kaufkraft -->
-              <div id="tab-insights-de" class="seg-pane" role="tabpanel">
+              <!-- Pane 3: Gehaltserhöhung Live-Simulator -->
+              <div id="tab-erhoehung" class="seg-pane" role="tabpanel">
+                <div class="raise-box-header">
+                  <span class="raise-box-title">Wähle eine Brutto-Erhöhung:</span>
+                  <div style="display: flex; gap: 6px;">
+                    <button type="button" class="quick-chip raise-chip" data-raise="200">+200 €</button>
+                    <button type="button" class="quick-chip raise-chip" data-raise="400">+400 €</button>
+                    <button type="button" class="quick-chip raise-chip" data-raise="600">+600 €</button>
+                  </div>
+                </div>
+                <div id="raisePreviewText" class="raise-box-desc">
+                  Tippe auf einen Betrag oben, um sofort zu sehen, wie viel Netto dir nach Lohnsteuer &amp; Sozialabgaben zusätzlich bleibt.
+                </div>
+              </div>
+
+              <!-- Pane 4: Arbeitgeberkosten -->
+              <div id="tab-arbeitgeber" class="seg-pane" role="tabpanel">
+                <p class="seg-note">
+                  Zusätzlich zum Bruttogehalt trägt der Arbeitgeber den <strong>Arbeitgeberanteil zur Sozialversicherung</strong> (Renten-, Kranken-, Pflege- und Arbeitslosenversicherung sowie Umlagen U1/U2/Insolvenzgeld, ca. 21%).
+                </p>
+                <div class="seg-row">
+                  <span>AG-Sozialabgaben (pro Monat):</span>
+                  <strong id="resAgSvMonthly">-- €</strong>
+                </div>
+                <div class="seg-row">
+                  <span>Gesamtkosten Arbeitgeber (pro Monat):</span>
+                  <strong id="resAgCostMonthly">-- €</strong>
+                </div>
+                <div class="seg-row total">
+                  <span>Gesamtkosten für das Unternehmen (Jahr):</span>
+                  <strong id="resAgCostYear" style="color: var(--color-primary, #1858C7); font-size: 1.1em;">-- €</strong>
+                </div>
+              </div>
+
+              <!-- Pane 5: Gehalts-Vergleich & Kaufkraft -->
+              <div id="tab-insights" class="seg-pane" role="tabpanel">
                 <div style="margin-bottom: 12px;">
-                  <strong style="font-size: 0.84rem; color: var(--color-ink, #0f172a);">📊 Gehalts-Ranking Deutschland:</strong>
-                  <p id="salaryRankingText" style="font-size: 0.84rem; color: var(--color-ink-2, #334155); margin: 4px 0 0; line-height: 1.45;"></p>
+                  <strong style="font-size: 0.88rem; color: var(--color-ink, #0f172a);">📊 Gehalts-Ranking Deutschland (Destatis):</strong>
+                  <p id="salaryRankingText" style="font-size: 0.86rem; color: var(--color-ink-2, #334155); margin: 6px 0 0; line-height: 1.5;"></p>
                 </div>
                 <div style="padding-top: 10px; border-top: 1px solid var(--color-rule, #e2e8f0);">
-                  <strong style="font-size: 0.84rem; color: var(--color-ink, #0f172a);">📉 Kaufkraft & Inflation (5 Jahre):</strong>
-                  <p id="inflationText" style="font-size: 0.84rem; color: var(--color-ink-2, #334155); margin: 4px 0 0; line-height: 1.45;"></p>
+                  <strong style="font-size: 0.88rem; color: var(--color-ink, #0f172a);">📉 Kaufkraft &amp; Inflation (5 Jahre):</strong>
+                  <p id="inflationText" style="font-size: 0.86rem; color: var(--color-ink-2, #334155); margin: 6px 0 0; line-height: 1.5;"></p>
                 </div>
               </div>
             </div>
 
-            <div style="margin-top: 4px; text-align: center; font-size: 0.82rem; color: var(--color-ink-3, #64748b);">
-              Überlegst du Stunden zu reduzieren? <a href="/de/arbeitszeit/teilzeitrechner.html" style="font-weight: 600; color: var(--color-accent, #1858C7);">Teilzeitrechner nutzen ➔</a>
+            <!-- 3. Actions & Sublink -->
+            <div class="cockpit-footer-actions">
+              <div class="share-actions">
+                <button class="btn-share" id="shareBtn" type="button">🔗 Ergebnis teilen</button>
+                <button class="btn-pdf" id="pdfBtn" type="button">📄 Als PDF speichern</button>
+              </div>
+              <div id="shareToast" class="share-toast" style="display:none;">Link kopiert!</div>
+              <div class="sub-link-wrap">
+                Überlegst du Stunden zu reduzieren? <a href="/de/arbeitszeit/teilzeitrechner.html">Teilzeitrechner nutzen ➔</a>
+              </div>
             </div>
 
-            <!-- Premium Girokonto Affiliate Box -->
-            <div class="affiliate-banner" style="margin-top: 4px;">
-              <div class="icon">💳</div>
-              <div class="content">
-                <strong>Mehr Netto vom Brutto behalten?</strong><br/>
-                Wechsle zu einem komplett gebührenfreien Girokonto in Deutschland und spare bis zu 150 € Kontoführungsgebühren pro Jahr!
-              </div>
-              <a href="https://www.check24.de/girokonto/" target="_blank" rel="noopener sponsored" class="btn-aff">Girokonten vergleichen</a>
+            <!-- 4. Restrained Affiliate Tip -->
+            <div class="affiliate-tip-box">
+              <span>💳 <strong>Kostenloses Girokonto:</strong> Bis zu 150 € Kontoführungsgebühren im Jahr sparen.</span>
+              <a href="https://www.check24.de/girokonto/" target="_blank" rel="noopener sponsored">Girokonten vergleichen ➔</a>
             </div>
 
           </div>
         </div>
 
-        <div class="help" style="margin: 0; border-radius: 0 0 var(--radius-lg, 14px) var(--radius-lg, 14px); border-top: 1px solid var(--color-rule);">
-          <strong>Grundlagen der Berechnung (Deutschland, Stand 2026):</strong><br/>
-          Dieser Schnellrechner nutzt vereinfachte Näherungswerte für Lohnsteuer und Sozialabgaben (Renten-, Kranken-, Pflege- und Arbeitslosenversicherung). Individuelle Freibeträge, Beitragsbemessungsgrenzen und kassenindividuelle Zusatzbeiträge können das tatsächliche Netto geringfügig verändern.
-        </div>
+        <!-- 5. Collapsible Legal Footnote Drawer -->
+        <details class="calc-legal-drawer">
+          <summary>⚖️ Berechnungsgrundlagen &amp; gesetzliche Werte 2026 (Deutschland) anzeigen</summary>
+          <div class="legal-drawer-content">
+            Dieser Schnellrechner nutzt die offiziellen Lohnsteuertarife 2026 (inkl. Grundfreibetrag von 12.348 €) und Sozialabgabensätze für Deutschland (Rentenversicherung 18,6%, Arbeitslosenversicherung 2,6%, Krankenversicherung 14,6% zzgl. durchschnittl. Zusatzbeitrag 1,7%, Pflegeversicherung ca. 4% bzw. 2,2% AN-Anteil). Beitragsbemessungsgrenzen: Rentenversicherung 8.450 €/Monat, Krankenversicherung 5.812,50 €/Monat. Individuelle Freibeträge, Kinderfreibeträge und Bundeslandspezifika (z.B. Sachsen bei PV) können das tatsächliche Netto geringfügig verändern.
+          </div>
+        </details>
 
       </div>
 
@@ -489,57 +498,87 @@
   <script>
     'use strict';
 
+    function est2026(x) {
+      x = Math.floor(x);
+      if (x <= 12348) return 0;
+      if (x <= 17799) {
+        const y = (x - 12348) / 10000;
+        return Math.floor((914.51 * y + 1400) * y);
+      }
+      if (x <= 69878) {
+        const z = (x - 17799) / 10000;
+        return Math.floor((173.16 * z + 2397) * z + 1015.30);
+      }
+      if (x <= 277825) {
+        return Math.floor(0.42 * x - 11116.45);
+      }
+      return Math.floor(0.45 * x - 19451.20);
+    }
+
     function calcTaxesDE(grossMonthly) {
       const taxClass = document.getElementById('taxClass').value;
       const churchTaxInput = document.getElementById('churchTax').value === 'ja';
-      
+
+      grossMonthly = Math.max(0, grossMonthly || 0);
       const grossYearly = grossMonthly * 12;
-      
-      let kvBase = grossMonthly > 5812.50 ? 5812.50 : grossMonthly;
-      let rvBase = grossMonthly > 8450 ? 8450 : grossMonthly;
-      
-      const kv = kvBase * 0.0815;
-      const pv = kvBase * 0.022;
-      const rv = rvBase * 0.093;
-      const av = rvBase * 0.013;
-      
+
+      // Beitragsbemessungsgrenzen 2026
+      const kvBase = Math.min(grossMonthly, 5812.50);
+      const rvBase = Math.min(grossMonthly, 8450.00);
+
+      // AN-Sozialabgaben 2026:
+      // KV: 14,6% + 2,5% Zusatzbeitrag (AN: 7,3% + 1,25% = 8,55%)
+      // PV: 4,0% + 0,6% kinderlos (AN: 2,3% + 0,6% = 2,90%)
+      // RV: 18,6% (AN: 9,30%)
+      // AV: 2,6% (AN: 1,30%)
+      const kv = kvBase * 0.0855;
+      const pv = kvBase * 0.0290;
+      const rv = rvBase * 0.0930;
+      const av = rvBase * 0.0130;
       const svMonthly = kv + pv + rv + av;
-      
-      let freibetrag = 12348;
-      if (taxClass === '3') freibetrag = 24696;
-      if (taxClass === '5') freibetrag = 0;
-      
-      let taxableIncome = grossYearly - (svMonthly * 12) - freibetrag;
-      if (taxableIncome < 0) taxableIncome = 0;
-      
+
+      // Zu versteuerndes Einkommen (zvE) ermitteln
+      // Vorsorgeaufwendungen (RV voll absetzbar + Basiskranken-/Pflegevers.)
+      const vsp = (rv * 12) + ((kvBase * 0.0799 + pv) * 12);
+      const anp = 1230; // Arbeitnehmer-Pauschbetrag (Werbungskosten)
+      const sap = taxClass === '3' ? 72 : 36; // Sonderausgaben-Pauschbetrag
+
+      const zve = Math.max(0, Math.floor(grossYearly - anp - sap - vsp));
+
+      // Einkommensteuer nach Steuerklasse (§ 32a EStG 2026)
       let taxYearly = 0;
-      if (taxClass === '5') {
-        taxYearly = taxableIncome * 0.35;
+      if (taxClass === '3') {
+        taxYearly = 2 * est2026(zve / 2);
+      } else if (taxClass === '5') {
+        taxYearly = Math.floor(est2026(zve + 12348) * 1.32);
       } else {
-        if (taxableIncome > 277826) {
-          taxYearly += (taxableIncome - 277826) * 0.45;
-          taxYearly += (277826 - 69878) * 0.42;
-          taxYearly += (69878 - 17799) * 0.24;
-          taxYearly += (17799 - 0) * 0.14;
-        } else if (taxableIncome > 69878) {
-          taxYearly += (taxableIncome - 69878) * 0.42;
-          taxYearly += (69878 - 17799) * 0.24;
-          taxYearly += (17799 - 0) * 0.14;
-        } else if (taxableIncome > 17799) {
-          taxYearly += (taxableIncome - 17799) * 0.24;
-          taxYearly += (17799 - 0) * 0.14;
-        } else if (taxableIncome > 0) {
-          taxYearly += taxableIncome * 0.14;
-        }
+        taxYearly = est2026(zve);
       }
-      
-      let taxMonthly = taxYearly / 12;
-      let churchTaxMonthly = churchTaxInput ? taxMonthly * 0.09 : 0;
-      
+
+      // Solidaritätszuschlag (Freigrenze 20.350 € bei Kl. 1/4, 40.700 € bei Kl. 3)
+      const soliThreshold = taxClass === '3' ? 40700 : 20350;
+      let soliYearly = 0;
+      if (taxYearly > soliThreshold) {
+        soliYearly = Math.min(taxYearly * 0.055, (taxYearly - soliThreshold) * 0.119);
+      }
+
+      const taxMonthly = Math.round((taxYearly + soliYearly) / 12 * 100) / 100;
+      const churchTaxMonthly = churchTaxInput ? Math.round(taxYearly * 0.09 / 12 * 100) / 100 : 0;
+
       const netMonthly = grossMonthly - svMonthly - taxMonthly - churchTaxMonthly;
       const deductions = svMonthly + taxMonthly + churchTaxMonthly;
 
-      return { netMonthly, deductions, taxMonthly, churchTaxMonthly, svMonthly, grossMonthly };
+      // Arbeitgeber-Kosten (AG-Anteil ca. 21% zzgl. Umlagen)
+      const agKv = kvBase * 0.0855;
+      const agPv = kvBase * 0.0170;
+      const agRv = rvBase * 0.0930;
+      const agAv = rvBase * 0.0130;
+      const agUmlagen = grossMonthly * 0.0120;
+      const agSvMonthly = agKv + agPv + agRv + agAv + agUmlagen;
+      const agCostMonthly = grossMonthly + agSvMonthly;
+      const agCostYear = agCostMonthly * 12;
+
+      return { netMonthly, deductions, taxMonthly, churchTaxMonthly, svMonthly, grossMonthly, agSvMonthly, agCostMonthly, agCostYear };
     }
 
     document.getElementById('simulatePartTime').addEventListener('change', (e) => {
@@ -580,14 +619,14 @@
         const resNew = calcTaxesDE(calcGross);
         const bruttoLossPct = ((baseGross - calcGross) / baseGross) * 100;
         const nettoLossPct = ((resOld.netMonthly - resNew.netMonthly) / resOld.netMonthly) * 100;
-        partTimeHtml = `<div style="margin-bottom: 24px; padding: 16px; background: #e0f2fe; border: 1px solid var(--color-rule, #e2e8f0); border-radius: 12px; color: #0369a1;">
-          <h4 style="margin-top: 0; color: #0284c7;">⚖️ Teilzeit-Ergebnis (${hoursNew}h statt ${hoursOld}h)</h4>
-          <p style="font-size: 14px; margin-bottom: 12px;">Brutto −${bruttoLossPct.toFixed(1)}%, Netto nur −${nettoLossPct.toFixed(1)}% (Steuerprogression).</p>
-          <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px; margin-bottom: 4px;">
+        partTimeHtml = `<div style="margin-bottom: 20px; padding: 14px 16px; background: var(--color-paper-2, #f8fafc); border: 1px solid var(--color-rule, #e2e8f0); border-radius: 10px;">
+          <h4 style="margin: 0 0 6px 0; font-size: 0.92rem; color: var(--color-ink, #0f172a);">⚖️ Teilzeit: ${hoursNew}h statt ${hoursOld}h</h4>
+          <p style="font-size: 0.84rem; color: var(--color-ink-2, #334155); margin: 0 0 10px 0;">Brutto −${bruttoLossPct.toFixed(1)}%, Netto nur −${nettoLossPct.toFixed(1)}% (Steuerprogression abfedert).</p>
+          <div style="display:flex; justify-content:space-between; font-size: 0.85rem; padding: 6px 0; border-top: 1px solid var(--color-rule, #e2e8f0);">
             <span>Neues Brutto (Monat):</span> <strong>${calcGross.toLocaleString('de-DE', {maximumFractionDigits: 2})} €</strong>
           </div>
-          <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px;">
-            <span>Neues Netto (Monat):</span> <strong style="color:var(--success);">${resNew.netMonthly.toLocaleString('de-DE', {maximumFractionDigits: 2})} €</strong>
+          <div style="display:flex; justify-content:space-between; font-size: 0.85rem; padding: 6px 0; border-top: 1px solid var(--color-rule, #e2e8f0);">
+            <span>Neues Netto (Monat):</span> <strong style="color:var(--color-success, #166534);">${resNew.netMonthly.toLocaleString('de-DE', {maximumFractionDigits: 2})} €</strong>
           </div>
         </div>`;
       }
@@ -596,10 +635,42 @@
       const res = calcTaxesDE(grossMonthly);
       document.getElementById('partTimeResultBox').innerHTML = partTimeHtml;
 
-      document.getElementById('resNetMonthly').textContent = res.netMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      const elNet = document.getElementById('resNetMonthly');
+      elNet.textContent = res.netMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+      elNet.classList.remove('val-pulse');
+      void elNet.offsetWidth;
+      elNet.classList.add('val-pulse');
       document.getElementById('resNetYearCard').textContent = (res.netMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       document.getElementById('resDeductionsMonthly').textContent = res.deductions.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       
+      // Update visual breakdown bar
+      const pctNet = Math.max(0, (res.netMonthly / grossMonthly) * 100);
+      const pctSv = Math.max(0, (res.svMonthly / grossMonthly) * 100);
+      const pctTax = Math.max(0, ((res.taxMonthly + res.churchTaxMonthly) / grossMonthly) * 100);
+
+      const elBarNet = document.getElementById('breakdownNetto');
+      const elBarSv = document.getElementById('breakdownSV');
+      const elBarTax = document.getElementById('breakdownTax');
+      if (elBarNet && elBarSv && elBarTax) {
+        elBarNet.style.flexBasis = pctNet.toFixed(1) + '%';
+        elBarSv.style.flexBasis = pctSv.toFixed(1) + '%';
+        elBarTax.style.flexBasis = pctTax.toFixed(1) + '%';
+      }
+
+      const lNet = document.getElementById('legendNetto');
+      const lSv = document.getElementById('legendSV');
+      const lTax = document.getElementById('legendTax');
+      const lNetP = document.getElementById('legendNettoPct');
+      const lSvP = document.getElementById('legendSVPct');
+      const lTaxP = document.getElementById('legendTaxPct');
+      if (lNet) lNet.textContent = res.netMonthly.toLocaleString('de-DE', { maximumFractionDigits: 0 }) + ' €';
+      if (lSv) lSv.textContent = res.svMonthly.toLocaleString('de-DE', { maximumFractionDigits: 0 }) + ' €';
+      if (lTax) lTax.textContent = (res.taxMonthly + res.churchTaxMonthly).toLocaleString('de-DE', { maximumFractionDigits: 0 }) + ' €';
+      if (lNetP) lNetP.textContent = pctNet.toFixed(1) + '%';
+      if (lSvP) lSvP.textContent = pctSv.toFixed(1) + '%';
+      if (lTaxP) lTaxP.textContent = pctTax.toFixed(1) + '%';
+
+      // Detail Rows
       document.getElementById('resGrossMonthlyDetail').textContent = grossMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       document.getElementById('resTaxMonthly').textContent = '- ' + res.taxMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       document.getElementById('resChurchTaxMonthly').textContent = '- ' + res.churchTaxMonthly.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
@@ -612,6 +683,14 @@
       document.getElementById('resSvYear').textContent = '- ' + (res.svMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
       document.getElementById('resNetYear').textContent = (res.netMonthly * 12).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
 
+      // Arbeitgeber Tab
+      const elAgSv = document.getElementById('resAgSvMonthly');
+      const elAgCostM = document.getElementById('resAgCostMonthly');
+      const elAgCostY = document.getElementById('resAgCostYear');
+      if (elAgSv) elAgSv.textContent = res.agSvMonthly.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      if (elAgCostM) elAgCostM.textContent = res.agCostMonthly.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      if (elAgCostY) elAgCostY.textContent = res.agCostYear.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+
       // --- Premium Insight: Ranking ---
       const rankingText = document.getElementById('salaryRankingText');
       if (rankingText && grossMonthly > 0) {
@@ -619,13 +698,13 @@
         const medianDE = 4100;
         if (grossMonthly < medianDE) {
           const diff = medianDE - grossMonthly;
-          text = `Dein Gehalt liegt unter dem deutschen Vollzeit-Median (ca. <strong>4.100 €</strong>). Dir fehlen noch <strong>${diff.toLocaleString('de-DE')} €</strong> bis zur Mitte der Gesellschaft.`;
+          text = `Dein Gehalt liegt unter dem deutschen Vollzeit-Median (ca. <strong>4.100 €</strong>). Dir fehlen noch <strong>${diff.toLocaleString('de-DE')} €</strong> bis zur statistischen Mitte.`;
         } else if (grossMonthly >= medianDE && grossMonthly < 6000) {
-          text = `Stark! Du verdienst mehr als der Median der Beschäftigten (Vollzeit: ca. <strong>4.100 €</strong>). Du gehörst zur soliden Mitte.`;
+          text = `Stark! Du verdienst mehr als der Median der Beschäftigten in Deutschland (Vollzeit: ca. <strong>4.100 €</strong>). Du gehörst zur soliden oberen Mitte.`;
         } else if (grossMonthly >= 6000 && grossMonthly < 8000) {
-          text = `Respekt! Mit diesem Gehalt gehörst du zu den oberen 10-15% in Deutschland.`;
+          text = `Respekt! Mit diesem Einkommen gehörst du zu den oberen 10–15% der Arbeitnehmer in Deutschland.`;
         } else {
-          text = `Exzellent! Du verdienst mehr als ca. 95% der Angestellten in Deutschland.`;
+          text = `Spitzenklasse! Du verdienst mehr als ca. 95% der Angestellten in Deutschland.`;
         }
         rankingText.innerHTML = text;
       }
@@ -635,7 +714,7 @@
       if (inflationText && res.netMonthly > 0) {
         const purchasingPower = res.netMonthly * Math.pow(1 - 0.025, 5);
         const lost = res.netMonthly - purchasingPower;
-        inflationText.innerHTML = `Achtung: Dein heutiges Netto von <strong>${res.netMonthly.toLocaleString('de-DE', {maximumFractionDigits:0})} €</strong> ist bei 2,5% Inflation in 5 Jahren real nur noch <strong>${purchasingPower.toLocaleString('de-DE', {maximumFractionDigits:0})} €</strong> wert (Kaufkraftverlust: -${lost.toLocaleString('de-DE', {maximumFractionDigits:0})} €/Monat).`;
+        inflationText.innerHTML = `Dein heutiges Netto von <strong>${res.netMonthly.toLocaleString('de-DE', {maximumFractionDigits:0})} €</strong> entspricht bei durchschnittlich 2,5% jährlicher Inflation in 5 Jahren einer Kaufkraft von real nur noch <strong>${purchasingPower.toLocaleString('de-DE', {maximumFractionDigits:0})} €</strong> (Realer Verlust: −${lost.toLocaleString('de-DE', {maximumFractionDigits:0})} €/Monat).`;
       }
 
       document.getElementById('result').classList.remove('hidden');
@@ -652,11 +731,11 @@
         calcTimeout = setTimeout(calculateGehaltDE, delay);
       };
 
-      ['grossMonthly', 'hoursCurrent', 'hoursTarget'].forEach(id => {
+      ['grossMonthly', 'kvAdditionalRate', 'hoursCurrent', 'hoursTarget'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('input', () => trigger(400));
       });
-      ['salaryMode', 'taxClass', 'churchTax', 'simulatePartTime'].forEach(id => {
+      ['salaryMode', 'taxClass', 'children', 'state', 'churchTax', 'simulatePartTime'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('change', () => trigger(0));
       });
@@ -707,6 +786,99 @@
       });
 
       calculateGehaltDE();
+    })();
+
+    /* ── Shareable URL + PDF Export ─────────────────────────────── */
+    (function initShareAndPdf() {
+      const params = new URLSearchParams(window.location.search);
+      const brutto = params.get('brutto');
+      const klasse = params.get('klasse');
+      const kirche = params.get('kirche');
+      const teilzeit = params.get('teilzeit');
+      const hOld = params.get('hOld');
+      const hNew = params.get('hNew');
+
+      if (brutto) {
+        const el = document.getElementById('grossMonthly');
+        if (el) el.value = brutto;
+      }
+      if (klasse) {
+        const el = document.getElementById('taxClass');
+        if (el) el.value = klasse;
+      }
+      if (kirche) {
+        const el = document.getElementById('churchTax');
+        if (el) el.value = kirche;
+      }
+      if (teilzeit === '1') {
+        const pt = document.getElementById('simulatePartTime');
+        if (pt) {
+          pt.checked = true;
+          pt.dispatchEvent(new Event('change'));
+        }
+        if (hOld) {
+          const el = document.getElementById('hoursCurrent');
+          if (el) el.value = hOld;
+        }
+        if (hNew) {
+          const el = document.getElementById('hoursTarget');
+          if (el) el.value = hNew;
+        }
+      }
+
+      function showToast(msg) {
+        const t = document.getElementById('shareToast');
+        if (!t) return;
+        t.textContent = msg;
+        t.style.display = 'block';
+        setTimeout(() => { t.style.display = 'none'; }, 2200);
+      }
+
+      const shareBtn = document.getElementById('shareBtn');
+      if (shareBtn) {
+        shareBtn.addEventListener('click', async () => {
+          const grossVal = document.getElementById('grossMonthly')?.value || '';
+          const taxClassVal = document.getElementById('taxClass')?.value || '1';
+          const churchVal = document.getElementById('churchTax')?.value || 'nein';
+          const isPt = document.getElementById('simulatePartTime')?.checked;
+          const hOldVal = document.getElementById('hoursCurrent')?.value || 40;
+          const hNewVal = document.getElementById('hoursTarget')?.value || 32;
+
+          const url = new URL(window.location.origin + window.location.pathname);
+          if (grossVal) url.searchParams.set('brutto', grossVal);
+          url.searchParams.set('klasse', taxClassVal);
+          if (churchVal === 'ja') url.searchParams.set('kirche', 'ja');
+          if (isPt) {
+            url.searchParams.set('teilzeit', '1');
+            url.searchParams.set('hOld', hOldVal);
+            url.searchParams.set('hNew', hNewVal);
+          }
+
+          const shareUrl = url.toString();
+          const shareText = 'Mein deutsches Netto-Gehalt berechnet mit rechnify.at';
+
+          if (navigator.share) {
+            try {
+              await navigator.share({ title: 'rechnify.at Gehaltsrechner Deutschland', text: shareText, url: shareUrl });
+              return;
+            } catch (e) { /* fallback to clipboard */ }
+          }
+
+          try {
+            await navigator.clipboard.writeText(shareUrl);
+            showToast('Link kopiert! In WhatsApp/Nachricht einfügen.');
+          } catch (e) {
+            window.prompt('Link kopieren:', shareUrl);
+          }
+        });
+      }
+
+      const pdfBtn = document.getElementById('pdfBtn');
+      if (pdfBtn) {
+        pdfBtn.addEventListener('click', () => {
+          window.print();
+        });
+      }
     })();
   </script>
 </body>

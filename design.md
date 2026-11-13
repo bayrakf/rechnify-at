@@ -1,63 +1,53 @@
 # Design — rechnify.at
 
-Locked design system for rechnify.at. Every page reads this file before emitting code.
+/* anchor: Stripe-data / Linear-dense, diverge: Austrian & German legal calculator workbench */
+Locked design system for rechnify.at. Combines product-ui-design (Floor/Ceiling restraint), genjutsu (native 60fps motion & micro-interactions), no-slop-ui (banned AI-tells), and hallmark (OKLCH precision tokens).
 
-## Genre
-modern-minimal
+## Genre & Archetype
+- **Genre:** modern-minimal / utility-first
+- **Floor (Tool Pages):** Workbench — high-density input/output split, 1px crisp borders, `tabular-nums` for all financial figures.
+- **Ceiling (Index / Hero):** Clean Bento Grid — solid app-bar header, clear typographic hierarchy, zero fuzzy radial halos.
 
-## Macrostructure family
-- **Marketing pages:** Bento Grid — category bento tiles, marquee hero, value strip
-- **Tool pages:** Workbench — centered calculator card, result panel below inputs, FAQ accordion
-- **Content pages:** Long Document — single reading column, breadcrumb, minimal chrome
+## AI-Tells Explicitly Banned
+- ❌ No floating detached pill-nav with heavy blur on homepage (use anchored crisp app-bar).
+- ❌ No radial gradient color halos / glowing auras on `body`.
+- ❌ No card hover translations (`translateY(-4px)` is banned on cards; hover is 1px border/highlight only).
+- ❌ No decorative mono eyebrow tags or badge clusters without functional data.
+- ❌ No generic 4-cell metric stat strips.
+- ❌ No celebratory confetti or toast popups on calculate (Silent Success).
 
-## Theme
+## Theme (OKLCH)
 - `--color-paper`   oklch(98.5% 0.005 240)
-- `--color-paper-2` oklch(95% 0.010 240)
-- `--color-ink`     oklch(15% 0.040 255)
-- `--color-ink-2`   oklch(40% 0.028 255)
-- `--color-rule`    oklch(88% 0.012 240)
-- `--color-accent`  oklch(48% 0.220 255)
-- `--color-focus`   oklch(48% 0.220 255)
+- `--color-paper-2` oklch(96%   0.008 240)
+- `--color-paper-3` oklch(92%   0.012 240)
+- `--color-ink`     oklch(15%   0.040 255)
+- `--color-ink-2`   oklch(38%   0.025 255)
+- `--color-ink-3`   oklch(58%   0.018 255)
+- `--color-rule`    oklch(88%   0.012 240)
+- `--color-rule-2`  oklch(80%   0.014 240)
+- `--color-accent`  oklch(48%   0.220 255)
+- `--color-focus`   oklch(48%   0.220 255)
 
-## Typography
-- Display: Space Grotesk, weight 600–700, style normal
-- Body: Inter, weight 400–500
-- Display tracking: -0.02em on large headlines
-- Type scale anchor: `--text-display` = clamp(3rem, 7vw + 1rem, 6rem)
+## Typography & Numbers
+- Display: Space Grotesk, weight 600–700
+- Body: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, sans-serif
+- Figures: `font-variant-numeric: tabular-nums lining-nums` for all currencies, percentages, and inputs.
+- Scale: `--text-xs` (0.75rem) to `--text-display` (clamp(2.5rem, 5vw + 1rem, 4.5rem)).
 
-## Spacing
-4-point named scale in `tokens.css`. Use `var(--space-md)` etc., never raw px in new code.
-
-## Motion
-- Easings: `--ease-out`, `--ease-in`, `--ease-in-out`
-- Reveal: fade + 8px translate on hero only; tool pages static
-- Reduced-motion: opacity-only, ≤ 150ms
-
-## Microinteractions stance
-- Silent success — no celebratory toasts on calculate
-- Hover delay 800ms on tooltips · focus delay 0ms
-- Buttons: transform translateY on hover, instant focus ring
-
-## CTA voice
-- Primary: filled cobalt pill/rounded, white ink, verb-first ("Berechnen", "Jetzt berechnen")
-- Secondary: outline cobalt, same radius
-
-## Per-page allowances
-- Marketing (`index.html`): enrichment none — typography + bento grid
-- Tool pages: no enrichment — calculator IS the page
-- Content (Über uns, Kontakt, Impressum, Datenschutz): typography only
+## Genjutsu Motion & Micro-interactions
+- Interaction Thesis: Every transition communicates state change or hierarchy.
+- Durations: `--dur-micro` (120ms), `--dur-short` (180ms).
+- Easings: `--ease-out: cubic-bezier(0.16, 1, 0.3, 1)`.
+- Calculation Update: `@keyframes value-pulse` (120ms subtle contrast pulse on updated figures).
+- Focus Ring: 2px solid `var(--color-focus)`, 1px offset, 0px blur.
+- Reduced Motion: Respect `@media (prefers-reduced-motion: reduce)` — instant switch, no transitions.
 
 ## What pages MUST share
-- Space Grotesk + Inter pairing
-- Cobalt accent ≤ 5% per viewport
-- Glass sticky header on tool/content pages
-- Pill nav on homepage
-- CTA shape (14px radius, 11px×18px padding rhythm)
-- Dark mode via `body.dark`
-
-## What pages MAY differ on
-- Macrostructure within family (Bento vs Workbench vs Long Document)
-- Footer density (statement on index · compact grid on tools)
+- Consistent solid/subtle-glass sticky header (anchored, not floating).
+- Space Grotesk headline + clean sans body.
+- Cobalt accent ≤ 5% of viewport.
+- 1px crisp rule borders, 8px input radius, 10px card radius.
+- Tabular alignment on all calculated outputs.
 - Breadcrumb on tool/content pages only
 
 ## Exports

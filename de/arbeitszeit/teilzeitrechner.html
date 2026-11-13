@@ -29,58 +29,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
-  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.0" />
-
-  <style>
-    .calc-body { padding: 24px; }
-    .input-group { margin-bottom: 20px; }
-    .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--color-ink); }
-    .input-group input, .input-group select { 
-      width: 100%; 
-      padding: 12px; 
-      border: 1px solid var(--color-rule); 
-      border-radius: 10px; 
-      background: var(--color-paper); 
-      color: var(--color-ink); 
-      font-size: 16px; 
-    }
-    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    @media(max-width: 600px) { .input-row { grid-template-columns: 1fr; } }
-
-    .result-box { 
-      margin-top: 24px; 
-      background: var(--color-paper-2); 
-      border: 1px solid var(--color-rule); 
-      border-radius: 12px; 
-      padding: 24px; 
-    }
-    
-    .result-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--color-rule);
-    }
-    .result-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .result-item.highlight { font-weight: bold; font-size: 1.3em; color: var(--color-primary); border-bottom: none; }
-    .result-item.success { font-weight: bold; font-size: 1.1em; color: var(--color-success); }
-    .result-item.muted { color: var(--color-ink-3); font-size: 0.9em; }
-    
-    .comparison-box {
-        background: #e0f2fe;
-        border: 1px solid var(--color-rule, #e2e8f0);
-        border-radius: 12px;
-        padding: 16px;
-        margin-top: 24px;
-        color: #0369a1;
-    }
-    .dark-theme .comparison-box {
-        background: rgba(14, 165, 233, 0.1);
-        border: 1px solid rgba(14, 165, 233, 0.2);
-        color: #38bdf8;
-    }
-  </style>
+  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.1" />
 </head>
 <body>
 
@@ -91,9 +40,9 @@
         <span class="site-logo-text">rechnify<span>.at</span></span>
       </a>
       <nav class="site-nav" id="siteNav">
-        <a href="/">🏠 Start</a>
-        <a href="/arbeitszeit/kommen-gehen-rechner.html">⏰ Arbeitszeit</a>
-        <a href="/finanzen/gehaltsrechner.html">💰 Finanzen</a>
+        <a href="/">Start</a>
+        <a href="/#finanzen">Finanzen</a>
+        <a href="/#arbeitszeit" class="active">Arbeitszeit</a>
       </nav>
       <div class="header-actions">
         <div class="country-toggle-group" id="countryToggleGroup">
