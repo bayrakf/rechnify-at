@@ -334,22 +334,22 @@
       <!-- Unique SEO Content -->
       <section class="content-section" style="margin-top: 32px;">
         <h2>Was bedeutet 2.480 € Brutto in Deutschland?</h2>
-        <p>Ein Bruttogehalt von 2.480 € pro Monat fällt in Deutschland in die Kategorie <strong>unteres Mittelfeld</strong>. Das bedeutet: Du liegst nahe dem österreichischen Median von ca. 3.650 € (Median Vollzeit, Stand 2024/2025). Bei diesem Einkommen ist die Steuerbelastung noch moderat.</p>
+        <p>Ein Bruttogehalt von 2.480 € pro Monat fällt in Deutschland in die Kategorie <strong>unteres Mittelfeld</strong>. Das bedeutet: Du liegst unter dem deutschen Median (Vollzeit 2025: 54.066 € Jahresbrutto inkl. Sonderzahlungen, Destatis). Bei diesem Einkommen ist die Steuerbelastung noch moderat.</p>
         
         <h3>So setzt sich dein Netto zusammen</h3>
         <p>Von deinen 2.480 € Brutto werden folgende Abzüge berechnet:</p>
         <ul>
-          <li><strong>Sozialversicherung (SV):</strong> ca. 0 € (0.00% des Bruttos)</li>
-          <li><strong>Lohnsteuer:</strong> Progressiver Steuertarif, abhängig von der Steuerstufe</li>
-          <li><strong>Verkehrsabsetzbetrag:</strong> Wird steuermindernd berücksichtigt (nur AT)</li>
+          <li><strong>Sozialversicherung (SV):</strong> ca. 539 € (21,75 % des Bruttos, kinderlos)</li>
+          <li><strong>Lohnsteuer:</strong> Progressiver Steuertarif, abhängig von der Steuerklasse</li>
+          <li><strong>Solidaritätszuschlag & Kirchensteuer:</strong> Soli erst ab ca. 20.350 € Lohnsteuer im Jahr, Kirchensteuer 8 bis 9 % der Lohnsteuer (nur bei Kirchenmitgliedschaft)</li>
         </ul>
         <p>Das <strong>Netto-Gehalt</strong> ist der Betrag, der tatsächlich auf dein Konto überwiesen wird. Verwende den Rechner oben, um die exakte Summe zu sehen.</p>
         
         <h3>2.480 € Brutto – Jahresübersicht</h3>
         <p>Bei 2.480 € monatlichem Brutto ergeben sich folgende Jahreswerte:</p>
         <ul>
-          <li><strong>Brutto pro Jahr (14 Gehälter):</strong> ca. 34,720 € (inkl. 13./14. Gehalt)</li>
-          <li><strong>Brutto pro Jahr (12 Gehälter):</strong> ca. 29,760 € (ohne Sonderzahlungen)</li>
+          <li><strong>Brutto pro Jahr mit 13. Gehalt:</strong> ca. 32.240 € (z. B. Weihnachtsgeld laut Vertrag)</li>
+          <li><strong>Brutto pro Jahr (12 Gehälter):</strong> ca. 29.760 € (ohne Sonderzahlungen)</li>
           <li><strong>Netto pro Jahr:</strong> Siehe Rechner-Ergebnis oben</li>
         </ul>
         
@@ -361,7 +361,7 @@
         <ul>
           <li><a href="/de/finanzen/brutto-netto/2380-brutto-in-netto.html">2380 € Brutto → Netto</a></li>
           <li><a href="/de/finanzen/brutto-netto/2580-brutto-in-netto.html">2580 € Brutto → Netto</a></li>
-          <li><a href="/de/finanzen/brutto-netto/3000-brutto-in-netto.html">3.000 € Brutto → Netto (Median-Nähe)</a></li>
+          <li><a href="/de/finanzen/brutto-netto/3000-brutto-in-netto.html">3.000 € Brutto → Netto</a></li>
           <li><a href="/de/finanzen/brutto-netto/5000-brutto-in-netto.html">5.000 € Brutto → Netto (gehobenes Einkommen)</a></li>
         </ul>
         
@@ -504,22 +504,25 @@
       // Beitragsbemessungsgrenzen 2026
       const kvBase = Math.min(grossMonthly, 5812.50);
       const rvBase = Math.min(grossMonthly, 8450.00);
+      // Uebergangsbereich 603,01-2.000 EUR (Midijob): reduzierte AN-Bemessung, § 20 Abs. 2a SGB IV
+      const anBase = grossMonthly > 603 && grossMonthly < 2000 ? (grossMonthly - 603) * 2000 / 1397 : grossMonthly;
+      const kvAn = Math.min(anBase, 5812.50), rvAn = Math.min(anBase, 8450.00);
 
       // AN-Sozialabgaben 2026:
       // KV: 14,6% + 2,9% durchschn. Zusatzbeitrag (AN: 7,3% + 1,45% = 8,75%)
       // PV: 3,6% + 0,6% Kinderlosenzuschlag ab 23 J. (AN: 1,8% + 0,6% = 2,40%)
       // RV: 18,6% (AN: 9,30%)
       // AV: 2,6% (AN: 1,30%)
-      const kv = kvBase * 0.0875;
-      const pv = kvBase * 0.0240;
-      const rv = rvBase * 0.0930;
-      const av = rvBase * 0.0130;
+      const kv = kvAn * 0.0875;
+      const pv = kvAn * 0.0240;
+      const rv = rvAn * 0.0930;
+      const av = rvAn * 0.0130;
       const svMonthly = kv + pv + rv + av;
 
       // Zu versteuerndes Einkommen (zvE) ermitteln
       // Vorsorgepauschale 2026 (§ 39b Abs. 2 S. 5 Nr. 3 EStG): RV voll, KV (ermaessigt 14,0% + Zusatz) + PV,
       // AV nur soweit KV+PV+AV 1.900 € nicht uebersteigen
-      const kvPv = (kvBase * 0.0845 + pv) * 12;
+      const kvPv = (kvAn * 0.0845 + pv) * 12;
       const vsp = (rv * 12) + kvPv + Math.max(0, Math.min(av * 12, 1900 - kvPv));
       const anp = 1230; // Arbeitnehmer-Pauschbetrag (Werbungskosten)
       const sap = taxClass === '3' ? 72 : 36; // Sonderausgaben-Pauschbetrag

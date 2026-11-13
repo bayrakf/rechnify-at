@@ -337,7 +337,7 @@
       <!-- Unique SEO Content -->
       <section class="content-section" style="margin-top: 32px;">
         <h2>Wie viel verdient ein Zahnarzt in Deutschland?</h2>
-        <p>Ein Zahnarzt in Deutschland verdient durchschnittlich ca. <strong>7.500 € Brutto pro Monat</strong>. Das entspricht einem Jahresbrutto von ca. 105,000 € (inkl. 13./14. Gehalt) bzw. 90,000 € (ohne Sonderzahlungen). Das liegt über dem deutschen Median von ca. 3.500 €.</p>
+        <p>Ein Zahnarzt in Deutschland verdient durchschnittlich ca. <strong>7.500 € Brutto pro Monat</strong>. Das entspricht einem Jahresbrutto von ca. 90.000 € (12 Gehälter) bzw. 97.500 € mit 13. Gehalt. Das liegt über dem deutschen Median (Vollzeit 2025: 54.066 € Jahresbrutto inkl. Sonderzahlungen, Destatis).</p>
         
         <h3>Gehaltsentwicklung als Zahnarzt</h3>
         <p>Das Gehalt als Zahnarzt hängt von mehreren Faktoren ab:</p>
@@ -499,22 +499,25 @@
       // Beitragsbemessungsgrenzen 2026
       const kvBase = Math.min(grossMonthly, 5812.50);
       const rvBase = Math.min(grossMonthly, 8450.00);
+      // Uebergangsbereich 603,01-2.000 EUR (Midijob): reduzierte AN-Bemessung, § 20 Abs. 2a SGB IV
+      const anBase = grossMonthly > 603 && grossMonthly < 2000 ? (grossMonthly - 603) * 2000 / 1397 : grossMonthly;
+      const kvAn = Math.min(anBase, 5812.50), rvAn = Math.min(anBase, 8450.00);
 
       // AN-Sozialabgaben 2026:
       // KV: 14,6% + 2,9% durchschn. Zusatzbeitrag (AN: 7,3% + 1,45% = 8,75%)
       // PV: 3,6% + 0,6% Kinderlosenzuschlag ab 23 J. (AN: 1,8% + 0,6% = 2,40%)
       // RV: 18,6% (AN: 9,30%)
       // AV: 2,6% (AN: 1,30%)
-      const kv = kvBase * 0.0875;
-      const pv = kvBase * 0.0240;
-      const rv = rvBase * 0.0930;
-      const av = rvBase * 0.0130;
+      const kv = kvAn * 0.0875;
+      const pv = kvAn * 0.0240;
+      const rv = rvAn * 0.0930;
+      const av = rvAn * 0.0130;
       const svMonthly = kv + pv + rv + av;
 
       // Zu versteuerndes Einkommen (zvE) ermitteln
       // Vorsorgepauschale 2026 (§ 39b Abs. 2 S. 5 Nr. 3 EStG): RV voll, KV (ermaessigt 14,0% + Zusatz) + PV,
       // AV nur soweit KV+PV+AV 1.900 € nicht uebersteigen
-      const kvPv = (kvBase * 0.0845 + pv) * 12;
+      const kvPv = (kvAn * 0.0845 + pv) * 12;
       const vsp = (rv * 12) + kvPv + Math.max(0, Math.min(av * 12, 1900 - kvPv));
       const anp = 1230; // Arbeitnehmer-Pauschbetrag (Werbungskosten)
       const sap = taxClass === '3' ? 72 : 36; // Sonderausgaben-Pauschbetrag
