@@ -25,7 +25,9 @@ RE_ALT = re.compile(r'<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"')
 def lastmod(rel: str) -> str:
     """Datum des letzten Commits der Datei. Massen-Bumps auf 'heute' entwerten lastmod bei Google."""
     out = subprocess.run(
-        ["git", "log", "-1", "--format=%cs", "--", rel],
+        # Boilerplate-Commits (Fonts, Nav, Footer, Styles) aendern keinen Inhalt.
+        ["git", "log", "-1", "--format=%cs", "-E", "--invert-grep",
+         r"--grep=^(style|perf|chore)|^fix\((ux|legal)\)", "--", rel],
         cwd=ROOT, capture_output=True, text=True,
     ).stdout.strip()
     return out or TODAY  # neue, noch nicht committete Seite
