@@ -171,6 +171,7 @@ waehrung = '''<!DOCTYPE html>
           </ul>
         </div>
       </div>
+      <div class="footer-bottom"><span class="footer-copy">© 2026 rechnify.at</span><nav class="footer-legal-links" aria-label="Rechtliches"><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutzerklärung</a><a href="/kontakt.html">Kontakt</a></nav></div>
     </div>
   </footer>
   <script src="/assets/js/global.js?v=3.1"></script>
@@ -329,6 +330,7 @@ arbeitszeit = '''<!DOCTYPE html>
           </ul>
         </div>
       </div>
+      <div class="footer-bottom"><span class="footer-copy">© 2026 rechnify.at</span><nav class="footer-legal-links" aria-label="Rechtliches"><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutzerklärung</a><a href="/kontakt.html">Kontakt</a></nav></div>
     </div>
   </footer>
   <script src="/assets/js/global.js?v=3.1"></script>
@@ -451,6 +453,7 @@ embed = '''<!DOCTYPE html>
           </ul>
         </div>
       </div>
+      <div class="footer-bottom"><span class="footer-copy">© 2026 rechnify.at</span><nav class="footer-legal-links" aria-label="Rechtliches"><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutzerklärung</a><a href="/kontakt.html">Kontakt</a></nav></div>
     </div>
   </footer>
   <script src="/assets/js/global.js?v=3.1"></script>
