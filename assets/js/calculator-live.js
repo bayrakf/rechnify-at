@@ -50,12 +50,14 @@
     svBar.style.flexBasis = svPct + '%';
     taxBar.style.flexBasis = taxPct + '%';
     
-    nettoBar.querySelector('.breakdown-segment-label').textContent = 
-      `Netto ${nettoPct}%`;
-    svBar.querySelector('.breakdown-segment-label').textContent = 
-      `SV ${svPct}%`;
-    taxBar.querySelector('.breakdown-segment-label').textContent = 
-      `Steuer ${taxPct}%`;
+    // Labels sind optional (Redesign-Balken haben keine) — fehlende ueberspringen statt crashen
+    const setLabel = (bar, text) => {
+      const label = bar.querySelector('.breakdown-segment-label');
+      if (label) label.textContent = text;
+    };
+    setLabel(nettoBar, `Netto ${nettoPct}%`);
+    setLabel(svBar, `SV ${svPct}%`);
+    setLabel(taxBar, `Steuer ${taxPct}%`);
   }
 
   // ── LIVE CALCULATION TRIGGER ───────────────────────────────────

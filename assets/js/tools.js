@@ -506,16 +506,3 @@ function initAutoCalculate() {
   setTimeout(() => calcBtn.click(), 100);
 }
 
-// --- Last Updated Stamp ---
-function injectLastUpdated() {
-  if (document.querySelector('.updated,[data-updated]')) return;
-  const main = document.querySelector('main.site-main, main');
-  if (!main || !document.querySelector('.calc-body, #resultBox, #grossMonthly, .calculator')) return;
-  const el = document.createElement('p');
-  el.className = 'updated help';
-  el.style.cssText = 'margin-top:24px;font-size:0.85rem;color:var(--color-ink-3)';
-  // ponytail: ISO date stamp; localize if product wants "Stand: DD.MM.YYYY"
-  const today = new Date().toISOString().slice(0, 10);
-  el.textContent = 'Zuletzt aktualisiert: ' + today;
-  main.appendChild(el);
-}

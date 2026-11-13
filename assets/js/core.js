@@ -24,19 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initFaqAccordion();
   setActiveNavLink();
   
-  // Tools
-  initCountryToggle();
-  initPWAInstall();
-  registerServiceWorker();
-  initShareButtons();
-  initAutoCalculate();
-  injectBreadcrumbs();
-  injectRelatedTools();
-  initGehaltsVergleich();
-  injectHowToSchema();
-  injectPrintBrand();
-  injectLastUpdated();
-  
+  // Tools — tools.js fehlt auf manchen Seiten (Blog, Hubs); ohne Guard bricht
+  // der ReferenceError den ganzen Block ab, inkl. Analytics und AdSense darunter.
+  ['initCountryToggle', 'initPWAInstall', 'registerServiceWorker', 'initShareButtons',
+   'initAutoCalculate', 'injectBreadcrumbs', 'injectRelatedTools', 'initGehaltsVergleich',
+   'injectHowToSchema', 'injectPrintBrand']
+    .forEach((name) => { if (typeof window[name] === 'function') window[name](); });
+
   // Analytics (after UI)
   initAnalytics();
   if ('requestIdleCallback' in window) requestIdleCallback(loadAdSense, { timeout: 4000 });
