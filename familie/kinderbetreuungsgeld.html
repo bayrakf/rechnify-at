@@ -197,8 +197,8 @@
         <div id="viewKonto">
           <div class="input-group">
             <label for="kontoDuration">Dauer der Betreuung durch Elternteil 1 (in Tagen)</label>
-            <input type="number" id="kontoDuration" value="365" min="365" max="851" />
-            <div class="text-xs text-muted" style="margin-top:4px;">Zwischen 365 (ca. 1 Jahr) und 851 Tagen (ca. 28 Monate).</div>
+            <input type="number" id="kontoDuration" value="365" min="91" max="851" />
+            <div class="text-xs text-muted" style="margin-top:4px;">Allein: 365 (ca. 1 Jahr) bis 851 Tage (ca. 28 Monate). Mit Partner: beide zusammen 456 bis 1.063 Tage.</div>
           </div>
           <div class="input-group">
             <label for="kontoPartner">Nimmt der 2. Elternteil auch Zeiten in Anspruch?</label>
@@ -209,8 +209,8 @@
           </div>
           <div class="input-group hidden" id="kontoPartnerDurationGroup">
             <label for="kontoPartnerDuration">Dauer der Betreuung durch Elternteil 2 (in Tagen)</label>
-            <input type="number" id="kontoPartnerDuration" value="91" min="91" max="212" />
-            <div class="text-xs text-muted" style="margin-top:4px;">Mindestens 20% der Gesamtzeit, zwischen 91 und 212 Tagen.</div>
+            <input type="number" id="kontoPartnerDuration" value="91" min="91" max="851" />
+            <div class="text-xs text-muted" style="margin-top:4px;">20 % der Gesamtdauer sind diesem Elternteil vorbehalten (mind. 91 Tage). Je kürzer die Gesamtdauer, desto höher der Tagessatz.</div>
           </div>
         </div>
 
@@ -282,7 +282,7 @@
               <div class="result-card" style="background: var(--soft-row);">
                 <div class="text-sm text-muted">Partnerschaftsbonus (insgesamt)</div>
                 <div class="big-number text-success" id="resBonus">1.000 €</div>
-                <div class="sub-number">500 € pro Elternteil (bei 50:50 bis 60:40 Aufteilung)</div>
+                <div class="sub-number">500 € pro Elternteil (bei 50:50 bis 60:40 Aufteilung, je mind. 124 Tage)</div>
               </div>
             </div>
 
@@ -328,7 +328,7 @@
               </tr>
               <tr>
                 <td><strong>Tagesbetrag</strong></td>
-                <td>ca. 14,53 € bis 41,14 €</td>
+                <td>ca. 17,65 € bis 41,14 €</td>
                 <td>41,14 € bis max. 80,12 €</td>
               </tr>
               <tr>
@@ -452,24 +452,25 @@
     });
 
     function calculateKonto() {
-      let duration1 = parseInt(document.getElementById('kontoDuration').value) || 365;
-      if (duration1 < 365) duration1 = 365;
-      if (duration1 > 851) duration1 = 851;
-
-      const budget1 = 15016.10;
-      let dailyRate = budget1 / duration1;
-
       const hasPartner = document.getElementById('kontoPartner').value === 'ja';
+      let duration1 = parseInt(document.getElementById('kontoDuration').value) || 365;
       let duration2 = 0;
       let isBonusEligible = false;
+      let dailyRate;
 
-      if (hasPartner) {
-        duration2 = parseInt(document.getElementById('kontoPartnerDuration').value) || 91;
-        const totalDuration = duration1 + duration2;
-        const ratio = Math.min(duration1, duration2) / totalDuration;
-        if (ratio >= 0.40 && ratio <= 0.60) {
-          isBonusEligible = true;
-        }
+      if (!hasPartner) {
+        // Ein Elternteil: 365–851 Tage, Budget 365 × 41,14 €
+        duration1 = Math.min(Math.max(duration1, 365), 851);
+        dailyRate = 41.14 * 365 / duration1;
+      } else {
+        // Beide Elternteile: Tagsatz haengt an der Gesamtdauer (456–1.063 Tage), Budget 456 × 41,14 €
+        duration2 = Math.max(parseInt(document.getElementById('kontoPartnerDuration').value) || 91, 91);
+        duration1 = Math.max(duration1, 91);
+        const totalDuration = Math.min(Math.max(duration1 + duration2, 456), 1063);
+        dailyRate = 41.14 * 456 / totalDuration;
+        // Partnerschaftsbonus: 50:50 bis 60:40 und je mind. 124 Tage
+        const shorter = Math.min(duration1, duration2);
+        isBonusEligible = shorter >= 124 && shorter / (duration1 + duration2) >= 0.40;
       }
 
       return {
