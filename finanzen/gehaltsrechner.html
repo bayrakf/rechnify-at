@@ -728,16 +728,13 @@
 
       // Premium Insights Logic
       if (hoursNew >= 35 || !isPartTime) {
-        let rankingStr = '';
-        if (calcGross < 3500) {
-          rankingStr = `Du liegst unter dem österreichischen Vollzeit-Median (ca. 3.650 € Brutto/Monat).`;
-        } else if (calcGross <= 4500) {
-          rankingStr = `Du liegst im guten Mittelfeld! Etwa die Hälfte der Vollzeitbeschäftigten verdient weniger als du.`;
-        } else if (calcGross <= 6000) {
-          rankingStr = `Überdurchschnittlich! Du verdienst mehr als ca. 75% der vollzeitbeschäftigten Österreicher.`;
-        } else {
-          rankingStr = `Top-Verdiener! Du gehörst zu den oberen 10% in Österreich.`;
-        }
+        // Statistik Austria, Lohnsteuerdaten 2024: Dezile P10-P90 Bruttojahreseinkommen ganzjaehrig Vollzeit / 14
+        const D = [2438, 2876, 3237, 3586, 3977, 4456, 5085, 5926, 7458];
+        const i = D.findIndex((d) => calcGross < d);
+        const p = i * 10 + Math.round(10 * (calcGross - D[i - 1]) / (D[i] - D[i - 1]));
+        const rankingStr = i === -1 ? `Du gehörst zu den oberen 10 % der ganzjährig Vollzeitbeschäftigten in Österreich.`
+          : i === 0 ? `Weniger als 10 % der ganzjährig Vollzeitbeschäftigten in Österreich verdienen weniger als du (Median 3.977 €).`
+          : `Rund ${p} % der ganzjährig Vollzeitbeschäftigten in Österreich verdienen weniger als du (Median 3.977 €).`;
         document.getElementById('rankingText').innerHTML = `Dein Brutto: <strong>${calcGross.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong>/Monat. ${rankingStr}`;
       } else {
         document.getElementById('rankingText').innerHTML = `Da du in Teilzeit rechnest, ist ein direkter Vergleich mit dem Vollzeit-Median nicht aussagekräftig. Dein Vollzeit-Äquivalent wäre <strong>${baseGross.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong>/Monat.`;
