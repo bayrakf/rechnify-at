@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import datetime
 import os
+import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -24,6 +25,15 @@ PRIORITIES = (
     ("finanzen/gehaltsrechner.html", "0.9"),
     ("de/finanzen/gehaltsrechner.html", "0.9"),
 )
+
+
+def lastmod(rel: str) -> str:
+    """Datum des letzten Commits der Datei. Massen-Bumps auf 'heute' entwerten lastmod bei Google."""
+    out = subprocess.run(
+        ["git", "log", "-1", "--format=%cs", "--", rel],
+        cwd=ROOT, capture_output=True, text=True,
+    ).stdout.strip()
+    return out or TODAY  # neue, noch nicht committete Seite
 
 
 def priority(rel: str) -> str:
@@ -63,7 +73,7 @@ def main() -> int:
             "  <url>\n"
             f"    <loc>{url_for(rel)}</loc>\n"
             f"{alternates(rel)}\n"
-            f"    <lastmod>{TODAY}</lastmod>\n"
+            f"    <lastmod>{lastmod(rel)}</lastmod>\n"
             f"    <priority>{priority(rel)}</priority>\n"
             "  </url>"
         )
