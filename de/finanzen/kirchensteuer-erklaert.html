@@ -46,7 +46,18 @@
         <picture><source srcset="/assets/images/logo-72.webp" type="image/webp" /><img src="/assets/images/logo-72.jpg" alt="rechnify Logo" width="36" height="36" decoding="async" /></picture>
         <span class="site-logo-text">rechnify<span>.at</span></span>
       </a>
-      <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus">🌙</button>
+      <nav class="site-nav" id="siteNav" aria-label="Hauptnavigation">
+        <a href="/de/">🏠 Start</a>
+        <a href="/de/finanzen/">💶 Finanzen</a>
+        <a href="/de/arbeitszeit/">⏰ Arbeitszeit</a>
+        <a href="/de/familie/">👶 Familie</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </header>
   <nav class="breadcrumb" aria-label="Brotkrumen"><a href="/">Start</a><span class="breadcrumb-sep">/</span><a href="/#finanzen">Finanzen</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Kirchensteuer</span></nav>

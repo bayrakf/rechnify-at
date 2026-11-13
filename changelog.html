@@ -11,7 +11,22 @@
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
 </head>
 <body>
-<header class="site-header"><div class="header-inner"><a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a></div></header>
+<header class="site-header"><div class="header-inner"><a href="/" class="site-logo"><picture><source srcset="/assets/images/logo-72.webp" type="image/webp" /><img src="/assets/images/logo-72.jpg" alt="rechnify Logo" width="36" height="36" decoding="async" /></picture><span class="site-logo-text">rechnify<span>.at</span></span></a>
+      <nav class="site-nav" id="siteNav" aria-label="Hauptnavigation">
+        <a href="/">🏠 Start</a>
+        <a href="/finanzen/">💶 Finanzen</a>
+        <a href="/arbeitszeit/">⏰ Arbeitszeit</a>
+        <a href="/familie/">👶 Familie</a>
+        <a href="/mathematik/">📐 Mathematik</a>
+        <a href="/alltag/">⚖️ Alltag</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div></header>
 <main class="site-main"><article class="content-section">
   <h1>Changelog & Tarif-Updates</h1>
   <p>Transparenz für Nutzer und Crawler. Rechtliche Sätze nur nach offiziellen Quellen.</p>
@@ -34,4 +49,7 @@
       <div class="footer-bottom"><span class="footer-copy">© 2026 rechnify.at</span><nav class="footer-legal-links" aria-label="Rechtliches"><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutzerklärung</a><a href="/kontakt.html">Kontakt</a></nav></div>
     </div>
   </footer>
+  <script src="/assets/js/analytics.js?v=3.1"></script>
+  <script src="/assets/js/ui.js?v=3.1"></script>
+  <script src="/assets/js/core.js?v=3.1"></script>
 </body></html>

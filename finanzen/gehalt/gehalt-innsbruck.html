@@ -26,8 +26,22 @@
 </head>
 <body>
   <header class="site-header"><div class="header-inner">
-    <a href="/" class="site-logo"><span class="site-logo-text">rechnify<span>.at</span></span></a>
-  </div></header>
+    <a href="/" class="site-logo"><picture><source srcset="/assets/images/logo-72.webp" type="image/webp" /><img src="/assets/images/logo-72.jpg" alt="rechnify Logo" width="36" height="36" decoding="async" /></picture><span class="site-logo-text">rechnify<span>.at</span></span></a>
+      <nav class="site-nav" id="siteNav" aria-label="Hauptnavigation">
+        <a href="/">🏠 Start</a>
+        <a href="/finanzen/">💶 Finanzen</a>
+        <a href="/arbeitszeit/">⏰ Arbeitszeit</a>
+        <a href="/familie/">👶 Familie</a>
+        <a href="/mathematik/">📐 Mathematik</a>
+        <a href="/alltag/">⚖️ Alltag</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div></header>
   <nav class="breadcrumb" aria-label="Brotkrumen">
     <a href="/">Start</a><span class="breadcrumb-sep">/</span>
     <a href="/finanzen/">Finanzen</a><span class="breadcrumb-sep">/</span>

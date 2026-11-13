@@ -1815,7 +1815,8 @@ body.dark .scale-marker {
   /* iOS Safari zoomt bei Feldern < 16px beim Antippen hinein */
   input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
   select,
-  textarea { font-size: 16px !important; }
+  textarea,
+  .embed-widget textarea { font-size: 16px !important; } /* .embed-widget setzt 0.75rem !important */
 }
 
 @media (max-width: 800px) {
