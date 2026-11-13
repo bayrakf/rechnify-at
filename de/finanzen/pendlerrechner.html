@@ -159,7 +159,7 @@
           <details style="margin-bottom: 12px;">
             <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie hoch ist die Entfernungspauschale in Deutschland?</summary>
             <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
-              Die Entfernungspauschale beträgt **0,30 Euro** für die ersten 20 km der einfachen Wegstrecke. Ab dem 21. Kilometer erhöht sich die Pauschale auf **0,38 Euro** pro Kilometer.
+              Seit 1. Januar 2026 beträgt die Entfernungspauschale <strong>0,38 Euro</strong> pro Kilometer der einfachen Wegstrecke, und zwar ab dem ersten Kilometer (bis 2025: 0,30 Euro für die ersten 20 km).
             </p>
           </details>
 
@@ -244,11 +244,8 @@
 
       // Berechnung der Pauschale pro Tag
       let dailyPauschale = 0;
-      if (dist <= 20) {
-        dailyPauschale = dist * 0.30;
-      } else {
-        dailyPauschale = (20 * 0.30) + ((dist - 20) * 0.38);
-      }
+      // seit 2026: 0,38 € ab dem ersten Kilometer (Steueraenderungsgesetz 2025)
+      dailyPauschale = dist * 0.38;
 
       let totalYear = dailyPauschale * days;
 
