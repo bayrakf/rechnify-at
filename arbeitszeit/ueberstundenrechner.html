@@ -320,7 +320,7 @@
                 <!-- Premium Feature: Steuerfreibetrag -->
                 <div id="taxFreeBlock" style="margin-top: 14px; padding: 14px 16px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 12px; display: none;">
                   <h4 style="margin: 0 0 4px; color: #2e7d32; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;"><span>🎁</span> Steuerfreibetrag (1:1 Netto)</h4>
-                  <p id="taxFreeText" style="font-size: 12px; color: #1b5e20; margin: 0 0 8px; line-height: 1.4;">In Österreich ist der Zuschlag der ersten 18 Überstunden steuerfrei.</p>
+                  <p id="taxFreeText" style="font-size: 12px; color: #1b5e20; margin: 0 0 8px; line-height: 1.4;">In Österreich ist der Zuschlag der ersten 15 Überstunden steuerfrei.</p>
                   <div style="display:flex; justify-content:space-between; font-size: 14px; font-weight: 600;">
                     <span style="color: #2e7d32;">Steuerfrei (Netto-Vorteil):</span>
                     <strong id="resTaxFree" style="color: #2e7d32; font-size: 1.1em;">-- €</strong>
@@ -431,7 +431,7 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              Der Rechner berechnet den <strong>Brutto-Betrag</strong>. Von diesem Betrag werden noch Sozialversicherung und Lohnsteuer abgezogen. Beachte: In Österreich sind die Zuschläge für die ersten 18 Überstunden im Monat bis zu einem Betrag von maximal 200 Euro steuerfrei (§ 68 Abs. 2 EStG).
+              Der Rechner berechnet den <strong>Brutto-Betrag</strong>. Von diesem Betrag werden noch Sozialversicherung und Lohnsteuer abgezogen. Beachte: In Österreich sind 2026 die Zuschläge für die ersten 15 Überstunden im Monat bis zu einem Betrag von maximal 170 Euro steuerfrei (§ 68 Abs. 2 EStG, BGBl. I Nr. 4/2026; 2024/25: 18 Überstunden, 200 Euro).
             </div>
           </div>
         </div>
@@ -520,13 +520,13 @@
           const resTaxFree = document.getElementById('resTaxFree');
           
           if (currentFactor === 1.5) {
-             // 50% surcharge: first 18 hours (max 200 EUR) tax free
-             const eligibleHours = Math.min(hours, 18);
-             const taxFreeAmount = Math.min(eligibleHours * wage * 0.5, 200);
+             // 50% surcharge: 2026 first 15 hours (max 170 EUR) tax free, § 68 Abs. 2 EStG (BGBl. I 4/2026)
+             const eligibleHours = Math.min(hours, 15);
+             const taxFreeAmount = Math.min(eligibleHours * wage * 0.5, 170);
              if (taxFreeAmount > 0) {
                resTaxFree.textContent = formatEuro(taxFreeAmount);
                taxFreeBlock.style.display = 'block';
-               taxFreeText.innerHTML = 'In Österreich ist der 50%-Zuschlag der ersten 18 Überstunden (max. 200 €) komplett steuerfrei. Dieser Teil fließt 1:1 brutto für netto auf dein Konto!';
+               taxFreeText.innerHTML = 'In Österreich ist 2026 der 50%-Zuschlag der ersten 15 Überstunden (max. 170 €) komplett steuerfrei. Dieser Teil fließt 1:1 brutto für netto auf dein Konto!';
              } else {
                taxFreeBlock.style.display = 'none';
              }
