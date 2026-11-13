@@ -84,9 +84,9 @@
           const calc=()=>{
             const b=+brutto.value||0, y=+jahre.value||0, sz=+szEl.value||0, sys=sysEl.value;
             if(sys==='alt'){
-              const m=altMonths(y);
-              res.textContent=euro(b*m);
-              det.textContent=m?`${m} Monatsentgelte × ${euro(b)}`:'unter 3 Dienstjahren: kein ALT-Anspruch (Staffel)';
+              const m=altMonths(y), me=b*(12+sz)/12; // Monatsentgelt inkl. anteiliger Sonderzahlungen (AK)
+              res.textContent=euro(me*m);
+              det.textContent=m?`${m} Monatsentgelte × ${euro(me)} (inkl. anteiliger Sonderzahlungen)`:'unter 3 Dienstjahren: kein ALT-Anspruch (Staffel)';
             }else{
               const months=Math.max(0,y*12-1); // ab 2. Monat
               const yearly=b*(12+sz);
