@@ -102,7 +102,7 @@
       "name": "Wie hoch sind die Sozialabgaben für Arbeitnehmer in Deutschland?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Die Sozialabgaben betragen für Arbeitnehmer ca. 20% bis 21% des Bruttogehalts. Sie setzen sich zusammen aus der Rentenversicherung (9,3%), Arbeitslosenversicherung (1,3%), Krankenversicherung (ca. 8,15% inkl. Zusatzbeitrag) und Pflegeversicherung (ca. 2,2%)."
+        "text": "Die Sozialabgaben betragen für Arbeitnehmer ca. 21% bis 22% des Bruttogehalts. Sie setzen sich zusammen aus der Rentenversicherung (9,3%), Arbeitslosenversicherung (1,3%), Krankenversicherung (ca. 8,75% inkl. durchschnittlichem Zusatzbeitrag 2026) und Pflegeversicherung (1,8%, kinderlos ab 23 Jahren 2,4%)."
       }
     }, {
       "@type": "Question",
@@ -176,7 +176,7 @@
           <div class="input-group">
             <label for="grossMonthly">Bruttogehalt (pro Monat)</label>
             <div class="input-suffix">
-              <input type="number" id="grossMonthly" placeholder="z.B. 4000" min="0" step="100">
+              <input type="number" id="grossMonthly" value="7000" min="0" step="100">
               <span class="suffix">€</span>
             </div>
           </div>
@@ -390,7 +390,7 @@
           <div class="faq-item">
             <button class="faq-question" type="button">Wie hoch sind die Sozialabgaben in Deutschland?</button>
             <div class="faq-answer">
-              <p>Der Arbeitnehmeranteil an den Sozialabgaben liegt in der Regel knapp über 20% des Bruttogehalts. Sie setzen sich zusammen aus der Rentenversicherung (9,3%), Arbeitslosenversicherung (1,3%), Krankenversicherung (ca. 8,15% inkl. Zusatzbeitrag) und Pflegeversicherung (ca. 2,2%).</p>
+              <p>Der Arbeitnehmeranteil an den Sozialabgaben liegt in der Regel bei rund 21% bis 22% des Bruttogehalts. Sie setzen sich zusammen aus der Rentenversicherung (9,3%), Arbeitslosenversicherung (1,3%), Krankenversicherung (ca. 8,75% inkl. durchschnittlichem Zusatzbeitrag 2026) und Pflegeversicherung (1,8%, kinderlos ab 23 Jahren 2,4%).</p>
             </div>
           </div>
           
@@ -477,57 +477,89 @@
   <script>
     'use strict';
 
-    function calcTaxesDE(grossMonthly) {
-      const taxClass = document.getElementById('taxClass').value;
-      const churchTaxInput = document.getElementById('churchTax').value === 'ja';
-      
-      const grossYearly = grossMonthly * 12;
-      
-      let kvBase = grossMonthly > 5812.50 ? 5812.50 : grossMonthly;
-      let rvBase = grossMonthly > 8450 ? 8450 : grossMonthly;
-      
-      const kv = kvBase * 0.0815;
-      const pv = kvBase * 0.022;
-      const rv = rvBase * 0.093;
-      const av = rvBase * 0.013;
-      
-      const svMonthly = kv + pv + rv + av;
-      
-      let freibetrag = 12348;
-      if (taxClass === '3') freibetrag = 24696;
-      if (taxClass === '5') freibetrag = 0;
-      
-      let taxableIncome = grossYearly - (svMonthly * 12) - freibetrag;
-      if (taxableIncome < 0) taxableIncome = 0;
-      
-      let taxYearly = 0;
-      if (taxClass === '5') {
-        taxYearly = taxableIncome * 0.35;
-      } else {
-        if (taxableIncome > 277826) {
-          taxYearly += (taxableIncome - 277826) * 0.45;
-          taxYearly += (277826 - 69878) * 0.42;
-          taxYearly += (69878 - 17799) * 0.24;
-          taxYearly += (17799 - 0) * 0.14;
-        } else if (taxableIncome > 69878) {
-          taxYearly += (taxableIncome - 69878) * 0.42;
-          taxYearly += (69878 - 17799) * 0.24;
-          taxYearly += (17799 - 0) * 0.14;
-        } else if (taxableIncome > 17799) {
-          taxYearly += (taxableIncome - 17799) * 0.24;
-          taxYearly += (17799 - 0) * 0.14;
-        } else if (taxableIncome > 0) {
-          taxYearly += taxableIncome * 0.14;
-        }
+    function est2026(x) {
+      x = Math.floor(x);
+      if (x <= 12348) return 0;
+      if (x <= 17799) {
+        const y = (x - 12348) / 10000;
+        return Math.floor((914.51 * y + 1400) * y);
       }
-      
-      let taxMonthly = taxYearly / 12;
-      let churchTaxMonthly = churchTaxInput ? taxMonthly * 0.09 : 0;
-      
+      if (x <= 69878) {
+        const z = (x - 17799) / 10000;
+        return Math.floor((173.10 * z + 2397) * z + 1034.87);
+      }
+      if (x <= 277825) {
+        return Math.floor(0.42 * x - 11135.63);
+      }
+      return Math.floor(0.45 * x - 19470.38);
+    }
+
+    function calcTaxesDE(grossMonthly) {
+      const taxClass = document.getElementById('taxClass')?.value || '1';
+      const churchTaxInput = (document.getElementById('churchTax')?.value || 'nein') === 'ja';
+
+      grossMonthly = Math.max(0, grossMonthly || 0);
+      const grossYearly = grossMonthly * 12;
+
+      // Beitragsbemessungsgrenzen 2026
+      const kvBase = Math.min(grossMonthly, 5812.50);
+      const rvBase = Math.min(grossMonthly, 8450.00);
+
+      // AN-Sozialabgaben 2026:
+      // KV: 14,6% + 2,9% durchschn. Zusatzbeitrag (AN: 7,3% + 1,45% = 8,75%)
+      // PV: 3,6% + 0,6% Kinderlosenzuschlag ab 23 J. (AN: 1,8% + 0,6% = 2,40%)
+      // RV: 18,6% (AN: 9,30%)
+      // AV: 2,6% (AN: 1,30%)
+      const kv = kvBase * 0.0875;
+      const pv = kvBase * 0.0240;
+      const rv = rvBase * 0.0930;
+      const av = rvBase * 0.0130;
+      const svMonthly = kv + pv + rv + av;
+
+      // Zu versteuerndes Einkommen (zvE) ermitteln
+      // Vorsorgepauschale 2026 (§ 39b Abs. 2 S. 5 Nr. 3 EStG): RV voll, KV (ermaessigt 14,0% + Zusatz) + PV,
+      // AV nur soweit KV+PV+AV 1.900 € nicht uebersteigen
+      const kvPv = (kvBase * 0.0845 + pv) * 12;
+      const vsp = (rv * 12) + kvPv + Math.max(0, Math.min(av * 12, 1900 - kvPv));
+      const anp = 1230; // Arbeitnehmer-Pauschbetrag (Werbungskosten)
+      const sap = taxClass === '3' ? 72 : 36; // Sonderausgaben-Pauschbetrag
+
+      const zve = Math.max(0, Math.floor(grossYearly - anp - sap - vsp));
+
+      // Einkommensteuer nach Steuerklasse (§ 32a EStG 2026)
+      let taxYearly = 0;
+      if (taxClass === '3') {
+        taxYearly = 2 * est2026(zve / 2);
+      } else if (taxClass === '5') {
+        taxYearly = Math.floor(est2026(zve + 12348) * 1.32);
+      } else {
+        taxYearly = est2026(zve);
+      }
+
+      // Solidaritätszuschlag (Freigrenze 20.350 € bei Kl. 1/4, 40.700 € bei Kl. 3)
+      const soliThreshold = taxClass === '3' ? 40700 : 20350;
+      let soliYearly = 0;
+      if (taxYearly > soliThreshold) {
+        soliYearly = Math.min(taxYearly * 0.055, (taxYearly - soliThreshold) * 0.119);
+      }
+
+      const taxMonthly = Math.round((taxYearly + soliYearly) / 12 * 100) / 100;
+      const churchTaxMonthly = churchTaxInput ? Math.round(taxYearly * 0.09 / 12 * 100) / 100 : 0;
+
       const netMonthly = grossMonthly - svMonthly - taxMonthly - churchTaxMonthly;
       const deductions = svMonthly + taxMonthly + churchTaxMonthly;
 
-      return { netMonthly, deductions, taxMonthly, churchTaxMonthly, svMonthly, grossMonthly };
+      // Arbeitgeber-Kosten (AG-Anteil ca. 21% zzgl. Umlagen)
+      const agKv = kvBase * 0.0875;
+      const agPv = kvBase * 0.0180;
+      const agRv = rvBase * 0.0930;
+      const agAv = rvBase * 0.0130;
+      const agUmlagen = grossMonthly * 0.0120;
+      const agSvMonthly = agKv + agPv + agRv + agAv + agUmlagen;
+      const agCostMonthly = grossMonthly + agSvMonthly;
+      const agCostYear = agCostMonthly * 12;
+
+      return { netMonthly, deductions, taxMonthly, churchTaxMonthly, svMonthly, grossMonthly, agSvMonthly, agCostMonthly, agCostYear };
     }
 
     document.getElementById('simulatePartTime').addEventListener('change', (e) => {
