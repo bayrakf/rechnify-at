@@ -159,7 +159,7 @@
             <div class="input-field">
               <label class="input-label" for="grossMonthly" id="grossMonthlyLabel">Bruttogehalt (pro Monat)</label>
               <div class="input-with-suffix">
-                <input type="number" id="grossMonthly" inputmode="numeric" placeholder="z.B. 4.100" min="0" step="50" value="4100">
+                <input type="number" id="grossMonthly" inputmode="numeric" placeholder="z.B. 4.217" min="0" step="50" value="4217">
                 <span class="suffix">€</span>
               </div>
             </div>
@@ -168,7 +168,7 @@
               <span class="quick-chip-label">Häufig:</span>
               <button type="button" class="quick-chip" data-val="2500">2.500 €</button>
               <button type="button" class="quick-chip" data-val="3200">3.200 €</button>
-              <button type="button" class="quick-chip active" data-val="4100">4.100 € (Median)</button>
+              <button type="button" class="quick-chip active" data-val="4217">4.217 € (Median)</button>
               <button type="button" class="quick-chip" data-val="5200">5.200 €</button>
               <button type="button" class="quick-chip" data-val="7000">7.000 €</button>
             </div>
@@ -705,17 +705,12 @@
       const rankingText = document.getElementById('salaryRankingText');
       if (rankingText && grossMonthly > 0) {
         let text = "";
-        const medianDE = 4100;
-        if (grossMonthly < medianDE) {
-          const diff = medianDE - grossMonthly;
-          text = `Dein Gehalt liegt unter dem deutschen Vollzeit-Median (ca. <strong>4.100 €</strong>). Dir fehlen noch <strong>${diff.toLocaleString('de-DE')} €</strong> bis zur statistischen Mitte.`;
-        } else if (grossMonthly >= medianDE && grossMonthly < 6000) {
-          text = `Stark! Du verdienst mehr als der Median der Beschäftigten in Deutschland (Vollzeit: ca. <strong>4.100 €</strong>). Du gehörst zur soliden oberen Mitte.`;
-        } else if (grossMonthly >= 6000 && grossMonthly < 8000) {
-          text = `Respekt! Mit diesem Einkommen gehörst du zu den oberen 10–15% der Arbeitnehmer in Deutschland.`;
-        } else {
-          text = `Spitzenklasse! Du verdienst mehr als ca. 95% der Angestellten in Deutschland.`;
-        }
+        // BA-Entgeltstatistik 31.12.2025, Vollzeit: Anteil mit Monatsbrutto unter 2.000/3.000/4.000/5.000/6.000 €
+        const B = [[2000, 3.1], [3000, 19.9], [4000, 44.7], [5000, 65.6], [6000, 78.2]];
+        const k = B.findIndex(([g]) => grossMonthly < g);
+        if (k === 0) text = `Weniger als 3 % der Vollzeitbeschäftigten in Deutschland verdienen weniger als du (Median 4.217 €, Bundesagentur für Arbeit 2025).`;
+        else if (k === -1) text = `Du gehörst zu den rund 22 % der Vollzeitbeschäftigten in Deutschland mit mehr als 6.000 € brutto (Median 4.217 €, Bundesagentur für Arbeit 2025).`;
+        else text = `Rund ${Math.round(B[k - 1][1] + (B[k][1] - B[k - 1][1]) * (grossMonthly - B[k - 1][0]) / 1000)} % der Vollzeitbeschäftigten in Deutschland verdienen weniger als du (Median 4.217 €, Bundesagentur für Arbeit 2025).`;
         rankingText.innerHTML = text;
       }
 

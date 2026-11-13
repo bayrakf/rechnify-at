@@ -623,20 +623,14 @@
       // --- Premium Insight: Ranking ---
       const rankingInsight = document.getElementById('salaryRankingInsight');
       const rankingText = document.getElementById('salaryRankingText');
-      // DE Median is around 4100
       if (grossMonthly > 0) {
         let text = "";
-        const medianDE = 4100;
-        if (grossMonthly < medianDE) {
-          const diff = medianDE - grossMonthly;
-          text = `Dein Gehalt liegt aktuell unter dem deutschen Durchschnitt (Median-Brutto für Vollzeit: ca. <strong>4.100 €</strong>). Dir fehlen noch <strong>${diff.toLocaleString('de-DE')} €</strong> bis zur "Mitte" der Gesellschaft. Ein guter Grund für die nächste Gehaltsverhandlung!`;
-        } else if (grossMonthly >= medianDE && grossMonthly < 6000) {
-          text = `Stark! Du verdienst mehr als der Median (Mitte) der Deutschen (Vollzeit: ca. <strong>4.100 €</strong>). Du gehörst zur soliden Mittel- bis Oberschicht.`;
-        } else if (grossMonthly >= 6000 && grossMonthly < 8000) {
-          text = `Respekt! Mit diesem Gehalt gehörst du zu den absoluten Top-Verdienern (Top 10-15%) in Deutschland. Dein Einkommen ist weit überdurchschnittlich.`;
-        } else {
-          text = `Wow. Du verdienst mehr als ca. 95% der Angestellten in Deutschland. Du zählst zur absoluten Einkommens-Elite.`;
-        }
+        // BA-Entgeltstatistik 31.12.2025, Vollzeit: Anteil mit Monatsbrutto unter 2.000/3.000/4.000/5.000/6.000 €
+        const B = [[2000, 3.1], [3000, 19.9], [4000, 44.7], [5000, 65.6], [6000, 78.2]];
+        const k = B.findIndex(([g]) => grossMonthly < g);
+        if (k === 0) text = `Weniger als 3 % der Vollzeitbeschäftigten in Deutschland verdienen weniger als du (Median 4.217 €, Bundesagentur für Arbeit 2025).`;
+        else if (k === -1) text = `Du gehörst zu den rund 22 % der Vollzeitbeschäftigten in Deutschland mit mehr als 6.000 € brutto (Median 4.217 €, Bundesagentur für Arbeit 2025).`;
+        else text = `Rund ${Math.round(B[k - 1][1] + (B[k][1] - B[k - 1][1]) * (grossMonthly - B[k - 1][0]) / 1000)} % der Vollzeitbeschäftigten in Deutschland verdienen weniger als du (Median 4.217 €, Bundesagentur für Arbeit 2025).`;
         rankingText.innerHTML = text;
         rankingInsight.style.display = 'block';
       } else {
