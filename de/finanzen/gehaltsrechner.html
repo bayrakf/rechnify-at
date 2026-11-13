@@ -527,16 +527,18 @@
       // Uebergangsbereich 603,01-2.000 EUR (Midijob): reduzierte AN-Bemessung, § 20 Abs. 2a SGB IV
       const anBase = grossMonthly > 603 && grossMonthly < 2000 ? (grossMonthly - 603) * 2000 / 1397 : grossMonthly;
       const kvAn = Math.min(anBase, 5812.50), rvAn = Math.min(anBase, 8450.00);
+      // Minijob bis 603 EUR: AN nur 3,6 % RV-Aufstockung, Lohnsteuer pauschal durch AG
+      const mini = grossMonthly > 0 && grossMonthly <= 603;
 
       // AN-Sozialabgaben 2026:
       // KV: 14,6% + 2,9% durchschn. Zusatzbeitrag (AN: 7,3% + 1,45% = 8,75%)
       // PV: 3,6% + 0,6% Kinderlosenzuschlag ab 23 J. (AN: 1,8% + 0,6% = 2,40%)
       // RV: 18,6% (AN: 9,30%)
       // AV: 2,6% (AN: 1,30%)
-      const kv = kvAn * 0.0875;
-      const pv = kvAn * 0.0240;
-      const rv = rvAn * 0.0930;
-      const av = rvAn * 0.0130;
+      const kv = mini ? 0 : kvAn * 0.0875;
+      const pv = mini ? 0 : kvAn * 0.0240;
+      const rv = mini ? grossMonthly * 0.036 : rvAn * 0.0930;
+      const av = mini ? 0 : rvAn * 0.0130;
       const svMonthly = kv + pv + rv + av;
 
       // Zu versteuerndes Einkommen (zvE) ermitteln
@@ -566,8 +568,8 @@
         soliYearly = Math.min(taxYearly * 0.055, (taxYearly - soliThreshold) * 0.119);
       }
 
-      const taxMonthly = Math.round((taxYearly + soliYearly) / 12 * 100) / 100;
-      const churchTaxMonthly = churchTaxInput ? Math.round(taxYearly * 0.09 / 12 * 100) / 100 : 0;
+      const taxMonthly = mini ? 0 : Math.round((taxYearly + soliYearly) / 12 * 100) / 100;
+      const churchTaxMonthly = churchTaxInput && !mini ? Math.round(taxYearly * 0.09 / 12 * 100) / 100 : 0;
 
       const netMonthly = grossMonthly - svMonthly - taxMonthly - churchTaxMonthly;
       const deductions = svMonthly + taxMonthly + churchTaxMonthly;
@@ -578,7 +580,11 @@
       const agRv = rvBase * 0.0930;
       const agAv = rvBase * 0.0130;
       const agUmlagen = grossMonthly * 0.0120;
-      const agSvMonthly = agKv + agPv + agRv + agAv + agUmlagen;
+      // AG: Minijob pauschal 13 % KV + 15 % RV + 2 % Steuer; Uebergangsbereich: 42,3 % auf Gesamt-BE (Faktor F = 28 / 42,3) minus AN-Anteil
+      const F = 28 / 42.3;
+      const agSvMonthly = agUmlagen + (mini ? grossMonthly * 0.30
+        : grossMonthly > 603 && grossMonthly < 2000 ? 0.423 * (F * 603 + (2000 / 1397 - 603 / 1397 * F) * (grossMonthly - 603)) - 0.2115 * anBase
+        : agKv + agPv + agRv + agAv);
       const agCostMonthly = grossMonthly + agSvMonthly;
       const agCostYear = agCostMonthly * 12;
 
