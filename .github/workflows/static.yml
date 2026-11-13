@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # IndexNow braucht den Vorgaenger-Commit fuer den Diff
       - name: SEO-Audit
         run: python3 scripts/seo_audit.py
       - name: Setup Pages
@@ -38,4 +40,4 @@ jobs:
       - name: Ping IndexNow
         run: |
           sleep 30
-          python3 scripts/indexnow.py
+          python3 scripts/indexnow.py --since "${{ github.event.before }}"
