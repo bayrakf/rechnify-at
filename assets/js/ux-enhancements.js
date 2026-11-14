@@ -9,56 +9,76 @@
   // ── MODAL SYSTEM ──────────────────────────────────────────────
   const modals = {};
 
+  // <dialog> statt Overlay-Div: Fokusfalle, Esc/Zurück-Geste, Top-Layer vom Browser (Guide dialog).
+  // Mobil (<= 640px) als Bottom Sheet mit Wisch-zum-Schließen.
   function createModal(id, title, content) {
     if (modals[id]) return modals[id];
 
-    const overlay = document.createElement('div');
-    overlay.className = 'modal-overlay';
-    overlay.id = `modal-overlay-${id}`;
-
-    const modal = document.createElement('div');
+    const modal = document.createElement('dialog');
     modal.className = 'modal';
     modal.id = `modal-${id}`;
+    modal.setAttribute('closedby', 'any');
+    modal.setAttribute('aria-labelledby', `modal-title-${id}`);
     modal.innerHTML = `
       <div class="modal-header">
-        <h2 class="modal-title">${title}</h2>
-        <button class="modal-close" aria-label="Schließen">×</button>
+        <span class="sheet-grip" aria-hidden="true"></span>
+        <h2 class="modal-title" id="modal-title-${id}">${title}</h2>
+        <button class="modal-close" type="button" aria-label="Schließen" autofocus><svg class="icon" width="20" height="20" aria-hidden="true"><use href="/assets/icons.svg#i-x"/></svg></button>
       </div>
       <div class="modal-body">${content}</div>
     `;
-
-    document.body.appendChild(overlay);
     document.body.appendChild(modal);
+    modals[id] = { modal };
 
-    modals[id] = { overlay, modal };
-
-    // Close handlers
-    const closeBtn = modal.querySelector('.modal-close');
-    closeBtn.addEventListener('click', () => closeModal(id));
-    overlay.addEventListener('click', () => closeModal(id));
-
-    // Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
-        closeModal(id);
-      }
-    });
-
+    modal.querySelector('.modal-close').addEventListener('click', () => closeModal(id));
+    // Fallback für Browser ohne closedby: Klick auf ::backdrop trifft den Dialog selbst, außerhalb seiner Box
+    if (!('closedBy' in HTMLDialogElement.prototype)) {
+      modal.addEventListener('click', (e) => {
+        if (e.target !== modal) return;
+        const r = modal.getBoundingClientRect();
+        if (e.clientY < r.top || e.clientY > r.bottom || e.clientX < r.left || e.clientX > r.right) modal.close();
+      });
+    }
+    initSheetDrag(modal);
     return modals[id];
   }
 
   function openModal(id) {
-    if (!modals[id]) return;
-    modals[id].overlay.classList.add('active');
-    modals[id].modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    if (modals[id] && !modals[id].modal.open) modals[id].modal.showModal();
   }
 
   function closeModal(id) {
-    if (!modals[id]) return;
-    modals[id].overlay.classList.remove('active');
-    modals[id].modal.classList.remove('active');
-    document.body.style.overflow = '';
+    if (modals[id]) modals[id].modal.close();
+  }
+
+  // Wisch-zum-Schließen (Skill gestures): 1:1-Tracking per transform, schließt nach Strecke ODER Tempo.
+  function initSheetDrag(sheet) {
+    const handle = sheet.querySelector('.modal-header');
+    const isSheet = matchMedia('(max-width: 640px)');
+    let startY = 0, lastY = 0, lastT = 0, v = 0, dragging = false;
+    handle.addEventListener('pointerdown', (e) => {
+      if (!isSheet.matches || e.button !== 0 || e.target.closest('button')) return;
+      dragging = true; startY = lastY = e.clientY; lastT = e.timeStamp; v = 0;
+      handle.setPointerCapture(e.pointerId);
+      sheet.classList.add('is-dragging');
+    });
+    handle.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const d = e.clientY - startY;
+      v = (e.clientY - lastY) / Math.max(1, e.timeStamp - lastT);
+      lastY = e.clientY; lastT = e.timeStamp;
+      sheet.style.transform = `translateY(${d > 0 ? d : d / 4}px)`; // nach oben nur mit Widerstand
+    });
+    const end = (e) => {
+      if (!dragging) return;
+      dragging = false;
+      sheet.classList.remove('is-dragging');
+      const d = e.clientY - startY;
+      sheet.style.transform = '';
+      if (e.type === 'pointerup' && (d > sheet.offsetHeight * 0.3 || (d > 10 && v > 0.5))) sheet.close();
+    };
+    handle.addEventListener('pointerup', end);
+    handle.addEventListener('pointercancel', end);
   }
 
   // ── TOOLTIP INITIALIZATION ────────────────────────────────────
@@ -130,7 +150,7 @@
   // ── PREDEFINED MODALS (Common explanations) ────────────────────
   const predefinedModals = {
     'jahressechstel': {
-      title: '📊 Was ist das Jahressechstel?',
+      title: 'Was ist das Jahressechstel?',
       content: `
         <h3>Jahressechstel in Österreich</h3>
         <p>Das Jahressechstel ist ein wichtiger Begriff für Sonderzahlungen (13. & 14. Gehalt):</p>
@@ -145,7 +165,7 @@
       `
     },
     'sozialversicherung': {
-      title: '🏥 Sozialversicherung in Österreich',
+      title: 'Sozialversicherung in Österreich',
       content: `
         <h3>Zusammensetzung der SV-Beiträge</h3>
         <p>Der Arbeitnehmer-Beitrag beträgt <strong>18,07%</strong> des Bruttogehalts:</p>
@@ -163,7 +183,7 @@
       `
     },
     'ueberstundenzuschlag': {
-      title: '⏰ Überstundenzuschläge erklärt',
+      title: 'Überstundenzuschläge erklärt',
       content: `
         <h3>Zuschläge nach österreichischem Recht</h3>
         <p><strong>Normale Überstunden:</strong> 50% Zuschlag auf Grundlohn</p>
@@ -195,7 +215,7 @@
   // ── STICKY CTA ON SCROLL (Mobile) ──────────────────────────────
   function initStickyCTA() {
     const calcBtn = document.getElementById('calculate');
-    if (!calcBtn || window.innerWidth > 768) return;
+    if (!calcBtn || window.innerWidth > 768 || document.querySelector('.net-bar')) return;
 
     // Wrap in sticky container if not already
     if (!calcBtn.closest('.btn-calculate-sticky')) {

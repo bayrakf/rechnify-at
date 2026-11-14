@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <script>try{document.querySelector('meta[name="color-scheme"]').content=localStorage.getItem('rechnify.theme')??(localStorage.getItem('rechnify.darkMode')==='true'?'dark':'light dark')}catch(e){}</script>
   <title>Brutto Netto Rechner Österreich 2026 | rechnify.at</title>
   <meta name="description"
     content="Brutto-Netto-Rechner für Österreich. Berechne dein Nettoeinkommen, Sozialversicherung und Lohnsteuer für Angestellte und Arbeiter (inkl. 13./14. Gehalt)." />
@@ -37,18 +39,18 @@
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#1858C7" />
   <link rel="preload" href="/assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="/tokens.css?v=1.2" />
-  <link rel="stylesheet" href="/assets/css/global.css?v=3.1" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="/tokens.css?v=1.3" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=3.2" media="print" onload="this.media='all'" />
   <noscript>
-    <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+    <link rel="stylesheet" href="/assets/css/global.css?v=3.2" />
   </noscript>
-  <link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.0" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.1" media="print" onload="this.media='all'" />
   <noscript>
-    <link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.0" />
+    <link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.1" />
   </noscript>
-  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.1" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.2" media="print" onload="this.media='all'" />
   <noscript>
-    <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.1" />
+    <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.2" />
   </noscript>
 
   <script type="application/ld+json">
@@ -164,10 +166,10 @@
       </nav>
       <div class="header-actions">
         <div class="country-toggle-group" id="countryToggleGroup">
-          <button class="country-pill active" data-country="at" title="Österreich" type="button">🇦🇹 AT</button>
-          <button class="country-pill" data-country="de" title="Deutschland" type="button">🇩🇪 DE</button>
+          <button class="country-pill active" data-country="at" title="Österreich" type="button"><svg class="flag" width="18" height="12" aria-hidden="true"><use href="/assets/icons.svg#flag-at"/></svg>AT</button>
+          <button class="country-pill" data-country="de" title="Deutschland" type="button"><svg class="flag" width="18" height="12" aria-hidden="true"><use href="/assets/icons.svg#flag-de"/></svg>DE</button>
         </div>
-        <button class="btn-icon" id="darkModeToggle" aria-label="Dunkelmodus aktivieren" type="button">🌙</button>
+        <button class="btn-icon" id="darkModeToggle" type="button"><span class="if-light"><svg class="icon" width="18" height="18" aria-hidden="true"><use href="/assets/icons.svg#i-moon"/></svg><span class="visually-hidden">Dunkles Design</span></span><span class="if-dark"><svg class="icon" width="18" height="18" aria-hidden="true"><use href="/assets/icons.svg#i-sun"/></svg><span class="visually-hidden">Helles Design</span></span></button>
         <button class="btn-icon hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
           <span></span><span></span><span></span>
         </button>
@@ -187,7 +189,7 @@
 
         <div class="cockpit-header">
           <div class="cockpit-header-main">
-            <span style="font-size: 1.6rem; line-height: 1;">💶</span>
+            <span class="cockpit-icon"><svg class="icon" width="22" height="22" aria-hidden="true"><use href="/assets/icons.svg#i-wallet"/></svg></span>
             <div>
               <h1>Brutto Netto Rechner Österreich 2026</h1>
               <p>Berechne dein exaktes Netto-Gehalt (Angestellte &amp; Arbeiter) inkl. 13. &amp; 14. Gehalt für Österreich.</p>
@@ -233,16 +235,16 @@
 
             <div class="teilzeit-box">
               <label class="teilzeit-label" for="simulatePartTime">
-                <input type="checkbox" id="simulatePartTime" style="width: 16px; height: 16px; margin: 0; cursor: pointer;">
-                <span>⚖️ Teilzeit-Simulator</span>
+                <input type="checkbox" id="simulatePartTime">
+                <svg class="icon" width="16" height="16" aria-hidden="true"><use href="/assets/icons.svg#i-clock"/></svg><span>Teilzeit-Simulator</span>
               </label>
-              <div id="partTimeInputs" style="margin-top: 12px; display: none; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div class="input-field" style="margin: 0;">
-                  <label class="input-label" for="hoursCurrent" style="font-size: 0.78rem;">Aktuell (h/Wo)</label>
+              <div id="partTimeInputs" class="parttime-grid" style="display: none;">
+                <div class="input-field">
+                  <label class="input-label" for="hoursCurrent">Aktuell (h/Wo)</label>
                   <input type="number" id="hoursCurrent" inputmode="numeric" value="40" min="1" max="60">
                 </div>
-                <div class="input-field" style="margin: 0;">
-                  <label class="input-label" for="hoursTarget" style="font-size: 0.78rem;">Ziel (h/Wo)</label>
+                <div class="input-field">
+                  <label class="input-label" for="hoursTarget">Ziel (h/Wo)</label>
                   <input type="number" id="hoursTarget" inputmode="numeric" value="32" min="1" max="60">
                 </div>
               </div>
@@ -259,9 +261,7 @@
             <div class="hero-net-card">
               <div class="hero-net-header">
                 <span class="hero-net-label">Dein Netto-Gehalt</span>
-                <button class="modal-trigger" data-modal="sozialversicherung"
-                  data-modal-title="🏥 Sozialversicherung erklärt" data-modal-content=""
-                  style="font-size:0.8rem; background:none; border:none; color:var(--color-primary, #1858C7); cursor:pointer; text-decoration:underline;">ⓘ Wie berechnet?</button>
+                <button class="link-btn" type="button" data-modal="sozialversicherung" aria-haspopup="dialog"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="/assets/icons.svg#i-info"/></svg>Wie berechnet?</button>
               </div>
               <div class="hero-net-val" id="resNetMonthly">-- €</div>
               <div class="hero-net-sub">Monatliche Netto-Auszahlung auf dein Konto (12×)</div>
@@ -282,16 +282,17 @@
 
             <!-- 2. Verschachteltes Details-Panel (Progressive Disclosure) -->
             <div class="details-panel">
-              <nav class="seg-nav" role="tablist">
-                <button type="button" class="seg-btn active" data-tab="tab-aufteilung" role="tab">📊 Aufteilung</button>
-                <button type="button" class="seg-btn" data-tab="tab-jahresabrechnung" role="tab">📅 Jahresübersicht</button>
-                <button type="button" class="seg-btn" data-tab="tab-erhoehung" role="tab">💼 Gehaltserhöhung</button>
-                <button type="button" class="seg-btn" data-tab="tab-dienstgeber" role="tab">🏢 Arbeitgeber</button>
-                <button type="button" class="seg-btn" data-tab="tab-insights" role="tab">💡 Einordnung</button>
-              </nav>
+              <div class="seg-nav" role="tablist" aria-label="Details zum Ergebnis">
+                <button type="button" class="seg-btn" id="tab-aufteilung-btn" data-tab="tab-aufteilung" role="tab" aria-selected="true" tabindex="0">Aufteilung</button>
+                <button type="button" class="seg-btn" id="tab-jahresabrechnung-btn" data-tab="tab-jahresabrechnung" role="tab" aria-selected="false" tabindex="-1">Jahresübersicht</button>
+                <button type="button" class="seg-btn" id="tab-erhoehung-btn" data-tab="tab-erhoehung" role="tab" aria-selected="false" tabindex="-1">Gehaltserhöhung</button>
+                <button type="button" class="seg-btn" id="tab-dienstgeber-btn" data-tab="tab-dienstgeber" role="tab" aria-selected="false" tabindex="-1">Arbeitgeber</button>
+                <button type="button" class="seg-btn" id="tab-insights-btn" data-tab="tab-insights" role="tab" aria-selected="false" tabindex="-1">Einordnung</button>
+              </div>
+              <div class="seg-panes">
 
               <!-- Pane 1: Visuelle Aufteilung (Monat) -->
-              <div id="tab-aufteilung" class="seg-pane active" role="tabpanel">
+              <div id="tab-aufteilung" class="seg-pane" role="tabpanel" aria-labelledby="tab-aufteilung-btn" tabindex="0">
                 <div class="breakdown-bar">
                   <div class="breakdown-segment netto" id="breakdownNetto" style="flex-basis: 60%;"></div>
                   <div class="breakdown-segment sv" id="breakdownSV" style="flex-basis: 18%;"></div>
@@ -314,30 +315,30 @@
               </div>
 
               <!-- Pane 2: Jahresabrechnung -->
-              <div id="tab-jahresabrechnung" class="seg-pane" role="tabpanel">
+              <div id="tab-jahresabrechnung" class="seg-pane" role="tabpanel" aria-labelledby="tab-jahresabrechnung-btn" hidden="until-found">
                 <div class="seg-row">
                   <span>Brutto (gesamt pro Jahr):</span>
                   <strong id="resGrossYear">-- €</strong>
                 </div>
                 <div class="seg-row">
                   <span>- Sozialversicherung (SV):</span>
-                  <strong id="resSvYear" style="color: var(--danger, #dc2626);">-- €</strong>
+                  <strong id="resSvYear" class="val-neg">-- €</strong>
                 </div>
                 <div class="seg-row">
                   <span>- Lohnsteuer:</span>
-                  <strong id="resTaxYear" style="color: var(--danger, #dc2626);">-- €</strong>
+                  <strong id="resTaxYear" class="val-neg">-- €</strong>
                 </div>
                 <div class="seg-row total">
                   <span>Netto (gesamt pro Jahr):</span>
-                  <strong id="resNetYear" class="text-success" style="font-size: 1.15em;">-- €</strong>
+                  <strong id="resNetYear" class="val-total">-- €</strong>
                 </div>
               </div>
 
               <!-- Pane 3: Gehaltserhöhung Live-Simulator -->
-              <div id="tab-erhoehung" class="seg-pane" role="tabpanel">
+              <div id="tab-erhoehung" class="seg-pane" role="tabpanel" aria-labelledby="tab-erhoehung-btn" hidden="until-found">
                 <div class="raise-box-header">
                   <span class="raise-box-title">Wähle eine Brutto-Erhöhung:</span>
-                  <div style="display: flex; gap: 6px;">
+                  <div class="raise-chips">
                     <button type="button" class="quick-chip raise-chip" data-raise="150">+150 €</button>
                     <button type="button" class="quick-chip raise-chip" data-raise="300">+300 €</button>
                     <button type="button" class="quick-chip raise-chip" data-raise="500">+500 €</button>
@@ -349,7 +350,7 @@
               </div>
 
               <!-- Pane 4: Arbeitgeberkosten -->
-              <div id="tab-dienstgeber" class="seg-pane" role="tabpanel">
+              <div id="tab-dienstgeber" class="seg-pane" role="tabpanel" aria-labelledby="tab-dienstgeber-btn" hidden="until-found">
                 <p class="seg-note">
                   Zusätzlich zum Bruttogehalt zahlt der Arbeitgeber <strong>Lohnnebenkosten</strong> (Dienstgeberanteil zur SV, Kommunalsteuer, DB, DZ, Vorsorgekasse).
                 </p>
@@ -359,32 +360,33 @@
                 </div>
                 <div class="seg-row total">
                   <span>Gesamtkosten für das Unternehmen:</span>
-                  <strong id="resTotalCostYear" style="color: var(--color-primary, #1858C7); font-size: 1.1em;">-- €</strong>
+                  <strong id="resTotalCostYear" class="val-accent">-- €</strong>
                 </div>
               </div>
 
               <!-- Pane 5: Gehalts-Vergleich & Kaufkraft -->
-              <div id="tab-insights" class="seg-pane" role="tabpanel">
-                <div style="margin-bottom: 12px;">
-                  <strong style="font-size: 0.88rem; color: var(--color-ink, #0f172a);">📊 Statistik Austria Vergleich:</strong>
-                  <p id="rankingText" style="font-size: 0.86rem; color: var(--color-ink-2, #334155); margin: 6px 0 0; line-height: 1.5;"></p>
+              <div id="tab-insights" class="seg-pane" role="tabpanel" aria-labelledby="tab-insights-btn" hidden="until-found">
+                <div class="insight-block">
+                  <strong class="insight-title"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="/assets/icons.svg#i-gauge"/></svg>Statistik Austria Vergleich:</strong>
+                  <p id="rankingText" class="insight-text"></p>
                 </div>
-                <div style="padding-top: 10px; border-top: 1px solid var(--color-rule, #e2e8f0);">
-                  <strong style="font-size: 0.88rem; color: var(--color-ink, #0f172a);">📉 Kaufkraft &amp; Inflation (5 Jahre):</strong>
-                  <p id="inflationText" style="font-size: 0.86rem; color: var(--color-ink-2, #334155); margin: 6px 0 0; line-height: 1.5;"></p>
+                <div class="insight-block">
+                  <strong class="insight-title"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="/assets/icons.svg#i-trending"/></svg>Kaufkraft &amp; Inflation (5 Jahre):</strong>
+                  <p id="inflationText" class="insight-text"></p>
                 </div>
+              </div>
               </div>
             </div>
 
             <!-- 3. Actions & Sublink -->
             <div class="cockpit-footer-actions">
               <div class="share-actions">
-                <button class="btn-share" id="shareBtn" type="button">🔗 Ergebnis teilen</button>
-                <button class="btn-pdf" id="pdfBtn" type="button">📄 Als PDF speichern</button>
+                <button class="btn-share" id="shareBtn" type="button"><svg class="icon" width="18" height="18" aria-hidden="true"><use href="/assets/icons.svg#i-share"/></svg>Ergebnis teilen</button>
+                <button class="btn-pdf" id="pdfBtn" type="button"><svg class="icon" width="18" height="18" aria-hidden="true"><use href="/assets/icons.svg#i-file-down"/></svg>Als PDF speichern</button>
               </div>
-              <div id="shareToast" class="share-toast" style="display:none;">Link kopiert!</div>
+              <div id="shareToast" class="share-toast" role="status" hidden>Link kopiert!</div>
               <div class="sub-link-wrap">
-                Arbeitszeit reduzieren? <a href="/arbeitszeit/teilzeitrechner.html">Teilzeitrechner nutzen ➔</a>
+                Arbeitszeit reduzieren? <a href="/arbeitszeit/teilzeitrechner.html">Teilzeitrechner nutzen<svg class="icon" width="16" height="16" aria-hidden="true"><use href="/assets/icons.svg#i-arrow"/></svg></a>
               </div>
             </div>
 
@@ -393,7 +395,7 @@
 
         <!-- 4. Collapsible Legal Footnote Drawer -->
         <details class="calc-legal-drawer">
-          <summary>⚖️ Berechnungsgrundlagen &amp; gesetzliche Werte 2026 anzeigen</summary>
+          <summary><svg class="icon" width="16" height="16" aria-hidden="true"><use href="/assets/icons.svg#i-scale"/></svg>Berechnungsgrundlagen &amp; gesetzliche Werte 2026 anzeigen</summary>
           <div class="legal-drawer-content">
             Dieser Rechner nutzt die offiziellen Lohnsteuertarife und SV-Sätze für das Jahr 2026. Der Verkehrsabsetzbetrag
             (VAB 496 €) ist automatisch inkludiert. Höchstbeitragsgrundlage (HBGL) 6.930 €/Monat. Spezifische Sonderfälle (Pendlerpauschale, Familienbonus Plus, Freibeträge)
@@ -404,70 +406,58 @@
       </div>
 
       <!-- FAQ Section -->
-      <section class="faq-section" style="margin-top: 32px;">
-        <h2>Häufig gestellte Fragen (FAQs)</h2>
+      <section class="faq-section" aria-labelledby="faq-heading">
+        <h2 id="faq-heading">Häufig gestellte Fragen (FAQs)</h2>
 
         <div class="faq-accordion">
-          <div class="faq-item">
-            <button class="faq-question" type="button">Was ist der Unterschied zwischen Brutto und Netto?</button>
-            <div class="faq-answer">
-              <p>Das Bruttogehalt ist das vertraglich vereinbarte Gehalt vor Abzügen. Das Netto-Gehalt ist der Betrag,
+          <details>
+            <summary>Was ist der Unterschied zwischen Brutto und Netto?</summary>
+            <p>Das Bruttogehalt ist das vertraglich vereinbarte Gehalt vor Abzügen. Das Netto-Gehalt ist der Betrag,
                 der tatsächlich auf das Konto des Arbeitnehmers ausgezahlt wird, nachdem die Sozialversicherung und die
                 Lohnsteuer abgezogen wurden.</p>
-            </div>
-          </div>
+          </details>
 
-          <div class="faq-item">
-            <button class="faq-question" type="button">Was sind Sonderzahlungen (13. und 14. Gehalt) in
-              Österreich?</button>
-            <div class="faq-answer">
-              <p>In Österreich haben fast alle Arbeitnehmer Anspruch auf Urlaubsgeld (13. Gehalt) und Weihnachtsgeld
+          <details>
+            <summary>Was sind Sonderzahlungen (13. und 14. Gehalt) in
+              Österreich?</summary>
+            <p>In Österreich haben fast alle Arbeitnehmer Anspruch auf Urlaubsgeld (13. Gehalt) und Weihnachtsgeld
                 (14. Gehalt). Diese Sonderzahlungen sind steuerlich begünstigt – es fällt ein geringerer
                 Sozialversicherungsbeitrag (17,07%) an und sie werden im Rahmen des Jahressechstels niedriger besteuert
                 (meist mit 6% flat).</p>
-            </div>
-          </div>
+          </details>
 
-          <div class="faq-item">
-            <button class="faq-question" type="button">Wie hoch ist der Sozialversicherungsbeitrag in
-              Österreich?</button>
-            <div class="faq-answer">
-              <p>Der reguläre Sozialversicherungsbeitrag für Angestellte und Arbeiter beträgt 18,07% des Bruttogehalts,
+          <details>
+            <summary>Wie hoch ist der Sozialversicherungsbeitrag in
+              Österreich?</summary>
+            <p>Der reguläre Sozialversicherungsbeitrag für Angestellte und Arbeiter beträgt 18,07% des Bruttogehalts,
                 gedeckelt bis zur Höchstbeitragsgrundlage (6.930 € pro Monat im Jahr 2026). Bis 2.630 € Monatsbrutto ist er niedriger, weil der Anteil zur Arbeitslosenversicherung gestaffelt ist (0 bis 2,95 %).</p>
-            </div>
-          </div>
+          </details>
 
-          <div class="faq-item">
-            <button class="faq-question" type="button">Wie hoch ist die Höchstbeitragsgrundlage in Österreich?</button>
-            <div class="faq-answer">
-              <p>Im Jahr 2026 liegt die Höchstbeitragsgrundlage bei 6.930 € monatlich (83.160 € jährlich).
+          <details>
+            <summary>Wie hoch ist die Höchstbeitragsgrundlage in Österreich?</summary>
+            <p>Im Jahr 2026 liegt die Höchstbeitragsgrundlage bei 6.930 € monatlich (83.160 € jährlich).
                 Einkommensanteile über dieser Grenze sind beitragsfrei in der Sozialversicherung.</p>
-            </div>
-          </div>
+          </details>
 
-          <div class="faq-item">
-            <button class="faq-question" type="button">Wie wird die Lohnsteuer in Österreich berechnet?</button>
-            <div class="faq-answer">
-              <p>Die Lohnsteuer wird nach dem progressiven Steuertarif berechnet. Vom Bruttogehalt wird zuerst die
+          <details>
+            <summary>Wie wird die Lohnsteuer in Österreich berechnet?</summary>
+            <p>Die Lohnsteuer wird nach dem progressiven Steuertarif berechnet. Vom Bruttogehalt wird zuerst die
                 Sozialversicherung abgezogen. Der verbleibende Betrag wird nach den Steuerstufen (0% bis 55%) besteuert.
                 Der Verkehrsabsetzbetrag wird steuermindernd berücksichtigt.</p>
-            </div>
-          </div>
+          </details>
 
-          <div class="faq-item">
-            <button class="faq-question" type="button">Was ist das Jahressechstel in Österreich?</button>
-            <div class="faq-answer">
-              <p>Das Jahressechstel ist eine steuerliche Begünstigung für sonstige Bezüge (wie das 13. und 14. Gehalt).
+          <details>
+            <summary>Was ist das Jahressechstel in Österreich?</summary>
+            <p>Das Jahressechstel ist eine steuerliche Begünstigung für sonstige Bezüge (wie das 13. und 14. Gehalt).
                 Es beträgt ein Sechstel der laufenden Bezüge des Kalenderjahres. Bis zu dieser Grenze werden
                 Sonderzahlungen mit einem deutlich niedrigeren Steuersatz (meist 6%) besteuert.</p>
-            </div>
-          </div>
+          </details>
         </div>
       </section>
 
       <!-- Embed Widget (Quiet Progressive Disclosure) -->
       <details class="embed-details">
-        <summary>💻 Rechner als Widget auf deiner Website einbinden</summary>
+        <summary><svg class="icon" width="16" height="16" aria-hidden="true"><use href="/assets/icons.svg#i-code"/></svg>Rechner als Widget auf deiner Website einbinden</summary>
         <div class="embed-content">
           <p>Kostenlos per iFrame in deinen HR-Blog oder deine Firmenwebsite einbinden:</p>
           <textarea readonly onclick="this.select()"><iframe src="https://rechnify.at/finanzen/gehaltsrechner.html?widget=true" width="100%" height="600" style="border:1px solid #cbd5e1; border-radius:8px;"></iframe></textarea>
@@ -476,6 +466,8 @@
 
     </div>
   </main>
+
+  <a class="net-bar" href="#result" data-mirror="resNetMonthly">Netto/Monat <strong>-- €</strong><span class="net-bar-cta">Details<svg class="icon" width="16" height="16" aria-hidden="true"><use href="/assets/icons.svg#i-arrow"/></svg></span></a>
 
   <footer class="site-footer">
     <div class="footer-inner">
@@ -504,9 +496,9 @@
   </footer>
 
   <script src="/assets/js/analytics.js?v=3.1"></script>
-  <script src="/assets/js/ui.js?v=3.1"></script>
+  <script src="/assets/js/ui.js?v=3.2"></script>
   <script src="/assets/js/tools.js?v=3.1"></script>
-  <script src="/assets/js/core.js?v=3.1"></script>
+  <script src="/assets/js/core.js?v=3.2"></script>
   <script>
     'use strict';
 
@@ -684,14 +676,14 @@
         const bruttoDiff = baseGross - calcGross;
         const nettoDiff = resOld.netMonthly - resNew.netMonthly;
 
-        partTimeHtml = `<div style="margin-bottom: 24px; padding: 16px; background: #e0f2fe; border: 1px solid var(--color-rule, #e2e8f0); border-radius: 12px; color: #0369a1;">
-          <h4 style="margin-top: 0; color: #0284c7; display: flex; align-items: center; gap: 8px;"><span>⚖️</span> Teilzeit-Ergebnis (${hoursNew}h statt ${hoursOld}h)</h4>
-          <p style="font-size: 14px; margin-bottom: 12px;">Du verzichtest auf <strong>${bruttoLossPct.toFixed(1)}%</strong> deines Bruttogehalts (-${bruttoDiff.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €), verlierst aber durch die Steuerprogression nur <strong>${nettoLossPct.toFixed(1)}%</strong> deines Nettos (-${nettoDiff.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €)!</p>
-          <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px; margin-bottom: 4px;">
-            <span>Neues Brutto (Monat):</span> <strong>${calcGross.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong>
+        partTimeHtml = `<div class="pt-result">
+          <h4 class="pt-title"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="/assets/icons.svg#i-clock"/></svg>Teilzeit-Ergebnis (${hoursNew}h statt ${hoursOld}h)</h4>
+          <p>Du verzichtest auf <strong>${bruttoLossPct.toFixed(1)}%</strong> deines Bruttogehalts (-${bruttoDiff.toLocaleString('de-DE', { maximumFractionDigits: 0 })} €), verlierst aber durch die Steuerprogression nur <strong>${nettoLossPct.toFixed(1)}%</strong> deines Nettos (-${nettoDiff.toLocaleString('de-DE', { maximumFractionDigits: 0 })} €)!</p>
+          <div class="pt-row">
+            <span>Neues Brutto (Monat):</span> <strong>${calcGross.toLocaleString('de-DE', { maximumFractionDigits: 2 })} €</strong>
           </div>
-          <div style="display:flex; justify-content:space-between; font-size: 14px; background: white; padding: 8px; border-radius: 6px;">
-            <span>Neues Netto (Monat):</span> <strong style="color:var(--success);">${resNew.netMonthly.toLocaleString('de-AT', { maximumFractionDigits: 2 })} €</strong>
+          <div class="pt-row">
+            <span>Neues Netto (Monat):</span> <strong class="val-total">${resNew.netMonthly.toLocaleString('de-DE', { maximumFractionDigits: 2 })} €</strong>
           </div>
         </div>`;
       }
@@ -699,29 +691,29 @@
       const res = calcTaxes(calcGross, hasSonder);
 
       const elMonthly = document.getElementById('resNetMonthly');
-      elMonthly.textContent = res.netMonthly.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      elMonthly.textContent = res.netMonthly.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
       elMonthly.classList.remove('val-pulse');
       void elMonthly.offsetWidth;
       elMonthly.classList.add('val-pulse');
 
       if (hasSonder) {
         document.getElementById('cardSonder').classList.remove('hidden');
-        document.getElementById('resNetSonder').textContent = res.netSonder.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+        document.getElementById('resNetSonder').textContent = res.netSonder.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
         document.getElementById('resNetYearCardSub').textContent = '14 Auszahlungen (inkl. 13./14.)';
       } else {
         document.getElementById('cardSonder').classList.add('hidden');
         document.getElementById('resNetYearCardSub').textContent = '12 Auszahlungen gesamt';
       }
 
-      document.getElementById('resNetYearCard').textContent = res.totalNetYear.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      document.getElementById('resNetYearCard').textContent = res.totalNetYear.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 
-      document.getElementById('resGrossYear').textContent = res.totalGrossYear.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
-      document.getElementById('resSvYear').textContent = '- ' + res.totalSvYear.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
-      document.getElementById('resTaxYear').textContent = '- ' + res.totalTaxYear.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
-      document.getElementById('resNetYear').textContent = res.totalNetYear.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      document.getElementById('resGrossYear').textContent = res.totalGrossYear.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      document.getElementById('resSvYear').textContent = '- ' + res.totalSvYear.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      document.getElementById('resTaxYear').textContent = '- ' + res.totalTaxYear.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      document.getElementById('resNetYear').textContent = res.totalNetYear.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 
-      document.getElementById('resLnkYear').textContent = '+ ' + res.lnkYearly.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
-      document.getElementById('resTotalCostYear').textContent = res.totalCostYearly.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      document.getElementById('resLnkYear').textContent = '+ ' + res.lnkYearly.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      document.getElementById('resTotalCostYear').textContent = res.totalCostYearly.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 
       const partTimeBox = document.getElementById('partTimeResultBox');
       if (partTimeBox) partTimeBox.innerHTML = partTimeHtml;
@@ -735,14 +727,14 @@
         const rankingStr = i === -1 ? `Du gehörst zu den oberen 10 % der ganzjährig Vollzeitbeschäftigten in Österreich.`
           : i === 0 ? `Weniger als 10 % der ganzjährig Vollzeitbeschäftigten in Österreich verdienen weniger als du (Median 3.977 €).`
           : `Rund ${p} % der ganzjährig Vollzeitbeschäftigten in Österreich verdienen weniger als du (Median 3.977 €).`;
-        document.getElementById('rankingText').innerHTML = `Dein Brutto: <strong>${calcGross.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong>/Monat. ${rankingStr}`;
+        document.getElementById('rankingText').innerHTML = `Dein Brutto: <strong>${calcGross.toLocaleString('de-DE', { maximumFractionDigits: 0 })} €</strong>/Monat. ${rankingStr}`;
       } else {
-        document.getElementById('rankingText').innerHTML = `Da du in Teilzeit rechnest, ist ein direkter Vergleich mit dem Vollzeit-Median nicht aussagekräftig. Dein Vollzeit-Äquivalent wäre <strong>${baseGross.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong>/Monat.`;
+        document.getElementById('rankingText').innerHTML = `Da du in Teilzeit rechnest, ist ein direkter Vergleich mit dem Vollzeit-Median nicht aussagekräftig. Dein Vollzeit-Äquivalent wäre <strong>${baseGross.toLocaleString('de-DE', { maximumFractionDigits: 0 })} €</strong>/Monat.`;
       }
 
       const netAfter5Years = res.netMonthly * Math.pow(1 - 0.025, 5);
       const loss = res.netMonthly - netAfter5Years;
-      document.getElementById('inflationText').innerHTML = `Achtung: Dein heutiges Netto von <strong>${res.netMonthly.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong> ist in 5 Jahren faktisch nur noch <strong>${netAfter5Years.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €</strong> wert (Kaufkraftverlust: -${loss.toLocaleString('de-AT', { maximumFractionDigits: 0 })} €).`;
+      document.getElementById('inflationText').innerHTML = `Achtung: Dein heutiges Netto von <strong>${res.netMonthly.toLocaleString('de-DE', { maximumFractionDigits: 0 })} €</strong> ist in 5 Jahren faktisch nur noch <strong>${netAfter5Years.toLocaleString('de-DE', { maximumFractionDigits: 0 })} €</strong> wert (Kaufkraftverlust: -${loss.toLocaleString('de-DE', { maximumFractionDigits: 0 })} €).`;
 
       // Update breakdown bar
       const breakdownNetto = res.netMonthly;
@@ -768,9 +760,9 @@
         const legN = document.getElementById('legendNetto');
         const legS = document.getElementById('legendSV');
         const legT = document.getElementById('legendTax');
-        if (legN) legN.textContent = breakdownNetto.toLocaleString('de-AT', { maximumFractionDigits: 0 }) + ' €';
-        if (legS) legS.textContent = breakdownSV.toLocaleString('de-AT', { maximumFractionDigits: 0 }) + ' €';
-        if (legT) legT.textContent = breakdownTax.toLocaleString('de-AT', { maximumFractionDigits: 0 }) + ' €';
+        if (legN) legN.textContent = breakdownNetto.toLocaleString('de-DE', { maximumFractionDigits: 0 }) + ' €';
+        if (legS) legS.textContent = breakdownSV.toLocaleString('de-DE', { maximumFractionDigits: 0 }) + ' €';
+        if (legT) legT.textContent = breakdownTax.toLocaleString('de-DE', { maximumFractionDigits: 0 }) + ' €';
       }
 
       document.getElementById('result').classList.remove('hidden');
@@ -828,21 +820,8 @@
 
           const preview = document.getElementById('raisePreviewText');
           if (preview) {
-            preview.innerHTML = `Bei <strong>+${raise} € Brutto</strong> mehr erhältst du jeden Monat <strong>+${netMonthlyDiff.toLocaleString('de-AT', { maximumFractionDigits: 0 })} € Netto</strong> zusätzlich aufs Konto. Aufs Jahr gerechnet sind das <strong>+${netYearDiff.toLocaleString('de-AT', { maximumFractionDigits: 0 })} € Netto</strong> (inkl. Urlaubsgeld &amp; Weihnachtsgeld).`;
+            preview.innerHTML = `Bei <strong>+${raise} € Brutto</strong> mehr erhältst du jeden Monat <strong>+${netMonthlyDiff.toLocaleString('de-DE', { maximumFractionDigits: 0 })} € Netto</strong> zusätzlich aufs Konto. Aufs Jahr gerechnet sind das <strong>+${netYearDiff.toLocaleString('de-DE', { maximumFractionDigits: 0 })} € Netto</strong> (inkl. Urlaubsgeld &amp; Weihnachtsgeld).`;
           }
-        });
-      });
-
-      // Details segmented tab switching
-      document.querySelectorAll('.details-panel .seg-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const panel = btn.closest('.details-panel');
-          if (!panel) return;
-          panel.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
-          panel.querySelectorAll('.seg-pane').forEach(p => p.classList.remove('active'));
-          btn.classList.add('active');
-          const target = panel.querySelector('#' + btn.dataset.tab);
-          if (target) target.classList.add('active');
         });
       });
 
@@ -945,7 +924,7 @@
           const calcGross = isPt ? (grossNum / hOld) * hNew : grossNum;
 
           const res = calcTaxes(calcGross, hasSonder);
-          const fmt = (n) => n.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+          const fmt = (n) => n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
           const date = new Date().toLocaleDateString('de-AT');
 
           const html = '<!DOCTYPE html><html lang="de-AT"><head><meta charset="UTF-8"><title>Gehaltsberechnung ' + date + '</title>' +
@@ -1005,7 +984,7 @@
     })();
   </script>
   <script src="/assets/js/calculator-live.js?v=1.0"></script>
-  <script src="/assets/js/ux-enhancements.js?v=1.0" defer></script>
+  <script src="/assets/js/ux-enhancements.js?v=1.1" defer></script>
 </body>
 
 </html>

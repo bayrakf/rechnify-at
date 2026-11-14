@@ -23,48 +23,47 @@
 }
 
 :root {
-  --color-paper:      oklch(98.5% 0.005 240);
-  --color-paper-2:    oklch(95%   0.010 240);
-  --color-paper-3:    oklch(91%   0.013 240);
-  --color-ink:        oklch(15%   0.040 255);
-  --color-ink-2:      oklch(40%   0.028 255);
-  --color-ink-3:      oklch(60%   0.018 255);
-  --color-muted:      oklch(52%   0.020 255);
-  --color-rule:       oklch(88%   0.012 240);
-  --color-rule-2:     oklch(78%   0.014 240);
-  --color-accent:     oklch(48%   0.220 255);
-  --color-accent-h:   oklch(42%   0.220 255);
-  --color-accent-s:   oklch(96%   0.050 255);
+  --color-paper: light-dark(oklch(98.5% 0.005 240), oklch(14%  0.040 255));
+  --color-paper-2: light-dark(oklch(95%   0.010 240), oklch(19%  0.038 255));
+  --color-paper-3: light-dark(oklch(91%   0.013 240), oklch(24%  0.034 255));
+  --color-ink: light-dark(oklch(15%   0.040 255), oklch(95%  0.007 240));
+  --color-ink-2: light-dark(oklch(40%   0.028 255), oklch(68%  0.014 240));
+  --color-ink-3: light-dark(oklch(52% 0.018 255), oklch(64% 0.016 240));
+  --color-muted: light-dark(oklch(52%   0.020 255), oklch(58%  0.016 240));
+  --color-rule: light-dark(oklch(88%   0.012 240), oklch(26%  0.038 255));
+  --color-rule-2: light-dark(oklch(78%   0.014 240), oklch(32%  0.034 255));
+  --color-accent: light-dark(oklch(48%   0.220 255), oklch(65%  0.220 255));
+  --color-accent-h: light-dark(oklch(42%   0.220 255), oklch(72%  0.220 255));
+  --color-accent-s: light-dark(oklch(96%   0.050 255), oklch(22%  0.070 255));
   --color-accent-ink: oklch(100%  0     0);
-  --color-focus:      oklch(48%   0.220 255);
-  --color-at:         oklch(56%   0.190 22);
-  --color-at-bg:      oklch(94% 0.07 22);
-  --color-de:         oklch(48%   0.140 148);
-  --color-de-bg:      oklch(94% 0.06 148);
+  --color-focus: light-dark(oklch(48% 0.220 255), oklch(70% 0.180 255));
+  --color-at: light-dark(oklch(56% 0.190 22), oklch(72% 0.150 22));
+  --color-at-bg: light-dark(oklch(94% 0.07 22), oklch(26% 0.07 22));
+  --color-de: light-dark(oklch(48% 0.140 148), oklch(74% 0.130 148));
+  --color-de-bg: light-dark(oklch(94% 0.06 148), oklch(25% 0.05 148));
   --color-feat-ink:   oklch(95% 0.006 240);
   --color-feat-muted: oklch(62% 0.014 240);
   --color-badge-new-bg: oklch(92% 0.11 145);
   --color-badge-new-ink: oklch(38% 0.14 145);
-  --color-success:    oklch(42%   0.14 145);
-  --color-success-bg: oklch(95%   0.04 145);
-  --color-danger:     oklch(48%   0.18 25);
-  --color-danger-bg:  oklch(96%   0.03 25);
-  --color-warning:    oklch(52%   0.14 65);
-  --color-warning-bg: oklch(96%   0.04 85);
-  --color-info:       oklch(52%   0.16 255);
-  --color-info-bg:    oklch(96%   0.04 255);
+  --color-success: light-dark(oklch(42% 0.14 145), oklch(76% 0.15 150));
+  --color-success-bg: light-dark(oklch(95%   0.04 145), oklch(22% 0.05 145));
+  --color-danger: light-dark(oklch(48% 0.18 25), oklch(72% 0.15 25));
+  --color-danger-bg: light-dark(oklch(96%   0.03 25), oklch(22% 0.05 25));
+  --color-warning: light-dark(oklch(52% 0.14 65), oklch(78% 0.13 75));
+  --color-warning-bg: light-dark(oklch(96%   0.04 85), oklch(22% 0.05 65));
+  --color-info: light-dark(oklch(52% 0.16 255), oklch(72% 0.14 255));
+  --color-info-bg: light-dark(oklch(96%   0.04 255), oklch(22% 0.05 255));
 
-  color-scheme: light;
   accent-color: var(--color-accent);
 
-  --color-callout-blue-bg:     oklch(96% 0.04 255);
-  --color-callout-blue-border: oklch(86% 0.08 255);
-  --color-callout-green-bg:    oklch(96% 0.04 145);
-  --color-callout-green-border:oklch(86% 0.08 145);
-  --color-callout-red-bg:      oklch(96% 0.04 25);
-  --color-callout-red-border:  oklch(86% 0.08 25);
-  --color-callout-yellow-bg:   oklch(96% 0.04 85);
-  --color-callout-yellow-border:oklch(86% 0.08 85);
+  --color-callout-blue-bg: light-dark(oklch(96% 0.04 255), oklch(22% 0.05 255));
+  --color-callout-blue-border: light-dark(oklch(86% 0.08 255), oklch(30% 0.08 255));
+  --color-callout-green-bg: light-dark(oklch(96% 0.04 145), oklch(22% 0.05 145));
+  --color-callout-green-border: light-dark(oklch(86% 0.08 145), oklch(30% 0.08 145));
+  --color-callout-red-bg: light-dark(oklch(96% 0.04 25), oklch(22% 0.05 25));
+  --color-callout-red-border: light-dark(oklch(86% 0.08 25), oklch(30% 0.08 25));
+  --color-callout-yellow-bg: light-dark(oklch(96% 0.04 85), oklch(22% 0.05 65));
+  --color-callout-yellow-border: light-dark(oklch(86% 0.08 85), oklch(30% 0.08 65));
 
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body:    system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -97,9 +96,9 @@
   --radius-card: 10px;
   --radius-input: 8px;
 
-  --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.04);
-  --shadow-md: 0 1px 3px oklch(0% 0 0 / 0.05), 0 1px 2px oklch(0% 0 0 / 0.03);
-  --shadow-lg: 0 4px 12px oklch(0% 0 0 / 0.05), 0 1px 3px oklch(0% 0 0 / 0.03);
+  --shadow-sm: 0 1px 2px light-dark(oklch(25% 0.04 255 / 0.06), oklch(0% 0 0 / 0.40));
+  --shadow-md: 0 1px 2px light-dark(oklch(25% 0.04 255 / 0.05), oklch(0% 0 0 / 0.40)), 0 4px 12px light-dark(oklch(25% 0.04 255 / 0.05), oklch(0% 0 0 / 0.35));
+  --shadow-lg: 0 2px 4px light-dark(oklch(25% 0.04 255 / 0.04), oklch(0% 0 0 / 0.40)), 0 12px 32px light-dark(oklch(25% 0.04 255 / 0.10), oklch(0% 0 0 / 0.55));
 
   --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
@@ -139,33 +138,14 @@
   --dur: var(--dur-short);
 }
 
-body.dark {
-  color-scheme: dark;
-  --color-paper:      oklch(14%  0.040 255);
-  --color-paper-2:    oklch(19%  0.038 255);
-  --color-paper-3:    oklch(24%  0.034 255);
-  --color-ink:        oklch(95%  0.007 240);
-  --color-ink-2:      oklch(68%  0.014 240);
-  --color-ink-3:      oklch(48%  0.018 240);
-  --color-muted:      oklch(58%  0.016 240);
-  --color-rule:       oklch(26%  0.038 255);
-  --color-rule-2:     oklch(32%  0.034 255);
-  --color-accent:     oklch(65%  0.220 255);
-  --color-accent-h:   oklch(72%  0.220 255);
-  --color-accent-s:   oklch(22%  0.070 255);
-  --color-success-bg: oklch(22% 0.05 145);
-  --color-danger-bg:  oklch(22% 0.05 25);
-  --color-warning-bg: oklch(22% 0.05 65);
-  --color-info-bg:    oklch(22% 0.05 255);
-  --color-callout-blue-bg:     oklch(22% 0.05 255);
-  --color-callout-blue-border: oklch(30% 0.08 255);
-  --color-callout-green-bg:    oklch(22% 0.05 145);
-  --color-callout-green-border:oklch(30% 0.08 145);
-  --color-callout-red-bg:      oklch(22% 0.05 25);
-  --color-callout-red-border:  oklch(30% 0.08 25);
-  --color-callout-yellow-bg:   oklch(22% 0.05 65);
-  --color-callout-yellow-border:oklch(30% 0.08 65);
-  --shadow-sm: 0 1px 4px  oklch(0% 0 0 / 0.40);
-  --shadow-md: 0 5px 22px oklch(0% 0 0 / 0.50);
-  --shadow-lg: 0 16px 48px oklch(0% 0 0 / 0.65);
+/* Farbschema: Seiten mit <meta name="color-scheme"> folgen dem System (Override per Meta, siehe ui.js).
+ * ponytail: Seiten ohne Meta bleiben hell + body.dark (Legacy-Toggle), bis Welle 2 alle Seiten migriert. */
+:root { color-scheme: light; --color-scheme: light; }
+body.dark { color-scheme: dark; --color-scheme: dark; }
+:root:has(> head > meta[name="color-scheme"]) {
+  color-scheme: light dark;
+  @media (prefers-color-scheme: dark) { --color-scheme: dark; }
+  &:has(> head > meta[name="color-scheme"][content="dark"]) { color-scheme: dark; --color-scheme: dark; }
+  &:has(> head > meta[name="color-scheme"][content="light"]) { color-scheme: light; --color-scheme: light; }
 }
+

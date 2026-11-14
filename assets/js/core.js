@@ -21,7 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // UI
   initDarkMode();
   initMobileNav();
-  initFaqAccordion();
+  initFaqAccordion(); // ponytail: weg, sobald alle FAQ <details> sind (Welle 2)
+  initSegTabs();
+  initNetBar();
   setActiveNavLink();
   
   // Tools — tools.js fehlt auf manchen Seiten (Blog, Hubs); ohne Guard bricht

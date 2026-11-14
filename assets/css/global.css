@@ -205,10 +205,12 @@ body.dark .site-logo img {
   transition: background var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
 }
 
-.btn-icon:hover {
-  background: var(--color-paper-3);
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+@media (hover: hover) and (pointer: fine) {
+  .btn-icon:hover {
+    background: var(--color-paper-3);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
 }
 
 .btn-icon:focus-visible {
@@ -216,7 +218,18 @@ body.dark .site-logo img {
   outline-offset: 2px;
 }
 
-.btn-icon:active { transform: translateY(1px); }
+.btn-icon:active { transform: scale(0.95); }
+
+.icon { display: inline-block; flex-shrink: 0; vertical-align: -0.2em; }
+.flag { display: inline-block; flex-shrink: 0; border-radius: 2px; box-shadow: 0 0 0 1px oklch(0% 0 0 / 0.08); }
+
+/* Dark-Mode-Button: beide Zustände im Markup, CSS zeigt den passenden (Guide dark-mode-toggle).
+ * Fallback ohne Style Queries: Mond bleibt sichtbar. */
+.if-dark { display: none; }
+@container style(--color-scheme: dark) {
+  .if-dark { display: contents; }
+  .if-light { display: none; }
+}
 
 .country-toggle-group {
   display: flex;
@@ -241,7 +254,8 @@ body.dark .site-logo img {
   transition: background var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
 }
 
-.country-pill:hover { color: var(--color-ink); }
+@media (hover: hover) and (pointer: fine) { .country-pill:hover { color: var(--color-ink); } }
+.country-pill { display: inline-flex; align-items: center; gap: 6px; }
 
 .country-pill.active {
   background: var(--color-paper);
@@ -1092,6 +1106,58 @@ body.dark .site-logo img {
 
 .faq-accordion { margin-top: var(--space-xs); }
 
+/* FAQ als <details> (Guide accordion): nicht exklusiv, Marker vor dem Text, Höhe per ::details-content */
+.faq-accordion > details {
+  border-bottom: 1px solid var(--color-rule);
+}
+.faq-accordion > details:first-of-type { border-top: 1px solid var(--color-rule); }
+.faq-accordion > details > summary {
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 1rem 0.25rem;
+  min-height: 44px;
+  font-weight: 600;
+  color: var(--color-ink);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+.faq-accordion > details > summary::-webkit-details-marker { display: none; }
+.faq-accordion > details > summary::before {
+  content: "";
+  inline-size: 1rem;
+  block-size: 1rem;
+  flex-shrink: 0;
+  translate: 0 0.15em;
+  background-color: var(--color-accent);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat center / contain;
+  rotate: -90deg;
+}
+.faq-accordion > details[open] > summary::before { rotate: 0deg; }
+.faq-accordion > details > summary:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) {
+  .faq-accordion > details > summary:hover { color: var(--color-accent); }
+}
+.faq-accordion > details::details-content {
+  interpolate-size: allow-keywords;
+  overflow: clip;
+  contain: layout;
+}
+.faq-accordion > details:not([open])::details-content { block-size: 0; }
+.faq-accordion > details > p {
+  padding: 0 0.25rem 1.1rem 2rem;
+  color: var(--color-ink-2);
+  line-height: 1.7;
+  max-width: 70ch;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .faq-accordion > details > summary::before { transition: rotate var(--dur-short) var(--ease-out); }
+  .faq-accordion > details::details-content {
+    transition: block-size var(--dur-long) var(--ease-in-out), content-visibility var(--dur-long) allow-discrete;
+  }
+}
+
 .faq-item {
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-sm);
@@ -1564,7 +1630,7 @@ label {
     grid-template-columns: 1fr;
   }
   
-  .site-logo-text { display: none; } /* Saves space in the header */
+  .site-header .site-logo-text { display: none; } /* Saves space in the header; footer keeps its wordmark */
 
   .site-nav.open {
     display: flex;

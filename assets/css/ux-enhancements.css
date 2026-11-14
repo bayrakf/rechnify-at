@@ -10,7 +10,7 @@
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-card);
   overflow: hidden;
-  transition: all var(--dur-short) var(--ease-out);
+  transition: border-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
 }
 
 .disclosure:hover {
@@ -205,69 +205,88 @@ body.dark .tooltip::after {
   transition: opacity var(--dur-short) var(--ease-out);
 }
 
-.modal-trigger:hover {
-  opacity: 0.8;
+@media (hover: hover) and (pointer: fine) {
+  .modal-trigger:hover { opacity: 0.8; }
 }
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  z-index: 9998;
-  display: none;
-  animation: fadeIn 0.2s var(--ease-out);
-}
-
-.modal-overlay.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
+/* <dialog class="modal">: Desktop zentriert, mobil Bottom Sheet (ux-enhancements.js initSheetDrag) */
 .modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  --sheet-ease: cubic-bezier(0.32, 0.72, 0, 1); /* Vaul */
+  margin: auto;
+  padding: 0;
   background: var(--color-paper);
+  color: var(--color-ink);
   border: 1px solid var(--color-rule);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  max-width: 600px;
-  width: calc(100% - 32px);
-  max-height: calc(100vh - 64px);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  width: min(600px, calc(100% - 32px));
+  max-height: calc(100dvh - 64px);
   overflow: hidden;
-  z-index: 9999;
-  display: none;
-  animation: slideUp 0.3s var(--ease-out);
-}
-
-.modal.active {
-  display: flex;
+  overscroll-behavior: contain;
   flex-direction: column;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out),
+              overlay var(--dur-short) allow-discrete, display var(--dur-short) allow-discrete;
+}
+.modal[open] { display: flex; opacity: 1; transform: none; }
+@starting-style { .modal[open] { opacity: 0; transform: scale(0.97); } }
+
+.modal::backdrop {
+  background: oklch(15% 0.04 255 / 0.45);
+  overflow: hidden;
+  overscroll-behavior: contain;
+  opacity: 0;
+  transition: opacity var(--dur-short) var(--ease-out), overlay var(--dur-short) allow-discrete, display var(--dur-short) allow-discrete;
+}
+.modal[open]::backdrop { opacity: 1; }
+@starting-style { .modal[open]::backdrop { opacity: 0; } }
+
+.sheet-grip { display: none; }
+
+@media (max-width: 640px) {
+  .modal {
+    margin: auto 0 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 85dvh;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    border-bottom: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    opacity: 1;
+    transform: translateY(100%);
+    transition: transform var(--dur-long) var(--sheet-ease),
+                overlay var(--dur-long) allow-discrete, display var(--dur-long) allow-discrete;
+  }
+  .modal[open] { transform: none; }
+  @starting-style { .modal[open] { transform: translateY(100%); } }
+  .modal.is-dragging { transition: none; }
+  .modal .modal-header { touch-action: none; cursor: grab; position: relative; padding-top: 26px; }
+  .sheet-grip {
+    display: block;
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    width: 36px;
+    height: 4px;
+    margin-left: -18px;
+    border-radius: 2px;
+    background: var(--color-rule-2);
+  }
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -45%);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
+@media (prefers-reduced-motion: reduce) {
+  .modal, .modal[open] { transform: none; }
+  @starting-style { .modal[open] { transform: none; opacity: 0; } }
 }
 
 .modal-header {
-  padding: 20px 24px;
+  padding: 16px 16px 16px 24px;
   border-bottom: 1px solid var(--color-rule);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   background: var(--color-paper-2);
 }
 
@@ -279,24 +298,22 @@ body.dark .tooltip::after {
 }
 
 .modal-close {
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
   border-radius: 50%;
   border: none;
-  background: var(--color-paper-3);
+  background: transparent;
   color: var(--color-ink-2);
-  font-size: 1.2rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--dur-short) var(--ease-out);
+  transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
 }
-
-.modal-close:hover {
-  background: var(--color-danger);
-  color: white;
-  transform: rotate(90deg);
+.modal-close:active { transform: scale(0.94); }
+@media (hover: hover) and (pointer: fine) {
+  .modal-close:hover { background: var(--color-paper-3); color: var(--color-ink); }
 }
 
 .modal-body {
@@ -344,7 +361,7 @@ body.dark .tooltip::after {
   font-weight: 600;
   font-size: var(--text-sm);
   cursor: pointer;
-  transition: all var(--dur-short) var(--ease-out);
+  transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
 }
 
 .expand-toggle:hover {
@@ -423,8 +440,7 @@ body.dark .tooltip::after {
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   .result-box,
-  .result-card,
-  .modal {
+  .result-card {
     animation: none;
   }
 }

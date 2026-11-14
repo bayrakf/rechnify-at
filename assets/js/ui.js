@@ -4,27 +4,100 @@
    rechnify.at — UI (Dark Mode, Mobile Nav, FAQ)
    ============================================================ */
 
-const DARK_MODE_KEY = 'rechnify.darkMode';
+const DARK_MODE_KEY = 'rechnify.darkMode'; // Legacy-Seiten (body.dark)
+const THEME_KEY = 'rechnify.theme';         // Seiten mit <meta name="color-scheme">: 'light' | 'dark' | fehlt = System
+const schemeMeta = () => document.querySelector('meta[name="color-scheme"]');
+const systemDark = () => matchMedia('(prefers-color-scheme: dark)').matches;
+
+function isDarkRendered() {
+  const m = schemeMeta();
+  if (!m) return document.body.classList.contains('dark');
+  return m.content === 'dark' || (m.content !== 'light' && systemDark());
+}
 
 function initDarkMode() {
-  const saved = localStorage.getItem(DARK_MODE_KEY);
-  const isDark = saved === 'true';
-  if (isDark) document.body.classList.add('dark');
+  const m = schemeMeta();
+  if (!m) {
+    try { if (localStorage.getItem(DARK_MODE_KEY) === 'true') document.body.classList.add('dark'); } catch (e) {}
+  } else {
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateDarkModeBtn);
+    addEventListener('storage', (e) => {
+      if (e.key === THEME_KEY) { m.content = e.newValue ?? 'light dark'; updateDarkModeBtn(); }
+    });
+  }
   updateDarkModeBtn();
 }
 
+// Zwei Zustände: System oder Gegenteil davon (Guide dark-mode-toggle). Rückkehr zum System löscht den Wert.
 function toggleDarkMode() {
-  document.body.classList.toggle('dark');
-  localStorage.setItem(DARK_MODE_KEY, document.body.classList.contains('dark'));
-  updateDarkModeBtn();
+  const dark = !isDarkRendered();
+  const m = schemeMeta();
+  if (m) {
+    const pinned = dark !== systemDark();
+    m.content = pinned ? (dark ? 'dark' : 'light') : 'light dark';
+    try {
+      if (pinned) { localStorage.setItem(THEME_KEY, m.content); localStorage.setItem(DARK_MODE_KEY, dark); }
+      else { localStorage.removeItem(THEME_KEY); localStorage.removeItem(DARK_MODE_KEY); }
+    } catch (e) {}
+  } else {
+    try { localStorage.setItem(DARK_MODE_KEY, dark); localStorage.removeItem(THEME_KEY); } catch (e) {}
+  }
+  updateDarkModeBtn(dark);
 }
 
-function updateDarkModeBtn() {
+function updateDarkModeBtn(dark) {
+  if (typeof dark !== 'boolean') dark = isDarkRendered();
+  document.body.classList.toggle('dark', dark); // Legacy-CSS mit body.dark
   const btn = document.getElementById('darkModeToggle');
-  if (!btn) return;
-  const isDark = document.body.classList.contains('dark');
-  btn.textContent = isDark ? '☀️' : '🌙';
-  btn.setAttribute('aria-label', isDark ? 'Lichtmodus aktivieren' : 'Dunkelmodus aktivieren');
+  if (!btn || btn.querySelector('svg')) return; // SVG-Variante schaltet per CSS
+  btn.textContent = dark ? '☀️' : '🌙';
+  btn.setAttribute('aria-label', dark ? 'Lichtmodus aktivieren' : 'Dunkelmodus aktivieren');
+}
+
+// Tabs (Guide tabs): aria-selected als Wahrheit, Pfeiltasten, hidden="until-found" + beforematch.
+// Nur Markup mit aria-selected; alte Seiten behalten ihren Inline-Handler bis zur Migration.
+function initSegTabs() {
+  document.querySelectorAll('.seg-nav[role="tablist"]').forEach((list) => {
+    const tabs = [...list.querySelectorAll('[role="tab"][aria-selected]')];
+    if (!tabs.length) return;
+    const panel = (t) => document.getElementById(t.dataset.tab);
+    const select = (tab, focus) => {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', on);
+        t.tabIndex = on ? 0 : -1;
+        const p = panel(t);
+        if (p) { p.hidden = on ? false : 'until-found'; on ? p.setAttribute('tabindex', '0') : p.removeAttribute('tabindex'); }
+      });
+      if (focus) tab.focus();
+      tab.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+    };
+    tabs.forEach((t) => {
+      t.addEventListener('click', () => select(t));
+      panel(t)?.addEventListener('beforematch', () => select(t));
+    });
+    list.addEventListener('keydown', (e) => {
+      const i = tabs.indexOf(document.activeElement);
+      if (i < 0) return;
+      const n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+      if (n === undefined) return;
+      e.preventDefault();
+      select(tabs[(n + tabs.length) % tabs.length], true);
+    });
+  });
+}
+
+// Mobile: Netto-Leiste unten, solange die Ergebnis-Karte nicht sichtbar ist.
+function initNetBar() {
+  const bar = document.querySelector('.net-bar[data-mirror]');
+  const src = bar && document.getElementById(bar.dataset.mirror);
+  const card = src?.closest('.hero-net-card');
+  if (!card) return;
+  const out = bar.querySelector('strong');
+  const sync = () => { out.textContent = src.textContent; };
+  sync();
+  new MutationObserver(sync).observe(src, { childList: true, characterData: true, subtree: true });
+  new IntersectionObserver(([e]) => bar.classList.toggle('is-visible', !e.isIntersecting)).observe(card);
 }
 
 function initMobileNav() {
