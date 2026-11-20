@@ -73,14 +73,14 @@
       "name": "Wie berechnet man den Stundenlohn aus dem Monatsgehalt?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Formel: Stundenlohn = Monatsgehalt × 12 ÷ (Wochenstunden × 52). Beispiel: 3.000 € × 12 ÷ (38,5 × 52) = ca. 17,94 € Bruttostundenlohn."
+        "text": "Formel: Stundenlohn = Monatsgehalt × 12 ÷ (Wochenstunden × 52). Beispiel: 3.000 € × 12 ÷ (38,5 × 52) = ca. 17,98 € Bruttostundenlohn."
       }
     }, {
       "@type": "Question",
-      "name": "Was ist der gesetzliche Mindestlohn in Österreich?",
+      "name": "Gibt es einen gesetzlichen Mindestlohn in Österreich?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "In Österreich gilt seit 2024 ein kollektivvertraglicher Mindestlohn von mindestens 2.000 € brutto pro Monat (Vollzeit). Das entspricht bei 38,5 Wochenstunden einem Stundenlohn von ca. 12,00 €."
+        "text": "Nein. Österreich hat keinen gesetzlichen Mindestlohn, die Mindestlöhne regeln die Kollektivverträge (KV). Nach Angaben des Sozialministeriums sehen die meisten KV mindestens 1.700 € brutto, 14-mal im Jahr, vor. Bei 38,5 Wochenstunden sind das rund 11,90 € pro Stunde. Die 2.000-€-Marke ist eine Forderung des ÖGB, nicht überall erreicht. Die aktuellen KV-Mindestlöhne je Branche stehen im Artikel Mindestlohn Österreich 2026."
       }
     }, {
       "@type": "Question",
@@ -306,14 +306,14 @@
             <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Wie berechnet man den Stundenlohn aus dem Monatsgehalt?</summary>
             <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
               Formel: <strong>Stundenlohn = Monatsgehalt × 12 ÷ (Wochenstunden × 52)</strong><br />
-              Beispiel bei 3.000 € und 38,5 h/Woche: 3.000 × 12 ÷ (38,5 × 52) = <strong>17,94 €/Stunde</strong> brutto.
+              Beispiel bei 3.000 € und 38,5 h/Woche: 3.000 × 12 ÷ (38,5 × 52) = <strong>17,98 €/Stunde</strong> brutto.
             </p>
           </details>
 
           <details style="margin-bottom: 12px;">
-            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Was ist der Mindestlohn in Österreich (2025)?</summary>
+            <summary style="cursor:pointer; font-weight:600; font-size:var(--text-sm); padding: 10px 0;">Gibt es einen gesetzlichen Mindestlohn in Österreich?</summary>
             <p style="font-size:var(--text-sm); color:var(--muted); padding: 10px 0 4px;">
-              Der kollektivvertragliche Mindestlohn beträgt seit 2024 mindestens <strong>2.000 € brutto/Monat</strong> (Vollzeit, 38,5 h/Woche). Das entspricht ca. <strong>12,00 €/Stunde</strong>.
+              <strong>Nein.</strong> Österreich hat keinen gesetzlichen Mindestlohn, die Mindestlöhne regeln die Kollektivverträge (KV). Nach Angaben des <a href="https://www.sozialministerium.gv.at/Themen/Arbeit/Arbeitsrecht/Entlohnung/Mindestlohn-in-OE.html" rel="noopener">Sozialministeriums</a> sehen die meisten KV mindestens <strong>1.700 € brutto, 14-mal im Jahr</strong>, vor. Bei 38,5 Wochenstunden sind das rund <strong>11,90 €/Stunde</strong>. Die 2.000-€-Marke ist eine Forderung des ÖGB und noch nicht überall erreicht. Die aktuellen Werte je Branche findest du im Artikel <a href="/blog/mindestlohn-oesterreich-2026.html">Mindestlohn Österreich 2026</a>.
             </p>
           </details>
 
@@ -605,7 +605,7 @@
       const minLohn = 12.00;
       let info = '';
       if (hourlyBrutto < minLohn) {
-        info = `⚠️ Dein Stundenlohn (${fmt(hourlyBrutto)}) liegt unter dem österreichischen KV-Mindestlohn von ca. ${fmt(minLohn)}.`;
+        info = `⚠️ Dein Stundenlohn (${fmt(hourlyBrutto)}) liegt unter ca. ${fmt(minLohn)}. Das ist weniger, als die meisten Kollektivverträge vorsehen. Prüfe deinen KV: <a href="/blog/mindestlohn-oesterreich-2026.html">KV-Mindestlöhne 2026 nach Branche</a>.`;
       } else {
         info = `✅ Dein Brutto-Stundenlohn liegt bei ${fmt(hourlyBrutto)}. Der Netto-Stundenlohn (ca. ${fmt(hourlyNetto)}) ist eine Schätzung — für eine genaue Berechnung nutze unseren <a href="/finanzen/gehaltsrechner.html">Gehaltsrechner</a>.`;
       }
