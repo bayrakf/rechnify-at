@@ -203,6 +203,15 @@
               </select>
             </div>
 
+            <div class="input-field">
+              <label class="input-label" for="taxYear">Steuer- &amp; SV-Jahr</label>
+              <select id="taxYear">
+                <option value="2026" selected>2026 (aktuell)</option>
+                <option value="2027">2027 (ab 01.01. – SV-Grenzen fix)</option>
+              </select>
+              <small id="taxYearNote" style="display:none; font-size:0.76rem; color:var(--color-ink-3,#64748b); line-height:1.35; margin-top:4px;">2027: BBG KV/PV 6.375 €, BBG RV/AV 8.850 €, Minijob 633 € (Bundesrat fix). Einkommensteuer bis Endbeschluss weiter nach geltendem § 32a (Entwurf: 12.564 €).</small>
+            </div>
+
             <div class="teilzeit-box">
               <label class="teilzeit-label" for="simulatePartTime">
                 <input type="checkbox" id="simulatePartTime" style="width: 16px; height: 16px; margin: 0; cursor: pointer;">
@@ -427,7 +436,7 @@
           <div class="faq-item">
             <button class="faq-question" type="button">Was ist der Grundfreibetrag?</button>
             <div class="faq-answer">
-              <p>Der steuerliche Grundfreibetrag sichert das Existenzminimum ab und bleibt komplett steuerfrei. Für das Jahr 2026 liegt er bei 12.348 € pro Person (Steuerklasse 1/4). Bei Paaren in Steuerklasse 3 verdoppelt er sich auf 24.696 €.</p>
+              <p>Der steuerliche Grundfreibetrag sichert das Existenzminimum ab und bleibt komplett steuerfrei. Für <strong>2026</strong> liegt er bei 12.348 € pro Person (Klasse 3: 24.696 €). Für <strong>2027</strong> sieht der Regierungsentwurf eine Erhöhung auf 12.564 € vor (sowie Kindergeld 267 €, AN-Pauschbetrag 1.430 €; vorbehaltlich Finalbeschluss).</p>
             </div>
           </div>
 
@@ -441,7 +450,7 @@
           <div class="faq-item">
             <button class="faq-question" type="button">Wie hoch ist die Beitragsbemessungsgrenze in Deutschland?</button>
             <div class="faq-answer">
-              <p>Die Beitragsbemessungsgrenze (BBG) bestimmt das maximale Einkommen, auf das Sozialabgaben gezahlt werden müssen. Für 2026 liegen die Grenzen bei 101.400 € jährlich (8.450 € monatlich) in der Renten- und Arbeitslosenversicherung sowie bei 69.750 € jährlich (5.812,50 € monatlich) in der Kranken- und Pflegeversicherung.</p>
+              <p>Für <strong>2026</strong> gelten 101.400 € jährlich (8.450 € monatlich) in der Renten-/Arbeitslosenversicherung und 69.750 € (5.812,50 € monatlich) in der Kranken-/Pflegeversicherung. Ab <strong>01.01.2027</strong> steigen die beschlossenen Grenzen auf <strong>106.200 € jährlich (8.850 € monatlich)</strong> in der RV/AV sowie <strong>76.500 € jährlich (6.375 € monatlich)</strong> in der GKV/PV (Minijob steigt gleichzeitig auf 633 €/Monat bei 14,60 € Mindestlohn).</p>
             </div>
           </div>
 
@@ -527,18 +536,26 @@
     function calcTaxesDE(grossMonthly) {
       const taxClass = document.getElementById('taxClass')?.value || '1';
       const churchTaxInput = (document.getElementById('churchTax')?.value || 'nein') === 'ja';
+      const year = document.getElementById('taxYear')?.value || '2026';
+      const is2027 = year === '2027';
+      const taxYearNote = document.getElementById('taxYearNote');
+      if (taxYearNote) taxYearNote.style.display = is2027 ? 'block' : 'none';
 
       grossMonthly = Math.max(0, grossMonthly || 0);
       const grossYearly = grossMonthly * 12;
 
-      // Beitragsbemessungsgrenzen 2026
-      const kvBase = Math.min(grossMonthly, 5812.50);
-      const rvBase = Math.min(grossMonthly, 8450.00);
-      // Uebergangsbereich 603,01-2.000 EUR (Midijob): reduzierte AN-Bemessung, § 20 Abs. 2a SGB IV
-      const anBase = grossMonthly > 603 && grossMonthly < 2000 ? (grossMonthly - 603) * 2000 / 1397 : grossMonthly;
-      const kvAn = Math.min(anBase, 5812.50), rvAn = Math.min(anBase, 8450.00);
-      // Minijob bis 603 EUR: AN nur 3,6 % RV-Aufstockung, Lohnsteuer pauschal durch AG
-      const mini = grossMonthly > 0 && grossMonthly <= 603;
+      // Beitragsbemessungsgrenzen: 2026 (5.812,50 / 8.450) vs. 2027 beschlossen (6.375 / 8.850)
+      const kvCap = is2027 ? 6375.00 : 5812.50;
+      const rvCap = is2027 ? 8850.00 : 8450.00;
+      const miniLimit = is2027 ? 633 : 603;
+      const span = 2000 - miniLimit;
+      const kvBase = Math.min(grossMonthly, kvCap);
+      const rvBase = Math.min(grossMonthly, rvCap);
+      // Uebergangsbereich (Midijob bis 2.000 EUR): reduzierte AN-Bemessung, § 20 Abs. 2a SGB IV
+      const anBase = grossMonthly > miniLimit && grossMonthly < 2000 ? (grossMonthly - miniLimit) * 2000 / span : grossMonthly;
+      const kvAn = Math.min(anBase, kvCap), rvAn = Math.min(anBase, rvCap);
+      // Minijob (603 bzw. 633 EUR): AN nur 3,6 % RV-Aufstockung, Lohnsteuer pauschal durch AG
+      const mini = grossMonthly > 0 && grossMonthly <= miniLimit;
 
       // AN-Sozialabgaben 2026:
       // KV: 14,6% + 2,9% durchschn. Zusatzbeitrag (AN: 7,3% + 1,45% = 8,75%)
@@ -593,7 +610,7 @@
       // AG: Minijob pauschal 13 % KV + 15 % RV + 2 % Steuer; Uebergangsbereich: 42,3 % auf Gesamt-BE (Faktor F = 28 / 42,3) minus AN-Anteil
       const F = 28 / 42.3;
       const agSvMonthly = agUmlagen + (mini ? grossMonthly * 0.30
-        : grossMonthly > 603 && grossMonthly < 2000 ? 0.423 * (F * 603 + (2000 / 1397 - 603 / 1397 * F) * (grossMonthly - 603)) - 0.2115 * anBase
+        : grossMonthly > miniLimit && grossMonthly < 2000 ? 0.423 * (F * miniLimit + (2000 / span - miniLimit / span * F) * (grossMonthly - miniLimit)) - 0.2115 * anBase
         : agKv + agPv + agRv + agAv);
       const agCostMonthly = grossMonthly + agSvMonthly;
       const agCostYear = agCostMonthly * 12;
@@ -750,7 +767,7 @@
         const el = document.getElementById(id);
         if (el) el.addEventListener('input', () => trigger(400));
       });
-      ['salaryMode', 'taxClass', 'children', 'state', 'churchTax', 'simulatePartTime'].forEach(id => {
+      ['salaryMode', 'taxClass', 'taxYear', 'children', 'state', 'churchTax', 'simulatePartTime'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('change', () => trigger(0));
       });

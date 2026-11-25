@@ -286,10 +286,18 @@
             </div>
 
             <div class="input-group">
-              <label>Berechnungsmethode</label>
+              <label for="calcMode">Berechnungsmethode</label>
               <select id="calcMode">
                 <option value="payout">Auszahlung (Brutto)</option>
                 <option value="time">Zeitausgleich (ZA)</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label for="overtimeYear">Steuerfreibetrag (§ 68 Abs. 2 EStG)</label>
+              <select id="overtimeYear">
+                <option value="2026" selected>2026 (erste 15 Std. · max. 170 €)</option>
+                <option value="2027">Ab 01.01.2027 (erste 10 Std. · max. 120 €)</option>
               </select>
             </div>
           </div>
@@ -431,7 +439,7 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              Der Rechner berechnet den <strong>Brutto-Betrag</strong>. Von diesem Betrag werden noch Sozialversicherung und Lohnsteuer abgezogen. Beachte: In Österreich sind 2026 die Zuschläge für die ersten 15 Überstunden im Monat bis zu einem Betrag von maximal 170 Euro steuerfrei (§ 68 Abs. 2 EStG, BGBl. I Nr. 4/2026; 2024/25: 18 Überstunden, 200 Euro).
+              Der Rechner berechnet den <strong>Brutto-Betrag</strong>. Von diesem Betrag werden noch Sozialversicherung und Lohnsteuer abgezogen. Beachte beim 50-%-Zuschlag (§ 68 Abs. 2 EStG): <strong>2026</strong> sind die ersten <strong>15 Überstunden</strong> bis max. <strong>170 €/Monat</strong> steuerfrei; <strong>ab 01.01.2027</strong> läuft diese Erhöhung aus und es gelten wieder regulär maximal <strong>10 Überstunden bis 120 €/Monat</strong>.
             </div>
           </div>
         </div>
@@ -490,6 +498,7 @@
       const hoursInput = document.getElementById('hours');
       const wageInput = document.getElementById('wage');
       const calcModeSelect = document.getElementById('calcMode');
+      const overtimeYearSelect = document.getElementById('overtimeYear');
       const toggleBtns = document.querySelectorAll('.toggle-btn');
       
       let currentFactor = 1.5;
@@ -523,13 +532,16 @@
           const resTaxFree = document.getElementById('resTaxFree');
           
           if (currentFactor === 1.5) {
-             // 50% surcharge: 2026 first 15 hours (max 170 EUR) tax free, § 68 Abs. 2 EStG (BGBl. I 4/2026)
-             const eligibleHours = Math.min(hours, 15);
-             const taxFreeAmount = Math.min(eligibleHours * wage * 0.5, 170);
+             // 50% surcharge: 2026 first 15h (max 170 EUR), from 01.01.2027 first 10h (max 120 EUR), § 68 Abs. 2 EStG
+             const otYear = overtimeYearSelect ? overtimeYearSelect.value : '2026';
+             const maxOtHours = otYear === '2027' ? 10 : 15;
+             const maxOtEur = otYear === '2027' ? 120 : 170;
+             const eligibleHours = Math.min(hours, maxOtHours);
+             const taxFreeAmount = Math.min(eligibleHours * wage * 0.5, maxOtEur);
              if (taxFreeAmount > 0) {
                resTaxFree.textContent = formatEuro(taxFreeAmount);
                taxFreeBlock.style.display = 'block';
-               taxFreeText.innerHTML = 'In Österreich ist 2026 der 50%-Zuschlag der ersten 15 Überstunden (max. 170 €) lohnsteuerfrei (§ 68 Abs. 2 EStG; SV-Beiträge fallen an).';
+               taxFreeText.innerHTML = `In Österreich ist ${otYear} der 50%-Zuschlag der ersten ${maxOtHours} Überstunden (max. ${maxOtEur} €) lohnsteuerfrei (§ 68 Abs. 2 EStG; SV-Beiträge fallen an).`;
              } else {
                taxFreeBlock.style.display = 'none';
              }
@@ -564,6 +576,7 @@
       hoursInput.addEventListener('input', calculate);
       wageInput.addEventListener('input', calculate);
       calcModeSelect.addEventListener('change', calculate);
+      if (overtimeYearSelect) overtimeYearSelect.addEventListener('change', calculate);
 
       toggleBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {

@@ -170,30 +170,50 @@ function registerServiceWorker() {
 }
 
 // --- Share / Bookmark / Print ---
-function buildShareActions() {
+function buildShareActions(isCockpit = false) {
   const actionDiv = document.createElement('div');
-  actionDiv.className = 'result-actions';
-  actionDiv.style.cssText = 'display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;';
+  actionDiv.className = isCockpit ? 'cockpit-footer-actions' : 'result-actions';
+  if (!isCockpit) {
+    actionDiv.style.cssText = 'display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;';
+  }
   const shareUrl = window.location.href;
   const shareText = document.title + ' – berechnet mit rechnify.at';
+  const btnCls = isCockpit ? 'btn-share' : 'btn';
+  const printCls = isCockpit ? 'btn-pdf print-btn' : 'btn print-btn';
   const nativeBtn = document.createElement('button');
   nativeBtn.type = 'button';
-  nativeBtn.className = 'btn share-btn';
-  nativeBtn.innerHTML = '<img src="/assets/images/icons/share.svg" alt="Teilen" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Teilen';
+  nativeBtn.className = btnCls + ' share-btn';
+  nativeBtn.innerHTML = '<img src="/assets/images/icons/share.svg" alt="Teilen" width="16" height="16" style="vertical-align:middle;margin-right:6px;" /> Teilen';
   nativeBtn.setAttribute('aria-label', 'Ergebnis teilen');
-  nativeBtn.style.cssText = 'flex:1.4;min-width:140px;';
+  if (!isCockpit) nativeBtn.style.cssText = 'flex:1.4;min-width:140px;';
   nativeBtn.addEventListener('click', async () => {
     if (navigator.share) {
       try { await navigator.share({ title: document.title, text: shareText, url: shareUrl }); return; } catch (e) { }
     }
     try {
       await navigator.clipboard.writeText(shareUrl);
-      nativeBtn.innerHTML = '<img src="/assets/images/icons/link.svg" alt="Kopiert" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Kopiert';
-      setTimeout(() => { nativeBtn.innerHTML = '<img src="/assets/images/icons/share.svg" alt="Teilen" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Teilen'; }, 1600);
+      nativeBtn.innerHTML = '<img src="/assets/images/icons/link.svg" alt="Kopiert" width="16" height="16" style="vertical-align:middle;margin-right:6px;" /> Kopiert';
+      setTimeout(() => { nativeBtn.innerHTML = '<img src="/assets/images/icons/share.svg" alt="Teilen" width="16" height="16" style="vertical-align:middle;margin-right:6px;" /> Teilen'; }, 1600);
     } catch (e) {
       window.prompt('Link kopieren:', shareUrl);
     }
   });
+  const printBtn = document.createElement('button');
+  printBtn.type = 'button';
+  printBtn.className = printCls;
+  printBtn.innerHTML = '<img src="/assets/images/icons/print.svg" alt="Drucken" width="16" height="16" style="vertical-align:middle;margin-right:6px;" /> Als PDF / Drucken';
+  printBtn.setAttribute('aria-label', 'Drucken / PDF');
+  if (!isCockpit) printBtn.style.cssText = 'flex:1;min-width:120px;';
+  printBtn.addEventListener('click', () => window.print());
+
+  if (isCockpit) {
+    const row = document.createElement('div');
+    row.className = 'share-actions';
+    row.append(nativeBtn, printBtn);
+    actionDiv.appendChild(row);
+    return actionDiv;
+  }
+
   const bookmarkBtn = document.createElement('button');
   bookmarkBtn.type = 'button';
   bookmarkBtn.className = 'btn';
@@ -214,13 +234,6 @@ function buildShareActions() {
     bookmarkBtn.title = tip;
     setTimeout(() => { bookmarkBtn.hidden = true; }, 1800);
   });
-  const printBtn = document.createElement('button');
-  printBtn.type = 'button';
-  printBtn.className = 'btn print-btn';
-  printBtn.innerHTML = '<img src="/assets/images/icons/print.svg" alt="Drucken" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Drucken';
-  printBtn.setAttribute('aria-label', 'Drucken / PDF');
-  printBtn.style.cssText = 'flex:1;min-width:120px;';
-  printBtn.addEventListener('click', () => window.print());
   const wa = document.createElement('a');
   wa.className = 'btn';
   wa.href = 'https://wa.me/?text=' + encodeURIComponent(shareText + ' ' + shareUrl);
@@ -247,7 +260,7 @@ function initShareButtons() {
   const legacyBoxes = document.querySelectorAll('.result-box');
   legacyBoxes.forEach((box) => {
     if (box.querySelector('.share-btn')) return;
-    box.appendChild(buildShareActions());
+    box.appendChild(buildShareActions(false));
     injectCalcExplain(box);
     injectAdSlot(box);
   });
@@ -256,7 +269,7 @@ function initShareButtons() {
     const cockpitCard = document.querySelector('.calculator-container.cockpit-layout');
     if (cockpitRight) {
       if (!cockpitRight.querySelector('.cockpit-footer-actions, .share-actions, .share-btn')) {
-        cockpitRight.appendChild(buildShareActions());
+        cockpitRight.appendChild(buildShareActions(true));
       }
       injectCalcExplain(cockpitRight);
     }

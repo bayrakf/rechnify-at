@@ -197,9 +197,9 @@
           <li>Sonntags & Feiertags</li>
           <li>Beispiel: 20 € Stundenlohn → 40 € für Überstunde</li>
         </ul>
-        <h3>Steuerfreibetrag (2026)</h3>
-        <p>In Österreich sind 2026 die <strong>Zuschläge der ersten 15 Überstunden pro Monat bis max. 170 €</strong> lohnsteuerfrei (§ 68 Abs. 2 EStG)!</p>
-        <p>Das bedeutet: Für den steuerfreien Zuschlagsanteil fällt keine Lohnsteuer an (nur SV-Beiträge).</p>
+        <h3>Steuerfreibetrag (2026 &amp; 2027)</h3>
+        <p><strong>2026:</strong> Zuschläge der ersten <strong>15 Überstunden/Monat bis max. 170 €</strong> lohnsteuerfrei (§ 68 Abs. 2 EStG).</p>
+        <p><strong>Ab 01.01.2027:</strong> Befristung läuft aus – dann gelten wieder die ersten <strong>10 Überstunden bis max. 120 €</strong> monatlich steuerfrei (SV-Beiträge fallen jeweils an).</p>
       `
     }
   };

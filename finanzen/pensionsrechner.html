@@ -139,8 +139,16 @@
 
         <div class="cockpit-grid">
           <div class="cockpit-left">
-            <div class="info-box">
-              ℹ️ Schätzung auf Basis des ASVG-Pensionskontos (<strong>1,78 %</strong> pro Versicherungsjahr, max. <strong>6.930 €</strong> HBGL 2026). Dein exakt geführtes Konto findest du bei der PVA.
+            <div class="info-box" id="pensionInfoBox">
+              ℹ️ Schätzung auf Basis des ASVG-Pensionskontos (<strong>1,78 %</strong> pro Versicherungsjahr). 2026 max. <strong>6.930 €</strong> / 2027 max. <strong>7.410 €</strong> HBGL.
+            </div>
+
+            <div class="input-field">
+              <label class="input-label" for="pensionYear">Rechtsstand / Jahr</label>
+              <select id="pensionYear">
+                <option value="2026" selected>2026 (HBGL 6.930 € · AZ 1.308,39 €)</option>
+                <option value="2027">Ab 01.01.2027 (HBGL 7.410 € · AZ 1.351,57 €)</option>
+              </select>
             </div>
 
             <div class="input-field">
@@ -309,28 +317,36 @@
   <script>
   'use strict';
 
-  function atTaxYearly2026(taxableYear) {
+  function atTaxYearly(taxableYear, year) {
+    const b = year === '2027'
+      ? [13846, 22491, 37285, 71960, 107236]
+      : [13539, 21992, 36458, 70365, 104859];
     let t = 0;
-    if (taxableYear > 1000000) t += (taxableYear - 1000000) * 0.55 + (1000000 - 104859) * 0.50 + (104859 - 70365) * 0.48 + (70365 - 36458) * 0.40 + (36458 - 21992) * 0.30 + (21992 - 13539) * 0.20;
-    else if (taxableYear > 104859) t += (taxableYear - 104859) * 0.50 + (104859 - 70365) * 0.48 + (70365 - 36458) * 0.40 + (36458 - 21992) * 0.30 + (21992 - 13539) * 0.20;
-    else if (taxableYear > 70365) t += (taxableYear - 70365) * 0.48 + (70365 - 36458) * 0.40 + (36458 - 21992) * 0.30 + (21992 - 13539) * 0.20;
-    else if (taxableYear > 36458) t += (taxableYear - 36458) * 0.40 + (36458 - 21992) * 0.30 + (21992 - 13539) * 0.20;
-    else if (taxableYear > 21992) t += (taxableYear - 21992) * 0.30 + (21992 - 13539) * 0.20;
-    else if (taxableYear > 13539) t += (taxableYear - 13539) * 0.20;
+    if (taxableYear > 1000000) t += (taxableYear - 1000000) * 0.55 + (1000000 - b[4]) * 0.50 + (b[4] - b[3]) * 0.48 + (b[3] - b[2]) * 0.40 + (b[2] - b[1]) * 0.30 + (b[1] - b[0]) * 0.20;
+    else if (taxableYear > b[4]) t += (taxableYear - b[4]) * 0.50 + (b[4] - b[3]) * 0.48 + (b[3] - b[2]) * 0.40 + (b[2] - b[1]) * 0.30 + (b[1] - b[0]) * 0.20;
+    else if (taxableYear > b[3]) t += (taxableYear - b[3]) * 0.48 + (b[3] - b[2]) * 0.40 + (b[2] - b[1]) * 0.30 + (b[1] - b[0]) * 0.20;
+    else if (taxableYear > b[2]) t += (taxableYear - b[2]) * 0.40 + (b[2] - b[1]) * 0.30 + (b[1] - b[0]) * 0.20;
+    else if (taxableYear > b[1]) t += (taxableYear - b[1]) * 0.30 + (b[1] - b[0]) * 0.20;
+    else if (taxableYear > b[0]) t += (taxableYear - b[0]) * 0.20;
     return t;
   }
 
-  function activeWorkerNet2026(grossMonthly) {
+  function activeWorkerNet(grossMonthly, year) {
     if (grossMonthly <= 0) return 0;
-    const av = grossMonthly <= 2225 ? 0 : grossMonthly <= 2427 ? 0.01 : grossMonthly <= 2630 ? 0.02 : 0.0295;
+    const av = year === '2027'
+      ? (grossMonthly <= 2327 ? 0.005 : grossMonthly <= 2539 ? 0.015 : grossMonthly <= 2751 ? 0.025 : 0.0295)
+      : (grossMonthly <= 2225 ? 0 : grossMonthly <= 2427 ? 0.01 : grossMonthly <= 2630 ? 0.02 : 0.0295);
+    const hbgl = year === '2027' ? 7410 : 6930;
+    const vab = year === '2027' ? 508 : 496;
     const svRate = grossMonthly <= 551.10 ? 0 : 0.1512 + av;
-    const sv = Math.min(grossMonthly, 6930) * svRate;
-    const taxY = atTaxYearly2026(Math.max(0, (grossMonthly - sv) * 12 - 132));
-    const taxM = Math.max(0, taxY / 12 - 496 / 12);
+    const sv = Math.min(grossMonthly, hbgl) * svRate;
+    const taxY = atTaxYearly(Math.max(0, (grossMonthly - sv) * 12 - 132), year);
+    const taxM = Math.max(0, taxY / 12 - vab / 12);
     return Math.max(0, grossMonthly - sv - taxM);
   }
 
   function calcPension() {
+    const year      = document.getElementById('pensionYear')?.value || '2026';
     const birthYear = parseInt(document.getElementById('birthYear').value, 10) || 1988;
     const retireAge = parseInt(document.getElementById('retireAge').value, 10) || 65;
     const avgBrutto = Math.max(0, parseFloat(document.getElementById('avgBrutto').value) || 0);
@@ -340,19 +356,20 @@
     const currentYear = new Date().getFullYear();
     const currentAge  = currentYear - birthYear;
     const yearsLeft   = Math.max(0, retireAge - currentAge);
-    const maxFutureByStart = Math.max(0, retireAge - startAge - insYears);
-    const futureYears = yearsLeft > 0 ? Math.min(yearsLeft, Math.max(yearsLeft, maxFutureByStart)) : 0;
     const totalYears  = Math.min(45, insYears + Math.max(0, Math.min(yearsLeft, retireAge - startAge - insYears)));
 
-    const basisMonthly = Math.min(avgBrutto, 6930);
+    const hbgl         = year === '2027' ? 7410 : 6930;
+    const basisMonthly = Math.min(avgBrutto, hbgl);
     let pensionBrutto  = totalYears * 0.0178 * basisMonthly;
 
     const diffFromNormal = retireAge - 65;
     const adj = diffFromNormal < 0 ? diffFromNormal * 0.051 : Math.min(diffFromNormal, 3) * 0.042;
     pensionBrutto = pensionBrutto * (1 + adj);
 
-    // Ausgleichszulagenrichtsatz 2026 (Alleinstehend)
-    const minPension = totalYears >= 40 ? 1700.76 : totalYears >= 30 ? 1423.63 : 1308.39;
+    // Ausgleichszulagenrichtsatz 2026 (1.308,39 / 1.423,63 / 1.700,76) bzw. 2027 (+3,3 % auf 1.351,57 alleinstehend)
+    const minPension = year === '2027'
+      ? 1351.57
+      : (totalYears >= 40 ? 1700.76 : totalYears >= 30 ? 1423.63 : 1308.39);
     const isWarning = totalYears < 15;
     let isAusgleich = false;
     if (!isWarning && avgBrutto > 0 && pensionBrutto < minPension) {
@@ -360,14 +377,15 @@
       isAusgleich = true;
     }
 
-    // 2026 Netto: 6,0 % Krankenversicherung + Lohnsteuertarif 2026 - Pensionistenabsetzbetrag (1.020 €)
+    // Netto: 6,0 % Krankenversicherung + Tarif 2026/2027 - Pensionistenabsetzbetrag (1.020 € bzw. 1.044 €)
     const svPension = pensionBrutto * 0.06;
     const taxableYear = Math.max(0, (pensionBrutto - svPension) * 12);
+    const pabMax = year === '2027' ? 1044 : 1020;
     let pab = 0;
-    if (taxableYear > 0 && taxableYear <= 21614) pab = 1020;
-    else if (taxableYear > 21614 && taxableYear < 31494) pab = 1020 * (31494 - taxableYear) / (31494 - 21614);
+    if (taxableYear > 0 && taxableYear <= 21614) pab = pabMax;
+    else if (taxableYear > 21614 && taxableYear < 31494) pab = pabMax * (31494 - taxableYear) / (31494 - 21614);
 
-    const taxYear = Math.max(0, atTaxYearly2026(taxableYear) - pab);
+    const taxYear = Math.max(0, atTaxYearly(taxableYear, year) - pab);
     const taxMonthly = taxYear / 12;
     const pensionNetto = Math.max(0, pensionBrutto - svPension - taxMonthly);
 
@@ -376,7 +394,7 @@
     const sonderTax2 = sonderBase2 > 2615 ? Math.max(0, sonderBase2 - 620) * 0.06 : 0;
     const pensionSonderNetto = Math.max(0, pensionBrutto - svPension - sonderTax2 / 2);
 
-    const activeNetto = activeWorkerNet2026(avgBrutto);
+    const activeNetto = activeWorkerNet(avgBrutto, year);
     const replRate = avgBrutto > 0 ? ((pensionBrutto / avgBrutto) * 100).toFixed(1) : '0.0';
     const gap = Math.max(0, activeNetto - pensionNetto);
 
@@ -402,7 +420,7 @@
   }
 
   document.getElementById('calcPension').addEventListener('click', calcPension);
-  document.querySelectorAll('#avgBrutto, #birthYear, #startWorkAge, #insuredYears, #retireAge').forEach((el) => {
+  document.querySelectorAll('#pensionYear, #avgBrutto, #birthYear, #startWorkAge, #insuredYears, #retireAge').forEach((el) => {
     el.addEventListener('input', () => {
       if (el.id === 'avgBrutto') {
         const val = parseFloat(el.value);

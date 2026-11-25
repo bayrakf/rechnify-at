@@ -233,6 +233,15 @@
               </select>
             </div>
 
+            <div class="input-field">
+              <label class="input-label" for="calcYear">Tarifjahr</label>
+              <select id="calcYear">
+                <option value="2026" selected>2026 (aktuell)</option>
+                <option value="2027-bestand">2027 (ab 01.01. – bestehendes Dienstverhältnis)</option>
+                <option value="2027-neu">2027 (ab 01.01. – Neueintritt ab 2027)</option>
+              </select>
+            </div>
+
             <div class="teilzeit-box">
               <label class="teilzeit-label" for="simulatePartTime">
                 <input type="checkbox" id="simulatePartTime">
@@ -398,9 +407,7 @@
         <details class="calc-legal-drawer">
           <summary><svg class="icon" width="16" height="16" aria-hidden="true"><use href="/assets/icons.svg#i-scale"/></svg>Berechnungsgrundlagen &amp; gesetzliche Werte 2026 anzeigen</summary>
           <div class="legal-drawer-content">
-            Dieser Rechner nutzt die offiziellen Lohnsteuertarife und SV-Sätze für das Jahr 2026. Der Verkehrsabsetzbetrag
-            (VAB 496 €) ist automatisch inkludiert. Höchstbeitragsgrundlage (HBGL) 6.930 €/Monat. Spezifische Sonderfälle (Pendlerpauschale, Familienbonus Plus, Freibeträge)
-            werden in diesem Schnellrechner nicht berücksichtigt, um das Ergebnis einfach und übersichtlich zu halten.
+            Dieser Rechner nutzt die offiziellen Lohnsteuertarife und SV-Sätze für <strong>2026</strong> (VAB 496 €, HBGL 6.930 €) sowie <strong>2027</strong> (Tarifstufen +2,27 %, VAB 508 €, HBGL 7.410 €, AV-Staffelung mit Übergangsregelung Bestand vs. Neueintritt). Geringfügigkeitsgrenze bleibt 551,10 €. Sonderfälle (Pendlerpauschale, Familienbonus Plus) bleiben unberücksichtigt.
           </div>
         </details>
 
@@ -430,14 +437,12 @@
           <details>
             <summary>Wie hoch ist der Sozialversicherungsbeitrag in
               Österreich?</summary>
-            <p>Der reguläre Sozialversicherungsbeitrag für Angestellte und Arbeiter beträgt 18,07% des Bruttogehalts,
-                gedeckelt bis zur Höchstbeitragsgrundlage (6.930 € pro Monat im Jahr 2026). Bis 2.630 € Monatsbrutto ist er niedriger, weil der Anteil zur Arbeitslosenversicherung gestaffelt ist (0 bis 2,95 %).</p>
+            <p>Der reguläre Sozialversicherungsbeitrag für Angestellte und Arbeiter beträgt 18,07 % des Bruttogehalts, gedeckelt bis zur Höchstbeitragsgrundlage (<strong>2026:</strong> 6.930 €, <strong>2027:</strong> 7.410 € monatlich). Bis 2.630 € (2026) bzw. 2.751 € Bestand / 2.539 € Neueintritt (2027) ist der Anteil zur Arbeitslosenversicherung ermäßigt.</p>
           </details>
 
           <details>
             <summary>Wie hoch ist die Höchstbeitragsgrundlage in Österreich?</summary>
-            <p>Im Jahr 2026 liegt die Höchstbeitragsgrundlage bei 6.930 € monatlich (83.160 € jährlich).
-                Einkommensanteile über dieser Grenze sind beitragsfrei in der Sozialversicherung.</p>
+            <p>Die Höchstbeitragsgrundlage liegt <strong>2026</strong> bei 6.930 € monatlich (83.160 € jährlich laufend) und steigt <strong>2027</strong> auf <strong>7.410 € monatlich</strong>. Einkommensanteile darüber sind SV-beitragsfrei.</p>
           </details>
 
           <details>
@@ -535,9 +540,39 @@
       ]
     };
 
+    const AT2027 = {
+      bbgMonthly: 7410,      // Hoechstbeitragsgrundlage 2027 (inkl. Sonderanhebung)
+      vabYearly: 508,        // Verkehrsabsetzbetrag 2027
+      szFreibetrag: 620,
+      szFreigrenze: 2615,
+      svLaufendBase: 0.1512,
+      svSonderBase: 0.1412,
+      brackets: [
+        [13846, 0.00],
+        [22491, 0.20],
+        [37285, 0.30],
+        [71960, 0.40],
+        [107236, 0.48],
+        [1000000, 0.50],
+        [Infinity, 0.55]
+      ],
+      szBrackets: AT2026.szBrackets
+    };
+
     /* Versichertenanteil am AV-Beitrag ist bei geringem Einkommen gestaffelt.
-       Ohne diese Staffelung wird Niedrigverdienern zu viel SV abgezogen. */
-    function avRate(monthlyBase) {
+       2027 greift die neue schrittweise Abschaffung (Bestand vs. Neueintritt). */
+    function avRate(monthlyBase, yearMode = '2026') {
+      if (yearMode === '2027-neu') {
+        if (monthlyBase <= 2327) return 0.0100;
+        if (monthlyBase <= 2539) return 0.0200;
+        return 0.0295;
+      }
+      if (yearMode === '2027-bestand') {
+        if (monthlyBase <= 2327) return 0.0050;
+        if (monthlyBase <= 2539) return 0.0150;
+        if (monthlyBase <= 2751) return 0.0250;
+        return 0.0295;
+      }
       if (monthlyBase <= 2225) return 0.0000;
       if (monthlyBase <= 2427) return 0.0100;
       if (monthlyBase <= 2630) return 0.0200;
@@ -545,10 +580,10 @@
     }
 
     /* Progressive Steuer auf ein Jahreseinkommen */
-    function tariffTax(taxableYearly) {
+    function tariffTax(taxableYearly, C = AT2026) {
       if (taxableYearly <= 0) return 0;
       let tax = 0, lower = 0;
-      for (const [upper, rate] of AT2026.brackets) {
+      for (const [upper, rate] of C.brackets) {
         if (taxableYearly <= lower) break;
         const slice = Math.min(taxableYearly, upper) - lower;
         if (slice > 0) tax += slice * rate;
@@ -557,11 +592,11 @@
       return tax;
     }
 
-    function calcTaxes(grossMonthly, hasSonder) {
-      const C = AT2026;
+    function calcTaxes(grossMonthly, hasSonder, yearMode = '2026') {
+      const C = (yearMode === '2027-bestand' || yearMode === '2027-neu') ? AT2027 : AT2026;
       grossMonthly = Math.max(0, grossMonthly || 0);
 
-      const av = avRate(grossMonthly);
+      const av = avRate(grossMonthly, yearMode);
       const isGf = grossMonthly <= 551.10;
       const svRateLaufend = isGf ? 0 : (C.svLaufendBase + av);
       const svRateSonder = isGf ? 0 : (C.svSonderBase + av);
@@ -572,7 +607,7 @@
 
       // § 16 Abs. 3 EStG: Pauschbetrag für Werbungskosten 132 € jährlich
       const taxBaseYearly = Math.max(0, (grossMonthly - svMonthly) * 12 - 132);
-      let taxMonthly = (tariffTax(taxBaseYearly) - C.vabYearly) / 12;
+      let taxMonthly = (tariffTax(taxBaseYearly, C) - C.vabYearly) / 12;
       if (taxMonthly < 0) taxMonthly = 0;
 
       const netMonthly = grossMonthly - svMonthly - taxMonthly;
@@ -652,6 +687,7 @@
       const rawGross = parseFloat(document.getElementById('grossMonthly').value) || 0;
       const salaryMode = document.getElementById('salaryMode') ? document.getElementById('salaryMode').value : 'monat';
       const hasSonder = document.getElementById('hasSonderzahlungen').value === 'ja';
+      const yearMode = document.getElementById('calcYear') ? document.getElementById('calcYear').value : '2026';
       const isPartTime = document.getElementById('simulatePartTime').checked;
 
       // Base gross converted to standard monthly gross for tax calculations
@@ -668,8 +704,8 @@
 
       if (isPartTime && hoursOld > 0 && hoursNew > 0) {
         calcGross = (baseGross / hoursOld) * hoursNew;
-        const resOld = calcTaxes(baseGross, hasSonder);
-        const resNew = calcTaxes(calcGross, hasSonder);
+        const resOld = calcTaxes(baseGross, hasSonder, yearMode);
+        const resNew = calcTaxes(calcGross, hasSonder, yearMode);
 
         const bruttoLossPct = ((baseGross - calcGross) / baseGross) * 100;
         const nettoLossPct = ((resOld.netMonthly - resNew.netMonthly) / resOld.netMonthly) * 100;
@@ -688,7 +724,7 @@
         </div>`;
       }
 
-      const res = calcTaxes(calcGross, hasSonder);
+      const res = calcTaxes(calcGross, hasSonder, yearMode);
 
       const elMonthly = document.getElementById('resNetMonthly');
       elMonthly.textContent = res.netMonthly.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
@@ -770,6 +806,8 @@
 
     const calcBtn = document.getElementById('calculate');
     if (calcBtn) calcBtn.addEventListener('click', calculateGehalt);
+    const calcYearEl = document.getElementById('calcYear');
+    if (calcYearEl) calcYearEl.addEventListener('change', calculateGehalt);
 
     /* ── Live calculation: recalc while typing (debounced) ────────
      * 'input' covers text/number fields, 'change' covers select + checkbox. */
@@ -923,7 +961,8 @@
           const hNew = parseFloat(document.getElementById('hoursTarget')?.value) || 32;
           const calcGross = isPt ? (grossNum / hOld) * hNew : grossNum;
 
-          const res = calcTaxes(calcGross, hasSonder);
+          const yearMode = document.getElementById('calcYear')?.value || '2026';
+          const res = calcTaxes(calcGross, hasSonder, yearMode);
           const fmt = (n) => n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
           const date = new Date().toLocaleDateString('de-AT');
 
