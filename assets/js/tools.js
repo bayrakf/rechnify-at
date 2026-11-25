@@ -23,7 +23,8 @@ const TOOL_MAPPING = {
   '/arbeitszeit/teilzeitrechner.html': '/de/arbeitszeit/teilzeitrechner.html',
   '/finanzen/kreditrechner.html': '/de/finanzen/kreditrechner.html',
   '/arbeitszeit/arbeitstage-rechner.html': '/de/arbeitszeit/arbeitstage-rechner.html',
-  '/arbeitszeit/brueckentage-planer.html': '/de/arbeitszeit/brueckentage-planer.html'
+  '/arbeitszeit/brueckentage-planer.html': '/de/arbeitszeit/brueckentage-planer.html',
+  '/arbeitszeit/kuendigungsfrist-rechner.html': '/de/arbeitszeit/kuendigungsfrist-rechner.html'
 };
 
 function initCountryToggle() {
@@ -169,95 +170,116 @@ function registerServiceWorker() {
 }
 
 // --- Share / Bookmark / Print ---
-function initShareButtons() {
-  document.querySelectorAll('.result-box').forEach((box) => {
-    if (box.querySelector('.share-btn')) return;
-    const actionDiv = document.createElement('div');
-    actionDiv.className = 'result-actions';
-    actionDiv.style.cssText = 'display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;';
-    const shareUrl = window.location.href;
-    const shareText = document.title + ' – berechnet mit rechnify.at';
-    const nativeBtn = document.createElement('button');
-    nativeBtn.type = 'button';
-    nativeBtn.className = 'btn share-btn';
-    nativeBtn.innerHTML = '<img src="/assets/images/icons/share.svg" alt="Teilen" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Teilen';
-    nativeBtn.setAttribute('aria-label', 'Ergebnis teilen');
-    nativeBtn.style.cssText = 'flex:1.4;min-width:140px;';
-    nativeBtn.addEventListener('click', async () => {
-      if (navigator.share) {
-        try { await navigator.share({ title: document.title, text: shareText, url: shareUrl }); return; } catch (e) { }
-      }
-      try {
-        await navigator.clipboard.writeText(shareUrl);
-        nativeBtn.innerHTML = '<img src="/assets/images/icons/link.svg" alt="Kopiert" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Kopiert';
-        setTimeout(() => { nativeBtn.innerHTML = '<img src="/assets/images/icons/share.svg" alt="Teilen" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Teilen'; }, 1600);
-      } catch (e) {
-        window.prompt('Link kopieren:', shareUrl);
-      }
-    });
-    const bookmarkBtn = document.createElement('button');
-    bookmarkBtn.type = 'button';
-    bookmarkBtn.className = 'btn';
-    bookmarkBtn.innerHTML = '<img src="/assets/images/icons/bookmark.svg" alt="Merken" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Merken';
-    bookmarkBtn.setAttribute('aria-label', 'Seite merken');
-    bookmarkBtn.style.cssText = 'flex:1;min-width:120px;';
-    const BOOKMARK_KEY = 'rechnify.bookmarkShown';
-    if (localStorage.getItem(BOOKMARK_KEY) === '1') {
-      bookmarkBtn.hidden = true;
+function buildShareActions() {
+  const actionDiv = document.createElement('div');
+  actionDiv.className = 'result-actions';
+  actionDiv.style.cssText = 'display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;';
+  const shareUrl = window.location.href;
+  const shareText = document.title + ' – berechnet mit rechnify.at';
+  const nativeBtn = document.createElement('button');
+  nativeBtn.type = 'button';
+  nativeBtn.className = 'btn share-btn';
+  nativeBtn.innerHTML = '<img src="/assets/images/icons/share.svg" alt="Teilen" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Teilen';
+  nativeBtn.setAttribute('aria-label', 'Ergebnis teilen');
+  nativeBtn.style.cssText = 'flex:1.4;min-width:140px;';
+  nativeBtn.addEventListener('click', async () => {
+    if (navigator.share) {
+      try { await navigator.share({ title: document.title, text: shareText, url: shareUrl }); return; } catch (e) { }
     }
-    bookmarkBtn.addEventListener('click', () => {
-      const tip = 'Lesezeichen: Cmd/Ctrl+D';
-      try {
-        localStorage.setItem('rechnify.bookmarkHint', shareUrl);
-        localStorage.setItem(BOOKMARK_KEY, '1');
-      } catch (e) { }
-      bookmarkBtn.textContent = tip;
-      bookmarkBtn.title = tip;
-      setTimeout(() => { bookmarkBtn.hidden = true; }, 1800);
-    });
-    const printBtn = document.createElement('button');
-    printBtn.type = 'button';
-    printBtn.className = 'btn print-btn';
-    printBtn.innerHTML = '<img src="/assets/images/icons/print.svg" alt="Drucken" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Drucken';
-    printBtn.setAttribute('aria-label', 'Drucken / PDF');
-    printBtn.style.cssText = 'flex:1;min-width:120px;';
-    printBtn.addEventListener('click', () => window.print());
-    const wa = document.createElement('a');
-    wa.className = 'btn';
-    wa.href = 'https://wa.me/?text=' + encodeURIComponent(shareText + ' ' + shareUrl);
-    wa.target = '_blank';
-    wa.rel = 'noopener';
-    wa.innerHTML = '<img src="/assets/images/icons/whatsapp.svg" alt="WhatsApp" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> WhatsApp';
-    wa.setAttribute('aria-label', 'Per WhatsApp teilen');
-    wa.style.cssText = 'flex:1;min-width:120px;text-align:center;';
-    const ig = document.createElement('a');
-    ig.className = 'btn';
-    ig.href = 'https://www.instagram.com/?url=' + encodeURIComponent(shareUrl);
-    ig.target = '_blank';
-    ig.rel = 'noopener';
-    ig.innerHTML = '<img src="/assets/images/icons/instagram.svg" alt="Instagram" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Instagram';
-    ig.setAttribute('aria-label', 'Per Instagram teilen');
-    ig.style.cssText = 'flex:1;min-width:120px;text-align:center;';
-    actionDiv.append(nativeBtn, wa, ig);
-    if (!bookmarkBtn.hidden) actionDiv.append(bookmarkBtn);
-    actionDiv.append(printBtn);
-    box.appendChild(actionDiv);
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      nativeBtn.innerHTML = '<img src="/assets/images/icons/link.svg" alt="Kopiert" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Kopiert';
+      setTimeout(() => { nativeBtn.innerHTML = '<img src="/assets/images/icons/share.svg" alt="Teilen" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Teilen'; }, 1600);
+    } catch (e) {
+      window.prompt('Link kopieren:', shareUrl);
+    }
+  });
+  const bookmarkBtn = document.createElement('button');
+  bookmarkBtn.type = 'button';
+  bookmarkBtn.className = 'btn';
+  bookmarkBtn.innerHTML = '<img src="/assets/images/icons/bookmark.svg" alt="Merken" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Merken';
+  bookmarkBtn.setAttribute('aria-label', 'Seite merken');
+  bookmarkBtn.style.cssText = 'flex:1;min-width:120px;';
+  const BOOKMARK_KEY = 'rechnify.bookmarkShown';
+  if (localStorage.getItem(BOOKMARK_KEY) === '1') {
+    bookmarkBtn.hidden = true;
+  }
+  bookmarkBtn.addEventListener('click', () => {
+    const tip = 'Lesezeichen: Cmd/Ctrl+D';
+    try {
+      localStorage.setItem('rechnify.bookmarkHint', shareUrl);
+      localStorage.setItem(BOOKMARK_KEY, '1');
+    } catch (e) { }
+    bookmarkBtn.textContent = tip;
+    bookmarkBtn.title = tip;
+    setTimeout(() => { bookmarkBtn.hidden = true; }, 1800);
+  });
+  const printBtn = document.createElement('button');
+  printBtn.type = 'button';
+  printBtn.className = 'btn print-btn';
+  printBtn.innerHTML = '<img src="/assets/images/icons/print.svg" alt="Drucken" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Drucken';
+  printBtn.setAttribute('aria-label', 'Drucken / PDF');
+  printBtn.style.cssText = 'flex:1;min-width:120px;';
+  printBtn.addEventListener('click', () => window.print());
+  const wa = document.createElement('a');
+  wa.className = 'btn';
+  wa.href = 'https://wa.me/?text=' + encodeURIComponent(shareText + ' ' + shareUrl);
+  wa.target = '_blank';
+  wa.rel = 'noopener';
+  wa.innerHTML = '<img src="/assets/images/icons/whatsapp.svg" alt="WhatsApp" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> WhatsApp';
+  wa.setAttribute('aria-label', 'Per WhatsApp teilen');
+  wa.style.cssText = 'flex:1;min-width:120px;text-align:center;';
+  const ig = document.createElement('a');
+  ig.className = 'btn';
+  ig.href = 'https://www.instagram.com/?url=' + encodeURIComponent(shareUrl);
+  ig.target = '_blank';
+  ig.rel = 'noopener';
+  ig.innerHTML = '<img src="/assets/images/icons/instagram.svg" alt="Instagram" width="18" height="18" style="vertical-align:middle;margin-right:6px;" /> Instagram';
+  ig.setAttribute('aria-label', 'Per Instagram teilen');
+  ig.style.cssText = 'flex:1;min-width:120px;text-align:center;';
+  actionDiv.append(nativeBtn, wa, ig);
+  if (!bookmarkBtn.hidden) actionDiv.append(bookmarkBtn);
+  actionDiv.append(printBtn);
+  return actionDiv;
+}
+
+function initShareButtons() {
+  const legacyBoxes = document.querySelectorAll('.result-box');
+  legacyBoxes.forEach((box) => {
+    if (box.querySelector('.share-btn')) return;
+    box.appendChild(buildShareActions());
     injectCalcExplain(box);
     injectAdSlot(box);
   });
+  if (legacyBoxes.length === 0) {
+    const cockpitRight = document.querySelector('.cockpit-right');
+    const cockpitCard = document.querySelector('.calculator-container.cockpit-layout');
+    if (cockpitRight) {
+      if (!cockpitRight.querySelector('.cockpit-footer-actions, .share-actions, .share-btn')) {
+        cockpitRight.appendChild(buildShareActions());
+      }
+      injectCalcExplain(cockpitRight);
+    }
+    if (cockpitCard || cockpitRight) {
+      injectAdSlot(cockpitCard || cockpitRight);
+    }
+  }
 }
 
 function injectCalcExplain(box) {
-  if (box.parentElement?.querySelector('.calc-explain')) return;
+  const existingScope = box.classList.contains('cockpit-right') ? box : box.parentElement;
+  if (existingScope?.querySelector('.calc-explain')) return;
   const path = window.location.pathname;
   let title = 'Wie gerechnet?';
   let body = 'Berechnung läuft lokal in deinem Browser. Ergebnis ist eine Orientierung — keine Steuer- oder Rechtsberatung.';
   if (/gehalt|brutto-netto/i.test(path)) {
-    body = 'Vom Brutto werden Sozialversicherungsbeiträge und Lohnsteuer abgezogen. In Österreich kommen oft 13./14. Gehalt mit begünstigter Besteuerung dazu; in Deutschland gelten EstG, SV-Bemessungsgrenzen und ggf. Kirchensteuer/Soli. Stand der Formeln: 2026.';
+    body = 'Vom Brutto werden Sozialversicherungsbeiträge und Lohnsteuer abgezogen. In Österreich kommen oft 13./14. Gehalt mit begünstigter Besteuerung dazu; in Deutschland gelten EStG, SV-Bemessungsgrenzen und ggf. Kirchensteuer/Soli. Stand der Formeln: 2026.';
   } else if (/mwst/i.test(path)) {
     body = 'Brutto = Netto × (1 + MwSt-Satz). Netto = Brutto ÷ (1 + MwSt-Satz). Sätze je nach Land (AT/DE).';
   } else if (/ueberstunden|stundenlohn|kommen-gehen|teilzeit|urlaub/i.test(path)) {
     body = 'Aus Stunden, Zuschlägen und vereinbartem Satz wird der Betrag bzw. die Zeitbilanz berechnet. Tarifliche Sonderregeln können abweichen.';
+  } else if (/pension/i.test(path)) {
+    body = 'Pensionsschätzung nach österreichischem Pensionskonto-Modell (1,78 % Kontogutschrift pro Jahr) inklusive KV-Abzug (5,1 % / 6,0 % ab 06/2025) und Lohnsteuertarif 2026.';
   } else if (/krypto/i.test(path)) {
     body = 'Gewinn ≈ Verkaufserlös − Anschaffungskosten (vereinfacht). Haltefristen und Länderregeln (AT/DE) können die Steuerpflicht ändern.';
   } else if (/pendler/i.test(path)) {
@@ -266,7 +288,11 @@ function injectCalcExplain(box) {
   const el = document.createElement('details');
   el.className = 'calc-explain';
   el.innerHTML = '<summary>' + title + '</summary><p>' + body + '</p>';
-  box.insertAdjacentElement('afterend', el);
+  if (box.classList.contains('cockpit-right')) {
+    box.appendChild(el);
+  } else {
+    box.insertAdjacentElement('afterend', el);
+  }
 }
 
 function injectPrintBrand() {
@@ -280,8 +306,14 @@ function injectPrintBrand() {
   document.body.prepend(brand);
 }
 
+function hasSchemaType(typeName) {
+  return Array.from(document.querySelectorAll('script[type="application/ld+json"]')).some((s) =>
+    s.textContent.includes('"' + typeName + '"')
+  );
+}
+
 function injectHowToSchema() {
-  if (!document.querySelector('.calc-body') || document.getElementById('howto-schema')) return;
+  if (!document.querySelector('.calc-body, .cockpit-layout') || document.getElementById('howto-schema') || hasSchemaType('HowTo')) return;
   const name = document.title.replace(/\s*\|\s*rechnify\.at$/, '').trim();
   const schema = {
     '@context': 'https://schema.org',
@@ -303,7 +335,7 @@ function injectHowToSchema() {
 
 function injectBreadcrumbs() {
   const path = window.location.pathname;
-  if (path === '/' || path === '/index.html') return;
+  if (path === '/' || path === '/index.html' || hasSchemaType('BreadcrumbList')) return;
   const parts = path.split('/').filter(p => p && p !== 'de' && p !== 'index.html');
   const itemListElement = [{
     '@type': 'ListItem',
@@ -404,13 +436,13 @@ function injectRelatedTools() {
 
 // --- Gehalts-Vergleich (A/B Test) ---
 function initGehaltsVergleich() {
-  if (!window.location.pathname.includes('gehaltsrechner')) return;
-  const resultBox = document.querySelector('.result-box');
-  if (!resultBox) return;
+  if (!window.location.pathname.includes('gehaltsrechner') && !document.getElementById('resNetMonthly')) return;
+  const resultBox = document.querySelector('.result-box') || document.querySelector('.cockpit-right');
+  if (!resultBox || document.getElementById('ab-comparison-box')) return;
   const compDiv = document.createElement('div');
   compDiv.id = 'ab-comparison-box';
   compDiv.style.display = 'none';
-  compDiv.style.marginTop = '24px';
+  compDiv.style.marginTop = '16px';
   compDiv.style.padding = '16px';
   compDiv.style.background = 'var(--color-paper-3)';
   compDiv.style.border = '2px dashed var(--color-rule)';
@@ -428,6 +460,7 @@ function initGehaltsVergleich() {
   compText.id = 'ab-comparison-text';
   compDiv.appendChild(compText);
   const resetBtn = document.createElement('button');
+  resetBtn.type = 'button';
   resetBtn.className = 'btn';
   resetBtn.style.padding = '6px 12px';
   resetBtn.style.fontSize = '12px';
@@ -438,10 +471,10 @@ function initGehaltsVergleich() {
     compDiv.style.display = 'none';
   });
   compDiv.appendChild(resetBtn);
-  resultBox.appendChild(compDiv);
   const saveBtnContainer = document.createElement('div');
-  saveBtnContainer.style.marginTop = '16px';
+  saveBtnContainer.style.marginTop = '12px';
   const saveBtn = document.createElement('button');
+  saveBtn.type = 'button';
   saveBtn.className = 'btn';
   saveBtn.style.width = '100%';
   saveBtn.style.background = 'var(--color-paper)';
@@ -456,12 +489,19 @@ function initGehaltsVergleich() {
     if (!isNaN(netVal) && netVal > 0) {
       localStorage.setItem('rechnify.abTestNetto', netVal);
       saveBtn.innerHTML = '✅ Gemerkt! Gib jetzt ein anderes Gehalt ein.';
-      setTimeout(() => saveBtn.innerHTML = '📌 Dieses Netto für Vergleich merken', 3000);
+      setTimeout(() => { saveBtn.innerHTML = '📌 Dieses Netto für Vergleich merken'; }, 3000);
       updateComparisonUI();
     }
   });
   saveBtnContainer.appendChild(saveBtn);
-  resultBox.appendChild(saveBtnContainer);
+  const footerActions = resultBox.querySelector('.cockpit-footer-actions');
+  if (footerActions) {
+    resultBox.insertBefore(compDiv, footerActions);
+    resultBox.insertBefore(saveBtnContainer, footerActions);
+  } else {
+    resultBox.appendChild(compDiv);
+    resultBox.appendChild(saveBtnContainer);
+  }
   function updateComparisonUI() {
     const saved = localStorage.getItem('rechnify.abTestNetto');
     if (!saved) {
@@ -473,7 +513,7 @@ function initGehaltsVergleich() {
     if (!netEl) return;
     const currStr = netEl.textContent.replace(/[^\d,-]/g, '').replace(',', '.');
     const currNet = parseFloat(currStr);
-    if (!isNaN(currNet) && currNet > 0 && currNet !== savedNet) {
+    if (!isNaN(currNet) && currNet > 0 && Math.abs(currNet - savedNet) >= 0.01) {
       const diff = currNet - savedNet;
       const isPositive = diff > 0;
       const color = isPositive ? 'var(--color-success)' : 'var(--color-danger)';
@@ -492,17 +532,69 @@ function initGehaltsVergleich() {
       setTimeout(updateComparisonUI, 50);
     });
   }
+  document.querySelectorAll('.calc-body input, .calc-body select, .cockpit-left input, .cockpit-left select').forEach((el) => {
+    el.addEventListener('input', () => setTimeout(updateComparisonUI, 60));
+    el.addEventListener('change', () => setTimeout(updateComparisonUI, 60));
+  });
+  setTimeout(updateComparisonUI, 150);
+}
+
+// Prefill ?brutto= from URL and carry entered gross value across calculator links
+function initParamFlow() {
+  if (initParamFlow._done) return;
+  initParamFlow._done = true;
+  const grossSelectors = ['#brutto', '#currentGross', '#avgBrutto', '#alt', '#grossSalary'];
+  const getGrossInput = () => {
+    for (const sel of grossSelectors) {
+      const el = document.querySelector(sel);
+      if (el) return el;
+    }
+    return null;
+  };
+  const targetInput = getGrossInput();
+  const params = new URLSearchParams(window.location.search);
+  const rawBrutto = params.get('brutto');
+  if (targetInput && rawBrutto !== null) {
+    const val = parseFloat(rawBrutto.replace(',', '.'));
+    if (!isNaN(val) && val > 0 && val <= 1000000) {
+      targetInput.value = String(val);
+      targetInput.dispatchEvent(new Event('input', { bubbles: true }));
+      targetInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+  const carryRe = /\/(teilzeitrechner|gehaltserhoehung-rechner|pensionsrechner|abfertigungsrechner|jobwechsel-netto-vergleich|urlaubstage-rechner|ueberstundenrechner|stundenlohn-rechner|pendlerrechner|gehaltsrechner|brutto-netto-oesterreich-vs-deutschland)\.html$/;
+  document.addEventListener('click', (ev) => {
+    const link = ev.target.closest('a[href]');
+    if (!link || !targetInput) return;
+    const val = parseFloat(String(targetInput.value).replace(',', '.'));
+    if (isNaN(val) || val <= 0) return;
+    try {
+      const url = new URL(link.href, window.location.origin);
+      if (url.origin !== window.location.origin || !carryRe.test(url.pathname) || url.pathname === window.location.pathname) return;
+      if (!url.searchParams.has('brutto')) {
+        url.searchParams.set('brutto', String(Math.round(val)));
+        link.href = url.pathname + url.search + url.hash;
+      }
+    } catch (e) { }
+  }, true);
 }
 
 // Auto-calculate on input change
 function initAutoCalculate() {
+  initParamFlow();
   const calcBtn = document.getElementById('calculate');
   if (!calcBtn) return;
-  document.querySelectorAll('.calc-body input, .calc-body select').forEach(el => {
+  document.querySelectorAll('.calc-body input, .calc-body select, .cockpit-left input, .cockpit-left select').forEach(el => {
     el.addEventListener('input', () => {
       calcBtn.click();
     });
   });
   setTimeout(() => calcBtn.click(), 100);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initParamFlow);
+} else {
+  initParamFlow();
 }
 

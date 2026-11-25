@@ -1,5 +1,5 @@
 /* Aggressive static cache for repeat visits — GH Pages TTL is short server-side */
-const CACHE = 'rechnify-v7';
+const CACHE = 'rechnify-v8';
 const PRECACHE = [
   '/',
   '/tokens.css',

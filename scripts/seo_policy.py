@@ -36,8 +36,15 @@ EXCLUDED_FILES = {
     "finanzen/gehalt/filialleiter-gehalt-netto.html",
     "finanzen/gehalt/geschaeftsfuehrer-gehalt-netto.html",
     "finanzen/gehalt/handwerker-gehalt-netto.html",
-    "finanzen/gehalt/ingenieur-gehalt-netto.html",
     "finanzen/gehalt/professor-gehalt-netto.html",
+    # Redundante Dünn-Stubs / Kannibalisierung (verweisen auf stärkere Hauptseiten)
+    "arbeitszeit/ueberstunden-auszahlen-oesterreich.html",
+    "finanzen/13-14-gehalt-oesterreich.html",
+    "finanzen/netto-rechner-oesterreich-2026.html",
+    "de/finanzen/netto-rechner-deutschland-2026.html",
+    "de/finanzen/kirchensteuer-erklaert.html",
+    "finanzen/mwst-oesterreich-vs-deutschland.html",
+    "finanzen/kinderbetreuungsgeld-vs-elterngeld.html",
     # DE-Berufsseiten ohne passende Berufsgruppe in der BA-Entgeltstatistik: keine belegte Gehaltszahl
     "de/finanzen/gehalt/abteilungsleiter-gehalt-netto.html",
     "de/finanzen/gehalt/anwalt-gehalt-netto.html",

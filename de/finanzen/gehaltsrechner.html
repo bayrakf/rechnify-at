@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brutto Netto Rechner Deutschland 2026| rechnify.at</title>
+  <title>Brutto Netto Rechner Deutschland 2026 | rechnify.at</title>
   <meta name="description" content="Brutto-Netto-Rechner für Deutschland. Berechne dein exaktes Nettoeinkommen, Sozialabgaben und Lohnsteuer." />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -36,6 +36,7 @@
   <link rel="preload" href="/assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/tokens.css?v=1.2" />
   <link rel="stylesheet" href="/assets/css/global.css?v=3.1" />
+  <link rel="stylesheet" href="/assets/css/ux-enhancements.css?v=1.0" />
   <link rel="stylesheet" href="/assets/css/calculator-premium.css?v=1.1" />
 
   <script type="application/ld+json">
@@ -92,7 +93,7 @@
       "name": "Wie hoch ist die Beitragsbemessungsgrenze in Deutschland?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Die Beitragsbemessungsgrenze (BBG) bestimmt das maximale Einkommen, auf das Sozialabgaben gezahlt werden müssen. Für 2026 liegen die vorläufigen Grenzen bei 90.000 € bis 95.000 € jährlich in der Rentenversicherung und bei ca. 62.000 € bis 65.000 € in der Krankenversicherung."
+        "text": "Die Beitragsbemessungsgrenze (BBG) bestimmt das maximale Einkommen, auf das Sozialabgaben gezahlt werden müssen. Für 2026 liegen die Grenzen bei 101.400 € jährlich (8.450 € monatlich) in der Renten- und Arbeitslosenversicherung sowie bei 69.750 € jährlich (5.812,50 € monatlich) in der Kranken- und Pflegeversicherung."
       }
     }, {
       "@type": "Question",
@@ -102,6 +103,17 @@
         "text": "Der Solidaritätszuschlag (Soli) wurde für rund 90% der Steuerzahler abgeschafft. Er fällt erst bei höheren Einkommen ab einer Freigrenze (ca. 68.000 € zu versteuerndes Einkommen für Alleinstehende) an und steigt dann schrittweise bis auf 5,5%."
       }
     }]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://rechnify.at/de/" },
+      { "@type": "ListItem", "position": 2, "name": "Finanzen", "item": "https://rechnify.at/de/finanzen/" },
+      { "@type": "ListItem", "position": 3, "name": "Brutto Netto Rechner Deutschland", "item": "https://rechnify.at/de/finanzen/gehaltsrechner.html" }
+    ]
   }
   </script>
 </head>
@@ -429,7 +441,7 @@
           <div class="faq-item">
             <button class="faq-question" type="button">Wie hoch ist die Beitragsbemessungsgrenze in Deutschland?</button>
             <div class="faq-answer">
-              <p>Die Beitragsbemessungsgrenze (BBG) bestimmt das maximale Einkommen, auf das Sozialabgaben gezahlt werden müssen. Für 2026 liegen die Grenzen bei 90.000 € bis 95.000 € jährlich in der Rentenversicherung und bei ca. 62.000 € bis 65.000 € in der Krankenversicherung.</p>
+              <p>Die Beitragsbemessungsgrenze (BBG) bestimmt das maximale Einkommen, auf das Sozialabgaben gezahlt werden müssen. Für 2026 liegen die Grenzen bei 101.400 € jährlich (8.450 € monatlich) in der Renten- und Arbeitslosenversicherung sowie bei 69.750 € jährlich (5.812,50 € monatlich) in der Kranken- und Pflegeversicherung.</p>
             </div>
           </div>
 
@@ -455,7 +467,6 @@
       <div class="related-tools" style="margin-top: 32px; padding: 24px; background: white; border-radius: 12px; border: 1px solid var(--border);">
         <h3 style="margin-top: 0;">🔗 Passende Rechner</h3>
         <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
-          <li><a href="/de/finanzen/gehaltsrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Brutto-Netto Gehaltsrechner</a></li>
           <li><a href="/de/arbeitszeit/ueberstundenrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Überstundenrechner (inkl. Steuerfreibetrag)</a></li>
           <li><a href="/de/finanzen/pendlerrechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Pendlerrechner (Österreich)</a></li>
           <li><a href="/de/finanzen/kirchensteuer-rechner.html" style="text-decoration: none; color: var(--primary); font-weight: 500;">➔ Kirchensteuer Rechner</a></li>
@@ -474,7 +485,6 @@
         <div class="footer-col">
           <h3>Finanzen</h3>
           <ul>
-            <li><a href="/de/finanzen/gehaltsrechner.html">Gehaltsrechner</a></li>
             <li><a href="/de/finanzen/mwst-rechner.html">MwSt-Rechner</a></li>
           </ul>
         </div>
@@ -886,5 +896,6 @@
       }
     })();
   </script>
+  <script src="/assets/js/ux-enhancements.js?v=1.1" defer></script>
 </body>
 </html>

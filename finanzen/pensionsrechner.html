@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pensionsrechner Österreich 2026 – Pension berechnen | rechnify.at</title>
-  <meta name="description" content="Kostenloser Pensionsrechner für Österreich: Berechne deine voraussichtliche ASVG-Pension auf Basis von Erwerbsjahren, Durchschnittseinkommen und Pensionierungsalter." />
+  <title>Pensionsrechner AT 2026 – ASVG &amp; Netto | rechnify.at</title>
+  <meta name="description" content="Pensionsrechner Österreich 2026: Berechne ASVG-Brutto- &amp; Nettopension (inkl. 6 % KV, Tarif 2026, 1.308 € Ausgleichszulage) &amp; deine Pensionslücke sofort." />
   <link rel="canonical" href="https://rechnify.at/finanzen/pensionsrechner.html" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="alternate" hreflang="de-AT" href="https://rechnify.at/finanzen/pensionsrechner.html" />
@@ -47,7 +47,7 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://rechnify.at/" },
-      { "@type": "ListItem", "position": 2, "name": "Finanzen", "item": "https://rechnify.at/#finanzen" },
+      { "@type": "ListItem", "position": 2, "name": "Finanzen", "item": "https://rechnify.at/finanzen/" },
       { "@type": "ListItem", "position": 3, "name": "Pensionsrechner", "item": "https://rechnify.at/finanzen/pensionsrechner.html" }
     ]
   }
@@ -75,26 +75,22 @@
       "name": "Ab wann kann ich in Österreich in Pension gehen?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Das gesetzliche Pensionsalter beträgt für Männer 65 Jahre, für Frauen wird es bis 2033 schrittweise auf 65 Jahre angehoben. Mit 62 Jahren ist eine Korridorpension möglich, wenn man mind. 40 Versicherungsjahre hat. Für jedes Jahr des Frühpensionsantritts gibt es einen Abschlag von 4,2%."
+        "text": "Das gesetzliche Pensionsalter beträgt für Männer 65 Jahre, für Frauen wird es bis 2033 schrittweise auf 65 Jahre angehoben. Mit 62 Jahren ist eine Korridorpension möglich (mit mindestens 40 Versicherungsjahren, Abschlag 5,1 % pro Jahr). Bei Aufschub nach 65 gibt es +4,2 % Zuschlag pro Jahr."
+      }
+    },{
+      "@type": "Question",
+      "name": "Wie hoch ist die Mindestpension (Ausgleichszulage) in Österreich 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Der Ausgleichszulagenrichtsatz 2026 für Alleinstehende beträgt 1.308,39 € brutto (14× jährlich). Mit mindestens 30 Beitragsjahren gilt ein erhöhter Richtsatz von 1.423,63 €, ab 40 Beitragsjahren bis zu 1.700,76 € (Pensionsbonus). Vom Bruttobetrag werden 6,0 % Krankenversicherung abgezogen."
       }
     }]
   }
   </script>
 
   <style>
-    .calc-body { padding: 24px; }
-    .input-group { margin-bottom: 20px; }
-    .input-group label { display:block; font-family:var(--font-body); font-size:var(--text-sm); font-weight:600; color:var(--color-ink); margin-bottom:6px; }
-    .input-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-    @media(max-width:600px) { .input-row { grid-template-columns:1fr; } }
-    .result-box { margin-top:24px; background:var(--color-paper); border:1px solid var(--color-rule); border-radius: 10px; padding: 20px; }
-    .result-big { font-size:2.5rem; font-weight:800; color:var(--color-success); font-family:var(--font-display); letter-spacing:-0.03em; line-height:1; }
-    .result-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--color-rule); font-size:0.95rem; }
-    .result-row:last-child { border-bottom:none; }
-    .result-label { color:var(--color-ink-2); }
-    .result-value { font-weight:700; color:var(--color-ink); }
-    .info-box { background:var(--color-info-bg); border:1px solid var(--color-callout-blue-border); border-radius:10px; padding:16px; margin:20px 0; font-size:0.9rem; }
-    .warning-box { background:var(--color-warning-bg); border:1px solid var(--color-callout-yellow-border); border-radius:10px; padding:16px; margin:20px 0; font-size:0.9rem; }
+    .info-box { background:var(--color-info-bg); border:1px solid var(--color-callout-blue-border); border-radius:10px; padding:12px 14px; margin-bottom:16px; font-size:0.86rem; line-height:1.45; }
+    .warning-box { background:var(--color-warning-bg); border:1px solid var(--color-callout-yellow-border); border-radius:10px; padding:12px 14px; font-size:0.88rem; }
   </style>
 </head>
 <body>
@@ -107,8 +103,8 @@
       </a>
       <nav class="site-nav" id="siteNav">
         <a href="/">🏠 Start</a>
-        <a href="/#finanzen">💶 Finanzen</a>
-        <a href="/#arbeitszeit">⏰ Arbeitszeit</a>
+        <a href="/finanzen/" class="active">💶 Finanzen</a>
+        <a href="/arbeitszeit/">⏰ Arbeitszeit</a>
         <a href="/blog/">📰 Blog</a>
       </nav>
       <div class="header-actions">
@@ -124,115 +120,155 @@
 
   <nav class="breadcrumb" aria-label="Brotkrumen">
     <a href="/">Start</a><span class="breadcrumb-sep">/</span>
-    <a href="/#finanzen">Finanzen</a><span class="breadcrumb-sep">/</span>
+    <a href="/finanzen/">Finanzen</a><span class="breadcrumb-sep">/</span>
     <span class="breadcrumb-current">Pensionsrechner</span>
   </nav>
 
   <main class="site-main">
-    <div class="calculator-container">
+    <div class="calculator-container cockpit-layout">
       <div class="calculator-card">
-        <div class="calc-header">
-          <div class="calc-icon">🏦</div>
-          <h1>Pensionsrechner Österreich 2026</h1>
-          <p>Schätze deine zukünftige ASVG-Alterspension auf Basis deiner Erwerbsbiografie.</p>
+        <div class="cockpit-header">
+          <div class="cockpit-header-main">
+            <div class="cockpit-icon">🏦</div>
+            <div>
+              <h1>Pensionsrechner Österreich 2026</h1>
+              <p>ASVG-Alterspension &amp; Nettopension berechnen – inkl. 6 % KV, Tarif 2026 &amp; Ausgleichszulage (1.308,39 €).</p>
+            </div>
+          </div>
         </div>
 
-        <div class="calc-body">
-          <div class="info-box">
-            ℹ️ Dieser Rechner ist eine <strong>Schätzung</strong> auf Basis des Pensionskontos (neues Recht). Die genaue Pension hängt von deinem offiziellen Pensionskonto bei der ÖGK/SVS ab.
+        <div class="cockpit-grid">
+          <div class="cockpit-left">
+            <div class="info-box">
+              ℹ️ Schätzung auf Basis des ASVG-Pensionskontos (<strong>1,78 %</strong> pro Versicherungsjahr, max. <strong>6.930 €</strong> HBGL 2026). Dein exakt geführtes Konto findest du bei der PVA.
+            </div>
+
+            <div class="input-field">
+              <label class="input-label" for="avgBrutto">Durchschnittliches Brutto (monatlich, 14×)</label>
+              <div class="input-with-suffix">
+                <input type="number" id="avgBrutto" value="3500" min="0" step="100" inputmode="decimal" />
+                <span class="suffix">€</span>
+              </div>
+            </div>
+
+            <div class="quick-chips-wrap" aria-label="Brutto-Beispiele wählen">
+              <span class="quick-chip-label">Schnitt:</span>
+              <button type="button" class="quick-chip" data-brutto="2500">2.500 €</button>
+              <button type="button" class="quick-chip active" data-brutto="3500">3.500 €</button>
+              <button type="button" class="quick-chip" data-brutto="4500">4.500 €</button>
+              <button type="button" class="quick-chip" data-brutto="6000">6.000 €</button>
+            </div>
+
+            <div class="parttime-grid" style="display: grid; margin-top: 0; margin-bottom: 18px;">
+              <div class="input-field" style="margin: 0;">
+                <label class="input-label" for="birthYear">Geburtsjahr</label>
+                <input type="number" id="birthYear" value="1988" min="1940" max="2008" inputmode="numeric" style="width:100%; border:1px solid var(--color-rule,#e2e8f0); border-radius:8px; padding:11px 12px; font-weight:600; background:var(--color-paper,#fff); color:var(--color-ink);" />
+              </div>
+              <div class="input-field" style="margin: 0;">
+                <label class="input-label" for="startWorkAge">Berufseinstieg (Alter)</label>
+                <input type="number" id="startWorkAge" value="22" min="15" max="45" inputmode="numeric" style="width:100%; border:1px solid var(--color-rule,#e2e8f0); border-radius:8px; padding:11px 12px; font-weight:600; background:var(--color-paper,#fff); color:var(--color-ink);" />
+              </div>
+            </div>
+
+            <div class="parttime-grid" style="display: grid; margin-top: 0; margin-bottom: 18px;">
+              <div class="input-field" style="margin: 0;">
+                <label class="input-label" for="insuredYears">Bisherige Vers.-Jahre</label>
+                <input type="number" id="insuredYears" value="15" min="0" max="50" inputmode="numeric" style="width:100%; border:1px solid var(--color-rule,#e2e8f0); border-radius:8px; padding:11px 12px; font-weight:600; background:var(--color-paper,#fff); color:var(--color-ink);" />
+              </div>
+              <div class="input-field" style="margin: 0;">
+                <label class="input-label" for="retireAge">Pensionsalter</label>
+                <select id="retireAge">
+                  <option value="60">60 J. (Schwerarbeit)</option>
+                  <option value="62">62 J. (Korridorpension)</option>
+                  <option value="63">63 Jahre</option>
+                  <option value="65" selected>65 J. (Regelpension)</option>
+                  <option value="67">67 J. (Aufschub)</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn" id="calcPension" type="button" style="width:100%;">Pension berechnen</button>
           </div>
 
-          <div class="input-row">
-            <div class="input-group">
-              <label for="birthYear">Geburtsjahr</label>
-              <input type="number" id="birthYear" placeholder="z.B. 1985" min="1940" max="2005" />
-            </div>
-            <div class="input-group">
-              <label for="retireAge">Geplantes Pensionsalter</label>
-              <select id="retireAge">
-                <option value="60">60 Jahre (Frühpension, wenn möglich)</option>
-                <option value="62">62 Jahre (Korridorpension)</option>
-                <option value="63">63 Jahre</option>
-                <option value="65" selected>65 Jahre (Regelpension)</option>
-                <option value="67">67 Jahre (Spätpension)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="input-group">
-            <label for="avgBrutto">Durchschnittliches Bruttogehalt (Lebenseinkommen, monatlich)</label>
-            <div class="input-suffix">
-              <input type="number" id="avgBrutto" placeholder="z.B. 3500" min="0" step="100" />
-              <span class="suffix">€</span>
-            </div>
-          </div>
-
-          <div class="input-row">
-            <div class="input-group">
-              <label for="insuredYears">Bereits geleistete Versicherungsjahre</label>
-              <input type="number" id="insuredYears" placeholder="z.B. 15" min="0" max="50" />
-            </div>
-            <div class="input-group">
-              <label for="startWorkAge">Alter beim Berufseinstieg</label>
-              <input type="number" id="startWorkAge" placeholder="z.B. 22" min="15" max="40" value="22" />
-            </div>
-          </div>
-
-          <button class="btn" id="calcPension" style="width:100%; margin-top:8px;">🔢 Pension berechnen</button>
-
-          <div id="pensionResult" class="result-box hidden">
-            <h3>Deine voraussichtliche Pension</h3>
-            <div style="text-align:center; padding:16px 0;">
-              <div style="font-size:0.9rem; color:var(--color-ink-2); margin-bottom:4px;">Bruttopension monatlich (14x)</div>
-              <div class="result-big" id="resPensionBrutto">-- €</div>
-              <div style="font-size:0.85rem; color:var(--color-ink-3); margin-top:6px;" id="resPensionNetto"></div>
-            </div>
-
-            <div style="margin-top:16px;">
-              <div class="result-row">
-                <span class="result-label">Versicherungsjahre gesamt</span>
-                <span class="result-value" id="resTotalYears">--</span>
+          <div class="cockpit-right" id="pensionResult">
+            <div class="hero-net-card">
+              <div class="hero-net-header">
+                <span class="hero-net-label">Bruttopension monatlich (14×)</span>
               </div>
-              <div class="result-row">
-                <span class="result-label">Ersatzrate (Brutto)</span>
-                <span class="result-value" id="resReplacement">--</span>
+              <div class="hero-net-val" id="resPensionBrutto">-- €</div>
+              <div class="hero-net-sub" id="resPensionNetto">ca. -- € netto pro Monat (12×)</div>
+
+              <div class="sub-cards-grid">
+                <div class="sub-net-card">
+                  <div class="label">13. &amp; 14. Pension (netto je)</div>
+                  <div class="val" id="resPensionSonderNetto">-- €</div>
+                  <div class="desc">Begünstigt besteuert (6 % KV)</div>
+                </div>
+                <div class="sub-net-card">
+                  <div class="label">Geschätzte Pensionslücke</div>
+                  <div class="val" id="resGap" style="color:var(--color-danger);">--</div>
+                  <div class="desc">Differenz zum Aktiv-Netto</div>
+                </div>
               </div>
-              <div class="result-row">
-                <span class="result-label">Abschlag/Zuschlag</span>
-                <span class="result-value" id="resBonus">--</span>
-              </div>
-              <div class="result-row">
-                <span class="result-label">Pensionslücke (geschätzt)</span>
-                <span class="result-value" style="color:var(--color-danger);" id="resGap">--</span>
-              </div>
+            </div>
+
+            <div class="details-panel" style="padding: 14px 18px;">
+              <div class="seg-row"><span>Versicherungsjahre gesamt</span><strong id="resTotalYears">--</strong></div>
+              <div class="seg-row"><span>Ersatzrate (Brutto vom Schnitt)</span><strong id="resReplacement">--</strong></div>
+              <div class="seg-row"><span>Zu-/Abschlag durch Pensionsalter</span><strong id="resBonus">--</strong></div>
+              <div class="seg-row"><span>− Krankenversicherung (6,0 %)</span><strong id="resKvPension" style="color:var(--color-danger);">--</strong></div>
+              <div class="seg-row"><span>− Lohnsteuer (Tarif 2026)</span><strong id="resTaxPension" style="color:var(--color-danger);">--</strong></div>
+            </div>
+
+            <div id="ausgleichsBox" class="info-box hidden" style="margin:0;">
+              💡 <strong>Ausgleichszulage aktiv:</strong> Deine Kontopension läge unter dem Richtsatz 2026 (<span id="ausgleichsBetrag">1.308,39 €</span>). Bei gewöhnlichem Aufenthalt in Österreich wird auf den Richtsatz aufgestockt.
             </div>
 
             <div id="warningBox" class="warning-box hidden">
-              ⚠️ <strong>Achtung:</strong> Bei weniger als <strong>15 Versicherungsjahren</strong> besteht kein Anspruch auf ASVG-Pension. Mit weniger als <strong>40 Jahren</strong> sind Abschläge zu erwarten.
+              ⚠️ <strong>Hinweis:</strong> Mit unter <strong>15 Versicherungsjahren</strong> besteht kein regulärer ASVG-Alterspensionsanspruch (Mindestwartezeit).
             </div>
 
-            <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--color-rule);">
-              <h4 style="margin-bottom:8px;">Was bedeutet die Pensionslücke?</h4>
-              <p style="font-size:0.9rem; color:var(--color-ink-2); margin:0;">Die Pensionslücke ist die Differenz zwischen deinem letzten Nettoeinkommen und der Nettopension. Dieser Betrag sollte idealerweise durch private Altersvorsorge (z.B. ETF-Sparplan, Lebensversicherung) gedeckt werden.</p>
-              <div style="margin-top:12px;">
-                <a href="/finanzen/etf-sparplan-rechner.html" class="btn" style="font-size:0.85rem;">📈 ETF-Sparplan berechnen</a>
+            <div style="padding: 14px 16px; background: var(--color-paper-2); border: 1px dashed var(--color-primary); border-radius: 10px;">
+              <p style="font-size:0.88rem; color:var(--color-ink-2); margin:0 0 10px;"><strong>Pensionslücke schließen:</strong> Schon kleine monatliche Raten im ETF-Sparplan oder eine gezielte <a href="/finanzen/gehaltserhoehung-rechner.html">Gehaltserhöhung</a> verbessern dein Pensionskonto spürbar.</p>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <a href="/finanzen/etf-sparplan-rechner.html" class="btn" style="font-size:0.84rem;">📈 ETF-Sparplan berechnen</a>
+                <a href="/finanzen/gehaltsrechner.html" class="btn" style="font-size:0.84rem; background:var(--color-paper); color:var(--color-ink); border:1px solid var(--color-rule);">💶 Aktuelles Netto prüfen</a>
               </div>
             </div>
           </div>
-
-          <div class="seo-triangle" style="margin-top:32px;">
-            <h2>So funktioniert die Pension in Österreich</h2>
-            <p>Seit der Pensionsreform 2005 gilt das <strong>neue Pensionskonto-System</strong> für alle nach dem 1.1.1955 Geborenen. Pro Versicherungsjahr werden 1,78% der Bemessungsgrundlage gutgeschrieben.</p>
-            <ul class="hub-list">
-              <li><strong>Regelpensionsalter:</strong> 65 Jahre (M), schrittweise 65 Jahre (F, bis 2033)</li>
-              <li><strong>Korridorpension:</strong> ab 62 Jahren mit 40 Versicherungsjahren (Abschlag: 4,2%/Jahr)</li>
-              <li><strong>Schwerarbeitspension:</strong> ab 60 Jahren nach 10 Jahren Schwerarbeit</li>
-              <li><strong>Mindestpension:</strong> Ausgleichszulage, wenn Pension unter dem Richtsatz liegt</li>
-            </ul>
-            <p><a href="/blog/mindestlohn-oesterreich-2026.html">Zur Übersicht: Mindestlohn & Branchengehälter →</a></p>
-          </div>
         </div>
       </div>
+
+      <section class="content-section" style="margin-top: 32px;">
+        <h2>So funktioniert die Pension in Österreich 2026</h2>
+        <p>Seit der Pensionsharmonisierung 2005 gilt für alle ab 1.1.1955 Geborenen das einheitliche <strong>Pensionskonto</strong>. Für jedes Versicherungsjahr werden <strong>1,78 %</strong> deiner jährlichen Beitragsgrundlage gutgeschrieben (bis zur Höchstbeitragsgrundlage von <strong>6.930 € brutto/Monat</strong> bzw. 97.020 € im Jahr 2026).</p>
+        <ul>
+          <li><strong>Regelpensionsalter:</strong> 65 Jahre für Männer; für Frauen wird das Antrittsalter bis 2033 schrittweise von 60 auf 65 Jahre angehoben.</li>
+          <li><strong>Korridorpension (ab 62):</strong> Möglich bei mindestens 40 Versicherungsjahren mit einem dauerhaften Abschlag von <strong>5,1 % pro Jahr</strong> vor dem Regelalter.</li>
+          <li><strong>Aufschub-Bonus (über 65):</strong> Wer länger arbeitet, erhält einen Zuschlag von <strong>4,2 % pro Jahr</strong> (für max. 3 Jahre = +12,6 %).</li>
+          <li><strong>Krankenversicherung &amp; Steuer 2026:</strong> Seit Juni 2025 werden <strong>6,0 % Krankenversicherung</strong> von jeder Pension einbehalten; zusätzlich gilt der Pensionistenabsetzbetrag (bis zu 1.020 € jährlich) im Tarif 2026.</li>
+          <li><strong>Mindestpension (Ausgleichszulage 2026):</strong> Richtsatz für Alleinstehende <strong>1.308,39 €</strong> (ab 30 Beitragsjahren <strong>1.423,63 €</strong>, ab 40 Beitragsjahren <strong>1.700,76 €</strong>).</li>
+        </ul>
+        <p>Passende Rechner: <a href="/finanzen/gehaltsrechner.html">Brutto-Netto-Rechner AT</a> · <a href="/finanzen/abfertigungsrechner.html">Abfertigung Neu Rechner</a> · <a href="/finanzen/etf-sparplan-rechner.html">ETF-Sparplan</a> · <a href="/blog/mindestlohn-oesterreich-2026.html">Mindestlohn &amp; KV-Löhne 2026</a></p>
+      </section>
+
+      <section class="faq-section" style="margin-top: 28px;">
+        <h2>Häufig gestellte Fragen (FAQs)</h2>
+        <div class="faq-accordion">
+          <div class="faq-item">
+            <button class="faq-question" type="button">Wie wird die Pension in Österreich berechnet?</button>
+            <div class="faq-answer"><p>Im ASVG-Pensionskonto werden pro Jahr 1,78 % des durchschnittlichen Bruttoeinkommens (gedeckt bis 6.930 €/Monat) gutgeschrieben. 45 Versicherungsjahre entsprechen damit rund 80 % des Lebensdurchschnitts (brutto).</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button">Wie viel Abzug gibt es von Brutto auf Netto in der Pension 2026?</button>
+            <div class="faq-answer"><p>Von der Bruttopension werden <strong>6,0 % Krankenversicherung</strong> (seit Mitte 2025) sowie die reguläre Lohnsteuer (Tarif 2026) minus Pensionistenabsetzbetrag (bis 1.020 €/Jahr bis 21.614 € laufender Pension, eingeschliffen bis 31.494 €) abgezogen.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button">Wie hoch ist die Mindestpension (Ausgleichszulage) 2026?</button>
+            <div class="faq-answer"><p>Der Ausgleichszulagenrichtsatz 2026 für Alleinstehende beträgt <strong>1.308,39 €</strong> (14× jährlich), ab 30 Beitragsjahren <strong>1.423,63 €</strong> und ab 40 Beitragsjahren <strong>1.700,76 €</strong>.</p></div>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -247,7 +283,7 @@
           <h3>Finanzen</h3>
           <ul>
             <li><a href="/finanzen/gehaltsrechner.html">Gehaltsrechner</a></li>
-            <li><a href="/finanzen/pensionsrechner.html">Pensionsrechner</a></li>
+            <li><a href="/finanzen/abfertigungsrechner.html">Abfertigungsrechner</a></li>
             <li><a href="/finanzen/etf-sparplan-rechner.html">ETF-Sparplan</a></li>
           </ul>
         </div>
@@ -265,83 +301,128 @@
     </div>
   </footer>
 
+  <script src="/assets/js/ux-enhancements.js?v=1.0"></script>
   <script src="/assets/js/analytics.js?v=3.1"></script>
   <script src="/assets/js/ui.js?v=3.1"></script>
+  <script src="/assets/js/tools.js?v=3.1"></script>
   <script src="/assets/js/core.js?v=3.1"></script>
   <script>
   'use strict';
-  document.getElementById('calcPension').addEventListener('click', calcPension);
+
+  function atTaxYearly2026(taxableYear) {
+    let t = 0;
+    if (taxableYear > 1000000) t += (taxableYear - 1000000) * 0.55 + (1000000 - 104859) * 0.50 + (104859 - 70365) * 0.48 + (70365 - 36458) * 0.40 + (36458 - 21992) * 0.30 + (21992 - 13539) * 0.20;
+    else if (taxableYear > 104859) t += (taxableYear - 104859) * 0.50 + (104859 - 70365) * 0.48 + (70365 - 36458) * 0.40 + (36458 - 21992) * 0.30 + (21992 - 13539) * 0.20;
+    else if (taxableYear > 70365) t += (taxableYear - 70365) * 0.48 + (70365 - 36458) * 0.40 + (36458 - 21992) * 0.30 + (21992 - 13539) * 0.20;
+    else if (taxableYear > 36458) t += (taxableYear - 36458) * 0.40 + (36458 - 21992) * 0.30 + (21992 - 13539) * 0.20;
+    else if (taxableYear > 21992) t += (taxableYear - 21992) * 0.30 + (21992 - 13539) * 0.20;
+    else if (taxableYear > 13539) t += (taxableYear - 13539) * 0.20;
+    return t;
+  }
+
+  function activeWorkerNet2026(grossMonthly) {
+    if (grossMonthly <= 0) return 0;
+    const av = grossMonthly <= 2225 ? 0 : grossMonthly <= 2427 ? 0.01 : grossMonthly <= 2630 ? 0.02 : 0.0295;
+    const svRate = grossMonthly <= 551.10 ? 0 : 0.1512 + av;
+    const sv = Math.min(grossMonthly, 6930) * svRate;
+    const taxY = atTaxYearly2026(Math.max(0, (grossMonthly - sv) * 12 - 132));
+    const taxM = Math.max(0, taxY / 12 - 496 / 12);
+    return Math.max(0, grossMonthly - sv - taxM);
+  }
 
   function calcPension() {
-    const birthYear  = parseInt(document.getElementById('birthYear').value) || 0;
-    const retireAge  = parseInt(document.getElementById('retireAge').value) || 65;
-    const avgBrutto  = parseFloat(document.getElementById('avgBrutto').value) || 0;
-    const insYears   = parseFloat(document.getElementById('insuredYears').value) || 0;
-    const startAge   = parseFloat(document.getElementById('startWorkAge').value) || 22;
-
-    if (!birthYear || !avgBrutto) {
-      alert('Bitte Geburtsjahr und durchschnittliches Bruttogehalt eingeben.');
-      return;
-    }
+    const birthYear = parseInt(document.getElementById('birthYear').value, 10) || 1988;
+    const retireAge = parseInt(document.getElementById('retireAge').value, 10) || 65;
+    const avgBrutto = Math.max(0, parseFloat(document.getElementById('avgBrutto').value) || 0);
+    const insYears  = Math.max(0, parseFloat(document.getElementById('insuredYears').value) || 0);
+    const startAge  = Math.max(15, parseFloat(document.getElementById('startWorkAge').value) || 22);
 
     const currentYear = new Date().getFullYear();
     const currentAge  = currentYear - birthYear;
     const yearsLeft   = Math.max(0, retireAge - currentAge);
+    const maxFutureByStart = Math.max(0, retireAge - startAge - insYears);
+    const futureYears = yearsLeft > 0 ? Math.min(yearsLeft, Math.max(yearsLeft, maxFutureByStart)) : 0;
+    const totalYears  = Math.min(45, insYears + Math.max(0, Math.min(yearsLeft, retireAge - startAge - insYears)));
 
-    // Total insurance years at retirement
-    const futureYears  = Math.max(0, Math.min(yearsLeft, retireAge - startAge - insYears));
-    const totalYears   = Math.min(45, insYears + futureYears);
+    const basisMonthly = Math.min(avgBrutto, 6930);
+    let pensionBrutto  = totalYears * 0.0178 * basisMonthly;
 
-    // Pension calculation: 1.78% per year on assessment basis
-    // Assessment basis = min(avgBrutto, Höchstbeitragsgrundlage 6930)
-    const maxBasis       = 6930;
-    const basisMonthly   = Math.min(avgBrutto, maxBasis);
-    // Annual assessment contribution base
-    let pensionBrutto    = totalYears * 0.0178 * basisMonthly;
-
-    // Adjustment for early/late retirement (vs. 65)
     const diffFromNormal = retireAge - 65;
-    const adj            = diffFromNormal * 0.042; // 4.2% per year
-    pensionBrutto        = pensionBrutto * (1 + adj);
+    const adj = diffFromNormal < 0 ? diffFromNormal * 0.051 : Math.min(diffFromNormal, 3) * 0.042;
+    pensionBrutto = pensionBrutto * (1 + adj);
 
-    // Minimum pension (Ausgleichszulage 2026)
-    const minPension = 1110;
-    const isWarning  = totalYears < 15;
-    if (!isWarning && pensionBrutto < minPension) pensionBrutto = minPension;
+    // Ausgleichszulagenrichtsatz 2026 (Alleinstehend)
+    const minPension = totalYears >= 40 ? 1700.76 : totalYears >= 30 ? 1423.63 : 1308.39;
+    const isWarning = totalYears < 15;
+    let isAusgleich = false;
+    if (!isWarning && avgBrutto > 0 && pensionBrutto < minPension) {
+      pensionBrutto = minPension;
+      isAusgleich = true;
+    }
 
-    // Rough netto estimate: pension tax and health insurance (5.1% + progressive tax)
-    const svPension    = pensionBrutto * 0.0510;  // Krankenversicherung
-    const taxableBase  = pensionBrutto - svPension - (1282 / 12); // Pensionistenabsetzbetrag
-    let lohnsteuer     = 0;
-    const tb           = Math.max(0, taxableBase);
-    if (tb > 1525.67)  lohnsteuer = Math.min(tb - 1525.67, 626.67) * 0.20;
-    if (tb > 1735.67)  lohnsteuer += Math.min(tb - 1735.67, 1138.50) * 0.10; // simplified
-    const pensionNetto = Math.max(0, pensionBrutto - svPension - lohnsteuer);
+    // 2026 Netto: 6,0 % Krankenversicherung + Lohnsteuertarif 2026 - Pensionistenabsetzbetrag (1.020 €)
+    const svPension = pensionBrutto * 0.06;
+    const taxableYear = Math.max(0, (pensionBrutto - svPension) * 12);
+    let pab = 0;
+    if (taxableYear > 0 && taxableYear <= 21614) pab = 1020;
+    else if (taxableYear > 21614 && taxableYear < 31494) pab = 1020 * (31494 - taxableYear) / (31494 - 21614);
 
-    // Replacement rate
-    const nettoSalary   = avgBrutto * 0.72; // rough estimate
-    const replRate      = ((pensionBrutto / avgBrutto) * 100).toFixed(1);
+    const taxYear = Math.max(0, atTaxYearly2026(taxableYear) - pab);
+    const taxMonthly = taxYear / 12;
+    const pensionNetto = Math.max(0, pensionBrutto - svPension - taxMonthly);
 
-    // Gap
-    const gap = Math.max(0, nettoSalary - pensionNetto);
+    // 13./14. Sonderpension netto (mit 620 € Freibetrag, 6 % Sechstelsteuer)
+    const sonderBase2 = Math.max(0, (pensionBrutto - svPension) * 2);
+    const sonderTax2 = sonderBase2 > 2615 ? Math.max(0, sonderBase2 - 620) * 0.06 : 0;
+    const pensionSonderNetto = Math.max(0, pensionBrutto - svPension - sonderTax2 / 2);
 
-    // Display
-    const fmt = v => v.toLocaleString('de-AT', { style:'currency', currency:'EUR', maximumFractionDigits:0 });
+    const activeNetto = activeWorkerNet2026(avgBrutto);
+    const replRate = avgBrutto > 0 ? ((pensionBrutto / avgBrutto) * 100).toFixed(1) : '0.0';
+    const gap = Math.max(0, activeNetto - pensionNetto);
 
-    document.getElementById('resPensionBrutto').textContent = fmt(pensionBrutto);
-    document.getElementById('resPensionNetto').textContent  = 'ca. ' + fmt(pensionNetto) + ' netto';
-    document.getElementById('resTotalYears').textContent    = totalYears.toFixed(1) + ' Jahre';
-    document.getElementById('resReplacement').textContent   = replRate + '%';
-    document.getElementById('resBonus').textContent         = adj >= 0
-      ? '+' + (adj * 100).toFixed(1) + '% (Spätpension)'
-      : (adj * 100).toFixed(1) + '% (Frühpension)';
-    document.getElementById('resGap').textContent           = fmt(gap) + ' / Monat';
+    const fmtEur = v => v.toLocaleString('de-AT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
+    const fmtRound = v => v.toLocaleString('de-AT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 
-    const wb = document.getElementById('warningBox');
-    if (isWarning) wb.classList.remove('hidden'); else wb.classList.add('hidden');
+    document.getElementById('resPensionBrutto').textContent = fmtEur(pensionBrutto);
+    document.getElementById('resPensionNetto').textContent = 'ca. ' + fmtEur(pensionNetto) + ' netto pro Monat (12×)';
+    document.getElementById('resPensionSonderNetto').textContent = fmtEur(pensionSonderNetto);
+    document.getElementById('resTotalYears').textContent = totalYears.toFixed(1) + ' Jahre';
+    document.getElementById('resReplacement').textContent = replRate + ' %';
+    document.getElementById('resBonus').textContent = adj === 0
+      ? '0,0 % (Regelpension)'
+      : adj > 0 ? '+' + (adj * 100).toFixed(1) + ' % (Spätpension)'
+      : (adj * 100).toFixed(1) + ' % (Frühpension)';
+    document.getElementById('resKvPension').textContent = '− ' + fmtEur(svPension) + ' / Mon.';
+    document.getElementById('resTaxPension').textContent = '− ' + fmtEur(taxMonthly) + ' / Mon.';
+    document.getElementById('resGap').textContent = fmtRound(gap) + ' / Mon.';
 
-    document.getElementById('pensionResult').classList.remove('hidden');
+    document.getElementById('ausgleichsBetrag').textContent = fmtEur(minPension);
+    document.getElementById('ausgleichsBox').classList.toggle('hidden', !isAusgleich);
+    document.getElementById('warningBox').classList.toggle('hidden', !isWarning);
   }
+
+  document.getElementById('calcPension').addEventListener('click', calcPension);
+  document.querySelectorAll('#avgBrutto, #birthYear, #startWorkAge, #insuredYears, #retireAge').forEach((el) => {
+    el.addEventListener('input', () => {
+      if (el.id === 'avgBrutto') {
+        const val = parseFloat(el.value);
+        document.querySelectorAll('.quick-chip[data-brutto]').forEach((c) => {
+          c.classList.toggle('active', parseFloat(c.dataset.brutto) === val);
+        });
+      }
+      calcPension();
+    });
+    el.addEventListener('change', calcPension);
+  });
+  document.querySelectorAll('.quick-chip[data-brutto]').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.quick-chip[data-brutto]').forEach((c) => c.classList.remove('active'));
+      chip.classList.add('active');
+      document.getElementById('avgBrutto').value = chip.dataset.brutto;
+      calcPension();
+    });
+  });
+  document.addEventListener('DOMContentLoaded', calcPension);
   </script>
 </body>
 </html>

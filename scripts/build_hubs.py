@@ -19,6 +19,8 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://rechnify.at"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import seo_policy
 
 RE_H1 = re.compile(r"<h1[^>]*>(.*?)</h1>", re.S)
 RE_TITLE = re.compile(r"<title>(.*?)</title>", re.S)
@@ -50,7 +52,10 @@ def list_pages(directory: str, exclude: tuple[str, ...] = ()) -> list[str]:
     for name in sorted(os.listdir(full)):
         if not name.endswith(".html") or name == "index.html" or name in exclude:
             continue
-        out.append(f"{directory}/{name}")
+        rel = f"{directory}/{name}"
+        if not seo_policy.should_index(rel):
+            continue
+        out.append(rel)
     return out
 
 
@@ -78,11 +83,11 @@ def link_list(rels: list[str], with_desc: bool = True) -> str:
 
 HEADER_NAV = """      <nav class="site-nav" id="siteNav">
         <a href="/">🏠 Start</a>
-        <a href="/#finanzen">💶 Finanzen</a>
-        <a href="/#arbeitszeit">⏰ Arbeitszeit</a>
-        <a href="/#familie">👶 Familie</a>
-        <a href="/#mathematik">📐 Mathematik</a>
-        <a href="/#alltag">⚖️ Alltag</a>
+        <a href="/finanzen/">💶 Finanzen</a>
+        <a href="/arbeitszeit/">⏰ Arbeitszeit</a>
+        <a href="/familie/">👶 Familie</a>
+        <a href="/mathematik/">📐 Mathematik</a>
+        <a href="/alltag/">⚖️ Alltag</a>
       </nav>"""
 
 
@@ -283,10 +288,12 @@ def build() -> int:
                     + link_list(list_pages("de/familie")),
                 ),
                 (
-                    "AT und DE im Vergleich",
-                    "Wo die beiden Systeme sich unterscheiden.",
-                    '        <li><a href="/finanzen/kinderbetreuungsgeld-vs-elterngeld.html">'
-                    "Kinderbetreuungsgeld (AT) vs Elterngeld (DE)</a></li>",
+                    "Passende Finanz-Rechner",
+                    "Einkommen, Abgaben und Familienbudget im Zusammenhang berechnen.",
+                    '        <li><a href="/finanzen/familienbonus-rechner.html">'
+                    "Familienbonus Plus Rechner (AT)</a></li>\n"
+                    '        <li><a href="/finanzen/gehaltsrechner.html">'
+                    "Brutto-Netto-Rechner Österreich</a></li>",
                 ),
             ],
             breadcrumb=[home],
@@ -321,10 +328,12 @@ def build() -> int:
                     + link_list(list_pages("familie")),
                 ),
                 (
-                    "DE und AT im Vergleich",
-                    "Wo die beiden Systeme sich unterscheiden.",
-                    '        <li><a href="/finanzen/kinderbetreuungsgeld-vs-elterngeld.html">'
-                    "Kinderbetreuungsgeld (AT) vs Elterngeld (DE)</a></li>",
+                    "Passende Finanz-Rechner",
+                    "Einkommen, Steuern und Abzüge nach deutschem Recht berechnen.",
+                    '        <li><a href="/de/finanzen/gehaltsrechner.html">'
+                    "Brutto-Netto-Rechner Deutschland</a></li>\n"
+                    '        <li><a href="/finanzen/familienbonus-rechner.html">'
+                    "Familienbonus Plus Rechner (AT)</a></li>",
                 ),
             ],
             breadcrumb=[home],
@@ -364,7 +373,7 @@ def build() -> int:
         render(
             path="de/index.html",
             lang="de-DE",
-            title="Rechner für Deutschland 2026 – Brutto Netto, Arbeitszeit | rechnify.at",
+            title="Brutto Netto & Finanz-Rechner DE 2026 | rechnify.at",
             description="Alle Rechner für Deutschland 2026: Brutto-Netto-Gehaltsrechner, Kirchensteuer, Pendlerpauschale, Arbeitszeit und Elterngeld. Kostenlos.",
             h1="Rechner für Deutschland",
             intro="Alle Rechner nach deutschem Steuer- und Arbeitsrecht, Stand 2026. Für Österreich gibt es eigene Varianten mit AT-Regeln.",

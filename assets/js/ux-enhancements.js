@@ -179,7 +179,7 @@
         <p>2026: <strong>6.930 € monatlich</strong> (83.160 € jährlich)</p>
         <p>Einkommen über dieser Grenze ist SV-frei.</p>
         <h3>Sonderzahlungen</h3>
-        <p>13. & 14. Gehalt: nur <strong>17,07%</strong> SV-Beitrag (keine Arbeitslosenversicherung)</p>
+        <p>13. & 14. Gehalt: meist <strong>17,07%</strong> SV-Beitrag (statt 18,07%, da AK-Umlage &amp; WF-Beitrag entfallen)</p>
       `
     },
     'ueberstundenzuschlag': {
@@ -197,9 +197,9 @@
           <li>Sonntags & Feiertags</li>
           <li>Beispiel: 20 € Stundenlohn → 40 € für Überstunde</li>
         </ul>
-        <h3>Steuerfreibetrag</h3>
-        <p>In Österreich sind die <strong>Zuschläge der ersten 18 Überstunden pro Monat steuerfrei</strong>!</p>
-        <p>Das bedeutet: Der Zuschlagsanteil (nicht der Grundlohn) fließt 1:1 netto auf dein Konto.</p>
+        <h3>Steuerfreibetrag (2026)</h3>
+        <p>In Österreich sind 2026 die <strong>Zuschläge der ersten 15 Überstunden pro Monat bis max. 170 €</strong> lohnsteuerfrei (§ 68 Abs. 2 EStG)!</p>
+        <p>Das bedeutet: Für den steuerfreien Zuschlagsanteil fällt keine Lohnsteuer an (nur SV-Beiträge).</p>
       `
     }
   };
